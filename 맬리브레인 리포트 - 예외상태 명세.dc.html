@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+body{margin:0;background:#F7F8F9}
+a{color:#0A6B47;text-decoration:none}
+a:hover{color:#13BD7E}
+#specRoot,#specRoot *{word-break:keep-all;overflow-wrap:break-word}
+</style>
+</helmet>
+
+<div id="specRoot" style="max-width:1080px;margin:0 auto;padding:40px 28px 80px;font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#191F28;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased">
+
+<div style="border-bottom:2px solid #191F28;padding-bottom:20px;margin-bottom:32px">
+  <div style="display:inline-flex;background:rgba(14,122,82,.10);color:#0A6B47;font-size:13px;font-weight:700;padding:6px 13px;border-radius:99px;margin-bottom:12px">문서 3 / 4 · 개발 핸드오프 v1.0 · 2026.08.25</div>
+  <div style="font-size:34px;font-weight:800;letter-spacing:-.035em;line-height:1.25;text-wrap:balance">맬리브레인 3기 종료 리포트<br>예외 상태 · 정책 명세</div>
+  <div style="font-size:15px;color:#4E5968;line-height:1.7;margin-top:14px;max-width:660px;text-wrap:pretty">8개 화면 각각에서 데이터가 없거나 부족할 때 무엇을 보여줄지 정의합니다. 모수는 3기 챌린저 실사용자 <strong>823명</strong>, 기준일 2026-08-24 becare prod 조회입니다.</div>
+<div style="font-size:14px;color:#6A7480;line-height:1.7;margin-top:10px;max-width:660px;text-wrap:pretty">화면 요소 스펙·산식·상수의 정본은 <strong style="color:#4E5968">화면설계서</strong>이고, 문구의 정본은 <strong style="color:#4E5968">프로토타입 v3</strong>입니다. 이 문서는 그중 "값이 없을 때"만 화면 단위로 모아 본 요약입니다 — 값이 어긋나면 화면설계서를 따릅니다.</div>
+</div>
+
+<!-- ══ 0. 확정된 정책 상수 ══ -->
+<div style="margin-bottom:40px">
+  <div style="font-size:13px;font-weight:700;color:#0A6B47;letter-spacing:.06em;margin-bottom:10px">SECTION 0</div>
+  <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:16px">확정된 정책 상수</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;color:#5C6675;margin-bottom:6px">기수 기간 (표기용)</div>
+      <div style="font-size:20px;font-weight:800;letter-spacing:-.02em">3/3 – 10/31</div>
+      <div style="font-size:13px;color:#6A7480;margin-top:4px">243일 · KST 기준</div>
+    </div>
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;color:#5C6675;margin-bottom:6px">참여율 분모</div>
+      <div style="font-size:20px;font-weight:800;letter-spacing:-.02em">242일</div>
+      <div style="font-size:13px;color:#6A7480;margin-top:4px">3/3 – 10/30 · 달력 일수</div>
+    </div>
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;color:#5C6675;margin-bottom:6px">데이터 컷</div>
+      <div style="font-size:20px;font-weight:800;letter-spacing:-.02em">10/30 24:00</div>
+      <div style="font-size:13px;color:#6A7480;margin-top:4px">KST · 10/31 기록 제외</div>
+    </div>
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;color:#5C6675;margin-bottom:6px">배치 실행</div>
+      <div style="font-size:20px;font-weight:800;letter-spacing:-.02em">10/31 00:30</div>
+      <div style="font-size:13px;color:#6A7480;margin-top:4px">재검사 입력 지연 시 재실행 1회</div>
+    </div>
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;color:#5C6675;margin-bottom:6px">수료 기준</div>
+      <div style="font-size:20px;font-weight:800;letter-spacing:-.02em">30일 · 30건</div>
+      <div style="font-size:13px;color:#6A7480;margin-top:4px">참여일 30일 <strong>또는</strong> 활동 30건</div>
+    </div>
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;color:#5C6675;margin-bottom:6px">랭킹 기준</div>
+      <div style="font-size:20px;font-weight:800;letter-spacing:-.02em">활동 점수</div>
+      <div style="font-size:13px;color:#6A7480;margin-top:4px">게임 점수 아님 · 모수 823명 (Q-01)</div>
+    </div>
+  </div>
+
+  <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:18px 20px;margin-top:12px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:10px">참여일 정의 (P-01)</div>
+    <div style="font-size:14px;color:#4E5968;line-height:1.7;text-wrap:pretty">아래 세 가지 중 <strong>하나라도</strong> 기록이 있는 날의 합집합. KST 자정 경계로 날짜를 계산하며, 같은 날 여러 건이 있어도 1일로 집계합니다.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <div style="background:#F2F4F6;border-radius:8px;padding:7px 13px;font-size:14px;font-weight:600">완료 활동 ≥ 1건</div>
+      <div style="background:#F2F4F6;border-radius:8px;padding:7px 13px;font-size:14px;font-weight:600">로그인 ≥ 1건</div>
+      <div style="background:#F2F4F6;border-radius:8px;padding:7px 13px;font-size:14px;font-weight:600">걸음 &gt; 0보</div>
+    </div>
+  </div>
+
+  <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:18px 20px;margin-top:12px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:10px">분모 242일이 "평일 수"가 아닌 이유</div>
+    <div style="font-size:14px;color:#4E5968;line-height:1.7;text-wrap:pretty">프로그램은 평일 편성이지만 <strong>분모는 평일만 센 값이 아닙니다.</strong> 마지막 프로그램일이 10/30(금)이라 종료일을 거기에 맞췄고, 3/3부터 10/30까지의 <strong>달력 일수</strong>가 242일입니다. 참여일 쪽도 주말 로그인·걸음을 그대로 세므로 분자와 분모의 기준이 서로 맞습니다.</div>
+    <div style="font-size:14px;color:#6A7480;line-height:1.7;margin-top:10px;text-wrap:pretty">평일만 세는 곳은 <strong>요일별 참여율(F-07)</strong> 하나뿐이고, 여기서도 분모는 "기간 내 그 요일이 실제로 몇 번 있었는가"입니다. 전 요일에 같은 숫자를 쓰지 않습니다.</div>
+  </div>
+
+  <div style="background:#FFF8E6;border:1px solid #F0DCA8;border-radius:14px;padding:18px 20px;margin-top:12px">
+    <div style="font-size:13px;font-weight:700;color:#8A6A12;letter-spacing:.05em;margin-bottom:8px">주의 · UTC 날짜 직독 금지</div>
+    <div style="font-size:14px;color:#4E5968;line-height:1.7;text-wrap:pretty">챌린지 시작 레코드는 DB에 <code style="background:#F2F4F6;padding:2px 6px;border-radius:4px;font-size:13px">2026-03-02 15:00 UTC</code>로 저장돼 있습니다. 이를 KST로 변환하면 3월 3일 0시입니다. UTC 날짜를 그대로 읽으면 시작일이 3/2로 잘못 표기되고 분모가 244일이 됩니다. <strong>모든 일자 집계는 KST로 변환 후 수행합니다.</strong></div>
+  </div>
+</div>
+
+<!-- ══ 1. 수료 분기 ══ -->
+<div style="margin-bottom:40px">
+  <div style="font-size:13px;font-weight:700;color:#0A6B47;letter-spacing:.06em;margin-bottom:10px">SECTION 1</div>
+  <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px">수료 분기 A / B / C</div>
+  <div style="font-size:15px;color:#4E5968;line-height:1.7;margin-bottom:16px;text-wrap:pretty">SC-RP-07 수료증 화면의 문구·버튼 구성이 분기됩니다. 나머지 6개 화면의 <strong>레이아웃은 분기와 무관하게 동일</strong>하며, 값이 없는 항목만 개별 규칙(SECTION 2)을 따릅니다. C분기 사용자도 커버부터 걸음수까지 같은 화면을 지나며, 그 화면들이 0으로 채워질 뿐입니다.</div>
+
+  <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;overflow:hidden">
+    <div style="display:grid;grid-template-columns:64px 1.1fr 100px 90px 1.5fr;gap:0;background:#F2F4F6;font-size:13px;font-weight:700;color:#4E5968">
+      <div style="padding:12px 14px">분기</div>
+      <div style="padding:12px 14px">조건 (참여일)</div>
+      <div style="padding:12px 14px;text-align:right">인원</div>
+      <div style="padding:12px 14px;text-align:right">비율</div>
+      <div style="padding:12px 14px">증서 명칭 · 버튼</div>
+    </div>
+    <div style="display:grid;grid-template-columns:64px 1.1fr 100px 90px 1.5fr;gap:0;border-top:1px solid #E5E8EB;font-size:14px;align-items:center">
+      <div style="padding:14px;font-weight:800;color:#0A6B47">A</div>
+      <div style="padding:14px;font-weight:600">참여일 30↑<br>또는 활동 30건↑</div>
+      <div style="padding:14px;text-align:right;font-weight:700">재집계</div>
+      <div style="padding:14px;text-align:right;color:#4E5968">—</div>
+      <div style="padding:14px;color:#4E5968;line-height:1.6">수료증 · 버튼 3개<br><span style="font-size:13px;color:#6A7480">저장하기 / 4기도 참여하기 / 홈으로</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:64px 1.1fr 100px 90px 1.5fr;gap:0;border-top:1px solid #E5E8EB;font-size:14px;align-items:center">
+      <div style="padding:14px;font-weight:800;color:#0A6B47">B</div>
+      <div style="padding:14px;font-weight:600">기록은 있으나<br>A 미달</div>
+      <div style="padding:14px;text-align:right;font-weight:700">96~138명</div>
+      <div style="padding:14px;text-align:right;color:#4E5968">—</div>
+      <div style="padding:14px;color:#4E5968;line-height:1.6">참여기록 · 버튼 3개<br><span style="font-size:13px;color:#6A7480">저장 라벨 미확정 (Q-02)</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:64px 1.1fr 100px 90px 1.5fr;gap:0;border-top:1px solid #E5E8EB;font-size:14px;align-items:center">
+      <div style="padding:14px;font-weight:800;color:#0A6B47">C</div>
+      <div style="padding:14px;font-weight:600">참여일 0<br>+ 활동 0건</div>
+      <div style="padding:14px;text-align:right;font-weight:700">14명</div>
+      <div style="padding:14px;text-align:right;color:#4E5968">1.9%</div>
+      <div style="padding:14px;color:#4E5968;line-height:1.6">참여확인 · 버튼 2개<br><span style="font-size:13px;color:#6A7480">저장 버튼 없음 · 폭죽 미실행</span></div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px;text-wrap:pretty"><strong>판정 순서</strong> · <code style="background:#F2F4F6;padding:2px 6px;border-radius:4px;font-size:13px">참여일 ≥ 30 or 활동 ≥ 30 → A</code> · <code style="background:#F2F4F6;padding:2px 6px;border-radius:4px;font-size:13px">참여일 ≥ 1 or 활동 ≥ 1 → B</code> · 나머지 C. 위에서부터 먼저 맞는 것을 채택하며 <strong>원값으로 판정</strong>합니다 — 참여율 반올림값을 쓰면 29.6일이 30%로 올라가 수료로 넘어갑니다. 활동 건수는 판정에만 쓰고 화면에 노출하지 않습니다.<br><br><strong>A·B 인원은 재집계 대기</strong>입니다. 기존 641 / 154 / 28은 참여일 단독 기준 값이라 쓸 수 없습니다. 탈퇴자는 발급 대상에서 제외하되 랭킹 모수(823명)에는 포함합니다.</div>
+</div>
+
+<!-- ══ 2. 화면별 예외 규칙 ══ -->
+<div style="margin-bottom:40px">
+  <div style="font-size:13px;font-weight:700;color:#0A6B47;letter-spacing:.06em;margin-bottom:10px">SECTION 2</div>
+  <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px">화면별 예외 규칙</div>
+  <div style="font-size:15px;color:#4E5968;line-height:1.7;margin-bottom:20px;text-wrap:pretty">공통 원칙 네 가지. ① <strong>모든 화면은 항상 노출한다</strong> — 데이터가 없다는 이유로 섹션을 건너뛰지 않습니다. <strong style="color:#A63232">단 하나의 예외가 걸음 미연동(P16)</strong>입니다 — 2026-08-31 확정으로 SC-RP-06 섹션 전체를 감추며, 해당 사용자(27명·3.3%)의 리포트는 7개 섹션이 됩니다. 0보·0일·0%로 채운 화면은 정보가 없을 뿐 아니라 격려로 읽히지 않는다는 판단입니다. <strong>연동은 됐지만 걸은 날이 0일인 경우(P17)는 이 예외에 해당하지 않습니다</strong> — 0이 실제 측정 결과이므로 섹션을 그대로 노출합니다. ② <strong>수치가 없으면 0으로 표기한다</strong> — 빈칸이나 하이픈이 아닌 0입니다. ③ <strong>최소 데이터로도 대표값을 뽑는다</strong> — 화·목만 참여했고 화가 1회 더 많으면 화요일이 대표 요일입니다. ④ <strong>값이 하나뿐이면 그것이 현재 상태다</strong> — 비교 대상이 없다고 값을 숨기지 않습니다.</div>
+<div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:18px 20px;margin-bottom:12px">
+  <div style="font-size:15px;font-weight:700;margin-bottom:10px">한 화면은 812px을 넘지 않습니다</div>
+  <div style="font-size:14px;color:#4E5968;line-height:1.7;text-wrap:pretty;margin-bottom:14px">기준 단말은 안드로이드이고 아트보드는 375×812입니다. 콘텐츠가 넘치면 카드를 줄이는 대신 <strong>화면을 나눕니다</strong> — 이 원칙으로 SC-RP-04가 04와 04B로 갈라졌고, 05·06은 중복 요소를 덜어 한 장에 맞췄습니다. 상단 섹션 배지는 <strong>y 64</strong>, 하단 스크롤 힌트는 <strong>하단에서 40px</strong>로 전 화면 고정입니다. 다만 아트보드가 8장으로 보일 뿐, 실제 리포트는 <strong>오버레이 하나 안에 8개 섹션이 이어진 단일 스크롤 문서</strong>입니다. 그래서 닫기(X)는 <strong>뷰포트 fixed로 전 구간에 하나</strong>만 떠 있고, 스크롤 힌트는 <strong>섹션마다 하나씩</strong> 있어 스크롤과 함께 지나갑니다 — 아트보드의 X 8개는 같은 버튼 하나를 8번 그린 것입니다.</div>
+
+  <div style="font-size:15px;font-weight:700;margin-bottom:10px">카드는 감출 수 있고, 섹션은 감출 수 없습니다</div>
+  <div style="font-size:14px;color:#4E5968;line-height:1.7;text-wrap:pretty">원칙 ①은 <strong>섹션(화면) 단위</strong>에 적용됩니다. 카드 단위로는 감추는 경우가 세 군데 있습니다 — 게임 0종일 때의 하이라이트 카드와 TOP 3, 총 걸음 0일 때의 거리 환산과 칼로리 환산입니다. "0km를 걸었어요"나 "약 0kcal을 태웠어요"는 격려가 아니라 조롱으로 읽히기 때문입니다. 그 외에는 카드도 0을 담은 채로 남깁니다.</div>
+</div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-01</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">커버</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">참여일이 0일이면 <strong>"242일 중 0일"</strong>로 그대로 표기합니다. 문구를 바꾸거나 숨기지 않습니다. 히어로 캐릭터 영역은 데이터와 무관하게 항상 표시합니다.</div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">정상 · "242일 중 <strong>142일</strong>의 기록이 담겨 있어요"<br>0일 · "242일 중 <strong>0일</strong>의 기록이 담겨 있어요"</div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-02</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">숫자 요약</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">4개 스탯 타일(함께한 날 · 참여율 · 게임 횟수 · 마음 기록)은 <strong>모두 0으로 표기</strong>합니다. 뇌 점수 카드는 측정이 1회뿐이어도 감추지 않습니다 — <strong>그 값이 곧 현재 상태</strong>이므로 단일 값으로 확정 표기하고, 화살표와 나머지 항만 뺍니다.</div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">측정 0회 · "–점" 표기 + 그래프는 수평 점선만, 마커 없음<br>측정 1회 · 그 값만 대형으로. 화살표·나머지 항 없음, 그래프는 단일 포인트 + 수평 점선<br>측정 2회 이상 · 정상 (시작 → 종료)</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px"><strong>10/30 재검사 입력 전까지는 전원이 "측정 1회" 상태입니다.</strong> 이 화면의 기본값은 시작→종료가 아니라 단일 값 하나이며, 그 상태로 완성돼 보여야 합니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:8px">뇌 점수는 SMCQ(0~13 정수)를 변환한 값이라 <strong>0 · 8 · 15 · 23 · 31 · 38 · 46 · 54 · 62 · 69 · 77 · 85 · 92 · 100 중 하나만</strong> 나옵니다. 그 사이 값이 화면에 보이면 산식을 타지 않은 값입니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px">카운트업 애니메이션은 목표값이 0일 때 생략합니다 (0에서 0으로 세는 모션은 의미가 없음).</div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-03</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">집중 리듬</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">요일별 막대그래프는 <strong>월–금 5개 막대를 항상 모두 그립니다.</strong> 참여가 없는 요일은 0% 막대(트랙만 보이는 상태)로 표시합니다. 대표 요일·시간은 동점일 때 <strong>이른 요일 / 이른 시간</strong>을 택합니다.</div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">참여 1일 · 그 하루의 요일·시간을 그대로 대표값으로 표시<br>참여 0일 · 대표 요일·시간 타일에 "–", 막대 5개 전부 0%<br>동점 처리 · 화 3회 / 목 3회 → 화요일. 오후 1시 2회 / 오후 8시 2회 → 오후 1시</div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-04</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">게임 하이라이트</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">게임 하이라이트 카드는 <strong>완료 횟수 기준으로 확정</strong>됐습니다 — SECTION 3 참고. 하이라이트와 TOP 3 모두 material_code별 완료 횟수 내림차순에서 뽑습니다. <strong>점수 기반 표기(최고 점수, 내 점수 TOP 3)는 이번 기수에서 사용하지 않습니다.</strong></div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;margin-top:10px;text-wrap:pretty">화면 구성이 바뀌었습니다. 하이라이트 카드는 <strong>게임명만</strong> 담고 완료 횟수는 아래 타일로 분리했습니다. <strong>랭킹은 SC-RP-04B로 떨어져 나갔습니다</strong> — 한 화면에 다 넣으니 세로가 1,224px까지 늘어나 812 원칙을 못 지켰기 때문입니다.</div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">해본 게임 3종 이상 · TOP 3 정상<br>해본 게임 1–2종 · 있는 만큼만 행을 그리고 빈 행은 만들지 않음<br>해본 게임 0종 (P02·P05) · 하이라이트 카드와 리스트를 감추고 "아직 해본 게임이 없어요" 한 줄 (섹션은 유지)<br>완료 횟수 0회 · 타일은 "0회"로 유지 (P02)</div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-04B</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">활동 점수 랭킹 (신설)</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">04에서 분리된 화면입니다. 상단 2열 타일(<strong>활동 점수 랭킹</strong> · <strong>내 위치</strong>)과 전체 참여자 랭킹 카드로 이뤄집니다. 랭킹은 <strong>활동 점수</strong> 기준이며 게임 점수를 쓰지 않습니다.</div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">활동 점수 0점 (P08) · 공동 최하위를 그대로 표기. "823명 중 823위"<br>내 순위 1–3위 · 구분선과 별도 행 없이 해당 순위 행만 강조 (같은 사람을 두 번 그리지 않음)<br>내 순위 4위 · 구분선 문구를 "4위"로<br>최하위 · 하단 "아래로 N명" 문구 전체 미노출 (0명을 표기하지 않음)</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px">파생 수치 두 개는 <strong>모수에서 계산</strong>합니다. 상위 % = 내 순위 ÷ 823 × 100(소수점 올림), 하단 문구의 N = 823 − 내 순위. <strong>타일의 상위 %와 카드 배지의 상위 %는 같은 값</strong>이어야 합니다. 랭킹에 뜨는 타인 이름도 본인 이름과 같은 마스킹 규칙을 적용합니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:8px">1–3위 행의 블러(3px · 투명도 50%)는 개인정보 보호가 아니라 <strong>"위에 누가 있다"만 전하고 다음 기수 동기를 남기는 연출</strong>입니다. 이름은 블러와 무관하게 마스킹된 값을 넣습니다.</div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-05</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">마음 기록</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">화면이 정리됐습니다. <strong>기록한 날 · 나의 마음 두 타일과 4기 사진 예고를 뺐습니다</strong> — 기록한 날은 SC-RP-02 스탯과, 나의 마음은 게이지 상태 텍스트와 값이 겹쳤고, 사진 예고는 3기에 데이터가 없는 4기 안내라 회고의 마지막 인상을 차지할 이유가 없었습니다. 지금은 <strong>우울·스트레스 다크 카드 → 게이지 → 안내박스</strong> 세 덩어리입니다.</div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;margin-top:10px;text-wrap:pretty">우울·스트레스 게이지는 <strong>검사 2회 이상일 때만</strong> 변화 화살표와 고스트 마커를 표시합니다. 1회면 그 값을 <strong>실선 바늘</strong>로 확정 표기하고 고스트만 감춥니다 — 점선 하나만 떠 있는 화면은 값이 있는데도 미완성으로 읽힙니다.</div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">검사 0회 · 아크 배경만 남기고 중앙에 "검사 기록이 없습니다." (게이지 자체는 유지) · 다크 카드 점수는 "–점"<br>검사 1회 · 실선 바늘을 그 값 위치에. 고스트 마커 숨김<br>검사 2회 이상 · 정상 (고스트 + 실선 바늘)<br>어느 경우든 게이지 아래 구간 표기는 그대로 유지</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px">상태 텍스트 값은 <strong>양호 / 주의 / 위험 세 가지뿐</strong>입니다. "편안함" 같은 감성 표현은 구간과 매핑되지 않으므로 쓰지 않습니다. 바늘 각도와 점수·구간이 서로 어긋나지 않는지 반드시 검수합니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:8px"><strong>구간을 화면에 노출합니다.</strong> 다크 카드 각주에 방향(<span style="color:#4E5968">점수가 낮을수록 좋아요</span>), 게이지 아래에 경계값(<span style="color:#4E5968">양호 0~4 · 주의 5~9 · 위험 10~15</span>)을 나눠 적습니다. "3점"이 좋은 값인지 사용자가 알 수 없던 문제를 없애기 위함이며, 숫자는 K-12 설정값을 읽어 렌더하고 하드코딩하지 않습니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:8px">시작·종료 점수는 <strong>같은 크기</strong>로 두고 투명도(55% / 100%)로만 위계를 만듭니다. 크기까지 다르게 하면 종료 점수가 과하게 커져 카드가 세로로 늘어납니다.</div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-06</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">걸음수 · 운동</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">총 걸음수와 일평균 목표 달성률을 <strong>분리해서</strong> 보여줍니다. 도넛은 일평균 ÷ 10,000보 비율입니다. <strong>일평균이 10,000보를 넘으면 도넛을 100%로 채우고 실제 퍼센트를 함께 표기</strong>합니다 (예: 100% · 124% 달성).</div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">디바이스 미연동 · 총 걸음 0보 · 하루 평균 0보 · 도넛 0% · 걸은 날 0일. 총 걸음 카드 아래 "걸음 데이터가 연결되지 않았어요" 한 줄 추가<br>일평균 &lt; 10,000 · 도넛 = 일평균 ÷ 10,000, 퍼센트 그대로<br>일평균 ≥ 10,000 · 도넛 100% 고정 + 실제 달성률 별도 표기<br>일평균 산출 분모 · 걸음 기록이 있는 날 수 (참여일 아님)</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px"><strong>섹션을 감추지 않습니다.</strong> 초안은 미연동 시 이 화면을 통째로 빼는 안이었으나, 27명(3.3%)만 리포트가 6개 화면으로 짧아지고 공통 원칙 ①과도 어긋나 뒤집었습니다. 대신 왜 0인지를 한 줄로 설명합니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:8px">코드는 <strong>P16(미연동)</strong>과 <strong>P17(연동했지만 걸은 날 0일)</strong>로 나눠 씁니다. P03(집계 불가)에 섞지 않은 이유는 P03이 "–"를 지시하는 코드이기 때문입니다 — 한 코드가 상황에 따라 "–"와 0을 오가면 룩업이 안 됩니다. P17은 <strong>섹션을 그대로 노출</strong>합니다 — 연동은 돼 있으므로 0이 실제 측정 결과입니다. 반면 P16은 섹션 자체를 감춥니다. 그리고 <strong>하루 평균의 분모가 0이 되는 지점이라 0으로 나누지 않도록 방어</strong>해야 합니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:8px"><strong>최다 걸음일 타일은 삭제됐습니다.</strong> 총 걸음·걸은 날·하루 평균과 정보가 겹쳐 화면만 길어졌습니다. payload의 <code style="background:#F2F4F6;padding:2px 6px;border-radius:4px;font-size:12px">steps.max_day</code>도 제거됐으니 배치에서 산출하지 않습니다. 지금 상단은 <strong>총 걸음 수 · 걸은 날</strong> 2열입니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:8px">다만 <strong>거리 환산과 칼로리 환산 카드는 총 걸음이 0이면 카드째 감춥니다.</strong> 두 카드의 문구는 화면설계서 §2-4 매핑 표(거리 8단계 · 음식 8단계)를 따릅니다 — 거리는 <strong>1=편도 / 2=왕복 / 3+=N회</strong>로 갈리고, 칼로리는 <strong>반 개·반 잔이 나오지 않도록</strong> 구간을 잘랐습니다. 칼로리는 <strong>하루 평균</strong> 걸음 기준이고(총 걸음이 아님) "약" 접두가 붙습니다. 거리는 총 걸음 기준이며 소수점을 버립니다 — 714,200보면 464km이지 500km가 아닙니다.</div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:800;color:#0A6B47;background:rgba(14,122,82,.10);padding:4px 10px;border-radius:6px">SC-RP-07</div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">수료증</div>
+      </div>
+      <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">증서는 <strong>정확히 1:1 정사각형</strong>(375px 화면에서 335×335)으로 렌더합니다. 이미지 저장 시 인스타·카카오톡 프로필로 바로 쓸 수 있어야 하므로 <strong>내용이 넘쳐 잘리는 일이 없어야 합니다.</strong></div>
+      <div style="background:#F7F8F9;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:#4E5968;line-height:1.7">A · 수료증 / 통계 2개(함께한 날 · 참여율) / 버튼 3개 / 폭죽 실행<br>B · 참여기록 / 통계 2개 / 버튼 3개 / 폭죽 실행<br>C · 참여확인 / <strong>통계 없음</strong> / 버튼 2개 (저장 버튼 제외) / <strong>폭죽 미실행</strong><br>공통 · 통계는 박스 없이 한 줄 표기. 분모 "/242일"은 볼드 없이 연회색 처리</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px">이름은 마스킹 규칙에 따라 "김*리 님" 형태로 표기합니다. 3자 이상은 가운데를 * 처리, 2자는 뒷자를 * 처리, 1자는 그대로. 마스킹은 서버에서 처리하고 원문 이름은 응답에 담지 않습니다. 증서 캡처물이 외부로 공유되므로 리포트 전 화면에 동일 규칙을 적용합니다. 발급기관은 "인천광역시 남동구 치매안심센터"로 <strong>축약 없이</strong> 적고("인천 남동구" 불가), 발급일은 2026년 11월 1일입니다.</div>
+      <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px">증서에 <strong>금박 테두리와 인장</strong>이 들어갔습니다. 금박은 135° 8-stop 그라디언트에 안쪽 7px 흰 면, 이중 내부 라인, 마름모 장식 6개로 구성됩니다. 인장은 발급 정보 위에 겹치는 40×40 원형이며 <strong>mix-blend-mode multiply</strong>로 합성합니다 — normal로 두면 금박 위에서 스티커처럼 떠 보입니다. 세 분기(A·B·C) 모두 동일하게 적용합니다.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 3. 게임 점수 결손 ══ -->
+<div style="margin-bottom:40px">
+  <div style="font-size:13px;font-weight:700;color:#0A6B47;letter-spacing:.06em;margin-bottom:10px">SECTION 3</div>
+  <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px">게임 점수 결손과 카드 정책</div>
+  <div style="font-size:15px;color:#4E5968;line-height:1.7;margin-bottom:16px;text-wrap:pretty">안드로이드 앱 오류로 게임 점수가 서버에 저장되지 않다가 8월 18일 강제 업데이트로 정상화됐습니다. 그 이전 기록은 복구 불가입니다.</div>
+
+  <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;overflow:hidden;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#F2F4F6;font-size:13px;font-weight:700;color:#4E5968">
+      <div style="padding:12px 14px">월</div>
+      <div style="padding:12px 14px;text-align:right">게임 완료</div>
+      <div style="padding:12px 14px;text-align:right">점수 저장</div>
+      <div style="padding:12px 14px;text-align:right">저장률</div>
+    </div>
+    <sc-for list="{{ months }}" as="m" hint-placeholder-count="6">
+      <div style="{{ m.row }}">
+        <div style="padding:11px 14px;font-weight:600">{{ m.label }}</div>
+        <div style="padding:11px 14px;text-align:right;color:#4E5968">{{ m.done }}</div>
+        <div style="padding:11px 14px;text-align:right;color:#4E5968">{{ m.saved }}</div>
+        <div style="{{ m.rateStyle }}">{{ m.rate }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-bottom:12px;text-wrap:pretty">표는 2026-08-24 조회 시점 기준입니다. 8/1–8/17 구간은 강제 업데이트 전후가 한 달 안에 섞여 있어 따로 세지 않았고, 9·10월은 조회 시점 이후라 아직 없습니다. 저장률의 대비를 보기 위한 표이지 기수 전체 합계가 아닙니다.</div>
+
+  <div style="background:#FDF0F0;border:1px solid #F2C9C9;border-radius:14px;padding:18px 20px;margin-bottom:12px">
+    <div style="font-size:13px;font-weight:700;color:#A63232;letter-spacing:.05em;margin-bottom:8px">영향 범위</div>
+    <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">기수 3/3–10/30 중 점수가 정상 축적된 구간은 8/18 이후뿐입니다. <strong>기수의 약 70% 구간 점수가 영구 결손</strong>이며, 823명 중 점수 기록 보유자는 <strong>157명(19.1%)</strong>입니다. 게임을 한 번이라도 완료한 438명 중에서도 점수가 남은 건 157명뿐입니다.</div>
+  </div>
+
+  <div style="background:#F4FBF7;border:1.5px solid #0E9E68;border-radius:14px;padding:18px 20px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <div style="font-size:13px;font-weight:700;color:#0A6B47">결정</div>
+      <div style="font-size:11px;font-weight:700;color:#fff;background:#0E7A52;padding:3px 8px;border-radius:99px">확정</div>
+    </div>
+    <div style="font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px">가장 많이 한 게임 (완료 횟수 기준)</div>
+    <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">완료 횟수는 전 기간 오류 없이 기록돼 <strong>438명 전원</strong> 산출됩니다. 인지력 4축을 제외할 때의 논리("횟수 기반이면 가능")와 일치합니다. <strong>최고 점수 기준은 채택하지 않습니다</strong> — 점수 보유자가 157명(19.1%)뿐이어서 나머지 666명이 빈 카드를 보게 됩니다. 카드 제목·문구는 "가장 많이 한 게임"으로 확정하며, 칭찬 문구도 횟수 기준으로 작성합니다. 점수 기반 표기는 다음 기수 고도화 시 점수 축적이 정상화된 뒤 복원합니다.</div>
+  </div>
+</div>
+
+<!-- ══ 4. 게임 코드 ══ -->
+<div style="margin-bottom:40px">
+  <div style="font-size:13px;font-weight:700;color:#0A6B47;letter-spacing:.06em;margin-bottom:10px">SECTION 4</div>
+  <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px">게임 코드 · 칭찬 문구</div>
+  <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;padding:20px 22px">
+    <div style="font-size:14px;color:#4E5968;line-height:1.75;text-wrap:pretty">코드(<code style="background:#F2F4F6;padding:2px 6px;border-radius:4px;font-size:13px">material_code</code>)와 타이틀은 기획팀 두뇌훈련 노션 DB에 정리돼 있고 prod 데이터와 <strong>16종 전부 일치</strong>합니다. 별도 목록 문서를 만들지 않습니다.</div>
+    <div style="background:#F7F8F9;border-radius:10px;padding:14px 16px;margin-top:12px;font-size:14px;color:#4E5968;line-height:1.8">노션 16종 · 3기 플레이 기록 보유 15종<br><code style="background:#EDEFF2;padding:2px 6px;border-radius:4px;font-size:13px">defeatTheVirus</code>(바이러스 퇴치, 배포 4.1)는 최근 추가로 <strong>3기 점수 기록 없음</strong><br>칭찬 문구는 16종 모두 작성 → 개발팀에서 처리</div>
+    <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px">화면에서 게임명을 표기할 때는 노션의 <strong>정식 명칭 그대로</strong> 사용합니다. 축약하지 않습니다.</div>
+  </div>
+</div>
+
+<!-- ══ 5. 미결 ══ -->
+<div>
+  <div style="font-size:13px;font-weight:700;color:#0A6B47;letter-spacing:.06em;margin-bottom:10px">SECTION 5</div>
+  <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px">미결 항목</div>
+  <div style="font-size:15px;color:#4E5968;line-height:1.7;margin-bottom:16px;text-wrap:pretty">이 화면들을 실제로 그리기 전에 닫혀야 하는 항목만 추렸습니다. 코드는 화면설계서 SECTION 7의 번호를 그대로 씁니다 — 같은 항목을 두 문서가 다른 번호로 부르지 않게 하기 위함입니다. 전체 목록은 화면설계서(Q-01~Q-14)와 IA 문서(IA-Q-01~IA-Q-06)에 있습니다.</div>
+  <div style="background:#fff;border:1px solid #E5E8EB;border-radius:14px;overflow:hidden">
+    <div style="display:grid;grid-template-columns:70px 1.6fr 1fr;background:#F2F4F6;font-size:13px;font-weight:700;color:#4E5968">
+      <div style="padding:12px 14px">코드</div>
+      <div style="padding:12px 14px">항목</div>
+      <div style="padding:12px 14px">회신 주체</div>
+    </div>
+    <sc-for list="{{ opens }}" as="o" hint-placeholder-count="4">
+      <div style="display:grid;grid-template-columns:70px 1.6fr 1fr;border-top:1px solid #E5E8EB;font-size:14px">
+        <div style="padding:14px;font-weight:800;color:#0A6B47">{{ o.code }}</div>
+        <div style="padding:14px;line-height:1.6">{{ o.item }} <span style="font-size:13px;color:#6A7480">{{ o.note }}</span></div>
+        <div style="padding:14px;color:#4E5968">{{ o.who }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="font-size:13px;color:#6A7480;line-height:1.7;margin-top:10px;text-wrap:pretty">Q-01(랭킹 모수 탈퇴자 포함 여부)은 배치 개발이 시작되기 전에 닫혀야 합니다. 823명이라는 숫자가 랭킹 순위·상위 %·"아래로 N명" 세 곳의 분모라, 나중에 바뀌면 화면 세 군데를 함께 고쳐야 합니다.</div>
+</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    const base = 'display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:1px solid #E5E8EB;font-size:14px;align-items:center;';
+    const rows = [
+      ['2026-03', '11,754', '89', '0.8%', false],
+      ['2026-04', '11,289', '22', '0.2%', false],
+      ['2026-05', '12,013', '155', '1.3%', false],
+      ['2026-06', '12,759', '264', '2.1%', false],
+      ['2026-07', '12,571', '191', '1.5%', false],
+      ['8/18 이후', '2,534', '2,292', '90.4%', true],
+    ];
+    return {
+      opens: [
+        ['Q-02', 'B분기 저장 버튼 라벨 확정', '(현재 가정 "참여기록 저장하기")', '기획팀'],
+        ['Q-06', '보건소 10/30 재검사 입력 완료 예상 시각', '(배치 재실행 시각 K-05 확정용)', '기획팀 → 개발팀'],
+        ['Q-11', '3D 캐릭터 2종 · 게임 썸네일 렌더 파일 (음식 아이콘 13종은 수령 완료)', '(프로토타입은 캐릭터 슬롯 2개 + 썸네일이 비어 있음)', '디자인'],
+        ['Q-13', 'SC-RP-04B 섹션 레이블 · 헤딩 확정', '(현재 "활동 점수 랭킹" / "823명 중 어디쯤일까요"는 임시)', '기획팀'],
+      ].map(([code, item, note, who]) => ({ code, item, note, who })),
+      months: rows.map(([label, done, saved, rate, ok]) => ({
+        label, done, saved, rate,
+        row: base + (ok ? 'background:#F4FBF7;font-weight:700' : ''),
+        rateStyle: 'padding:11px 14px;text-align:right;font-weight:700;color:' + (ok ? '#0A6B47' : '#A63232'),
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>
