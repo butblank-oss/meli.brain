@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>맬리브레인 3기 종료 리포트 — 검수용</title>
+<title>맬리브레인 3기 종료 리포트 — 검수용 v3.1</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
@@ -106,6 +106,21 @@ button:active{transform:scale(.98)}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 #dim{animation:fadeIn .28s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+/* ── 변경이력 패널 · 토스트 ─────────────── */
+#hist{position:fixed;inset:0;background:rgba(10,14,18,.62);z-index:500;overflow:auto;padding:36px 24px}
+.histBox{max-width:1180px;margin:0 auto;background:#fff;border-radius:14px;color:#191F28;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.histHd{display:flex;justify-content:space-between;align-items:flex-start;background:#171C22;color:#fff;padding:18px 22px}
+.histX{background:#2A313A;color:#fff;border:0;border-radius:8px;width:34px;height:34px;font-size:15px;cursor:pointer}
+.histSec{background:#E8EDF2;color:#1E3A5F;font-size:13px;font-weight:800;padding:9px 16px;border-top:1px solid #D7DDE2}
+.histT{width:100%;border-collapse:collapse;font-size:12px}
+.histT th{background:#334155;color:#fff;font-weight:600;text-align:left;padding:8px 10px;white-space:nowrap}
+.histT td{padding:8px 10px;border-top:1px solid #EDF0F2;vertical-align:top;line-height:1.6;color:#38414D}
+.histT tr:nth-child(even) td{background:#FAFBFC}
+.histT .c0{font-weight:700;color:#1D4ED8;white-space:nowrap}.histT .c1{font-weight:600;color:#C2410C;white-space:nowrap}
+.histT .c2{color:#6A7480;white-space:nowrap}.histT .c3{font-weight:600;color:#191F28}.histT .c5{color:#191F28}
+.histFoot{font-size:12px;color:#4E5968;padding:12px 16px;background:#F4FBF7;border-top:1px solid #D7DDE2}
+.toastBox{position:fixed;bottom:34px;width:335px;background:#0F241E;color:#fff;font-size:13px;padding:12px 14px;
+  border-radius:10px;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:fadeIn .25s ease}
 .motionOff .rv,.motionOff .draw,.motionOff .dot,.motionOff .needle,.motionOff .ghost,.motionOff .certPaper
   {opacity:1 !important;transform:none !important;stroke-dashoffset:0 !important}
 .motionOff section .bar{width:var(--w) !important;transition:none !important}
@@ -116,7 +131,7 @@ button:active{transform:scale(.98)}
 
 <div id="panel">
   <h1>맬리브레인 3기 종료 리포트</h1>
-  <div class="sub">검수용 · 디스크립션 기준<br>왼쪽에서 예외를 바꾸면 오른쪽 화면이 즉시 반영됩니다.</div>
+  <div class="sub"><b style="color:#6EE7B7">v3.1 · 2026-09-07 · 정본</b><br>검수용 · 디스크립션 기준<br>왼쪽에서 예외를 바꾸면 오른쪽 화면이 즉시 반영됩니다.</div>
 
   <div class="btnrow">
     <button onclick="resetAll()">전부 정상으로</button>
@@ -126,11 +141,15 @@ button:active{transform:scale(.98)}
     <button onclick="replay()">▶ 모션 다시 보기</button>
     <button id="btnMotion" onclick="toggleMotion()">모션 끄기</button>
   </div>
+  <div class="btnrow">
+    <button onclick="toggleHist()" style="background:#0E4A33;border-color:#0E7A52;color:#D1FAE5">📋 변경이력 (최초 기획 2026-07-21 → v3.1)</button>
+  </div>
   <div class="jump" id="jump"></div>
   <div id="controls"></div>
 </div>
 
 <div id="stage"><div id="phone"></div></div>
+<div id="hist" hidden onclick="if(event.target===this)toggleHist()"></div>
 
 <script>
 /* ══════════════════════════════════════════
@@ -141,7 +160,8 @@ const VARIANTS = {
     ['0','정상'],
     ['a','01-a 참여일 0일 (P02)'],
     ['b','01-b 이름 미설정 (P12)'],
-    ['c','01-c 0일 + 이름 미설정']]},
+    ['c','01-c 0일 + 이름 미설정'],
+    ['d','01-d 4자 이름 · 남궁민수 → 남**수 (P12 마스킹)']]},
   s02: {label:'02 숫자 요약', opts:[
     ['0','정상 · 상승'],
     ['a','02-a 시작만 있음 (P04)'],
@@ -172,7 +192,8 @@ const VARIANTS = {
     ['c','04B-c 내 순위 4위'],
     ['d','04B-d 최하위 823위 (P08)'],
     ['e','04B-e 활동 점수 0점 (P08)'],
-    ['f','04B-f 동점 공동 순위 (F-06)']]},
+    ['f','04B-f 동점 공동 순위 (F-06)'],
+    ['g','04B-g 공동 1위 4명 · 본인 포함 → 본인 우선 3명 (F-06)']]},
   s05: {label:'05 마음 기록', opts:[
     ['0','정상 · 주의→양호'],
     ['a','05-a 종료 = 주의'],
@@ -242,14 +263,19 @@ const D = {
   랭킹:[['박*지',3120],['이*현',2860],['최*호',2590]],
   마음시작:7, 마음종료:3,
   총걸음:714200, 걸은날:198, 하루평균:3607, 달성률:36,
-  거리:464, 랜드마크:'부산', 편도:420, 칼로리:144, 음식:'초코파이 하나'
+  거리:464, 랜드마크:'부산', 편도:420, 칼로리:144, 음식:'초코파이 하나',
+  닉네임:'김맬리', 이름:'김민수'          /* P12 · 표기명 = 닉네임 → 이름 → 회원님 */
 };
+/* P12 (2026-09-07) : 첫·끝 글자만 남기고 가운데 전부 * · 증서(S7-06)만 원문 */
+const mask = s => !s ? '' : s.length<=1 ? s : s.length===2 ? s[0]+'*' : s[0]+'*'.repeat(s.length-2)+s.slice(-1);
+const 표기명 = () => D.닉네임 || D.이름 || null;
 const nf = n => n.toLocaleString('ko-KR');
 
 /* ══════════ 01 커버 ══════════ */
 function sec01(){
   const v=S.s01;
-  const 이름 = (v==='b'||v==='c') ? '회원님,' : '김*리 님,';
+  const raw = (v==='b'||v==='c') ? null : v==='d' ? '남궁민수' : 표기명();
+  const 이름 = raw ? mask(raw)+' 님,' : '회원님,';
   const 일수 = (v==='a'||v==='c') ? 0 : D.참여일;
   return `<section id="s01"><span class="secmark">SC-RP-01</span>
     <div class="closeBtn" title="S1-06 닫기 · 스크롤해도 우상단 고정">✕</div>
@@ -411,6 +437,8 @@ function sec04b(){
   if(v==='d'){ 순위=823; 점수=120; }
   if(v==='e'){ 순위=823; 점수=0; }
   if(v==='f'){ 순위=11; 랭킹=[['박*지',3120],['이*현',3120],['최*호',2590]]; }
+  if(v==='g'){ 순위=1;  랭킹=[['나',3120],['박*지',3120],['이*현',3120]]; }   /* 공동 1위 4명 → 본인 → 참여일 → 가입일 순 3명 (F-06) */
+  const rankNo = i => v==='g' ? 1 : i+1;
   const 상위 = Math.ceil(순위/D.모수*100);
   const 내가상위권 = 순위<=3;
   const 최하위 = 순위===D.모수;
@@ -420,16 +448,16 @@ function sec04b(){
         ${me?'background:#0F241E;color:#fff;margin:4px -6px;position:relative;z-index:1;box-shadow:0 8px 22px rgba(15,36,30,.30)'
             :'filter:blur(5px);opacity:.5;pointer-events:none'}
         ${i<2&&!me?'border-bottom:1px solid rgba(16,64,48,.07)':''}">
-      <span style="width:24px;text-align:center;font-size:17px;font-weight:700;${me?'':'color:#4E5968'}">${i+1}</span>
+      <span style="width:24px;text-align:center;font-size:17px;font-weight:700;${me?'':'color:#4E5968'}">${rankNo(i)}</span>
       <div style="width:34px;height:34px;border-radius:50%;background:${me?'rgba(255,255,255,.18)':'rgba(16,84,62,.075)'}"></div>
-      <span style="flex:1;font-size:17px;font-weight:600">${me?'김*리 (나)':r[0]}</span>
+      <span style="flex:1;font-size:17px;font-weight:600">${me?mask(표기명())+' (나)':r[0]}</span>
       <span style="font-size:17px;${me?'font-weight:800':'color:#4E5968'}">${nf(r[1])}</span>
     </div>`;}).join('');
   const 내행 = 내가상위권 ? '' : `
     <div style="height:1px;background:#E5E8EB;margin:20px 0 16px"></div>
     <div style="display:flex;align-items:center;gap:12px;padding:16px 18px;margin:0 -6px;border-radius:12px;background:#0F241E;color:#fff">
       <span style="width:34px;font-size:17px;font-weight:800">${순위}</span>
-      <span style="flex:1;font-size:17px;font-weight:700">김*리 (나)</span>
+      <span style="flex:1;font-size:17px;font-weight:700">${mask(표기명())} (나)</span>
       <span style="font-size:20px;font-weight:800">${nf(점수)}</span>
       <span style="font-size:13px;font-weight:600;margin-left:3px">점</span></div>`;
   return `<section id="s04b"><span class="secmark">SC-RP-04B</span>
@@ -450,6 +478,7 @@ function sec04b(){
           padding:6px 12px;border-radius:999px">상위 ${상위}%</span></div>
       <div style="font-size:15px;font-weight:700;color:#5C6675;margin:14px 0 6px">상위권</div>
       <div>${상위권}</div>
+      ${v==='g'?`<p style="font-size:12px;color:#9AA3AD;margin-top:6px">공동 1위 4명 · 본인 → 참여일 → 가입일 순으로 3명만 표시 (F-06)</p>`:''}
       ${내행}
       ${최하위?'':`<div style="height:1px;background:rgba(16,64,48,.10);margin:16px 0 12px"></div>
       <div style="display:flex;align-items:center;gap:10px">
@@ -483,7 +512,7 @@ function sec05(){
   const pt = (deg,r)=>[150+r*Math.cos(deg*Math.PI/180), 150-r*Math.sin(deg*Math.PI/180)];
   const needle = (deg,dash)=>{ const [x,y]=pt(deg,82);
     return `<line x1="150" y1="150" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#191F28"
-      stroke-width="${dash?2.5:5}" stroke-linecap="round" ${dash?'stroke-dasharray="5 5" opacity=".5"':''}/>`; };
+      stroke-width="${dash?2.5:5}" stroke-linecap="round" ${dash?'stroke-dasharray="5 5" stroke-opacity=".5"':''}/>`; };
   const 점수 = none ? `<div class="val">–점</div>`
     : one ? `<div class="val">${b}점</div>`
     : `<div style="display:flex;align-items:baseline;gap:10px">
@@ -600,7 +629,8 @@ function sec07(){
            C:['참 여 확 인','4기에도 함께해요!','2026년 맬리브레인 3기에\n등록해 주셔서 고맙습니다.\n다음 기수에서는 꼭 함께해요!']};
   let [제목,헤딩,본문]=T[br];
   if(v==='g') 본문='2026년 맬리브레인 3기 치매예방 인지훈련 교실에\n등록해 주셔서 고맙습니다.\n다음 기수에서는 꼭 끝까지 함께해요!';
-  const 이름 = v==='d' ? '회원님' : '김*리 님';
+  const 이름 = v==='d' ? '회원님' : 표기명()+' 님';          /* S7-06 : 원문 · 마스킹 없음 (2026-09-07) */
+  const 파일명 = `맬리브레인_3기_${br==='B'?'참여기록':'수료증'}_${v==='d'?'회원':표기명()}.png`;
   const 일수 = v==='f' ? 242 : D.참여일, 율 = v==='f' ? 100 : D.참여율;
   const 통계 = br==='C';
   const 저장 = br!=='C';
@@ -625,7 +655,7 @@ function sec07(){
           <span style="width:1px;height:11px;background:#E5E8EB"></span>
           <span>참여율 <b style="font-size:14px;font-weight:800;color:#191F28">${율}%</b></span></div>`}
         <div style="position:relative;margin-top:${통계?'auto':'18px'}">
-          <div style="font-size:10px;color:#55636E;line-height:1.7">인천광역시 남동구 치매안심센터<br>발급일 2026년 11월 1일</div>
+          <div style="font-size:10px;color:#55636E;line-height:1.7">인천남동구 보건소<br>발급일 2026년 11월 1일</div>
           <div style="position:absolute;right:-37px;top:-24px;width:48px;height:48px;border-radius:50%;
             border:2px solid rgba(194,65,12,.6);color:rgba(194,65,12,.75);font-size:10px;font-weight:900;
             display:flex;align-items:center;justify-content:center;line-height:1.15;transform:rotate(-8deg);
@@ -637,8 +667,8 @@ function sec07(){
       <div style="font-size:14px;font-weight:700;color:#C2410C">저장하지 못했습니다</div>
       <div style="font-size:13px;color:#4E5968;margin-top:4px">잠시 후 다시 시도해 주세요. (P15)</div></div>`:''}
     <div style="margin-top:26px;display:flex;flex-direction:column;gap:10px">
-      ${저장?`<button style="padding:16px;border-radius:14px;border:1.5px solid #0E7A52;background:#fff;
-        color:#0A6B47;font-size:17px;font-weight:700;font-family:inherit">${저장문구}</button>`:''}
+      ${저장?`<button onclick="toast('사진 앨범에 저장 · ${파일명}')" title="증서 카드만 335×335 PNG 캡처 · ${파일명}" style="padding:16px;border-radius:14px;border:1.5px solid #0E7A52;background:#fff;
+        color:#0A6B47;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer">${저장문구}</button>`:''}
       <button onclick="${전환비활?'':'openSheet()'}" style="padding:17px;border-radius:14px;border:0;
         background:${전환비활?'#E5E8EB':'#0E7A52'};color:${전환비활?'#9AA3AD':'#fff'};
         font-size:17px;font-weight:700;font-family:inherit;cursor:${전환비활?'default':'pointer'}">${전환문구}</button>
@@ -712,6 +742,52 @@ function sheet(){
         color:#fff;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer">네, 신청합니다</button></div>
   </div>`;
 }
+/* 토스트 (S7-10 저장 파일명 확인용) */
+function toast(msg){ const L=phoneX(); const t=document.createElement('div'); t.className='toastBox';
+  t.style.left=(L+20)+'px'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+
+/* ══════════ 변경이력 (07_변경이력.md 와 동일 내용) ══════════ */
+const HIST = {
+  meta:{first:'2026-07-21', last:'2026-09-07', ver:'v3.1'},
+  milestones:[
+    ['0','2026-07-21','초안 · 최초 기획','3기 종료 리포트 기획 착수','—','8개 화면 · 오버레이 구조 · 수료 분기 초안','남동구보건소 3기 종료 리포트 기획_20260721'],
+    ['—','2026-08-24','v1.0 핸드오프','개발팀 회신 반영 · 상수·산식·P코드 확정','8월 초 초안','화면설계서 · 예외 명세 · IA 3종','개발 핸드오프 v1.0'],
+    ['—','2026-08-31','v2 구현 확인','D-01~D-33 · P16 섹션 미노출 · F-15/F-16 신설','v1.0','화면설계서 v2 · 구현 확인 사항','개발팀 재문의'],
+    ['—','2026-09-02','v3.0 최종판','검수용 HTML 정본화 · 180° 게이지 · 13단계 매핑 · SC-RP-08 신설','v2','최종문서 4종 (변경 요약 #1~#17)','검수용 HTML 정본']],
+  v31:[
+    ['1','2026-09-07','증서','증서 표기명 (S7-06)','마스킹 (김*리 님)','원문 그대로 · payload user.cert_name 신설','개발팀 확인 요청 19번 · P12'],
+    ['2','2026-09-07','마스킹','마스킹 규칙 (P12)','3자 이상 가운데 글자 하나 *','첫·끝만 남기고 가운데 전부 * (김*리 · 남**수)','4자 이상 모호 해소 · 개발팀 제안 수용'],
+    ['3','2026-09-07','표기명','표기명 우선순위 (P12)','미정 (Q-07)','닉네임 → 이름 → 회원님','개발팀 확인 요청 12번 · Q-07 종결'],
+    ['4','2026-09-07','발급기관','K-09 발급기관 명칭','인천광역시 남동구 치매안심센터','인천남동구 보건소','개발팀 확인 요청 1번 · K-13 프로그램명과 주체 통일'],
+    ['5','2026-09-07','산식','F-11 목표 달성률','소수점 버림','정수 반올림','F-02 · F-07과 규칙 통일 · 개발팀 안 수용'],
+    ['6','2026-09-07','산식','F-14 8/1 당일 측정값','어느 쪽에도 미포함 (D-11)','시작에 포함 (<= 8/1)','개발팀 확인 요청 8번 · D-11 종결'],
+    ['7','2026-09-07','산식','F-14 동점 날짜','미정','시작 = 가장 이른 날 · 종료 = 가장 늦은 날','개발팀 확인 요청 9번'],
+    ['8','2026-09-07','랭킹','F-06 상위권 3행 선별','미정 (D-14 유사)','동점 그룹 3명 초과 시 본인 → 참여일 → 가입일 순','개발팀 확인 요청 13번 · 04B-g'],
+    ['9','2026-09-07','증서','S7-10 저장 파일명','미정 (Q-10)','맬리브레인_3기_수료증_{이름}.png · B분기 참여기록','개발팀 확인 요청 16번 · Q-10 종결'],
+    ['10','2026-09-07','증서','S7-10 저장 범위','(개발팀 인식) 전체 리포트 PNG','증서 카드 335×335 한 장만 — 종전 스펙 재확인','개발팀 확인 요청 6번'],
+    ['11','2026-09-07','IA','IA-R-08 배너 노출 종료','4기 시작일 (IA-Q-01)','종료일 없음 · 배너 유지 · 마이페이지 진입점 없음','개발팀 확인 요청 4번 · IA-Q-01 종결'],
+    ['12','2026-09-07','IA','최소 지원 버전 (K-15 · IA-R-13)','미정','11/2 00:00 KST부터 강제 업데이트 · 티켓 FE-02B 신설','개발팀 확인 요청 5번'],
+    ['13','2026-09-07','IA','시니어 모드 (IA-R-14)','미정','동일 리포트 · 글꼴 확대 대응 (D-28)','개발팀 확인 요청 18번'],
+    ['14','2026-09-07','상수','K-14 문의 전화번호','미정 (Q-13)','여전히 미정 — 설정값 구현 · {전화번호} 자리표시 유지','개발팀 확인 요청 17번 · 배포 전 확정'],
+    ['15','2026-09-07','검수 HTML','05 고스트 바늘 투명도','opacity=.5 (CSS에 덮여 100%)','stroke-opacity=.5','검증 워크플로우 F3 지적'],
+    ['16','2026-09-07','문서','회신 문서 신설','—','문서 5 (내부용) · 문서 6 (개발팀 회신용) · 문서 7 (변경이력)','개발팀 확인 요청 19건 회신'],
+    ['17','2026-09-07','검수 HTML','v3.1 반영','v3.0','증서 원문 이름 · 마스킹 함수 · 01-d / 04B-g 변형 · 저장 파일명 토스트 · 변경이력 패널','이 파일']]
+};
+function histTable(rows){ const H=['번호','변경일자','구분','항목','변경 전','변경 후','사유 · 근거'];
+  return `<table class="histT"><thead><tr>${H.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${
+    rows.map(r=>`<tr>${r.map((c,i)=>`<td class="c${i}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`; }
+function toggleHist(){ const h=document.getElementById('hist'); if(!h.hidden){ h.hidden=true; return; }
+  h.innerHTML=`<div class="histBox">
+    <div class="histHd"><div><div style="font-size:11px;letter-spacing:.08em;color:#6EE7B7">CHANGELOG</div>
+      <div style="font-size:18px;font-weight:800">변경이력 — 맬리브레인 3기 종료 리포트</div>
+      <div style="font-size:12px;color:#9AA3AD;margin-top:2px">최초 기획 ${HIST.meta.first} · 최근 변경 ${HIST.meta.last} · 현재 판 ${HIST.meta.ver} · 정본 07_변경이력.md와 동일</div></div>
+      <button onclick="toggleHist()" class="histX">✕</button></div>
+    <div class="histSec">1. 판 이정표 — 최초 기획부터 최종판까지</div>${histTable(HIST.milestones)}
+    <div class="histSec">2. ${HIST.meta.ver} · 2026-09-07 변경 — 개발팀 확인 요청 19건 회신 결과 · ${HIST.v31.length}건</div>${histTable(HIST.v31)}
+    <div class="histFoot">피그마 반영 완료 (2026-09-07) — 1~10번은 디스크립션 보드 · 정책 보드 · 증서 프레임 27개에 반영. 11~14번은 문서 전용. 검수 HTML은 17번으로 v3.1 동기화.</div>
+  </div>`; h.hidden=false; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const h=document.getElementById('hist'); if(h&&!h.hidden) h.hidden=true; } });
+
 /* 시트 노출은 오직 S.s07==='h' 하나로만 결정 (상태 이원화 금지) */
 function openSheet(){ S.s07='h'; render(); }
 function closeSheet(){ if(S.s07==='h') S.s07='A'; render(); }

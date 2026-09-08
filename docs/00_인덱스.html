@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>맬리브레인 3기 종료 리포트 — 개발 핸드오프 최종판</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+  background:#F5F7F8;color:#191F28;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:44px 28px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.3;margin:0 0 6px}
+h2{font-size:20px;font-weight:800;letter-spacing:-.02em;margin:46px 0 14px;padding-top:20px;
+  border-top:2px solid #191F28}
+h3{font-size:15px;font-weight:800;margin:28px 0 10px;color:#0A6B47}
+h4{font-size:13px;font-weight:800;margin:20px 0 8px;color:#334155}
+p{font-size:13px;color:#38414D;margin:0 0 10px}
+ul,ol{margin:0 0 12px 18px}
+li{font-size:13px;color:#38414D;margin-bottom:4px}
+hr{border:0;border-top:1px solid #D7DDE2;margin:26px 0}
+strong{font-weight:700;color:#111}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+  background:#EAEEF1;border-radius:4px;padding:1px 5px;color:#0F3D2C}
+a{color:#0A6B47}
+pre{background:#141A20;color:#D7E3DC;border-radius:8px;padding:14px 16px;margin:0 0 16px;
+  overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.7}
+.tw{overflow-x:auto;border:1px solid #D7DDE2;border-radius:10px;margin:0 0 16px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{padding:9px 11px;font-size:11px;font-weight:700;color:#fff;background:#334155;text-align:left;
+  letter-spacing:.03em;white-space:nowrap;vertical-align:top}
+td{padding:9px 11px;font-size:12px;color:#38414D;line-height:1.7;border-top:1px solid #EDF0F2;vertical-align:top}
+tr:nth-child(even) td{background:#FAFBFC}
+td:first-child{font-weight:700;color:#0A6B47;font-size:11px;white-space:nowrap}
+table.plain td:first-child{font-weight:400;color:#38414D;font-size:12px;white-space:normal}
+blockquote{background:#F0F7F3;border-left:3px solid #0E7A52;border-radius:0 8px 8px 0;
+  padding:12px 16px;margin:0 0 16px}
+blockquote p{margin:0;font-size:12.5px;color:#22402F}
+blockquote.warn{background:#FDF3EE;border-left-color:#C2410C}
+blockquote.warn p{color:#5A2A12}
+.meta{font-size:12px;color:#6A7480;margin-bottom:26px;padding-bottom:20px;border-bottom:1px solid #D7DDE2}
+.toc{background:#fff;border:1px solid #D7DDE2;border-radius:10px;padding:16px 20px;margin-bottom:30px}
+.toc a{display:inline-block;font-size:12px;margin:0 14px 5px 0;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+@media print{body{background:#fff}.wrap{max-width:none;padding:0}h2{page-break-after:avoid}
+  .tw{page-break-inside:avoid}}
+</style></head><body><div class="wrap">
+<div class="toc"><a href="#h0">1. 정본 규칙</a><a href="#h1">2. 문서 구성</a><a href="#h2">3. 30초 요약</a><a href="#h3">4. 이번 판에서 바뀐 것 (요약)</a><a href="#h4">5. 지금 막혀 있는 것</a><a href="#h5">6. 파일 목록</a></div>
+<h1>맬리브레인 3기 종료 리포트 — 개발 핸드오프 최종판</h1>
+<p><strong>v3.1 · 2026-09-07</strong> · 인천남동구 보건소 · 2026 맬리브레인 3기 종료 리포트</p>
+<hr>
+<h2 id="h0">1. 정본 규칙</h2>
+<p>이 판의 정본은 <strong><code>index.html</code> (검수용 · v3.1 · 2026-09-07)</strong> 하나입니다. 왼쪽 패널의 <code>📋 변경이력</code> 버튼으로 이력을 바로 볼 수 있습니다.</p>
+<ul><li>문구 · 값 · 레이아웃 · 예외 동작이 문서와 어긋나면 <strong>검수용 HTML을 따릅니다</strong>.</li><li>피그마 아트보드는 시각 검수용 참고이며, 아직 남은 차이는 문서 3 §15 부록 A에 정리했습니다.</li><li>이전 판(핸드오프 v1.0 · 화면설계서 v2 · 예외 상태 명세 v1.0 · IA v1.0 · 구 프로토타입 .dc)은 <strong>모두 이 폴더의 문서로 대체</strong>됐고, 원본 파일은 <code>../구버전_20260901/</code>로 옮겼습니다.</li></ul>
+<hr>
+<h2 id="h1">2. 문서 구성</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>문서</th><th>다루는 것</th><th>언제 보나</th></tr></thead><tbody><tr><td>1</td><td>정책 · 상수 · 산식</td><td>K-01~K-14 상수 · F-01~F-16 산식 · 13단계 환산 매핑 · 수료 분기 · 문구 정책 · 게이지 각도</td><td>값을 계산해야 할 때</td></tr><tr><td>2</td><td>예외 상태 명세</td><td>P01~P19 · 화면별 예외 케이스 65개 · 게임 점수 결손 · 검수 방법</td><td>데이터가 없거나 부족할 때</td></tr><tr><td>3</td><td>화면설계서</td><td>화면 9장 · 요소 표 전량(S1 ~ S8) · 공통 레이아웃 · 모션 M-01~M-11 · API 35필드 · 검수 체크리스트</td><td>화면을 그릴 때</td></tr><tr><td>4</td><td>IA · 개발 티켓</td><td>오버레이 구조 · 진입 플로우 F1~F3 · 규칙 IA-R-01~12 · 홈 배너 · 티켓 27개 · 구현 순서</td><td>무엇을 어떤 순서로 만들지</td></tr></tbody></table></div>
+<p>각 문서는 <code>.md</code>(원본)와 <code>.html</code>(읽기용) 두 벌로 있으며 내용은 동일합니다. <code>build_docs.py</code>가 <code>.md</code>를 읽어 <code>.html</code>을 생성하므로 <strong>수정은 항상 <code>.md</code>에서</strong> 하고 다시 실행하세요.</p>
+<pre>python3 build_docs.py</pre>
+<hr>
+<h2 id="h2">3. 30초 요약</h2>
+<ul><li>리포트는 <strong>홈 위 전체화면 오버레이</strong>이고, 그 안에 <strong>8개 섹션이 이어진 단일 스크롤 문서</strong>입니다. 닫기(X)는 뷰포트 fixed로 <strong>전 구간에 하나</strong>.</li><li>기간은 <strong>2026-03-03 ~ 10-31</strong>(표기), 참여율 분모는 <strong>242일</strong>(3/3~10/30), 모수는 <strong>823명</strong>.</li><li>수료 분기는 <strong>참여일 30일 OR 활동 30건</strong>이며 서버 <code>cert.tier</code>를 그대로 신뢰합니다.</li><li><strong>랭킹은 활동 점수 기준</strong>입니다. 게임 점수는 8/18 이전이 영구 결손이라 화면 어디에도 쓰지 않습니다.</li><li><strong>모든 섹션은 항상 노출</strong>합니다. 명시적 예외는 <strong>걸음 미연동(P16)</strong> 하나뿐이고, 그 경우 리포트가 7개 섹션이 됩니다.</li><li><strong>0과 &quot;–&quot;는 다릅니다.</strong> P02는 언제나 0, P03은 언제나 &quot;–&quot;(en dash).</li><li>마음 게이지는 <strong>정확한 180° 반원</strong>이고 <code>각도 = 180 − 점수 × 12</code>입니다.</li><li><strong>스크롤 리빌은 progressive enhancement</strong>입니다. 기본 상태가 완성된 리포트여야 하며, 그렇지 않으면 증서 캡처가 빈 화면으로 나옵니다.</li><li>SC-RP-07의 &quot;4기도 참여하기&quot;가 <strong>이 리포트의 유일한 전환 지점</strong>이고, 바텀시트 확인 후 SC-RP-08 결과 화면으로 이어집니다.</li></ul>
+<hr>
+<h2 id="h3">4. 이번 판에서 바뀐 것 (요약)</h2>
+<div class="tw"><table><thead><tr><th>영역</th><th>변경</th></tr></thead><tbody><tr><td>게이지</td><td>125° 스윕 → <strong>180° 반원</strong> (<code>180 − 점수 × 12</code>)</td></tr><tr><td>환산 매핑</td><td>거리 · 칼로리 각 8단계 → <strong>각 13단계</strong> (500kcal 이상 음식 · 100~400km 도시 추가)</td></tr><tr><td>랭킹</td><td>그룹 블러 3px → <strong>행 단위 blur 5px + 투명도 50%</strong>, 내 행만 선명</td></tr><tr><td>랭킹</td><td>구분선 구간 문구 삭제 · 상위 % 배지에 코드 부여(S4B-06)</td></tr><tr><td>타일 폭</td><td>04B <strong>160 : 160</strong> · 06 <strong>180 : 140</strong> (7자리 걸음 대응)</td></tr><tr><td>06</td><td>요소 12개로 세분화 · 음식 아이콘 13종 적용 · S6 코드 체계로 정리</td></tr><tr><td>07</td><td>영문 kicker 삭제 · 배지 &quot;맬리브레인 3기&quot; 고정 · 헤딩 분기 3종 · 증서 본문 3줄 14px</td></tr><tr><td>신규</td><td><strong>SC-RP-08 4기 신청 완료 / 실패</strong> · 07-h 바텀시트 · 07-l 완료 후 비활성 상태</td></tr><tr><td>문구</td><td>자리표시 문구 <strong>&quot;게임 기록이 없어요&quot;</strong>로 통일 · S4-04 라벨 &quot;이 게임을 한 횟수&quot;</td></tr><tr><td>정합</td><td>P06 요일 동률 → <strong>&quot;골고루&quot;</strong> 확정 · 원칙 ①의 유일한 예외가 P16임을 두 문서에 동일하게 기술</td></tr></tbody></table></div>
+<p>상세 근거는 문서 1 §9에 표로 있습니다. <strong>2026-09-07 개발팀 확인 요청 19건에 대한 회신은 문서 5</strong>에 있으며, 그 결정(증서 실명 · 마스킹 규칙 · F-11 반올림 · 8/1 경계 · 강제 업데이트 · 배너 유지 등)은 문서 1~4에 반영돼 있습니다.</p>
+<hr>
+<h2 id="h4">5. 지금 막혀 있는 것</h2>
+<p>개발 착수 전에 닫혀야 하는 항목만 추렸습니다. 전체 목록은 문서 1 §10과 문서 4 §8에 있습니다.</p>
+<div class="tw"><table><thead><tr><th>코드</th><th>항목</th><th>회신</th></tr></thead><tbody><tr><td>Q-11</td><td>3D 캐릭터 2종 · 게임 썸네일 16종 (음식 아이콘 13종은 수령 완료)</td><td>디자인</td></tr><tr><td>Q-13</td><td>4기 신청 안내 <strong>문의 전화번호</strong> (K-14 · 현재 <code>{전화번호}</code> 자리표시)</td><td>기획팀</td></tr><tr><td>Q-02</td><td>B분기 저장 버튼 라벨 (현재 가정 &quot;참여기록 저장하기&quot;)</td><td>기획팀</td></tr><tr><td>IA-Q-04</td><td>11/2 강제 업데이트 · 리포트 공개 사전 안내 문구 (푸시 · 공지)</td><td>기획팀</td></tr><tr><td>D-32</td><td>F-15 활동 점수의 소스 테이블 · 컬럼</td><td>개발팀</td></tr><tr><td>D-33</td><td>F-16 &quot;3개 프로그램&quot;의 구체적 지정</td><td>기획팀 → 개발팀</td></tr><tr><td>IA-Q-07</td><td>4기 신청 API 엔드포인트 · 실패 코드 정의</td><td>개발팀</td></tr><tr><td>Q-06</td><td>보건소 10/30 재검사 입력 완료 예상 시각 (K-05 확정용)</td><td>기획팀 → 개발팀</td></tr></tbody></table></div>
+<hr>
+<h2 id="h5">6. 파일 목록</h2>
+<div class="tw"><table><thead><tr><th>파일</th><th>내용</th></tr></thead><tbody><tr><td><code>00_인덱스.md</code> / <code>.html</code></td><td>이 문서</td></tr><tr><td><code>01_정책·상수·산식.md</code> / <code>.html</code></td><td>문서 1</td></tr><tr><td><code>02_예외상태 명세.md</code> / <code>.html</code></td><td>문서 2</td></tr><tr><td><code>03_화면설계서.md</code> / <code>.html</code></td><td>문서 3</td></tr><tr><td><code>04_IA·개발티켓.md</code> / <code>.html</code></td><td>문서 4</td></tr><tr><td><code>05_개발팀 확인요청 회신_20260907.md</code> / <code>.html</code></td><td>문서 5 · 개발팀 질문 19건 회신 (내부용)</td></tr><tr><td><code>06_기획회신-20260907.md</code> / <code>.html</code></td><td>문서 6 · 개발팀 회신용 (7컬럼)</td></tr><tr><td><code>07_변경이력.md</code> / <code>.html</code></td><td>문서 7 · 변경이력 (index.html 변경이력 패널과 동일)</td></tr><tr><td><code>08_클로드디자인 프롬프트_20260907.md</code></td><td>클로드디자인 프로토타입 반영 프롬프트</td></tr><tr><td><code>build_docs.py</code></td><td><code>.md</code> → <code>.html</code> 변환 스크립트</td></tr><tr><td><code>../index.html</code></td><td><strong>정본 v3.1</strong> · 전 화면 · 예외 65개 · 전 모션 · 변경이력 패널</td></tr></tbody></table></div>
+<hr>
+<p>v3.1 · 2026-09-07</p>
+</div></body></html>
