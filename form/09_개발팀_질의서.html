@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>개발팀 질의서 — 맬리브레인 신청폼</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1F26;--ink2:#4E5968;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--accent:#1F3C5D}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.8;font-size:16px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;position:sticky;top:0;z-index:10;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top a{color:var(--accent);text-decoration:none;font-weight:700;font-size:14px}
+.top a:hover{text-decoration:underline}
+.top .sep{color:#C8C3B8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0 0 20px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.035em;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--ink);line-height:1.4}
+h3{font-size:18px;font-weight:800;letter-spacing:-.03em;margin:30px 0 8px}
+h4{font-size:16px;font-weight:800;margin:22px 0 6px}
+p{margin:10px 0;color:var(--ink2)}
+ul,ol{margin:10px 0 10px 22px;color:var(--ink2)}
+li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+code{background:#EDEBE5;color:#1A3654;padding:2px 6px;border-radius:5px;font-size:13.5px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+pre{background:#1A1F26;color:#E6EAF0;padding:18px 20px;border-radius:12px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:inherit;padding:0;font-size:13px;font-weight:400}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:#fff;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#EDEBE5;font-weight:700;color:var(--ink);white-space:nowrap}
+blockquote{border-left:4px solid var(--accent);background:#ECF1F6;margin:16px 0;padding:14px 18px;border-radius:0 10px 10px 0}
+blockquote p{margin:6px 0;color:#1A3654}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:var(--ink3)}
+@media(max-width:640px){.wrap{padding:24px 18px 80px}h1{font-size:24px}h2{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="index.html">← 신청폼 목차</a><span class="sep">·</span>
+  <a href="design/index.html">프로토타입</a><span class="sep">·</span>
+  <a href="terms/README.html">약관</a>
+</nav>
+<div class="wrap">
+<h1>개발팀 질의서</h1>
+<p><strong>보내는 곳</strong> 맬리브레인 개발팀
+<strong>목적</strong> 신청폼 개편(신청 = 가입, 자동 승인) 착수 전 확인
+<strong>관련 문서</strong> <a href="ia.html">IA·예외명세</a> §9 서버 요구사항 · <a href="07_약관_확인요청.html">약관 확인요청</a> · <a href="08_디자인본_검수_및_수정안.html">디자인본 검수</a></p>
+<hr />
+<h2>A. 지금 막고 있는 값 — 답만 주시면 됩니다 (3건)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>질문</th>
+<th>왜 필요한가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A-07</strong></td>
+<td><strong>서버·DB를 어느 클라우드에서 운영하고 있습니까?</strong> (AWS / NCP / GCP / Azure …)</td>
+<td>현행 개인정보 처리방침 제5조 위탁 표에 <strong>NHN Cloud(SMS·알림톡)만</strong> 있습니다. 서버 운영 위탁이 고지되지 않은 상태라 개인정보보호법 §26 위반 소지가 있습니다</td>
+</tr>
+<tr>
+<td><strong>A-08</strong></td>
+<td><strong>그 리전이 국내입니까, 국외입니까?</strong></td>
+<td>국외면 §28-8에 따라 <strong>국외이전 별도 고지·동의</strong>가 붙습니다. 동의 항목이 하나 늘어날 수 있어 문안 확정 전에 알아야 합니다</td>
+</tr>
+<tr>
+<td><strong>A-11</strong></td>
+<td><strong>앱 스토어 링크와 딥링크 스킴</strong>이 있습니까? 설치 링크 문자는 어디서 발송합니까?</td>
+<td>완료 화면의 설치 버튼·QR·문자가 모두 이 값에 걸려 있습니다. 딥링크가 있으면 이미 설치된 분은 바로 로그인 화면으로 보낼 수 있습니다 (<code>FR-05</code>)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>책임자·연락처는 물을 필요 없습니다.</strong> 현행 처리방침 제10·11조에 이미 있습니다 —
+보호책임자 한상호, 열람청구 담당 박용주, 02-549-5494, contact@onemedics.net.
+<strong>문자 발송 수탁사도 NHN Cloud로 확정</strong>돼 있습니다. 서버 운영 위탁사만 비어 있습니다.</p>
+</blockquote>
+<hr />
+<h2>B. 현재 구조 확인 — 개발 착수 전에 알아야 하는 것 (9건)</h2>
+<p>기획이 "신청폼이 회원까지 만든다"를 전제로 잡혀 있어서, 지금 코드가 어떻게 돼 있는지에 따라 작업량이 크게 달라집니다.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>질문</th>
+<th>왜</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B-1</td>
+<td><strong>현재 신청폼</strong>(<code>meli.health/invitations/dementia3/form</code>)의 스택과 저장소는? 제출 데이터는 어느 테이블에 쌓이고 어드민 어디서 봅니까?</td>
+<td>신규 개발인지 기존 확장인지가 갈립니다</td>
+</tr>
+<tr>
+<td>B-2</td>
+<td><strong>회원 테이블과 신청 테이블의 관계</strong>는? 지금은 완전히 분리돼 있습니까?</td>
+<td>"신청폼 제출 = 회원 생성"으로 합치려면 이 구조를 알아야 합니다</td>
+</tr>
+<tr>
+<td>B-3</td>
+<td><strong>전화번호만으로 앱 로그인</strong>이 이미 되는 구조입니까?</td>
+<td>9/18 회의에서 "신청폼 작성자는 앱 설치 후 전화번호로 로그인만 하면 된다"고 했는데, 구현이 이미 있는지 확인이 필요합니다. 없으면 이게 가장 큰 작업입니다</td>
+</tr>
+<tr>
+<td>B-4</td>
+<td><strong>SMS 인증번호 발송·검증 로직</strong>이 이미 있습니까? (NHN Cloud 연동)</td>
+<td>직원 대리 접수와 기존 회원 확인에 필요합니다. 없으면 신규</td>
+</tr>
+<tr>
+<td>B-5</td>
+<td><strong>승인 상태</strong>는 어떤 필드/값입니까? (<code>대기</code> / <code>승인</code> enum?) 자동 승인은 이 값을 바로 세팅하면 되는 구조입니까?</td>
+<td>자동 승인 구현 방식</td>
+</tr>
+<tr>
+<td>B-6</td>
+<td><strong>보건소 소속 편입</strong>은 어떤 값으로 표현됩니까? (<code>org_id</code> 같은 것) 신청폼 경로로 들어온 회원에게 자동으로 붙일 수 있습니까?</td>
+<td>관리자가 수동으로 넣던 거주동·소속을 자동화해야 합니다</td>
+</tr>
+<tr>
+<td>B-7</td>
+<td><strong>기수(3기 / 4기)가 데이터 모델에 있습니까?</strong> 같은 회원이 여러 기수에 참여하는 구조가 이미 있습니까?</td>
+<td>3기 참여자가 4기를 신청할 때 기존 계정에 붙이는 처리(<code>FE-07</code>, <code>FS-08</code>)에 필요합니다</td>
+</tr>
+<tr>
+<td>B-8</td>
+<td><strong>거주 행정동 코드 체계</strong>는? 행정동 코드입니까 법정동 코드입니까, 아니면 문자열입니까?</td>
+<td>관내 20개 화이트리스트 재검증(<code>FS-05</code>)을 서버에서 해야 합니다</td>
+</tr>
+<tr>
+<td>B-9</td>
+<td><strong>전화번호로 기존 회원을 조회하는 API</strong>가 이미 있습니까?</td>
+<td>신청폼의 첫 단계가 이 조회입니다</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>C. 서버가 구현해야 하는 것 — 요구사항 전달 (10건)</h2>
+<p>화면에서 막을 수 없고 <strong>서버에서만 막을 수 있는</strong> 것들입니다. 우선순위 순입니다.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>요구</th>
+<th>안 지키면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C-1</strong></td>
+<td><strong>전화번호 조회 API 응답에 이름·거주 동을 포함하지 않는다.</strong> 인증 통과 뒤 별도 호출로 내려준다</td>
+<td>화면을 잠가도 네트워크 응답에 들어 있으면 그대로 보입니다. <strong>가장 중요합니다</strong></td>
+</tr>
+<tr>
+<td><strong>C-2</strong></td>
+<td><strong>조회 API에 레이트 리밋</strong> (IP·번호 단위)</td>
+<td>번호를 대입해 남동구 참여자 명단을 통째로 캐낼 수 있습니다</td>
+</tr>
+<tr>
+<td><strong>C-3</strong></td>
+<td><strong>인증번호 검증·시도 횟수·잠금·재발송 쿨다운을 전부 서버에서 센다</strong></td>
+<td>클라이언트 조작으로 인증을 건너뜁니다. 화면의 <code>(3/5번째)</code>는 안내용일 뿐입니다</td>
+</tr>
+<tr>
+<td><strong>C-4</strong></td>
+<td><strong>제출 시 거주 동 코드를 관내 화이트리스트로 재검증</strong></td>
+<td>클라이언트를 우회해 관외 신청이 자동 승인됩니다</td>
+</tr>
+<tr>
+<td><strong>C-5</strong></td>
+<td><strong>제출 멱등 처리</strong> — 같은 번호는 신규 생성 대신 기존 건 반환</td>
+<td>연타·재시도로 중복 접수가 쌓입니다</td>
+</tr>
+<tr>
+<td><strong>C-6</strong></td>
+<td><strong>미로그인 30일 계정 자동 정리</strong></td>
+<td>타인 번호로 만든 계정이 그 번호의 실제 소유자 가입을 영구히 막습니다. 신규 가입을 무인증으로 두기로 한 결정의 전제 조건입니다</td>
+</tr>
+<tr>
+<td><strong>C-7</strong></td>
+<td>동의 저장 시 <strong>항목별 동의 여부 · 동의 시각 · 약관 버전 · 작성 경로</strong>를 함께 기록</td>
+<td>분쟁 시 동의를 입증할 수 없습니다</td>
+</tr>
+<tr>
+<td><strong>C-8</strong></td>
+<td>직원 대리 접수는 <strong><code>channel=staff_proxy</code></strong> 로 구분 저장</td>
+<td>대리 작성 건을 사후에 가려낼 수 없습니다</td>
+</tr>
+<tr>
+<td><strong>C-9</strong></td>
+<td><strong>인증 토큰에 짧은 유효기간</strong>을 두고 제출 시 재검증</td>
+<td>인증만 받아두고 나중에 다른 값으로 제출할 수 있습니다 (<code>FS-06</code>)</td>
+</tr>
+<tr>
+<td><strong>C-10</strong></td>
+<td><strong>완료 문자 발송을 제출 성공과 분리</strong> (문자가 실패해도 접수는 유효)</td>
+<td>문자 장애가 가입 전체를 막습니다 (<code>FR-03</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3>제안 API</h3>
+<table>
+<thead>
+<tr>
+<th>용도</th>
+<th>요청</th>
+<th>응답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>번호 조회</td>
+<td><code>POST /api/invitations/{org}/{term}/lookup</code> · <code>{phone}</code></td>
+<td><code>{state: new｜member｜prev｜dup｜blocked}</code> — <strong>이름·동 없음</strong></td>
+</tr>
+<tr>
+<td>인증번호 발송</td>
+<td><code>POST /api/otp/send</code> · <code>{phone, purpose}</code></td>
+<td><code>{ttl:300, resendAfter:30, sentAt}</code></td>
+</tr>
+<tr>
+<td>인증번호 검증</td>
+<td><code>POST /api/otp/verify</code> · <code>{phone, code}</code></td>
+<td><code>{ok, token, profile?}</code> — <code>profile</code>은 <strong>통과 시에만</strong></td>
+</tr>
+<tr>
+<td>신청 제출</td>
+<td><code>POST /api/invitations/{org}/{term}/apply</code> · <code>{phone, name, dongCode, consents[], otpToken?, channel}</code></td>
+<td><code>{status: created｜linked｜already, applicationId}</code></td>
+</tr>
+<tr>
+<td>약관 본문</td>
+<td><code>GET /api/terms/{org}/{version}</code></td>
+<td>본문 + 버전</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>D. 클라이언트 구현 시 주의 (5건)</h2>
+<p>프로토타입에서 실제로 물렸던 것들입니다.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-1</td>
+<td><strong>조상 요소에 <code>overflow:hidden</code> 을 쓰지 마세요.</strong> 제출 버튼의 <code>position:sticky</code> 가 조용히 죽습니다. 시각적으로 티가 안 나서 놓치기 쉽습니다</td>
+</tr>
+<tr>
+<td>D-2</td>
+<td><strong>고정 제출 바의 높이를 측정해서</strong> "아래에 더 있어요" 배지 위치를 잡으세요. 고정값(124px)을 쓰면 글자 확대 시 바가 181px까지 자라 배지가 뒤로 숨습니다</td>
+</tr>
+<tr>
+<td>D-3</td>
+<td><strong>동의 행 전체 탭 + 체크박스 탭이 겹치면 토글이 상쇄됩니다.</strong> 체크박스 버튼에서 이벤트 전파를 끊으세요</td>
+</tr>
+<tr>
+<td>D-4</td>
+<td><strong>임시저장·복구(<code>FX-05</code>)를 넣어주세요.</strong> 어르신은 입력 중 전화를 자주 받습니다. 단 <strong>직원 모드(공용 기기)에서는 저장하지 않고 기존 저장분도 지웁니다</strong></td>
+</tr>
+<tr>
+<td>D-5</td>
+<td><strong>제출 버튼을 <code>disabled</code> 로 막지 마세요.</strong> 항상 활성으로 두고, 누르면 빠진 항목까지 스크롤·포커스하고 이유를 띄웁니다. 비활성 버튼은 스크린리더가 읽지 않습니다</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>E. 기획·법무에 물어야 하는 것 (개발팀 아님)</h2>
+<p>혼선을 막기 위해 적어둡니다.</p>
+<table>
+<thead>
+<tr>
+<th>대상</th>
+<th>항목</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>보건소</strong> (김소리)</td>
+<td>자동 승인 가부 · 관내 행정동 20개 검증 · 보건소 대표 전화번호 · 담당 부서명 · 4기 모집 시작일 · 보건소 제공분 보유기간</td>
+</tr>
+<tr>
+<td><strong>법무</strong></td>
+<td>치매예방교실 참여 사실이 민감정보인지 · 대리 작성 동의의 유효성 · 약관 개정이 회원에게 불리한 변경인지(30일 전 공지 여부)</td>
+</tr>
+<tr>
+<td><strong>기획</strong></td>
+<td>회원가입 연령 하한 · 마케팅 수신 채널 범위 · 지난 기수 URL 처리 정책 · 직원 식별 수단 · 직원 모드 자동 해제 시간 · 정원 마감 시 대기 신청 여부</td>
+</tr>
+<tr>
+<td><strong>경영지원</strong></td>
+<td>사업자등록번호 · 본사 소재지 · 대표자명 · 고객센터 연락처 (약관 게시 의무)</td>
+</tr>
+<tr>
+<td><strong>양쪽</strong></td>
+<td>처리자 지위(원메딕스 vs 보건소) — <strong>보건소와 맺은 계약 형태</strong>로 판단. 동의서 구조 전체가 여기서 갈립니다</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>회신 요청 순서</h2>
+<ol>
+<li><strong>A-07 / A-08</strong> 클라우드 사업자와 리전 → 약관 문안을 확정할 수 있습니다</li>
+<li><strong>B-2 / B-3 / B-5</strong> 회원·신청 테이블 관계, 전화번호 로그인, 승인 상태 필드 → 작업량 산정</li>
+<li>나머지 B와 C 검토 의견</li>
+</ol>
+</div>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>09_개발팀_질의서.md</code> 에서 생성됐습니다</footer>
+</body>
+</html>
