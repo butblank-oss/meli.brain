@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>01. 정책과 규칙 — 맬리브레인 신청폼</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1F26;--ink2:#4E5968;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--accent:#1F3C5D}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.8;font-size:16px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;position:sticky;top:0;z-index:10;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top a{color:var(--accent);text-decoration:none;font-weight:700;font-size:14px}
+.top a:hover{text-decoration:underline}
+.top .sep{color:#C8C3B8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0 0 20px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.035em;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--ink);line-height:1.4}
+h3{font-size:18px;font-weight:800;letter-spacing:-.03em;margin:30px 0 8px}
+h4{font-size:16px;font-weight:800;margin:22px 0 6px}
+p{margin:10px 0;color:var(--ink2)}
+ul,ol{margin:10px 0 10px 22px;color:var(--ink2)}
+li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+code{background:#EDEBE5;color:#1A3654;padding:2px 6px;border-radius:5px;font-size:13.5px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+pre{background:#1A1F26;color:#E6EAF0;padding:18px 20px;border-radius:12px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:inherit;padding:0;font-size:13px;font-weight:400}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:#fff;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#EDEBE5;font-weight:700;color:var(--ink);white-space:nowrap}
+blockquote{border-left:4px solid var(--accent);background:#ECF1F6;margin:16px 0;padding:14px 18px;border-radius:0 10px 10px 0}
+blockquote p{margin:6px 0;color:#1A3654}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:var(--ink3)}
+@media(max-width:640px){.wrap{padding:24px 18px 80px}h1{font-size:24px}h2{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="../../index.html">← 신청폼 목차</a><span class="sep">·</span>
+  <a href="../../design/index.html">프로토타입</a><span class="sep">·</span>
+  <a href="../../terms/README.html">약관</a>
+</nav>
+<div class="wrap">
+<h1>01. 정책과 규칙</h1>
+<h2>배경 — 왜 바꾸나</h2>
+<p>현장 QR로 모집하는데 <strong>신청폼과 앱 회원가입이 이중으로 돌고 있어서</strong> 온보딩이 끊깁니다.
+신청폼만 내고 앱 가입을 안 한 사람은 관리자가 승인해 줄 수도 없습니다.
+유입 비중은 신청폼 약 85%, 앱 직접 가입 약 5%라 신청폼 경로가 우선입니다.</p>
+<h2>확정된 결정 (2026-09-18 회의)</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>가입 게이트</td>
+<td>신청폼 · 앱 직접 가입 두 경로 모두 유지</td>
+</tr>
+<tr>
+<td>승인 방식</td>
+<td><strong>신청폼 경로는 자동 승인</strong> / 앱 직접 가입은 관리자 승인</td>
+</tr>
+<tr>
+<td>신청폼 경로 회원가입</td>
+<td><strong>앱 회원가입 단계 제거</strong>, 전화번호 로그인만으로 진입</td>
+</tr>
+<tr>
+<td>개발 우선순위</td>
+<td>신청폼 경로 우선</td>
+</tr>
+<tr>
+<td>앱 가입 시 거주지역 선택</td>
+<td>넣지 않음 (시니어에게 허들이 큼)</td>
+</tr>
+<tr>
+<td>약관 · 동의</td>
+<td>이용약관 · 개인정보처리방침 · 제3자 제공 동의 재제작</td>
+</tr>
+</tbody>
+</table>
+<h2>이 폼의 4가지 전제</h2>
+<ol>
+<li><strong>자동 승인</strong> — 남동구 보건소 전용 폼이므로 제출 즉시 승인 상태로 회원을 생성합니다.
+   관외 필터는 관리자 판단 대신 <strong>거주 동 선택</strong>이 대신합니다.</li>
+<li><strong>앱 회원가입 제거</strong> — 신청폼이 회원까지 만들고, 앱에서는 전화번호 로그인만 합니다.</li>
+<li><strong>그 자리에서 설치</strong> — 완료 화면이 "문자 기다리세요"로 끝나지 않고,
+   기기를 자동 판별한 설치 버튼 · QR · 3단계 안내를 바로 제공합니다.</li>
+<li><strong>어르신에게 선택지를 주지 않음</strong> — 직원 대리 접수 모드는 탭으로 노출하지 않고
+   폼 맨 아래 작은 링크로만 진입합니다.</li>
+</ol>
+<hr />
+<h2>분기 규칙 16개 (IA-R)</h2>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>규칙</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IA-R-01</td>
+<td>이 폼으로 들어온 신청은 <strong>제출 즉시 승인 완료</strong>로 저장한다</td>
+<td>남동구 전용 폼이므로 관리자 판단이 필요 없다</td>
+</tr>
+<tr>
+<td>IA-R-02</td>
+<td>이 폼의 제출은 <strong>회원 생성까지</strong> 완료한다. 앱에서 다시 가입시키지 않는다</td>
+<td>이중 게이트가 이탈의 실제 원인</td>
+</tr>
+<tr>
+<td>IA-R-03</td>
+<td>기존 회원으로 판정된 번호는 <strong>SMS 인증 통과 전까지</strong> 이름·동·동의 영역을 잠근다</td>
+<td>번호만으로 타인 정보를 열람하는 경로 차단</td>
+</tr>
+<tr>
+<td>IA-R-04</td>
+<td>신규 번호는 SMS를 요구하지 않는다</td>
+<td>노출할 기존 정보가 없다. 85% 경로의 단계를 늘리지 않는다</td>
+</tr>
+<tr>
+<td>IA-R-05</td>
+<td>거주지는 <strong>관내 20개 행정동 선택</strong>으로만 받는다. 자유 입력·검색 없음</td>
+<td>자동 승인의 근거이자 시니어 입력 허들 제거</td>
+</tr>
+<tr>
+<td>IA-R-06</td>
+<td>동 시트에는 반드시 <strong>탈출구 2개</strong>를 둔다</td>
+<td>막다른 길에서의 이탈은 복구가 안 된다</td>
+</tr>
+<tr>
+<td>IA-R-07</td>
+<td>필수 동의 3 + 선택 1로 분리한다. 선택 미동의는 어떤 불이익도 없다</td>
+<td>개인정보보호법 §22 ④</td>
+</tr>
+<tr>
+<td>IA-R-08</td>
+<td>직원 대리 접수는 <strong>탭으로 노출하지 않는다</strong>. 폼 맨 아래 링크로만 진입한다</td>
+<td>어르신에게 첫 화면의 선택지를 주지 않는다</td>
+</tr>
+<tr>
+<td>IA-R-09</td>
+<td>직원 모드에서는 임시저장을 하지 않고 기존 저장분도 지운다</td>
+<td>공용 기기에 개인정보를 남기지 않는다</td>
+</tr>
+<tr>
+<td>IA-R-10</td>
+<td>모드를 바꾸면 번호 확인·인증을 <strong>처음부터 다시</strong> 밟는다</td>
+<td>앞 모드의 확인이 뒤 모드의 인증을 대신하면 안 된다</td>
+</tr>
+<tr>
+<td>IA-R-11</td>
+<td>화면은 <strong>저절로 바뀌지 않는다</strong>. 이동은 항상 사용자가 버튼을 눌러서 한다</td>
+<td>시니어는 자동 전환을 오작동으로 인식한다</td>
+</tr>
+<tr>
+<td>IA-R-12</td>
+<td>제출 버튼은 비활성화하지 않는다. 누르면 빠진 곳으로 데려간다</td>
+<td>비활성 버튼은 스크린리더가 읽지 않고 아무 피드백도 주지 않는다</td>
+</tr>
+<tr>
+<td>IA-R-13</td>
+<td>전화번호를 고치면 그 뒤 단계(인증·자동채움)를 전부 무효화한다</td>
+<td>인증한 번호와 제출되는 번호가 달라지는 것을 막는다</td>
+</tr>
+<tr>
+<td>IA-R-14</td>
+<td>완료·중복·관외 화면에는 항상 보건소 전화번호를 둔다</td>
+<td>화면에서 못 푸는 문제의 최종 탈출구</td>
+</tr>
+<tr>
+<td>IA-R-15</td>
+<td>상태는 색으로만 전달하지 않는다. 아이콘·문구를 함께 쓴다</td>
+<td>색각 이상·저조도 화면 대응</td>
+</tr>
+<tr>
+<td>IA-R-16</td>
+<td>기관별 설정값만 바꿔 타 기관 폼을 만든다. 구조·문구 톤은 공통</td>
+<td>타 기관 확장</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>절대 하면 안 되는 것 12가지</h2>
+<p>리디자인 과정에서 흔히 깨지는 것들입니다.</p>
+<ol>
+<li><strong>제출 버튼을 문서 맨 아래에 두기</strong> — 어르신은 스크롤 개념이 약해서 못 찾습니다. 붙박이(sticky)여야 합니다.</li>
+<li><strong>조상 요소에 <code>overflow:hidden</code></strong> — <code>position:sticky</code>가 조용히 죽습니다. 시각적으로 티가 안 나서 놓치기 쉽습니다.</li>
+<li><strong>제출 버튼을 비활성화(disabled)</strong> — 스크린리더가 읽지 않고, 왜 못 누르는지 알 수 없습니다.</li>
+<li><strong>모든 글자를 같은 비율로 확대</strong> — 헤더만 첫 화면을 다 먹고 첫 입력칸이 밀려납니다.</li>
+<li><strong>상태를 색으로만 구분</strong> — 빨강/초록만으로는 색각 이상·실외 밝은 화면에서 구분되지 않습니다.</li>
+<li><strong>미체크 체크박스에 회색 체크 표시</strong> — 이미 체크된 것으로 보입니다. 빈 네모여야 합니다.</li>
+<li><strong>화면을 자동으로 전환</strong> — 어르신은 자기가 잘못 눌렀다고 생각합니다.</li>
+<li><strong>오류를 화면 상단에 요약 배너로</strong> — 스크롤을 요구합니다. 오류는 해당 필드 바로 아래에.</li>
+<li><strong>입력 중에 글자를 지우거나 막기</strong> — 자판 고장으로 인식합니다. 검증은 제출 시점에.</li>
+<li><strong>필수 표시를 <code>*</code> 별표로</strong> — 의미가 전달되지 않습니다. 글자 배지로.</li>
+<li><strong>색으로 지칭하는 문구</strong> — "파란 버튼을 누르세요" ✗ → "설치 버튼을 누르세요" ✓</li>
+<li><strong>단계를 여러 화면으로 쪼개기</strong> — 되돌아가기가 어렵고 현재 위치를 계속 추적해야 합니다.</li>
+</ol>
+<hr />
+<h2>남긴 리스크 3가지 (알고 둔 것)</h2>
+<ol>
+<li><strong>신규 가입은 무인증</strong> — 타인 번호로 신규 접수가 가능합니다. 다만 실제 소유자가 아니면 앱 로그인이 안 되므로
+   피해는 "그 번호로 가입이 막힘"에 그칩니다. 서버에서 <strong>미로그인 30일 계정 자동 정리</strong>가 필요합니다.</li>
+<li><strong>거주 동은 자기 신고</strong> — 거짓 선택을 화면에서 막을 수 없습니다. 보건소 현장 확인이 최종 게이트입니다.</li>
+<li><strong>임시저장이 브라우저에 남음</strong> — 어르신 본인 기기라는 전제입니다. 직원 모드에서는 저장하지 않습니다.</li>
+</ol>
+</div>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>design/spec/01_정책과_규칙.md</code> 에서 생성됐습니다</footer>
+</body>
+</html>

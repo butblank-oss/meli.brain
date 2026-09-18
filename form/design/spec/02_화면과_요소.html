@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>02. 화면과 요소 — 맬리브레인 신청폼</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1F26;--ink2:#4E5968;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--accent:#1F3C5D}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.8;font-size:16px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;position:sticky;top:0;z-index:10;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top a{color:var(--accent);text-decoration:none;font-weight:700;font-size:14px}
+.top a:hover{text-decoration:underline}
+.top .sep{color:#C8C3B8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0 0 20px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.035em;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--ink);line-height:1.4}
+h3{font-size:18px;font-weight:800;letter-spacing:-.03em;margin:30px 0 8px}
+h4{font-size:16px;font-weight:800;margin:22px 0 6px}
+p{margin:10px 0;color:var(--ink2)}
+ul,ol{margin:10px 0 10px 22px;color:var(--ink2)}
+li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+code{background:#EDEBE5;color:#1A3654;padding:2px 6px;border-radius:5px;font-size:13.5px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+pre{background:#1A1F26;color:#E6EAF0;padding:18px 20px;border-radius:12px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:inherit;padding:0;font-size:13px;font-weight:400}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:#fff;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#EDEBE5;font-weight:700;color:var(--ink);white-space:nowrap}
+blockquote{border-left:4px solid var(--accent);background:#ECF1F6;margin:16px 0;padding:14px 18px;border-radius:0 10px 10px 0}
+blockquote p{margin:6px 0;color:#1A3654}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:var(--ink3)}
+@media(max-width:640px){.wrap{padding:24px 18px 80px}h1{font-size:24px}h2{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="../../index.html">← 신청폼 목차</a><span class="sep">·</span>
+  <a href="../../design/index.html">프로토타입</a><span class="sep">·</span>
+  <a href="../../terms/README.html">약관</a>
+</nav>
+<div class="wrap">
+<h1>02. 화면과 요소</h1>
+<p>화면 <strong>5장</strong> + 시트 <strong>2개</strong>. 추가·삭제·병합하지 않습니다.</p>
+<pre><code>                    [진입 · QR / 문자 링크]
+                              │
+              ┌───────────────┴───────────────┐
+    FX-01 기간 아님                      모집 기간 중
+              │                               │
+      [SC-F-05 모집마감]              [SC-F-01 신청폼]
+                                              │
+        ┌───────────────┬─────────────────────┼──────────────┐
+   FD-02 관외      FE-06 중복          FS-07 제출 성공    시트 2개
+        │               │                     │        (동 선택 · 약관)
+ [SC-F-04 관외]  [SC-F-03 이미신청]   [SC-F-02 완료]
+        │               │                     │
+        └───────────────┴─────────→ [맬리브레인 앱 · 전화번호 로그인]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>화면</th>
+<th>목적</th>
+<th>진입</th>
+<th>나가는 길</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SC-F-01</td>
+<td>신청폼</td>
+<td>번호·이름·동·동의를 받고 회원 생성까지</td>
+<td>QR / 안내 문자</td>
+<td>제출 성공 → SC-F-02</td>
+</tr>
+<tr>
+<td>SC-F-02</td>
+<td>신청 완료</td>
+<td>승인 완료 통보 + 그 자리 설치</td>
+<td>제출 성공</td>
+<td>스토어 · QR · 처음으로</td>
+</tr>
+<tr>
+<td>SC-F-03</td>
+<td>이미 신청함</td>
+<td>중복 접수를 막고 설치만 안내</td>
+<td>조회 중복 · 제출 경합</td>
+<td>스토어 · 번호 다시 넣기</td>
+</tr>
+<tr>
+<td>SC-F-04</td>
+<td>남동구 거주 아님</td>
+<td>막다른 길을 없애고 대안 제시</td>
+<td>동 시트에서 관외 선언</td>
+<td>앱 일반 이용 · 다시 골라보기</td>
+</tr>
+<tr>
+<td>SC-F-05</td>
+<td>모집 기간 아님·마감</td>
+<td>폼을 열지 않고 알림 예약만</td>
+<td>기간 외 · 정원 마감</td>
+<td>알림 신청 · 보건소 전화</td>
+</tr>
+<tr>
+<td>SH-01</td>
+<td>시트 · 동 선택</td>
+<td>관내 20개 동 + 탈출구 2개</td>
+<td>거주지 선택 버튼</td>
+<td>선택 · 모름 · 관외</td>
+</tr>
+<tr>
+<td>SH-02</td>
+<td>시트 · 약관 전문</td>
+<td>동의 항목 4종의 본문</td>
+<td>동의 항목의 "보기"</td>
+<td>동의 · 닫기</td>
+</tr>
+<tr>
+<td>SH-03</td>
+<td>시트 · 3기 참여자 확인</td>
+<td>자동 채움 전에 본인 확인</td>
+<td>조회 결과 = 이전 기수 참여자</td>
+<td>이어서 신청 · 번호 다시 넣기</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>SC-F-01 신청폼 — 요소</h2>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>요소</th>
+<th>규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1-01</td>
+<td>앱바 로고</td>
+<td>16px 800. <strong>링크가 아님</strong> (이탈 방지)</td>
+</tr>
+<tr>
+<td>S1-02</td>
+<td>글자 크기 버튼 <code>가＋</code></td>
+<td>42px 터치. 4단계 순환. 전환 시 현재 단계를 토스트로 고지</td>
+</tr>
+<tr>
+<td>S1-03</td>
+<td>오프라인 띠</td>
+<td>오프라인일 때만. 제출 차단</td>
+</tr>
+<tr>
+<td>S1-04</td>
+<td>직원 모드 배너</td>
+<td>직원 모드에서만. <strong>진한 배경</strong>으로 일반 화면과 확실히 구분 + <code>나가기</code></td>
+</tr>
+<tr>
+<td>S1-05</td>
+<td>기관 배지</td>
+<td>어느 기관의 폼인지 첫 화면에서 확정</td>
+</tr>
+<tr>
+<td>S1-06</td>
+<td>제목</td>
+<td>22px 800 · 2줄. 직원 모드에서는 "대리 접수"로</td>
+</tr>
+<tr>
+<td>S1-07</td>
+<td>부제</td>
+<td>관외 조건과 자동 승인을 <strong>입력 전에</strong> 미리 알림</td>
+</tr>
+<tr>
+<td>S1-08</td>
+<td>직원 안내 박스</td>
+<td>직원 모드에서만. 주황 계열</td>
+</tr>
+<tr>
+<td>S1-09</td>
+<td>복구 배너</td>
+<td>임시저장 복원 시. 직원 모드에서는 안 뜸</td>
+</tr>
+<tr>
+<td>S1-10</td>
+<td>전화번호 라벨</td>
+<td>17px 700 + <code>꼭 적어주세요</code> 배지 (별표 금지)</td>
+</tr>
+<tr>
+<td>S1-11</td>
+<td>전화번호 도움말</td>
+<td>앱 가입이 없어졌다는 사실을 여기서 알림</td>
+</tr>
+<tr>
+<td>S1-12</td>
+<td>전화번호 입력</td>
+<td>높이 60px · 19px · <code>inputmode=numeric</code> · <code>autocomplete=tel</code> · 하이픈 자동 · <strong>11자리 완성 시 자동 조회</strong></td>
+</tr>
+<tr>
+<td>S1-13</td>
+<td>조회 스피너</td>
+<td>입력칸 오른쪽 안쪽</td>
+</tr>
+<tr>
+<td>S1-14</td>
+<td>전화번호 상태</td>
+<td>아이콘+배경+테두리 · <code>role=status aria-live=polite</code></td>
+</tr>
+<tr>
+<td>S1-15</td>
+<td>인증번호 블록</td>
+<td>기존 회원·직원 모드에서만 노출</td>
+</tr>
+<tr>
+<td>S1-16</td>
+<td>유효시간 표시</td>
+<td><code>남은 시간 4:32</code>. 1분 미만 빨강. <code>tabular-nums</code>로 자릿수 흔들림 방지</td>
+</tr>
+<tr>
+<td>S1-17</td>
+<td>인증번호 입력</td>
+<td><code>autocomplete=one-time-code</code> (iOS 자동 채움) · 숫자 6자리</td>
+</tr>
+<tr>
+<td>S1-18</td>
+<td>확인 버튼</td>
+<td>6자리를 채워야 활성. 통과 시 초록 <code>확인됨</code> + 입력칸 읽기 전용</td>
+</tr>
+<tr>
+<td>S1-19</td>
+<td>재발송</td>
+<td><strong>보조 버튼으로 하단 배치</strong> (오조작 감소). 만료 시 <code>인증번호 다시 받기</code>로 강조 전환</td>
+</tr>
+<tr>
+<td>S1-20</td>
+<td>이름 입력</td>
+<td>2~20자 · 제출 시 검사 · <code>autocomplete=name</code></td>
+</tr>
+<tr>
+<td>S1-21</td>
+<td>주소 고정 배지</td>
+<td><code>인천광역시 남동구</code> + 자물쇠. 입력 불가</td>
+</tr>
+<tr>
+<td>S1-22</td>
+<td>동 선택 버튼</td>
+<td>60px · 시트 호출 · <code>aria-haspopup=dialog</code></td>
+</tr>
+<tr>
+<td>S1-23</td>
+<td>모두 동의</td>
+<td>34px 체크박스. <strong>선택 항목까지 켜진다는 부제 필수</strong></td>
+</tr>
+<tr>
+<td>S1-24</td>
+<td>동의 항목 ×4</td>
+<td>각 항목 <code>보기</code> 버튼(44px)</td>
+</tr>
+<tr>
+<td>S1-25</td>
+<td>대리 동의 주의</td>
+<td>직원 모드에서만</td>
+</tr>
+<tr>
+<td>S1-26</td>
+<td><strong>제출 버튼 (고정)</strong></td>
+<td><code>sticky bottom:0</code> · 높이 <code>clamp(58, 64×배율, 88)</code> · <strong>항상 활성</strong></td>
+</tr>
+<tr>
+<td>S1-27</td>
+<td>남은 항목 안내</td>
+<td>버튼 바로 아래. 실시간 갱신</td>
+</tr>
+<tr>
+<td>S1-28</td>
+<td>직원 진입 링크</td>
+<td>폼 <strong>맨 아래</strong> 14px 회색. 어르신 눈에 먼저 띄지 않게</td>
+</tr>
+<tr>
+<td>S1-29</td>
+<td>스크롤 안내</td>
+<td><code>아래에 더 있어요 ▾</code>. 맨 위 + 아래에 내용이 남았을 때만. 한 번 내리면 감춤. <strong>위치는 고정 바 높이를 측정한 <code>--ctah</code> 기준</strong> — 고정값을 쓰면 글자 확대 시 바 뒤로 숨음</td>
+</tr>
+<tr>
+<td>S1-30</td>
+<td>대상자 바 (직원 모드)</td>
+<td><code>sticky top:0</code>. 좌측 점 + <code>접수 중 · {번호}</code> + 우측 <code>오늘 N번째</code>. 직원이 지금 누구를 접수 중인지 확인</td>
+</tr>
+</tbody>
+</table>
+<h2>SC-F-02 신청 완료 — 요소</h2>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>요소</th>
+<th>규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S2-01</td>
+<td>완료 마크</td>
+<td>76px · <code>role=img aria-label="완료"</code></td>
+</tr>
+<tr>
+<td>S2-02</td>
+<td>헤딩</td>
+<td>"승인 대기"가 아니라 <strong>끝났다고 단언</strong> — 자동 승인의 핵심 메시지</td>
+</tr>
+<tr>
+<td>S2-03</td>
+<td>리드</td>
+<td>다음 할 일을 한 문장으로</td>
+</tr>
+<tr>
+<td>S2-04</td>
+<td>신청 내역</td>
+<td>전화번호는 <code>010-****-5678</code> 마스킹 (현장 어깨너머 노출 방지)</td>
+</tr>
+<tr>
+<td>S2-05</td>
+<td>상태값</td>
+<td>경로별 4종 (신규 / 기존 회원 연결 / 3기 이어서 / 직원 대리)</td>
+</tr>
+<tr>
+<td>S2-06</td>
+<td>설치 3단계</td>
+<td><strong>색 지칭 금지</strong>. 로그인에 쓸 값이 방금 적은 번호임을 명시</td>
+</tr>
+<tr>
+<td>S2-07</td>
+<td>설치 버튼</td>
+<td>UA 판별로 <strong>본인 기기를 크게</strong>(62px), 반대 기기는 보조(52px). 판별 실패 시 동일 크기 병렬</td>
+</tr>
+<tr>
+<td>S2-08</td>
+<td>QR</td>
+<td>132px. "다른 휴대폰으로 찍어도 됩니다" — 보조 수단</td>
+</tr>
+<tr>
+<td>S2-09</td>
+<td>문자 안내</td>
+<td>지금 설치를 못 해도 끊기지 않는다는 안전망. 직원 모드에서 문구 다름</td>
+</tr>
+<tr>
+<td>S2-10</td>
+<td>보건소 전화</td>
+<td>21px 800. <strong>모든 결과 화면 공통</strong></td>
+</tr>
+<tr>
+<td>S2-11</td>
+<td>복귀 버튼</td>
+<td><code>처음으로 돌아가기</code> / 직원 모드는 <code>다음 분 신청받기</code></td>
+</tr>
+<tr>
+<td>S2-12</td>
+<td>직원 모드 해제</td>
+<td><strong>제출이 끝나면 직원 모드를 자동으로 해제</strong>하고 접수 건수를 +1. 공용 기기가 직원 모드로 방치되는 것을 막음. [다음 분 신청받기]로 재진입</td>
+</tr>
+</tbody>
+</table>
+<h2>SC-F-03 · 04 · 05 · 시트 — 요소</h2>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>요소</th>
+<th>규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S3-01</td>
+<td>헤딩</td>
+<td>실패가 아니라 <strong>안내</strong>로 읽히게 (파랑 계열)</td>
+</tr>
+<tr>
+<td>S3-02</td>
+<td>리드</td>
+<td>진입 원인별 2종 (조회 중복 / 제출 경합)</td>
+</tr>
+<tr>
+<td>S3-03</td>
+<td>오인 안내</td>
+<td>"내가 신청한 적이 없는데 이 화면이 나왔다면" — 번호 오타 안전장치</td>
+</tr>
+<tr>
+<td>S4-01</td>
+<td>헤딩</td>
+<td>거절이 아니라 <strong>사업 조건</strong>임을 먼저 설명</td>
+</tr>
+<tr>
+<td>S4-02</td>
+<td>대안 ①</td>
+<td>앱 일반 이용으로 유도 — 이탈을 완전 손실로 만들지 않음</td>
+</tr>
+<tr>
+<td>S4-03</td>
+<td>대안 ②</td>
+<td>거주지 보건소 문의</td>
+</tr>
+<tr>
+<td>S4-04</td>
+<td>오선택 구제</td>
+<td>행정동 개편·이사로 목록과 어긋난 경우</td>
+</tr>
+<tr>
+<td>S5-01</td>
+<td>헤딩·리드</td>
+<td>정원 마감 시 문구 교체</td>
+</tr>
+<tr>
+<td>S5-02</td>
+<td>알림 예약</td>
+<td>모집 기간 외 방문자를 DB로 남기는 유일한 접점</td>
+</tr>
+<tr>
+<td>H1-01</td>
+<td>동 시트 헤딩</td>
+<td>기준 주소를 명시해 실거주·등본 혼선 차단</td>
+</tr>
+<tr>
+<td>H1-02</td>
+<td>동 버튼 20개</td>
+<td>2열 × 60px. <strong>행정 순서 유지</strong> (가나다 정렬은 어르신의 지리 감각과 어긋남)</td>
+</tr>
+<tr>
+<td>H1-03</td>
+<td>탈출구</td>
+<td>점선으로 구분. 목록 아래 고정</td>
+</tr>
+<tr>
+<td>H2-01</td>
+<td>약관 시트</td>
+<td>부제로 필수·선택의 <strong>결과</strong>를 먼저 말함</td>
+</tr>
+<tr>
+<td>H2-02</td>
+<td>스크롤 힌트</td>
+<td><code>▾ 끝까지 내려보세요</code>. 바닥에 닿으면 사라짐</td>
+</tr>
+<tr>
+<td>H2-03</td>
+<td>시트 버튼</td>
+<td>거절 경로(<code>닫기 (동의 안 함)</code>)를 <strong>같은 크기로</strong> 제공 (다크패턴 방지)</td>
+</tr>
+</tbody>
+</table>
+<h2>남동구 행정동 20개 (순서 유지)</h2>
+<pre><code>구월1동 구월2동 구월3동 구월4동
+간석1동 간석2동 간석3동 간석4동
+만수1동 만수2동 만수3동 만수4동 만수5동 만수6동
+남촌도림동 논현1동 논현2동 논현고잔동 장수서창동 서창2동
+</code></pre>
+<h2>화면에 없는 것 — 의도적으로 뺀 것</h2>
+<ul>
+<li><strong>단계 분할(멀티스텝)</strong> — 되돌아가기가 어렵고 현재 위치를 계속 추적해야 함. 항목이 4개뿐</li>
+<li><strong>주소 검색(우편번호)</strong> — 검색어 입력은 시니어에게 가장 높은 허들</li>
+<li><strong>생년월일·성별</strong> — 현행 폼에 없고 자동 승인 판정에 쓰이지 않음</li>
+<li><strong>본인인증(PASS·아이핀)</strong> — 통신사 인증 앱 설치는 사실상 이탈 지점. SMS 6자리로 대체</li>
+</ul>
+</div>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>design/spec/02_화면과_요소.md</code> 에서 생성됐습니다</footer>
+</body>
+</html>
