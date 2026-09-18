@@ -50,7 +50,8 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <div class="wrap">
 <h1>맬리브레인 신청폼 개선 — v0.2</h1>
 <p>인천 남동구 보건소 치매예방교실 신청폼(<code>meli.health/invitations/dementia3/form</code>) 개선안.
-2026-09-18 가입 절차 개선 회의 결정사항 반영.</p>
+2026-09-18 가입 절차 개선 회의 결정사항 반영.
+약관·처리방침·동의서 <strong>2026-09-18 시행 확정본</strong> 기준.</p>
 <p><strong>웹에서 보기</strong> → <a href="https://butblank-oss.github.io/meli.brain/form/">https://butblank-oss.github.io/meli.brain/form/</a></p>
 <table>
 <thead>
@@ -66,14 +67,14 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 <tr>
 <td><a href="design/index.html"><code>design/index.html</code></a></td>
-<td><strong>프로토타입 (디자인 확정본)</strong> — 모드·화면 5종·예외 17종·글자 크기 4단계 전환</td>
+<td><strong>프로토타입 (디자인 확정본)</strong> — 모드·화면 5종·예외 17종 전환</td>
 </tr>
 <tr>
 <td><a href="design/screens.html"><code>design/screens.html</code></a></td>
 <td>IA 화면설계서 (인쇄·PDF용)</td>
 </tr>
 <tr>
-<td><a href="design/spec/"><code>design/spec/</code></a></td>
+<td><a href="design/spec/00_리디자인_지시서.html"><code>design/spec/</code></a></td>
 <td>구현 기준 스펙 7종 — 정책·화면·예외·문구·토큰</td>
 </tr>
 <tr>
@@ -81,8 +82,12 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <td><strong>IA · 화면설계서 · 예외명세 전문</strong> — 화면 지도, 분기, 요소 명세, 예외 66개, 서버 요구사항, 검수 체크리스트</td>
 </tr>
 <tr>
-<td><a href="terms/"><code>terms/</code></a></td>
-<td>약관 MD 6종 — 신청폼 동의 4 + 현행 문서 2</td>
+<td><a href="terms/README.html"><code>terms/</code></a></td>
+<td><strong>약관 MD 7종 (확정)</strong> — 신청폼 동의 3 + 현행 이용약관·처리방침 2 + 구판 2. 시행일 2026-09-18</td>
+</tr>
+<tr>
+<td><a href="10_약관_최종검토.html"><code>10_약관_최종검토.md</code></a></td>
+<td><strong>약관 2차 검토</strong> — 고쳐진 것 5 / 새로 나온 것 2 / 남은 것 13</td>
 </tr>
 <tr>
 <td><a href="07_약관_확인요청.html"><code>07_약관_확인요청.md</code></a></td>
@@ -94,7 +99,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 <tr>
 <td><a href="09_개발팀_질의서.html"><code>09_개발팀_질의서.md</code></a></td>
-<td>개발팀 확인 27건 + 서버 요구사항 10건</td>
+<td>개발팀 확인 27건 + 서버 요구사항 12건</td>
 </tr>
 <tr>
 <td><a href="prototype-v02.html"><code>prototype-v02.html</code></a></td>
@@ -102,7 +107,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 <tr>
 <td><a href="terms.html"><code>terms.html</code></a></td>
-<td>약관 4종 문안 웹 보기 (미확정 값 주황색)</td>
+<td>~~약관 문안 초안 뷰어~~ — <strong>폐기</strong>. 확정본은 <a href="terms/README.html"><code>terms/</code></a></td>
 </tr>
 <tr>
 <td><a href="build_docs.py"><code>build_docs.py</code></a></td>
@@ -144,7 +149,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tr>
 <td>동의</td>
 <td>체크박스 1개, 전문 없음</td>
-<td><strong>필수 3 + 선택 1</strong>, 각 항목 전문 시트</td>
+<td><strong>필수 3개</strong> (선택 동의 없음), 각 항목 전문 시트</td>
 </tr>
 <tr>
 <td>대리 작성</td>
@@ -161,7 +166,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
   ③ 이름
   ④ 사시는 곳            인천 남동구(고정) + 동 20개 시트
                          └ 잘 모르겠어요 / 남동구에 살지 않아요
-  ⑤ 동의                 필수3 + 선택1
+  ⑤ 동의                 필수 3개 (선택 없음)
   ┌────────────────────────────────┐
   │  [신청하기]   ← 화면 붙박이      │   아직 남은 것: 이름 · 동의
   └────────────────────────────────┘
@@ -185,7 +190,7 @@ SC-F-02 신청완료   SC-F-03 이미신청   SC-F-04 관외거주   SC-F-05 모
 - 입력 중 이탈하면 전부 사라짐 → 24시간 임시저장 (직원 모드 제외)
 - 아이폰/안드로이드를 어르신이 고름 → UA 자동 판별</p>
 <p><strong>개선 6건</strong> — 별표 대신 <code>꼭 적어주세요</code> 배지, 미체크 체크박스를 빈 네모로, 상태를 색+아이콘+문구 3중 전달,
-"모두 동의"가 선택 항목까지 켠다는 명시, 시트 포커스 관리·ESC·뒤로가기, 이름 검증.</p>
+모두 동의 부제 명시, 시트 포커스 관리·ESC·뒤로가기, 이름 검증.</p>
 <p>상세 근거와 코드는 <a href="ia.html"><code>ia.html</code> §2</a>에 있습니다.</p>
 <h2>4. 시니어 UX 핵심 규칙</h2>
 <ul>
@@ -206,12 +211,12 @@ SC-F-02 신청완료   SC-F-03 이미신청   SC-F-04 관외거주   SC-F-05 모
 <li><strong>미로그인 30일 계정 자동 정리</strong> — 타인 번호 신규 접수의 유일한 방어</li>
 <li>동의 저장 시 <strong>항목별 동의·시각·약관 버전·작성 경로</strong> 기록</li>
 </ol>
-<p>전체 10건은 <a href="ia.html"><code>ia.html</code> §9</a>.</p>
+<p>전체는 <a href="ia.html"><code>ia.html</code> §9</a> · <a href="09_개발팀_질의서.html"><code>09_개발팀_질의서.md</code></a> C-1~C-12.</p>
 <h2>6. 남은 확인 사항</h2>
 <ul>
 <li>[ ] <strong>자동승인 가부</strong> — 보건소 확인 (이게 안 되면 전체 전제가 바뀜)</li>
+<li>[ ] <strong>기존 회원의 제3자 제공 동의 근거</strong> — 3기 참여자 재동의 필요 여부 → <a href="10_약관_최종검토.html"><code>10_약관_최종검토.md</code></a> N-2</li>
 <li>[ ] 남동구 행정동 20개 목록 검증 / 보건소 대표번호 / 위탁사 실명</li>
-<li>[ ] 보유기간 "사업 종료 후 1년"의 지자체 기록물 기준 적합성</li>
 <li>[ ] 스토어 링크·QR URL·딥링크 스킴</li>
 <li>[ ] 지난 기수 URL 처리 정책, 직원 식별 수단, 직원 모드 자동 해제 시간</li>
 </ul>
