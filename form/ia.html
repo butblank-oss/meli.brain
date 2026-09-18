@@ -224,11 +224,11 @@ QR을 찍은 시점에 이미 직원이 옆에 있는데 본인이 누르면 직
 <tr><td><code>C-01</code></td><td>필수 표시가 빨간 <code>*</code>. 어르신에게 별표는 의미가 전달되지 않음</td><td><span class="tag req">꼭 적어주세요</span> 글자 배지로 교체</td></tr>
 <tr><td><code>C-02</code></td><td>미체크 체크박스에 회색 체크 표시가 있어 이미 체크된 것처럼 보임</td><td>미체크는 빈 네모, 체크는 초록 바탕 + 흰 체크</td></tr>
 <tr><td><code>C-03</code></td><td>상태를 색으로만 구분(빨강 오류 / 초록 성공)</td><td>모든 상태 메시지에 <b>아이콘 + 배경 + 테두리</b>를 함께 붙여 색각 이상에서도 구분되게</td></tr>
-<tr><td><code>C-04</code></td><td>"모두 동의"가 선택 항목(마케팅 문자)까지 켜는데 표시가 없음</td><td>"선택 항목(문자 받기)까지 함께 켜집니다" 부제 명시</td></tr>
+<tr><td><code>C-04</code></td><td>"모두 동의"가 무엇까지 켜는지 표시가 없음</td><td><b>선택 동의(마케팅 문자)를 아예 삭제</b>하고 필수 3개만 남겼습니다. 부제는 <code>세 가지 모두 동의하셔야 신청할 수 있어요</code> — 2026-09-18 약관 확정 반영</td></tr>
 <tr><td><code>C-05</code></td><td>약관 "보기"가 밑줄 텍스트라 버튼으로 안 보임</td><td>회색 배경 박스 버튼(44px)으로 변경</td></tr>
 <tr><td><code>C-06</code></td><td>시트를 열어도 포커스가 이동하지 않고, 닫아도 돌아오지 않음</td><td>열 때 첫 조작 대상으로 포커스 이동, 닫을 때 연 버튼으로 복귀, <code>ESC</code>·뒤로가기로 닫힘</td></tr>
 <tr><td><code>C-07</code></td><td>이름에 숫자·기호가 들어가도 그대로 접수</td><td>제출 시점에 검사. 입력 자체는 막지 않습니다 (입력 중 차단은 어르신이 더 혼란스러워합니다)</td></tr>
-<tr><td><code>C-08</code></td><td>글자 크기 조절이 3단계뿐이고 무엇이 바뀌었는지 안 보임</td><td>4단계(기본/크게/아주 크게/최대 +60%)로 늘리고 전환 시 토스트로 현재 단계를 알림</td></tr>
+<tr><td><code>C-08</code> <span class="tag fix">철회</span></td><td>글자 크기 조절이 3단계뿐이고 무엇이 바뀌었는지 안 보임</td><td><b>글자 크기 조절 기능 자체를 제거했습니다.</b> 어르신은 이미 폰 설정에서 키워둔 채로 들어오고, 첫 화면의 선택지를 늘리지 않는다는 원칙(<code>IA-R-08</code>)과 어긋납니다. <code>--fs</code>는 OS·브라우저 배율을 받는 변수로만 남습니다</td></tr>
 </table>
 
 <div class="box e">
@@ -421,8 +421,8 @@ QR을 찍은 시점에 이미 직원이 옆에 있는데 본인이 누르면 직
 
 <div class="stp">
 <h4>⑤ 동의</h4>
-<p class="sd">필수 3 + 선택 1. <code>모두 동의</code> 한 번으로 끝낼 수 있게 하되, 선택 항목까지 켜진다는 점을 부제로 밝힙니다.</p>
-<div class="br"><span class="c x">필수 미동의</span><span class="t">빠진 항목을 <b>이름으로 나열</b>합니다 ("[필수] 이용약관, 개인정보 수집·이용 에 동의해 주셔야…") <code>FC-01</code></span></div>
+<p class="sd"><b>필수 3개뿐입니다.</b> 선택 동의는 두지 않습니다. <code>모두 동의</code> 한 번으로 끝낼 수 있게 하되, 부제로 <code>세 가지 모두 동의하셔야 신청할 수 있어요</code>를 밝힙니다.</p>
+<div class="br"><span class="c x">미동의</span><span class="t">빠진 항목을 <b>이름으로 나열</b>합니다 ("이용약관, 개인정보 수집·이용 에 동의해 주셔야…") <code>FC-01</code></span></div>
 <div class="br"><span class="c">전문 보기</span><span class="t">시트로 열고 <code>읽었어요, 동의합니다</code>를 누르면 해당 항목만 체크.
 끝까지 스크롤하지 않았으면 <code>▾ 끝까지 내려보세요</code>가 남습니다</span></div>
 <div class="br"><span class="c w">직원 대리</span><span class="t">동의 영역 위에 경고를 띄우고, 대리 작성 기록·직원 식별자·동의 시각을 함께 저장합니다 <code>FC-05</code></span></div>
@@ -449,14 +449,13 @@ QR을 찍은 시점에 이미 직원이 옆에 있는데 본인이 누르면 직
 <table class="w1 w2">
 <tr><th>코드</th><th>요소</th><th>내용 · 문구</th><th>상태 · 규칙</th></tr>
 <tr><td><code>S1-01</code></td><td>앱바 로고</td><td>매일 이롭게, 맬리브레인</td><td>16px 800 · 링크 아님 (이탈 방지)</td></tr>
-<tr><td><code>S1-02</code></td><td>글자 크기 버튼</td><td>가＋</td><td>42px 터치 · 4단계 순환 · 전환 시 토스트로 현재 단계 고지</td></tr>
 <tr><td><code>S1-03</code></td><td>오프라인 띠</td><td>⚠ 인터넷이 끊겼어요. 연결되면 이어서 하실 수 있습니다.</td><td><code>FX-04</code> 에서만 노출 · 제출 차단</td></tr>
 <tr><td><code>S1-04</code></td><td>직원 모드 배너</td><td>🏥 보건소 직원 모드 · <code>나가기</code></td><td>직원 모드에서만 · 진한 배경으로 일반 화면과 확실히 구분</td></tr>
 <tr><td><code>S1-05</code></td><td>기관 배지</td><td>인천 남동구 보건소</td><td>어느 기관의 폼인지 첫 화면에서 확정 · 타 기관 확장 시 이 값만 교체</td></tr>
 <tr><td><code>S1-06</code></td><td>제목</td><td>치매예방교실 4기<br>참가 신청 <span class="s">(직원 모드: 대리 접수)</span></td><td>22px 800 · 2줄 고정</td></tr>
 <tr><td><code>S1-07</code></td><td>부제</td><td>인천 남동구에 사시는 분만 신청할 수 있어요.<br>신청하시면 바로 이용하실 수 있습니다.</td>
 <td>관외 조건과 자동 승인을 <b>입력 전에</b> 미리 알립니다</td></tr>
-<tr><td><code>S1-08</code></td><td>직원 안내 박스</td><td>어르신 대신 작성하는 화면입니다 …동의 4개는 어르신께 화면을 보여드리고 직접 누르게 해주세요</td>
+<tr><td><code>S1-08</code></td><td>직원 안내 박스</td><td>어르신 대신 작성하는 화면입니다 …동의 3개는 어르신께 화면을 보여드리고 직접 누르게 해주세요</td>
 <td>직원 모드에서만 · 주황 계열</td></tr>
 <tr><td><code>S1-09</code></td><td>복구 배너</td><td>적으시던 내용을 살려뒀어요. + <code>지우고 처음부터 할게요</code></td><td><code>FX-05</code> · 직원 모드에서는 안 뜸</td></tr>
 <tr><td><code>S1-10</code></td><td>전화번호 라벨</td><td>휴대전화 번호 <span class="tag req">꼭 적어주세요</span></td><td>17px 700 · 별표(<code>*</code>) 대신 글자 배지</td></tr>
@@ -475,9 +474,9 @@ QR을 찍은 시점에 이미 직원이 옆에 있는데 본인이 누르면 직
 <tr><td><code>S1-20</code></td><td>이름 입력</td><td>placeholder <code>예) 홍길동</code></td><td>2~20자 · 제출 시 검사 · <code>autocomplete=name</code></td></tr>
 <tr><td><code>S1-21</code></td><td>주소 고정 배지</td><td>인천광역시 남동구 <span class="s">고정</span></td><td>입력 불가 · 자물쇠 문구로 "바꿀 수 없음"을 명시</td></tr>
 <tr><td><code>S1-22</code></td><td>동 선택 버튼</td><td>동을 골라주세요 → <code>인천 남동구 만수3동</code></td><td>60px · 시트 호출 · <code>aria-haspopup=dialog</code></td></tr>
-<tr><td><code>S1-23</code></td><td>모두 동의</td><td>아래 내용에 모두 동의합니다<br><small>선택 항목(문자 받기)까지 함께 켜집니다</small></td>
-<td>34px 체크박스 · 부제로 선택 포함을 명시 <code>C-04</code></td></tr>
-<tr><td><code>S1-24</code></td><td>동의 항목 ×4</td><td>[필수] 이용약관 / [필수] 개인정보 수집·이용 / [필수] 보건소 정보 제공 / [선택] 안내 문자</td>
+<tr><td><code>S1-23</code></td><td>모두 동의</td><td>아래 내용에 모두 동의합니다<br><small>세 가지 모두 동의하셔야 신청할 수 있어요</small></td>
+<td>34px 체크박스 · 부제로 <b>동의하지 않으면 신청할 수 없다는 결과</b>를 먼저 알림 <code>C-04</code></td></tr>
+<tr><td><code>S1-24</code></td><td>동의 항목 ×3</td><td>[필수] 이용약관 / [필수] 개인정보 수집·이용 / [필수] 보건소 정보 제공 <span class="s">— 전부 필수, 선택 동의 없음</span></td>
 <td>각 항목 <code>보기</code> 버튼(44px) → SH-02</td></tr>
 <tr><td><code>S1-25</code></td><td>대리 동의 주의</td><td>※ 위 동의는 어르신 본인이 직접 눌러주셔야 합니다…</td><td>직원 모드에서만</td></tr>
 <tr><td><code>S1-26</code></td><td>제출 버튼 (고정)</td><td>신청하기 → <code>신청하는 중이에요</code>(스피너)</td>
@@ -528,7 +527,7 @@ QR을 찍은 시점에 이미 직원이 옆에 있는데 본인이 누르면 직
 <tr><td><code>H1-02</code></td><td>동 버튼 20개</td><td>구월1~4 · 간석1~4 · 만수1~6 · 남촌도림 · 논현1·2 · 논현고잔 · 장수서창 · 서창2</td>
 <td>2열 × 60px · 행정 순서 유지 (가나다 정렬은 어르신의 지리 감각과 어긋남) <span class="tag fix">목록 검증 필요</span></td></tr>
 <tr><td><code>H1-03</code></td><td>탈출구</td><td>잘 모르겠어요 · 도와주세요 / 남동구에 살지 않아요</td><td>점선으로 구분 · 목록 아래 고정 <code>A-02</code></td></tr>
-<tr><td><code>H2-01</code></td><td>약관 시트</td><td>제목 + [필수] 동의하지 않으시면 신청할 수 없어요 / [선택] 동의하지 않으셔도 아무 불이익이 없어요</td>
+<tr><td><code>H2-01</code></td><td>약관 시트</td><td>제목 + [필수] 동의하지 않으시면 신청할 수 없어요</td>
 <td>부제로 필수·선택의 <b>결과</b>를 먼저 말함</td></tr>
 <tr><td><code>H2-02</code></td><td>스크롤 힌트</td><td>▾ 끝까지 내려보세요</td><td>바닥에 닿으면 사라짐</td></tr>
 <tr><td><code>H2-03</code></td><td>시트 버튼</td><td>읽었어요, 동의합니다 / 닫기 (동의 안 함)</td>
@@ -544,7 +543,7 @@ QR을 찍은 시점에 이미 직원이 옆에 있는데 본인이 누르면 직
 <tr><td><code>IA-R-04</code></td><td>신규 번호는 SMS를 요구하지 않는다</td><td>노출할 기존 정보가 없다. 85% 경로의 단계를 늘리지 않는다</td></tr>
 <tr><td><code>IA-R-05</code></td><td>거주지는 <b>관내 20개 행정동 선택</b>으로만 받는다. 자유 입력·검색 없음</td><td>자동 승인의 근거이자 시니어 입력 허들 제거</td></tr>
 <tr><td><code>IA-R-06</code></td><td>동 시트에는 반드시 <b>탈출구 2개</b>를 둔다</td><td>막다른 길에서의 이탈은 복구가 안 된다</td></tr>
-<tr><td><code>IA-R-07</code></td><td>필수 동의 3 + 선택 1로 분리한다. 선택 미동의는 어떤 불이익도 없다</td><td>개인정보보호법 §22 ④</td></tr>
+<tr><td><code>IA-R-07</code></td><td>동의는 <b>필수 3개뿐</b>이다. 선택 동의는 두지 않는다</td><td>필수만 받으면 §22 ④의 분리 표시 부담이 사라지고, 어르신이 판단할 항목이 줄어든다</td></tr>
 <tr><td><code>IA-R-08</code></td><td>직원 대리 접수는 <b>탭으로 노출하지 않는다</b>. 폼 맨 아래 링크로만 진입한다</td><td>어르신에게 첫 화면의 선택지를 주지 않는다 <code>B-01</code></td></tr>
 <tr><td><code>IA-R-09</code></td><td>직원 모드에서는 임시저장을 하지 않고 기존 저장분도 지운다</td><td>공용 기기에 개인정보를 남기지 않는다</td></tr>
 <tr><td><code>IA-R-10</code></td><td>모드를 바꾸면 번호 확인·인증을 <b>처음부터 다시</b> 밟는다</td><td>앞 모드의 확인이 뒤 모드의 인증을 대신하면 안 된다 <code>A-04</code></td></tr>
@@ -655,7 +654,7 @@ QR을 찍은 시점에 이미 직원이 옆에 있는데 본인이 누르면 직
 <td>빠진 항목을 <b>이름으로 나열</b>: "[필수] 이용약관, 개인정보 수집·이용 에 동의해 주셔야 신청할 수 있어요."
 + 동의 영역으로 스크롤 + 토스트</td><td>체크</td></tr>
 <tr><td><code>FC-02</code> <span class="tag new">구현</span></td><td>일부만 동의</td><td><code>모두 동의</code> 체크가 자동 해제됩니다. 남은 것만 나열</td><td>체크</td></tr>
-<tr><td><code>FC-03</code> <span class="tag new">구현</span></td><td>선택 항목만 동의</td><td>필수 3개를 모두 나열해 안내. 선택만으로는 제출되지 않습니다</td><td>체크</td></tr>
+<tr><td><code>FC-03</code> <span class="tag new">구현</span></td><td>하나만 동의하고 제출</td><td>빠진 항목을 모두 나열해 안내. 세 개를 다 받아야 제출됩니다</td><td>체크</td></tr>
 <tr><td><code>FC-04</code> <span class="tag sec">서버</span></td><td>약관 전문 로드 실패</td>
 <td>전문이 안 보이는 상태에서 동의를 받으면 <b>동의가 무효</b>가 될 수 있습니다.
 시트에 "지금 약관을 불러오지 못했어요" + 재시도를 띄우고 해당 항목 체크를 막습니다</td><td>재시도</td></tr>
@@ -905,8 +904,8 @@ QR은 <b>보조 수단</b>이고 설치 버튼이 주 경로입니다</td><td>�
 <td>이 문서의 전제 전체가 바뀝니다. 관리자 승인으로 되돌리면 모바일 승인 화면이 필요합니다</td></tr>
 <tr><td>2</td><td>남동구 행정동 <b>20개 목록</b> 검증</td><td>보건소</td><td>목록에 없는 동의 주민이 관외로 튕깁니다 <code>FD-05</code></td></tr>
 <tr><td>3</td><td>보건소 대표 전화번호 (현재 <code>032-000-0000</code>)</td><td>보건소</td><td>모든 결과 화면의 최종 탈출구가 비어 있습니다</td></tr>
-<tr><td>4</td><td>위탁사 실명 (문자 발송 · 클라우드)</td><td>개발팀</td><td>개인정보 동의서를 확정할 수 없습니다</td></tr>
-<tr><td>5</td><td>보유기간 "사업 종료 후 1년"의 지자체 기록물 기준 적합성</td><td>법무 · 보건소</td><td>동의서 문안 확정 불가</td></tr>
+<tr><td>4</td><td>위탁사 실명 — 문자 발송은 <b>NHN Cloud 확정</b>, <b>서버 운영 클라우드는 미정</b></td><td>개발팀</td><td>처리방침 제5조 위탁 표가 비어 있습니다. 리전이 국외면 국외이전 고지가 추가됩니다</td></tr>
+<tr><td>5</td><td>보유기간 <b>"사업 종료 후 3년"</b>의 지자체 기록물 기준 근거 <span class="tag fix">확정</span></td><td>보건소</td><td>값은 확정돼 처리방침·동의서가 일치합니다. 근거 확인만 남았습니다</td></tr>
 <tr><td>6</td><td>앱 스토어 링크 · QR 실제 URL · 딥링크 스킴</td><td>개발팀</td><td>완료 화면이 동작하지 않습니다 <code>FR-05</code></td></tr>
 <tr><td>7</td><td>지난 기수 URL 처리 정책</td><td>기획</td><td>몇 달 뒤 눌린 문자 링크가 빈 화면으로 갑니다 <code>FX-03</code></td></tr>
 <tr><td>8</td><td>직원 식별 수단 (PIN · 사원증)</td><td>기획 · 보건소</td><td>대리 동의의 책임 소재가 남지 않습니다 <code>FP-05</code></td></tr>
