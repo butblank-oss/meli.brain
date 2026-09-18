@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>디자인본 검수 · 수정안 — 맬리브레인 신청폼</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1F26;--ink2:#4E5968;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--accent:#1F3C5D}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.8;font-size:16px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;position:sticky;top:0;z-index:10;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top a{color:var(--accent);text-decoration:none;font-weight:700;font-size:14px}
+.top a:hover{text-decoration:underline}
+.top .sep{color:#C8C3B8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0 0 20px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.035em;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--ink);line-height:1.4}
+h3{font-size:18px;font-weight:800;letter-spacing:-.03em;margin:30px 0 8px}
+h4{font-size:16px;font-weight:800;margin:22px 0 6px}
+p{margin:10px 0;color:var(--ink2)}
+ul,ol{margin:10px 0 10px 22px;color:var(--ink2)}
+li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+code{background:#EDEBE5;color:#1A3654;padding:2px 6px;border-radius:5px;font-size:13.5px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+pre{background:#1A1F26;color:#E6EAF0;padding:18px 20px;border-radius:12px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:inherit;padding:0;font-size:13px;font-weight:400}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:#fff;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#EDEBE5;font-weight:700;color:var(--ink);white-space:nowrap}
+blockquote{border-left:4px solid var(--accent);background:#ECF1F6;margin:16px 0;padding:14px 18px;border-radius:0 10px 10px 0}
+blockquote p{margin:6px 0;color:#1A3654}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:var(--ink3)}
+@media(max-width:640px){.wrap{padding:24px 18px 80px}h1{font-size:24px}h2{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="index.html">← 신청폼 목차</a><span class="sep">·</span>
+  <a href="design/index.html">프로토타입</a><span class="sep">·</span>
+  <a href="terms/README.html">약관</a>
+</nav>
+<div class="wrap">
+<h1>디자인본 검수 · 수정안</h1>
+<p><strong>대상</strong> <code>design_handoff_malibrain_apply_form</code> (클로드디자인 산출물)
+<strong>기준</strong> <code>ia.html</code> v0.2 · <code>handoff/spec/*</code> · 2026-09-18 회의 결정
+<strong>결과</strong> 수용 10건 · <strong>되돌려야 하는 정책 회귀 3건</strong> · 확대 버그 1건 · 문구 교정 4건 · 확정값 2건 · 남은 과제 4건</p>
+<p>디자인 자체는 좋습니다. 네이비/웜그레이로 모드를 가른 것, 상태색 4종 체계, 3기 참여자 확인 팝업,
+대상자 바는 원안보다 낫습니다. <strong>다만 보안 정책 하나가 원래대로 되돌아갔습니다.</strong></p>
+<p>수정 가능한 항목은 전부 코드로 고쳐 <code>design_handoff_malibrain_apply_form_fixed/</code>에 넣었습니다.</p>
+<hr />
+<h2>1. 되돌려야 하는 것 — 정책 회귀 3건 ★</h2>
+<h3>R-01 기존 회원의 이름·거주지가 문자 확인 없이 화면에 뜬다 <span>치명</span></h3>
+<p>재현했습니다. 어르신 모드에서 <strong>아무 번호나 11자리</strong>를 넣으면 곧바로 이렇게 됩니다.</p>
+<pre><code>010-1234-5678
+✓ 이미 맬리브레인을 쓰고 계신 김순자 님이시네요. 적어두신 내용을 채워뒀어요.
+이름   [ 김순자 ]
+사시는 곳  인천 남동구 구월1동
+아직 남은 것: 동의        ← 동의만 누르면 제출됨
+</code></pre>
+<p>QR은 현장 밖에서도 열립니다. 남의 번호를 넣으면 <strong>그 사람의 이름과 거주 동이 노출</strong>되고,
+그대로 제출하면 <strong>남의 계정에 내 신청이 붙습니다.</strong></p>
+<p>이건 제가 v0.1 감사에서 <code>A-01</code> 치명으로 잡았고, 확인 과정에서 <strong>"기존회원일 때만 SMS"</strong> 를 직접 고르신 항목입니다.
+디자인 버전은 문자 확인을 <strong>직원 모드에서만</strong> 걸고 어르신 모드(= 유입 85%)에서는 뺐습니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>디자인본</th>
+<th>수정 후</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>신규 번호 · 어르신</td>
+<td>인증 없음</td>
+<td>인증 없음 (유지)</td>
+</tr>
+<tr>
+<td><strong>기존 회원 · 어르신</strong></td>
+<td><strong>인증 없이 이름·동 자동 채움</strong></td>
+<td><strong>인증 통과 후에만 채움</strong></td>
+</tr>
+<tr>
+<td>신규 번호 · 직원</td>
+<td>인증</td>
+<td>인증 (유지)</td>
+</tr>
+<tr>
+<td>기존 회원 · 직원</td>
+<td>인증</td>
+<td>인증 (유지)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>조치</strong> — <code>checkPhone()</code>의 <code>member</code> 분기에서 자동 채움을 걷어내고 모드와 무관하게 인증을 띄웁니다.
+채우는 시점을 <code>verifyOtp()</code> 성공 이후로 옮겼습니다. 잠금 장치(<code>otpShown &amp;&amp; !otpVerified</code> → 이름·동 비활성)는
+디자인본에 <strong>이미 구현돼 있었습니다.</strong> 호출만 안 하고 있었던 것이라 수정이 작습니다.</p>
+<h3>R-02 3기 참여자도 같은 경로로 뚫린다 <span>치명</span></h3>
+<p><code>confirmPrev()</code>가 팝업에서 [이어서 신청]을 누르면 어르신 모드에서 인증 없이 이름을 채웁니다.
+3기 참여자 명단은 보건소가 보유한 실명 명단이라 R-01보다 노출 범위가 좁지 않습니다.</p>
+<p><strong>조치</strong> — R-01과 동일. 팝업 확인 후 인증을 띄우고, 통과해야 채웁니다.
+팝업 자체(3기 참여자에게 먼저 알리는 것)는 좋은 설계라 그대로 뒀습니다.</p>
+<h3>R-03 인증 실패 횟수 제한이 없다 <span>중대</span></h3>
+<p>디자인본은 <code>"불일치는 [확인] 누른 시점에만 판정하고 몇 번째인지 표시. **잠금 없음**"</code> 입니다.
+6자리는 100만 가지뿐이라 시도 제한이 없으면 인증이 형식적인 절차가 됩니다.
+직원 모드의 인증은 <strong>번호 오타 검증</strong>이 주목적이지만, R-01을 되살리면 <strong>본인 확인</strong> 역할도 겸하게 되므로 제한이 필요합니다.</p>
+<p><strong>조치</strong> — 5회 실패 시 10분 잠금. 확인·재발송 버튼을 함께 잠그고 보건소 문의로 연결합니다.
+<code>(3/5번째)</code>로 남은 횟수를 보여줍니다.</p>
+<blockquote>
+<p><strong>서버가 정본입니다.</strong> 클라이언트 카운트는 안내용이고, 시도 횟수·잠금은 서버에서 세야 합니다
+(<code>ia.html</code> §9 서버 요구사항 3번).</p>
+</blockquote>
+<hr />
+<h2>2. 확대 시 버그 1건</h2>
+<h3>R-04 글자를 키우면 "아래에 더 있어요 ▾" 배지가 고정 바 뒤로 숨는다</h3>
+<p>배지가 <code>bottom:124px</code> 고정인데, 고정 제출 바는 글자 배율에 따라 <strong>124 → 181px</strong>까지 자랍니다.</p>
+<table>
+<thead>
+<tr>
+<th>글자 배율</th>
+<th>고정 바 높이</th>
+<th>배지 가려짐 (수정 전)</th>
+<th>수정 후</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기본 (1)</td>
+<td>124px</td>
+<td>아니오</td>
+<td>아니오</td>
+</tr>
+<tr>
+<td>아주 크게 (1.3)</td>
+<td>176px</td>
+<td><strong>예</strong></td>
+<td>아니오</td>
+</tr>
+<tr>
+<td>최대 (1.6)</td>
+<td>181px</td>
+<td><strong>예</strong></td>
+<td>아니오</td>
+</tr>
+</tbody>
+</table>
+<p>폰 글자 크기를 이미 키워둔 분에게만 생기는 버그라, <strong>정작 그 안내가 가장 필요한 사용자에게만 안 보입니다.</strong></p>
+<p><strong>조치</strong> — 고정 바의 실제 높이를 재서 <code>--ctah</code>로 내리고 배지를 <code>bottom:var(--ctah)</code>로 바꿨습니다.
+<code>ResizeObserver</code>로 글자 크기 변경에 따라갑니다. 원안(<code>index.html</code> v0.2)이 쓰던 방식입니다.</p>
+<hr />
+<h2>3. 문구 교정 4건</h2>
+<table>
+<thead>
+<tr>
+<th>위치</th>
+<th>디자인본</th>
+<th>수정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FS-02 제출 실패</td>
+<td>"정상적으로 신청되지 않았어요. <strong>잠시후</strong> 다시 시도해주세요. 반복적으로 신청이 <strong>안되는</strong> 경우 보건소 직원{전화번호}에게 <strong>문의주세요</strong>."</td>
+<td>"신청이 보내지지 않았어요. <strong>적으신 내용은 그대로 있습니다.</strong> 계속 안 되면 보건소 담당자{전화번호}에게 문의해 주세요."</td>
+</tr>
+<tr>
+<td>FE-03 조회 실패</td>
+<td>"지금 신청 확인이 안 되고 있어요. 잠시 후 다시 시도해 주세요…"</td>
+<td>"지금 확인이 안 되고 있어요. <strong>어르신 잘못이 아닙니다.</strong> 계속 안 되면…"</td>
+</tr>
+<tr>
+<td>FE-08 이용 제한</td>
+<td>"…문의주세요."</td>
+<td>"…문의해 주세요."</td>
+</tr>
+<tr>
+<td>버튼</td>
+<td>"다시 시도하기"</td>
+<td>"다시 보내기"</td>
+</tr>
+</tbody>
+</table>
+<p>세 가지가 걸립니다.</p>
+<ol>
+<li><strong>띄어쓰기</strong> — <code>잠시후</code> → <code>잠시 후</code>, <code>안되는</code> → <code>안 되는</code>, <code>문의주세요</code> → <code>문의해 주세요</code></li>
+<li><strong>입력값 보존 안내가 빠졌습니다.</strong> "적으신 내용은 그대로 있습니다"는 장식이 아니라 <strong>재시도율을 좌우하는 문장</strong>입니다.
+   어르신은 실패 화면에서 "처음부터 다시 써야 하나" 싶으면 그 자리에서 닫습니다. (<code>04_문구집.md</code> 원칙)</li>
+<li><strong>한 문장 40자 이내 · 한 문장 한 가지</strong> 원칙 위반 — FS-02 마지막 문장이 45자였습니다.</li>
+</ol>
+<h2>4. 확정값 반영 2건</h2>
+<p>디자인 작업이 약관 확인 이전 버전으로 진행돼 반영이 안 된 값입니다.</p>
+<table>
+<thead>
+<tr>
+<th>위치</th>
+<th>디자인본</th>
+<th>수정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>이용약관 제1조</td>
+<td>주식회사 <strong>맬리</strong></td>
+<td>주식회사 <strong>원메딕스인더스트리</strong></td>
+</tr>
+<tr>
+<td>개인정보 동의 · 처리 위탁</td>
+<td>문자 발송 — <strong>(주)○○</strong></td>
+<td>문자 발송 — <strong>NHN Cloud</strong> (SMS·카카오 알림톡)</td>
+</tr>
+</tbody>
+</table>
+<p>나머지 자리표시(<code>○○클라우드</code>, 보유기간 1년, 시행일)는 아직 값이 없어 그대로 뒀습니다 → <code>07_약관_확인요청.md</code></p>
+<hr />
+<h2>5. 수용한 개선 10건 — 원안보다 낫습니다</h2>
+<p>스펙에 역반영했습니다. 이건 <strong>디자인본이 정본</strong>입니다.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>개선</th>
+<th>왜 더 나은가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I-01</td>
+<td><strong>직원 모드는 신규 번호도 문자 확인</strong></td>
+<td>원안은 기존 회원만 인증. 대리 접수는 번호 오타가 곧 로그인 불가라 신규도 검증하는 게 맞습니다</td>
+</tr>
+<tr>
+<td>I-02</td>
+<td><strong>3기 참여자 확인 팝업</strong> (시트 3번째)</td>
+<td>자동 채움 전에 "3기에 참여하셨던 분이네요"로 한 번 확인. 본인 확인 단계가 하나 늘어 안전하고, 어르신에게는 안심 신호가 됩니다</td>
+</tr>
+<tr>
+<td>I-03</td>
+<td><strong>대상자 바</strong> (직원 모드 sticky top) — "접수 중 · {번호}" + "오늘 N번째"</td>
+<td>직원이 지금 누구를 접수 중인지 화면에서 확인. 연속 접수에서 섞이는 사고를 막습니다</td>
+</tr>
+<tr>
+<td>I-04</td>
+<td><strong>제출 완료 시 직원 모드 자동 해제</strong></td>
+<td>원안은 모드 유지. 공용 기기가 직원 모드로 방치되는 <code>FP-03</code> 리스크를 없앱니다. 완료 화면의 [다음 분 신청받기]로 재진입</td>
+</tr>
+<tr>
+<td>I-05</td>
+<td><strong>상태색 4종</strong> (오류·경고·성공 + <strong>안내 i</strong>)</td>
+<td>원안 3종. "확인하고 있어요" 같은 중립 상태를 성공(초록)으로 표시하던 문제 해결</td>
+</tr>
+<tr>
+<td>I-06</td>
+<td><strong>네이비 #1F3C5D / 직원 웜그레이 #3A342C</strong></td>
+<td>모드가 색으로 즉시 구분됩니다. 대비도 11.3:1 · 12.3:1로 충분</td>
+</tr>
+<tr>
+<td>I-07</td>
+<td><strong>보건소 번호를 <code>{전화번호}</code> 자리표시로 통일</strong></td>
+<td>주입 지점이 화면 7곳 + 약관 2곳으로 명확해졌습니다</td>
+</tr>
+<tr>
+<td>I-08</td>
+<td><strong>인증번호 입력에 <code>letter-spacing:.2em</code> + <code>tabular-nums</code></strong></td>
+<td>6자리를 두 개씩 끊어 읽기 쉬워집니다</td>
+</tr>
+<tr>
+<td>I-09</td>
+<td><strong>재발송 쿨다운 중 밑줄·포인터 제거</strong></td>
+<td>누를 수 없다는 것이 형태로도 전달됩니다</td>
+</tr>
+<tr>
+<td>I-10</td>
+<td><strong>체크박스 이벤트 전파 버그를 README에 명시</strong></td>
+<td>행 전체 탭 + 체크박스 탭이 겹쳐 토글이 상쇄되던 실제 버그. 구현자가 반복하지 않도록 기록한 것이 좋습니다</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. 코드로 못 고친 남은 과제 4건</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>항목</th>
+<th>상태</th>
+<th>판단</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L-01</td>
+<td><strong>임시저장 · 복구 (<code>FX-05</code>)</strong> 가 사라졌습니다</td>
+<td>디자인본에 <code>localStorage</code> 0건</td>
+<td>어르신은 입력 중 전화를 자주 받습니다. 돌아오면 전부 날아갑니다. <strong>구현 시 복원 필요</strong> (직원 모드는 저장 안 함)</td>
+</tr>
+<tr>
+<td>L-02</td>
+<td><strong>재발송 하루 한도 (<code>FA-07</code>)</strong> 프리셋 삭제</td>
+<td>화면 영향 없음</td>
+<td>서버 과제. SMS 비용·스팸 방어</td>
+</tr>
+<tr>
+<td>L-03</td>
+<td><strong>조회 레이트 리밋 (<code>FE-10</code>)</strong> 프리셋 삭제</td>
+<td>화면 영향 없음</td>
+<td>서버 과제지만 <strong>프리셋이 없으면 구현자가 모릅니다.</strong> 예외 목록에 남겨야 합니다</td>
+</tr>
+<tr>
+<td>L-04</td>
+<td><strong>입력칸 테두리 대비 1.5:1</strong></td>
+<td>원안도 동일 (1.3:1)</td>
+<td>흰 입력칸 / 앱 배경 대비가 1.11:1이라 <strong>테두리가 필드를 식별하는 유일한 단서</strong>입니다. 밝은 실외 부스에서 어르신에게 필드가 안 보일 수 있습니다. 테두리를 <code>#D6D2C9</code> → <strong>3:1 이상</strong>(예 <code>#A8A296</code>)으로 올리거나 입력칸 배경을 한 단계 더 눌러야 합니다</td>
+</tr>
+</tbody>
+</table>
+<p>L-04는 제 원안도 같은 문제를 갖고 있던 항목입니다. 디자인본의 회귀가 아니라 <strong>양쪽 공통 과제</strong>입니다.</p>
+<hr />
+<h2>7. 검증 결과</h2>
+<p>수정본을 헤드리스 브라우저로 돌려 확인했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>확인</th>
+<th>수정 전</th>
+<th>수정 후</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FE-05 · 인증 전 이름 칸</td>
+<td><code>"김순자"</code></td>
+<td><code>""</code> (빈칸)</td>
+</tr>
+<tr>
+<td>FE-05 · 인증 전 이름·동 필드</td>
+<td>활성</td>
+<td><code>pointer-events:none</code> 잠김</td>
+</tr>
+<tr>
+<td>FE-05 · 인증 영역</td>
+<td>안 뜸</td>
+<td><code>남은 시간 5:00</code> 노출</td>
+</tr>
+<tr>
+<td>FE-05 · 인증 통과 후</td>
+<td>—</td>
+<td>이름 <code>김순자</code> 채워짐</td>
+</tr>
+<tr>
+<td>FA-04 · 5회 실패</td>
+<td>"(5번째)" 계속</td>
+<td>"5번 틀리셨어요. 10분 뒤에…"</td>
+</tr>
+<tr>
+<td>FA-04 · 잠금 후 확인 버튼</td>
+<td><code>cursor:pointer</code></td>
+<td><code>cursor:not-allowed</code></td>
+</tr>
+<tr>
+<td>배지 가려짐 (<code>--fs</code> 1.3)</td>
+<td><strong>예</strong></td>
+<td>아니오 (<code>--ctah:186px</code>)</td>
+</tr>
+<tr>
+<td>배지 가려짐 (<code>--fs</code> 1.6)</td>
+<td><strong>예</strong></td>
+<td>아니오 (<code>--ctah:191px</code>)</td>
+</tr>
+<tr>
+<td>콘솔 에러</td>
+<td>없음</td>
+<td>없음</td>
+</tr>
+</tbody>
+</table>
+<h2>8. 적용 방법</h2>
+<p>수정본은 원본과 <strong>같은 구조</strong>입니다. <code>Malibrain Apply Form.dc.html</code> 한 파일만 바뀌었습니다.</p>
+<pre><code>design_handoff_malibrain_apply_form_fixed/
+  Malibrain Apply Form.dc.html   ← 12군데 수정
+  IA 화면설계서.dc.html           (변경 없음)
+  README.md                      (변경 없음 — 아래 4곳은 README도 고쳐야 함)
+  doc-page.js · support.js       (변경 없음)
+  spec/                          (변경 없음)
+</code></pre>
+<p><strong>README.md도 함께 고쳐야 하는 곳 4군데</strong></p>
+<table>
+<thead>
+<tr>
+<th>위치</th>
+<th>현재</th>
+<th>고칠 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>조회 결과 분기</code> 표 · FE-05</td>
+<td>"이름·동 자동 채움, <strong>인증 없음</strong>, 동의만 받고 제출"</td>
+<td>"<strong>문자 확인 후</strong> 이름·동 자동 채움. 인증 전에는 이름·동·동의 비활성"</td>
+</tr>
+<tr>
+<td><code>조회 결과 분기</code> 표 · FE-07</td>
+<td>"팝업으로 먼저 알림 → [이어서 신청]에서 이름 자동 채움"</td>
+<td>"팝업 확인 → <strong>문자 인증</strong> → 통과 후 이름 자동 채움"</td>
+</tr>
+<tr>
+<td><code>문자 인증</code> 절</td>
+<td>"<strong>잠금·횟수 제한 없음</strong>" · "직원 대리 접수 전용"</td>
+<td>"5회 실패 시 10분 잠금" · "<strong>직원 대리 접수 + 기존 회원</strong>"</td>
+</tr>
+<tr>
+<td><code>SC-F-01</code> 컴포넌트 9</td>
+<td>"bottom 124px"</td>
+<td>"고정 바 높이를 측정한 <code>--ctah</code>"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>실제 구현으로 옮길 때 지켜야 할 것</strong> (<code>ia.html</code> §9와 동일)
+- 조회 API 응답에 <strong>이름·거주 동을 포함하지 않습니다.</strong> 화면을 잠가도 응답에 있으면 R-01은 그대로입니다
+- 인증 시도 횟수·잠금·쿨다운은 <strong>서버가 셉니다</strong>
+- 제출은 <strong>멱등</strong> 처리 — 같은 번호는 기존 건 반환</p>
+</div>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>08_디자인본_검수_및_수정안.md</code> 에서 생성됐습니다</footer>
+</body>
+</html>

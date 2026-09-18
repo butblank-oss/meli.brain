@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>06. 남은 결정사항 — 맬리브레인 신청폼</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1F26;--ink2:#4E5968;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--accent:#1F3C5D}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.8;font-size:16px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;position:sticky;top:0;z-index:10;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top a{color:var(--accent);text-decoration:none;font-weight:700;font-size:14px}
+.top a:hover{text-decoration:underline}
+.top .sep{color:#C8C3B8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0 0 20px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.035em;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--ink);line-height:1.4}
+h3{font-size:18px;font-weight:800;letter-spacing:-.03em;margin:30px 0 8px}
+h4{font-size:16px;font-weight:800;margin:22px 0 6px}
+p{margin:10px 0;color:var(--ink2)}
+ul,ol{margin:10px 0 10px 22px;color:var(--ink2)}
+li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+code{background:#EDEBE5;color:#1A3654;padding:2px 6px;border-radius:5px;font-size:13.5px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+pre{background:#1A1F26;color:#E6EAF0;padding:18px 20px;border-radius:12px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:inherit;padding:0;font-size:13px;font-weight:400}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:#fff;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#EDEBE5;font-weight:700;color:var(--ink);white-space:nowrap}
+blockquote{border-left:4px solid var(--accent);background:#ECF1F6;margin:16px 0;padding:14px 18px;border-radius:0 10px 10px 0}
+blockquote p{margin:6px 0;color:#1A3654}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:var(--ink3)}
+@media(max-width:640px){.wrap{padding:24px 18px 80px}h1{font-size:24px}h2{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="../../index.html">← 신청폼 목차</a><span class="sep">·</span>
+  <a href="../../design/index.html">프로토타입</a><span class="sep">·</span>
+  <a href="../../terms/README.html">약관</a>
+</nav>
+<div class="wrap">
+<h1>06. 남은 결정사항</h1>
+<p>아직 값이 안 정해진 것들입니다. <strong>리디자인에서는 자리표시 그대로 두세요.</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>항목</th>
+<th>현재 자리표시</th>
+<th>누가</th>
+<th>없으면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>자동 승인 가부</strong> — "이 폼으로 신청한 분은 무조건 승인해도 되는지"</td>
+<td>(승인 완료로 가정)</td>
+<td>보건소 확인</td>
+<td><strong>전체 전제가 바뀝니다.</strong> 관리자 승인으로 되돌리면 모바일 승인 화면이 필요</td>
+</tr>
+<tr>
+<td>2</td>
+<td>남동구 행정동 20개 목록 검증</td>
+<td>20개 하드코딩</td>
+<td>보건소</td>
+<td>목록에 없는 동의 주민이 관외로 튕김</td>
+</tr>
+<tr>
+<td>3</td>
+<td>보건소 대표 전화번호</td>
+<td><code>032-000-0000</code></td>
+<td>보건소</td>
+<td>모든 결과 화면의 최종 탈출구가 비어 있음</td>
+</tr>
+<tr>
+<td>4</td>
+<td>위탁사 실명 (문자 발송 · 클라우드)</td>
+<td><code>(주)○○</code> / <code>○○클라우드</code></td>
+<td>개발팀</td>
+<td>개인정보 동의서를 확정할 수 없음</td>
+</tr>
+<tr>
+<td>5</td>
+<td>보유기간 "사업 종료 후 1년"의 지자체 기록물 기준 적합성</td>
+<td>1년</td>
+<td>법무 · 보건소</td>
+<td>동의서 문안 확정 불가</td>
+</tr>
+<tr>
+<td>6</td>
+<td>앱 스토어 링크 · QR 실제 URL · 딥링크 스킴</td>
+<td>더미 QR · 링크 없음</td>
+<td>개발팀</td>
+<td>완료 화면이 동작하지 않음</td>
+</tr>
+<tr>
+<td>7</td>
+<td>4기 모집 시작일</td>
+<td><code>10월 6일 월요일</code></td>
+<td>보건소</td>
+<td>SC-F-05 문구 확정 불가</td>
+</tr>
+<tr>
+<td>8</td>
+<td>지난 기수 URL 처리 정책</td>
+<td>미정</td>
+<td>기획</td>
+<td>몇 달 뒤 눌린 문자 링크가 빈 화면으로 감</td>
+</tr>
+<tr>
+<td>9</td>
+<td>직원 식별 수단 (PIN · 사원증)</td>
+<td>없음</td>
+<td>기획 · 보건소</td>
+<td>대리 동의의 책임 소재가 남지 않음</td>
+</tr>
+<tr>
+<td>10</td>
+<td>직원 모드 자동 해제 시간</td>
+<td>없음</td>
+<td>기획</td>
+<td>공용 기기가 직원 모드로 방치됨</td>
+</tr>
+<tr>
+<td>11</td>
+<td>정원 마감 시 대기 신청 여부</td>
+<td>미정</td>
+<td>기획</td>
+<td>SC-F-05 문구 확정 불가</td>
+</tr>
+</tbody>
+</table>
+<h2>타 기관으로 폼을 팔 때</h2>
+<p>기관별 설정값만 분리하면 됩니다. <strong>폼 구조 · 동의 항목 수 · 문구 톤은 공통으로 유지</strong>합니다.</p>
+<table>
+<thead>
+<tr>
+<th>설정값</th>
+<th>예 (남동구)</th>
+<th>영향 범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기관명 · 기수명</td>
+<td>인천 남동구 보건소 / 치매예방교실 4기</td>
+<td>기관 배지 · 제목 · 약관 전반</td>
+</tr>
+<tr>
+<td>관내 행정동 목록</td>
+<td>20개</td>
+<td>동 선택 시트 · 자동 승인 판정 · 서버 화이트리스트</td>
+</tr>
+<tr>
+<td>대표 전화번호</td>
+<td>032-000-0000</td>
+<td>모든 결과 화면</td>
+</tr>
+<tr>
+<td>제3자 제공 동의 내용</td>
+<td>제공받는 곳 · 목적 · 보유기간</td>
+<td>필수 동의 3</td>
+</tr>
+<tr>
+<td>자동 승인 여부</td>
+<td>켜짐</td>
+<td>없으면 관리자 승인 경로로</td>
+</tr>
+<tr>
+<td>모집 기간 · 정원</td>
+<td>10/6 ~</td>
+<td>SC-F-05</td>
+</tr>
+<tr>
+<td>URL 규칙</td>
+<td><code>/invitations/{기관}/{기수}/form</code></td>
+<td>미정</td>
+</tr>
+</tbody>
+</table>
+</div>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>design/spec/06_남은_결정사항.md</code> 에서 생성됐습니다</footer>
+</body>
+</html>
