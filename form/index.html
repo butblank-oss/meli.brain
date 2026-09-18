@@ -97,6 +97,13 @@ input[aria-invalid="true"]{border-color:var(--err);background:#FFF6F6}
 .btn-s{flex-shrink:0;height:60px;padding:0 16px;border:1.5px solid var(--g);background:var(--wt);
   color:var(--g-d);border-radius:12px;font-family:inherit;font-size:calc(16px*var(--fs));font-weight:700;cursor:pointer}
 .btn-s:disabled{border-color:var(--line);color:#B8C0C8;cursor:not-allowed}
+.btn-s.ok{background:var(--g);border-color:var(--g);color:#fff}
+.btn-resend{align-self:flex-start;background:none;border:0;padding:12px 2px;min-height:48px;
+  font-family:inherit;font-size:calc(15px*var(--fs));color:var(--ink2);cursor:pointer;text-align:left}
+.btn-resend b{color:var(--g-d);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.btn-resend:disabled{color:var(--ink3);cursor:not-allowed}
+.btn-resend:disabled b{color:var(--ink3);text-decoration:none}
+input[readonly]{background:#F4F6F7;color:var(--ink2)}
 
 /* 거주지 */
 .addr-fix{display:flex;align-items:center;gap:8px;background:var(--g-l);border-radius:12px;
@@ -324,9 +331,10 @@ input[aria-invalid="true"]{border-color:var(--err);background:#FFF6F6}
         <div class="row">
           <input type="text" id="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6"
                  placeholder="000000" oninput="onOtp(this)" aria-describedby="otpMsg">
-          <button class="btn-s" id="otpBtn" onclick="resend()">재발송</button>
+          <button class="btn-s" id="otpBtn" onclick="verifyOtp()" disabled>확인</button>
         </div>
         <p class="msg" id="otpMsg" role="status"></p>
+        <button class="btn-resend" id="resendBtn" onclick="resend()">문자가 안 왔어요? <b>재발송</b></button>
       </div>
 
       <!-- 이름 -->
@@ -460,7 +468,7 @@ input[aria-invalid="true"]{border-color:var(--err);background:#FFF6F6}
         <b>032-000-0000</b>
       </div>
 
-      <button class="btn line" onclick="go('form')">처음으로 돌아가기</button>
+      <button class="btn line" id="againBtn" onclick="go('form')">처음으로 돌아가기</button>
     </div>
   </div>
 
@@ -528,14 +536,25 @@ function go(s){document.querySelectorAll(".scr").forEach(function(e){e.classList
 
 /* ═══════ 탭 ═══════ */
 function setTab(t){
+  var changed = S.tab!==t;
   S.tab=t;
   $("tabA").setAttribute("aria-selected",t==="A");
   $("tabB").setAttribute("aria-selected",t==="B");
   $("staffbar").hidden = t!=="B";
   $("proxyNote").hidden = t!=="B";
-  $("otpField").hidden = !(t==="B" && S.verified===false && $("tel").value.length>=12 && S.otpSent);
-  if(t==="A"){S.otpSent=false;$("otpField").hidden=true}
-  $("telBtn").textContent = (t==="B") ? "인증번호" : "확인";
+  $("telBtn").textContent = (t==="B") ? "인증번호 받기" : "확인";
+  /* 탭을 옮기면 확인 절차를 다시 밟는다.
+     (A에서 받은 확인이 B의 SMS 인증을 대신하면 안 됨) */
+  if(changed){
+    S.verified=false;S.otpSent=false;S.otpTries=0;
+    $("otpField").hidden=true;$("otp").value="";$("otp").readOnly=false;
+    $("otp").setAttribute("aria-invalid","false");
+    clearInterval(window._ot);
+    $("otpBtn").disabled=true;$("otpBtn").className="btn-s";$("otpBtn").textContent="확인";
+    $("resendBtn").hidden=false;$("resendBtn").disabled=false;
+    $("resendBtn").innerHTML="문자가 안 왔어요? <b>재발송</b>";
+    msg("telMsg","");msg("otpMsg","");
+  }
   validate();
 }
 
@@ -579,35 +598,59 @@ function lookup(){
 
 /* ═══════ SMS 인증 (탭 B) ═══════ */
 function sendOtp(){
-  if(S.locked){msg("otpMsg","5번 틀리셨어요. 10분 뒤에 다시 해주세요. 급하시면 직접 신청 탭으로 바꿔주세요.","e");return}
-  S.otpSent=true;$("otpField").hidden=false;
+  if(S.locked){msg("otpMsg","5번 틀리셨어요. 10분 뒤에 다시 해주세요. 급하시면 '직접 신청' 탭으로 바꿔주세요.","e");return}
+  S.otpSent=true;S.verified=false;$("otpField").hidden=false;
+  $("otp").value="";$("otp").readOnly=false;$("otp").setAttribute("aria-invalid","false");
+  $("otpBtn").disabled=true;$("otpBtn").className="btn-s";$("otpBtn").textContent="확인";
+  $("resendBtn").hidden=false;
   msg("telMsg","어르신 휴대폰으로 인증번호를 보냈어요. 문자를 확인해 주세요.","k");
-  msg("otpMsg","5분 안에 입력해 주세요.","k");
+  msg("otpMsg","6자리를 넣고 [확인]을 눌러주세요. (5분 안에)","k");
   $("otp").focus();
-  var b=$("otpBtn"),n=30;b.disabled=true;b.textContent=n+"초";
-  clearInterval(window._ot);
-  window._ot=setInterval(function(){n--;b.textContent=n+"초";
-    if(n<=0){clearInterval(window._ot);b.disabled=false;b.textContent="재발송"}},1000);
+  cooldown(30);
+  validate();
 }
-function resend(){sendOtp()}
+function cooldown(n){
+  var b=$("resendBtn");b.disabled=true;
+  b.innerHTML="문자가 안 왔어요? <b>재발송</b> ("+n+"초 뒤에 가능)";
+  clearInterval(window._ot);
+  window._ot=setInterval(function(){n--;
+    b.innerHTML="문자가 안 왔어요? <b>재발송</b> ("+n+"초 뒤에 가능)";
+    if(n<=0){clearInterval(window._ot);b.disabled=false;
+      b.innerHTML="문자가 안 왔어요? <b>재발송</b>"}},1000);
+}
+function resend(){sendOtp();toast("인증번호를 다시 보냈어요")}
 
+/* 입력만으로는 인증되지 않는다. [확인]을 눌러야 검증한다. */
 function onOtp(el){
   el.value=el.value.replace(/\D/g,"").slice(0,6);
-  if(el.value.length<6){msg("otpMsg","5분 안에 입력해 주세요.","k");S.verified=false;validate();return}
+  S.verified=false;el.setAttribute("aria-invalid","false");
+  $("otpBtn").disabled = el.value.length!==6;
+  if(el.value.length===6) msg("otpMsg","[확인]을 눌러주세요.","k");
+  else msg("otpMsg","6자리를 넣고 [확인]을 눌러주세요. (5분 안에)","k");
+  validate();
+}
+
+function verifyOtp(){
+  var el=$("otp");
+  if(el.value.length!==6){msg("otpMsg","6자리를 모두 넣어주세요.","e");el.focus();return}
+  if(S.locked){msg("otpMsg","5번 틀리셨어요. 10분 뒤에 다시 해주세요. 급하시면 '직접 신청' 탭으로 바꿔주세요.","e");return}
 
   var wrong = (S.preset==="otpfail"||S.preset==="otplock");
   if(wrong){
-    S.otpTries++;
+    S.otpTries++;S.verified=false;
+    el.setAttribute("aria-invalid","true");
     if(S.preset==="otplock"||S.otpTries>=5){
-      S.locked=true;S.verified=false;
-      el.setAttribute("aria-invalid","true");
+      S.locked=true;
+      $("otpBtn").disabled=true;$("resendBtn").disabled=true;
       msg("otpMsg","5번 틀리셨어요. 10분 뒤에 다시 해주세요. 급하시면 '직접 신청' 탭으로 바꿔주세요.","e");
     }else{
-      el.setAttribute("aria-invalid","true");
-      msg("otpMsg","번호가 다릅니다. 다시 확인해 주세요. ("+S.otpTries+"/5회)","e");
+      msg("otpMsg","번호가 다릅니다. 문자를 다시 확인해 주세요. ("+S.otpTries+"/5회)","e");
+      el.select();
     }
   }else{
-    S.verified=true;el.setAttribute("aria-invalid","false");
+    S.verified=true;el.setAttribute("aria-invalid","false");el.readOnly=true;
+    $("otpBtn").className="btn-s ok";$("otpBtn").textContent="확인됨";$("otpBtn").disabled=true;
+    $("resendBtn").hidden=true;clearInterval(window._ot);
     msg("otpMsg","확인됐습니다. 본인 휴대폰이 맞아요.","k");
     if(S.preset==="member"){$("name").value="홍길동";pickDong("구월1동");
       msg("telMsg","맬리브레인 회원이시네요. 홍*동 님 맞으시죠? 적어두신 정보를 채워뒀어요.","k")}
@@ -699,6 +742,8 @@ function fillDone(path){
   $("rDong").textContent="인천 남동구 "+(S.dong||"구월1동");
   $("rPath").textContent = path==="기존신청" ? "이미 신청하심 · 승인 완료"
                          : path==="직원대리" ? "보건소 직원 대리 접수 · 승인 완료" : "승인 완료";
+  /* 직원이 연속으로 접수하는 흐름이라 탭은 유지하고 라벨만 바꾼다 */
+  $("againBtn").textContent = path==="직원대리" ? "다음 분 신청받기" : "처음으로 돌아가기";
 }
 
 /* ═══════ 프리셋 ═══════ */
@@ -707,8 +752,8 @@ var PD={
  member:"이미 맬리 회원인 번호. 마스킹된 이름(홍*동)으로 본인 확인만 시키고 이름·동을 자동으로 채웁니다.",
  dup:"이미 4기를 신청한 번호. 중복 접수 대신 완료 화면으로 보내 앱 설치만 안내합니다.",
  badphone:"확인을 눌러도 형식 오류로 막힙니다. 오류 문구는 필드 바로 아래에 붙습니다.",
- otpfail:"[도움받아 신청] 탭에서만 재현됩니다. 6자리를 넣으면 불일치로 처리하고 남은 횟수를 보여줍니다.",
- otplock:"[도움받아 신청] 탭에서 5회 초과 즉시 잠금. 직접 신청 탭으로 우회하도록 안내합니다.",
+ otpfail:"[도움받아 신청] 탭에서만 재현됩니다. 6자리를 넣고 [확인]을 눌러야 검증하며, 불일치 시 남은 횟수를 보여줍니다.",
+ otplock:"[도움받아 신청] 탭에서 [확인]을 누르면 즉시 잠금. 확인·재발송이 모두 막히고 직접 신청 탭으로 우회하도록 안내합니다.",
  noconsent:"필수 3개를 비운 채 제출을 누르면 어디가 빠졌는지 알려줍니다. (제출 버튼은 비활성 상태)"
 };
 function applyPreset(v){
@@ -733,7 +778,10 @@ function reset(){
   ["telMsg","otpMsg","nameMsg","dongMsg","consentMsg"].forEach(function(i){msg(i,"")});
   document.querySelectorAll("#dongList button").forEach(function(e){e.setAttribute("aria-pressed","false")});
   $("telBtn").disabled=true;$("otpField").hidden=true;clearInterval(window._ot);
-  $("otpBtn").disabled=false;$("otpBtn").textContent="재발송";
+  $("otp").readOnly=false;
+  $("otpBtn").disabled=true;$("otpBtn").className="btn-s";$("otpBtn").textContent="확인";
+  $("resendBtn").hidden=false;$("resendBtn").disabled=false;
+  $("resendBtn").innerHTML="문자가 안 왔어요? <b>재발송</b>";
   validate();
 }
 
