@@ -63,15 +63,6 @@
       <p style="font-size:11.5px;color:#89929B;line-height:1.8;margin-top:10px">{{ presetDesc }}</p>
     </div>
 
-    <div style="border-top:1px solid #242930;padding-top:14px;margin-bottom:16px">
-      <div style="font-size:11px;font-weight:700;color:#9DB6D2;letter-spacing:.06em;margin-bottom:8px">글자 크기</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">
-        <sc-for list="{{ fsOptions }}" as="f" hint-placeholder-count="4">
-          <button type="button" onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button>
-        </sc-for>
-      </div>
-    </div>
-
     <div style="font-size:11.5px;color:#7C848D;line-height:1.9;background:#1D2228;border:1px solid #242930;border-radius:10px;padding:12px 13px">
       본문 17px · 입력 19px · 터치 44px · 주요 버튼 58~88px · 본문 대비 4.5:1 이상.<br>
       제출 버튼은 붙박이, 상태는 색 · 아이콘 · 문구 3중.
@@ -211,9 +202,9 @@
           <div role="group" aria-labelledby="consentLbl" style="background:#fff;border:1px solid #E4E1DA;border-radius:16px">
             <div onClick="{{ toggleAll }}" style="display:flex;align-items:flex-start;gap:12px;padding:16px;cursor:pointer;background:#F7F6F2;border-radius:15px 15px 0 0">
               <button type="button" role="checkbox" aria-checked="{{ allAria }}" aria-labelledby="cAllT" onClick="{{ toggleAllBtn }}" style="{{ allBoxStyle }}">{{ allMark }}</button>
-              <span id="cAllT" style="flex:1;font-size:clamp(17px,calc(17px*var(--fs)),22px);font-weight:800;line-height:1.45;letter-spacing:-.02em">아래 내용에 모두 동의합니다<br><span style="font-size:clamp(14px,calc(14px*var(--fs)),18px);font-weight:600;color:#59636D">선택 항목(문자 받기)까지 함께 켜집니다</span></span>
+              <span id="cAllT" style="flex:1;font-size:clamp(17px,calc(17px*var(--fs)),22px);font-weight:800;line-height:1.45;letter-spacing:-.02em">아래 내용에 모두 동의합니다<br><span style="font-size:clamp(14px,calc(14px*var(--fs)),18px);font-weight:600;color:#59636D">세 가지 모두 동의하셔야 신청할 수 있어요</span></span>
             </div>
-            <sc-for list="{{ consentItems }}" as="c" hint-placeholder-count="4">
+            <sc-for list="{{ consentItems }}" as="c" hint-placeholder-count="3">
               <div onClick="{{ c.toggle }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid #EFEDE7;cursor:pointer">
                 <button type="button" role="checkbox" aria-checked="{{ c.aria }}" aria-label="{{ c.label }}" onClick="{{ c.toggleBtn }}" style="{{ c.boxStyle }}">{{ c.mark }}</button>
                 <span style="flex:1;font-size:clamp(16px,calc(16px*var(--fs)),21px);font-weight:600;line-height:1.45;letter-spacing:-.02em"><span style="{{ c.tagStyle }}">{{ c.tag }}</span>{{ c.label }}</span>
@@ -544,7 +535,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showInspector&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;검수&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;신청폼&quot;,&quot;신청 완료&quot;,&quot;이미 신청함&quot;,&quot;거주 아님&quot;,&quot;모집 기간 아님&quot;],&quot;default&quot;:&quot;신청폼&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;검수&quot;},&quot;staffMode&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;검수&quot;},&quot;fontScale&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;기본&quot;,&quot;크게&quot;,&quot;아주 크게&quot;,&quot;최대&quot;],&quot;default&quot;:&quot;기본&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;접근성&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showInspector&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;검수&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;신청폼&quot;,&quot;신청 완료&quot;,&quot;이미 신청함&quot;,&quot;거주 아님&quot;,&quot;모집 기간 아님&quot;],&quot;default&quot;:&quot;신청폼&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;검수&quot;},&quot;staffMode&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;검수&quot;}}">
 class Component extends DCLogic {
   DONGS = ["구월1동","구월2동","구월3동","구월4동","간석1동","간석2동","간석3동","간석4동","만수1동","만수2동","만수3동","만수4동","만수5동","만수6동","남촌도림동","논현1동","논현2동","논현고잔동","장수서창동","서창2동"];
 
@@ -582,7 +573,7 @@ class Component extends DCLogic {
     t2: {n:1, title:"개인정보 수집·이용 동의", sub:"[필수] 동의하지 않으시면 신청할 수 없어요", req:true, rows:[
       {k:"수집 항목", v:"이름, 휴대전화 번호, 거주 행정동\n(앱 이용 중 생성) 걸음 수, 게임 참여 기록, 프로그램 출석 기록"},
       {k:"수집 목적", v:"회원 식별과 로그인, 치매예방교실 참여자 관리, 참여 결과 리포트 제공"},
-      {k:"보유·이용 기간", v:"회원 탈퇴 시 또는 보건소 사업 종료 후 1년까지\n(관계 법령에 보존 의무가 있는 경우 그 기간)"},
+      {k:"보유·이용 기간", v:"회사 보유분은 회원 탈퇴 시까지, 보건소 제공분은 사업 종료 후 3년\n(관계 법령에 보존 의무가 있는 경우 그 기간)"},
       {k:"처리 위탁", v:"문자 발송 — NHN Cloud (SMS·카카오 알림톡) / 서버 운영 — ○○클라우드"}
     ], blocks:[
       {h:"동의를 거부할 권리", p:"동의를 거부하실 수 있습니다. 다만 위 항목은 서비스 제공에 꼭 필요한 최소한의 정보라, 동의하지 않으시면 신청과 앱 이용이 어렵습니다."},
@@ -593,26 +584,19 @@ class Component extends DCLogic {
       {k:"제공받는 곳", v:"인천광역시 남동구 보건소"},
       {k:"제공 항목", v:"이름, 휴대전화 번호, 거주 행정동, 프로그램 참여 기록(출석·활동 횟수), 수료 여부"},
       {k:"제공 목적", v:"치매예방교실 참여자 관리, 관내 거주 확인, 출석·수료 확인, 사업 실적 보고"},
-      {k:"보유 기간", v:"보건소 사업 종료 후 1년 (지자체 기록물 보존 기준에 따름)"}
+      {k:"보유 기간", v:"보건소 사업 종료 후 3년 (지자체 기록물 보존 기준에 따름)"}
     ], blocks:[
       {h:"왜 필요한가요", p:"이 교실은 인천 남동구 국비·구비로 운영되어 남동구 주민만 참여하실 수 있습니다. 보건소가 참여자를 확인해야 해서 위 정보를 전달합니다."},
       {h:"동의를 거부할 권리", p:"거부하실 수 있습니다. 다만 동의하지 않으시면 남동구 보건소 치매예방교실에는 참여하실 수 없습니다."}
-    ]},
-    t4: {n:3, title:"프로그램·행사 안내 문자 받기", sub:"[선택] 동의하지 않으셔도 아무 불이익이 없어요", req:false, rows:null, blocks:[
-      {h:"수집·이용 목적", p:"치매예방교실 일정 안내, 신규 기수 모집 안내, 보건소 행사·이벤트 안내 문자 발송"},
-      {h:"수집 항목", p:"이름, 휴대전화 번호"},
-      {h:"보유 기간", p:"동의를 철회하실 때까지"},
-      {h:"동의하지 않으셔도 됩니다", p:"이 항목은 선택입니다. 동의하지 않으셔도 치매예방교실 참여와 앱 이용에는 아무런 불이익이 없습니다."},
-      {h:"철회 방법", p:"앱 [내 정보] > [알림 설정]에서 언제든 끄실 수 있고, 남동구 보건소({전화번호})로 전화 주셔도 됩니다."}
     ]}
   };
 
-  CONSENT_LABELS = ["맬리브레인 서비스 이용약관","개인정보 수집·이용 동의","남동구 보건소에 참여 정보 제공 동의","프로그램·행사 안내 문자 받기"];
+  CONSENT_LABELS = ["맬리브레인 서비스 이용약관","개인정보 수집·이용 동의","남동구 보건소에 참여 정보 제공 동의"];
   SHORT_LABELS = ["이용약관","개인정보 수집·이용","참여 정보 제공"];
 
   state = {
     screen:"form", mode:"user", preset:"FE-00", fs:1,
-    tel:"", name:"", dong:null, consents:[false,false,false,false],
+    tel:"", name:"", dong:null, consents:[false,false,false],
     phoneState:null, checking:false,
     otpShown:false, otpSent:false, otp:"", otpVerified:false, otpTries:0, otpLocked:false,
     otpExpired:false, otpLeft:0, resendCd:0,
@@ -627,14 +611,12 @@ class Component extends DCLogic {
   _r = {};
 
   componentDidMount() {
-    this.applyFs(this.props.fontScale);
     if (this.props.staffMode) this.setState({mode:"staff"});
     if (this.props.startScreen) this.setState({screen:this.screenKey(this.props.startScreen)});
     this._onScroll = () => { if (window.scrollY > 60 && this.state.nudge) this.setState({nudge:false}); };
     window.addEventListener("scroll", this._onScroll, {passive:true});
   }
   componentDidUpdate(prev) {
-    if (prev.fontScale !== this.props.fontScale) this.applyFs(this.props.fontScale);
     if (prev.startScreen !== this.props.startScreen && this.props.startScreen) this.setState({screen:this.screenKey(this.props.startScreen)});
   }
   componentWillUnmount() {
@@ -645,21 +627,6 @@ class Component extends DCLogic {
   screenKey(label) {
     return {"신청폼":"form","신청 완료":"done","이미 신청함":"dup","거주 아님":"outer","모집 기간 아님":"closed"}[label] || "form";
   }
-  applyFs(label) {
-    const v = {"기본":1, "크게":1.15, "아주 크게":1.3, "최대":1.6}[label] || 1;
-    this.setState({fs:v});
-    document.documentElement.style.setProperty("--fs", String(v));
-  }
-  setFs(v) {
-    this.setState({fs:v});
-    document.documentElement.style.setProperty("--fs", String(v));
-  }
-  cycleFs = () => {
-    const o = [1, 1.15, 1.3, 1.6];
-    const i = (o.indexOf(this.state.fs) + 1) % o.length;
-    this.setFs(o[i]);
-    this.toast("글자 크기 " + ["기본","크게","아주 크게","최대"][i]);
-  };
   toast(t) {
     this.setState({toast:t});
     clearTimeout(this._tt);
@@ -862,7 +829,7 @@ class Component extends DCLogic {
   toggleAll = () => {
     this.setState(s => {
       const v = !s.consents.every(Boolean);
-      return {consents:[v,v,v,v], msg:Object.assign({}, s.msg, {consent: v ? null : s.msg.consent})};
+      return {consents:[v,v,v], msg:Object.assign({}, s.msg, {consent: v ? null : s.msg.consent})};
     });
   };
   openTerm(key) { this.setState({sheet:"term", curTerm:key}); }
@@ -892,7 +859,7 @@ class Component extends DCLogic {
   resetAll(over) {
     clearInterval(this._ttl); clearInterval(this._cd); clearTimeout(this._chk); clearTimeout(this._sub);
     this.setState(Object.assign({
-      screen:"form", tel:"", name:"", dong:null, consents:[false,false,false,false],
+      screen:"form", tel:"", name:"", dong:null, consents:[false,false,false],
       phoneState:null, checking:false, otpShown:false, otpSent:false, otp:"", otpVerified:false,
       otpTries:0, otpLocked:false, otpExpired:false, otpLeft:0, resendCd:0,
       submitting:false, offline:false, sheet:null, curTerm:null, nudge:true,
@@ -914,7 +881,7 @@ class Component extends DCLogic {
         over.name = p.name || "홍길동";
         over.dong = "구월1동";
         over.phoneState = p.phone === "member" ? "member" : "new";
-        over.consents = p.noConsent ? [false,false,false,false] : [true,true,true,true];
+        over.consents = p.noConsent ? [false,false,false] : [true,true,true];
         if (p.mode === "staff") { over.otpShown = true; over.otpVerified = true; over.otpSent = true; }
       }
       if (p.offline) over.offline = true;
@@ -1212,12 +1179,6 @@ class Component extends DCLogic {
       screenJumps: [["form","신청폼"],["done","완료"],["dup","이미 신청"],["outer","관외"],["closed","기간 아님"]].map(([k, label]) => ({
         label, style: jumpBtn(s.screen === k), go: () => this.go(k)
       })),
-      fsOptions: [1, 1.15, 1.3, 1.6].map((v, i) => ({
-        label: ["기본","크게","아주 크게","최대"][i],
-        style: jumpBtn(s.fs === v),
-        pick: () => this.setFs(v)
-      })),
-
       staffMode: staff,
       userMode: !staff,
       offline: s.offline,
@@ -1230,7 +1191,6 @@ class Component extends DCLogic {
       isDup: s.screen === "dup",
       isOuter: s.screen === "outer",
       isClosed: s.screen === "closed",
-      cycleFs: this.cycleFs,
 
       tel: s.tel, onTel: this.onTel, checking: s.checking,
       telRef: (el) => { this._r.tel = el; },
@@ -1265,8 +1225,8 @@ class Component extends DCLogic {
       toggleAllBtn: this.toggleAllBtn,
       consentItems: this.CONSENT_LABELS.map((label, i) => ({
         label,
-        tag: i === 3 ? "[선택] " : "[필수] ",
-        tagStyle: "font-weight:800;color:" + (i === 3 ? "#4A545E" : "#9E241D"),
+        tag: "[필수] ",
+        tagStyle: "font-weight:800;color:#9E241D",
         aria: String(s.consents[i]),
         mark: s.consents[i] ? "✓" : "",
         boxStyle: box(s.consents[i], false),
