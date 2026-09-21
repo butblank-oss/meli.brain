@@ -79,7 +79,15 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 <tr>
 <td><a href="ia.html"><code>ia.html</code></a></td>
-<td><strong>IA · 화면설계서 · 예외명세 전문</strong> — 화면 지도, 분기, 요소 명세, 예외 66개, 서버 요구사항, 검수 체크리스트</td>
+<td><strong>IA · 화면설계서</strong> — 화면 지도, 분기, 요소 명세, 분기 규칙, 시니어 UX 규칙, 타 기관 확장</td>
+</tr>
+<tr>
+<td><a href="exceptions.html"><code>exceptions.html</code></a></td>
+<td><strong>예외명세 66종</strong> — 예외 전량, 상태 전이표, 서버 요구사항, 검수 체크리스트</td>
+</tr>
+<tr>
+<td><a href="terms.html"><code>terms.html</code></a></td>
+<td><strong>신청폼 동의 문안 확정본</strong> — 필수 3종 (선택 동의 없음)</td>
 </tr>
 <tr>
 <td><a href="terms/README.html"><code>terms/</code></a></td>
@@ -104,10 +112,6 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tr>
 <td><a href="prototype-v02.html"><code>prototype-v02.html</code></a></td>
 <td>리디자인 이전 프로토타입 (기능 참조용)</td>
-</tr>
-<tr>
-<td><a href="terms.html"><code>terms.html</code></a></td>
-<td>~~약관 문안 초안 뷰어~~ — <strong>폐기</strong>. 확정본은 <a href="terms/README.html"><code>terms/</code></a></td>
 </tr>
 <tr>
 <td><a href="build_docs.py"><code>build_docs.py</code></a></td>
@@ -191,7 +195,7 @@ SC-F-02 신청완료   SC-F-03 이미신청   SC-F-04 관외거주   SC-F-05 모
 - 아이폰/안드로이드를 어르신이 고름 → UA 자동 판별</p>
 <p><strong>개선 6건</strong> — 별표 대신 <code>꼭 적어주세요</code> 배지, 미체크 체크박스를 빈 네모로, 상태를 색+아이콘+문구 3중 전달,
 모두 동의 부제 명시, 시트 포커스 관리·ESC·뒤로가기, 이름 검증.</p>
-<p>상세 근거와 코드는 <a href="ia.html"><code>ia.html</code> §2</a>에 있습니다.</p>
+<p>상세 근거와 코드는 <a href="ia.html#sa"><code>ia.html</code> 부록</a>에 있습니다.</p>
 <h2>4. 시니어 UX 핵심 규칙</h2>
 <ul>
 <li>본문 17px / 입력 19px / 터치 56~64px / 체크박스 34px</li>
@@ -211,7 +215,7 @@ SC-F-02 신청완료   SC-F-03 이미신청   SC-F-04 관외거주   SC-F-05 모
 <li><strong>미로그인 30일 계정 자동 정리</strong> — 타인 번호 신규 접수의 유일한 방어</li>
 <li>동의 저장 시 <strong>항목별 동의·시각·약관 버전·작성 경로</strong> 기록</li>
 </ol>
-<p>전체는 <a href="ia.html"><code>ia.html</code> §9</a> · <a href="09_개발팀_질의서.html"><code>09_개발팀_질의서.md</code></a> C-1~C-12.</p>
+<p>전체는 <a href="exceptions.html#s9"><code>exceptions.html</code> §4</a> · <a href="09_개발팀_질의서.html"><code>09_개발팀_질의서.md</code></a> C-1~C-12.</p>
 <h2>6. 남은 확인 사항</h2>
 <ul>
 <li>[ ] <strong>자동승인 가부</strong> — 보건소 확인 (이게 안 되면 전체 전제가 바뀜)</li>
@@ -220,7 +224,7 @@ SC-F-02 신청완료   SC-F-03 이미신청   SC-F-04 관외거주   SC-F-05 모
 <li>[ ] 스토어 링크·QR URL·딥링크 스킴</li>
 <li>[ ] 지난 기수 URL 처리 정책, 직원 식별 수단, 직원 모드 자동 해제 시간</li>
 </ul>
-<p>전체 10건은 <a href="ia.html"><code>ia.html</code> §12</a>.</p>
+<p>전체는 <a href="ia.html#s12"><code>ia.html</code> §7</a>.</p>
 <h2>7. 타 기관 확장</h2>
 <p>기관별 설정값만 분리하면 됩니다. 폼 구조·동의 항목 수·문구 톤은 공통.</p>
 <pre><code>기관명 · 기수명 / 관내 행정동 목록 / 대표 전화번호 /
