@@ -291,7 +291,7 @@ QR은 <b>보조 수단</b>이고 설치 버튼이 주 경로입니다</td><td>�
 <table class="w1">
 <tr><th>코드</th><th>상황</th><th>화면 처리 · 문구</th><th>복구 경로</th></tr>
 <tr><td><code>FX-01</code> <span class="tag new">구현</span></td><td>모집 기간이 아님</td>
-<td>폼을 열지 않고 SC-F-05. "4기 신청은 <b>10월 6일 월요일</b>부터 받습니다" + 알림 예약</td><td>알림 신청</td></tr>
+<td>폼을 열지 않고 SC-F-05. "4기 신청은 <b><code>{모집시작일}</code></b>부터 받습니다" + 알림 예약<br><span class="tag fix">값 미정</span> 날짜는 <b>보건소 확정 후</b> 넣습니다. 형식 <code>YYYY년 M월 D일 (요일)</code> — 예: <code>2026년 10월 6일 (월)</code>. 요일까지 적는 이유는 어르신이 날짜보다 요일로 기억하시기 때문입니다</td><td>알림 신청</td></tr>
 <tr><td><code>FX-02</code> <span class="tag fix">미정</span></td><td>정원 마감</td><td>SC-F-05 문구만 교체. 대기 신청을 받을지는 미정</td><td>알림 신청</td></tr>
 <tr><td><code>FX-03</code> <span class="tag fix">미정</span></td><td>지난 기수 URL로 접근 (<code>dementia3</code> 링크가 계속 돌아다님)</td>
 <td>현재 기수 폼으로 안내할지, 그대로 마감 화면을 보일지 미정.
@@ -309,7 +309,7 @@ QR은 <b>보조 수단</b>이고 설치 버튼이 주 경로입니다</td><td>�
 <td>현재 폼은 JS 없이는 동작하지 않습니다. 시니어 기기에 남아 있는 구형 웹뷰 대응 범위(최저 지원 버전) 미정</td><td>—</td></tr>
 <tr><td><code>FX-08</code> <span class="tag new">구현</span></td><td>OS 글자 크기 200%</td>
 <td>모든 크기를 <code>calc(N px × 배율)</code>로 잡아 <b>가로 스크롤 없이</b> 늘어납니다.
-검수 패널에서 최대(+60%)까지 확인할 수 있습니다</td><td>—</td></tr>
+폼 안에 글자 크기 버튼은 없고 <b>OS·브라우저 배율을 그대로</b> 받습니다</td><td>—</td></tr>
 <tr><td><code>FX-09</code> <span class="tag new">구현</span></td><td>가로 모드 · 좁은 화면</td>
 <td>390px 고정 대신 <code>max-width:900px</code> 이하에서 전체 폭을 씁니다. 고정 높이 없음</td><td>—</td></tr>
 <tr><td><code>FX-10</code> <span class="tag fix">미정</span></td><td>브라우저 자동완성이 <b>다른 사람</b> 정보를 채움</td>
