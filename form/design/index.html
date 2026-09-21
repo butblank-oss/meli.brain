@@ -45,9 +45,15 @@
     </div>
 
     <div style="border-top:1px solid #242930;padding-top:14px;margin-bottom:16px">
-      <div style="font-size:11px;font-weight:700;color:#9DB6D2;letter-spacing:.06em;margin-bottom:8px">화면</div>
+      <div style="font-size:11px;font-weight:700;color:#9DB6D2;letter-spacing:.06em;margin-bottom:8px">신청폼 화면</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
         <sc-for list="{{ screenJumps }}" as="j" hint-placeholder-count="5">
+          <button type="button" onClick="{{ j.go }}" style="{{ j.style }}">{{ j.label }}</button>
+        </sc-for>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:#C9A227;letter-spacing:.06em;margin:14px 0 8px">앱 화면 (승인 이후)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <sc-for list="{{ appJumps }}" as="j" hint-placeholder-count="4">
           <button type="button" onClick="{{ j.go }}" style="{{ j.style }}">{{ j.label }}</button>
         </sc-for>
       </div>
@@ -104,7 +110,7 @@
         <div style="background:#1F3C5D;color:#fff;padding:20px 20px 24px;flex-shrink:0">
           <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:6px 13px;font-size:clamp(13px,calc(13px*var(--fs)),16px);font-weight:700">인천 남동구 보건소</span>
           <h2 style="font-size:clamp(23px,calc(24px*var(--fs)),29px);font-weight:800;letter-spacing:-.04em;line-height:1.32;margin:14px 0 0">치매예방교실 4기<br>참가 신청</h2>
-          <p style="font-size:clamp(15px,calc(15px*var(--fs)),18px);color:rgba(255,255,255,.9);margin:9px 0 0;line-height:1.6">인천 남동구에 사시는 분만 신청할 수 있어요.<br>신청하시면 바로 이용하실 수 있습니다.</p>
+          <p style="font-size:clamp(15px,calc(15px*var(--fs)),18px);color:rgba(255,255,255,.9);margin:9px 0 0;line-height:1.6">인천 남동구에 사시는 분만 신청할 수 있어요.<br>보건소에서 확인한 뒤 이용하실 수 있습니다.</p>
         </div>
       </sc-if>
       <sc-if value="{{ staffMode }}" hint-placeholder-val="{{ false }}">
@@ -261,10 +267,10 @@
     <!-- ══════════ SC-F-02 신청 완료 ══════════ -->
     <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
     <div style="padding:32px 20px 40px;display:flex;flex-direction:column;gap:22px">
-<div role="img" aria-label="완료" style="width:76px;height:76px;border-radius:50%;background:#17624A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800">✓</div>
+<div role="img" aria-label="접수됨" style="width:76px;height:76px;border-radius:50%;background:#17624A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800">✓</div>
       <div>
-        <h2 style="font-size:clamp(26px,calc(27px*var(--fs)),32px);font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0">신청이 끝났어요<br>바로 쓰실 수 있습니다</h2>
-        <p style="font-size:clamp(17px,calc(17px*var(--fs)),22px);line-height:1.6;color:#4A545E;margin:12px 0 0">따로 기다리실 필요 없어요.<br>지금 앱만 받으시면 됩니다.</p>
+        <h2 style="font-size:clamp(26px,calc(27px*var(--fs)),32px);font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0">신청이 접수됐어요<br>보건소에서 확인합니다</h2>
+        <p style="font-size:clamp(17px,calc(17px*var(--fs)),22px);line-height:1.6;color:#4A545E;margin:12px 0 0">확인이 끝나면 바로 쓰실 수 있어요.<br>그동안 앱을 미리 받아두시면 됩니다.</p>
       </div>
 
       <div style="background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:6px 18px">
@@ -280,7 +286,7 @@
         <h3 style="font-size:clamp(19px,calc(19px*var(--fs)),24px);font-weight:800;letter-spacing:-.03em;margin:0">이대로만 하시면 됩니다</h3>
         <p style="font-size:clamp(15px,calc(15px*var(--fs)),19px);color:#59636D;margin:6px 0 16px;line-height:1.6">옆에 계신 직원분께 도움을 요청하셔도 좋아요.</p>
         <div style="display:flex;flex-direction:column;gap:12px">
-          <sc-for list="{{ installSteps }}" as="s" hint-placeholder-count="3">
+          <sc-for list="{{ installSteps }}" as="s" hint-placeholder-count="4">
             <div style="display:flex;gap:12px;align-items:flex-start">
               <span style="flex-shrink:0;width:30px;height:30px;border-radius:50%;background:#1F3C5D;color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ s.n }}</span>
               <span style="flex:1;font-size:clamp(17px,calc(17px*var(--fs)),22px);line-height:1.5;padding-top:2px">{{ s.a }}<b>{{ s.b }}</b>{{ s.c }}</span>
@@ -322,6 +328,10 @@
 
       <div style="background:#ECF1F6;border:1.5px solid #C6D6E4;border-radius:16px;padding:16px;font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#1A3654">
         <b>{{ smsNoteTitle }}</b><br>{{ smsNoteBody }}
+      </div>
+
+      <div style="background:#FAF2E3;border:1.5px solid #E6D3AE;border-radius:16px;padding:16px;font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#5F4517">
+        <b style="color:#4A340B">확인은 보건소 업무 시간에 합니다.</b><br>지금 옆에 직원이 계시면 금방 끝납니다. 저녁이나 주말에 신청하셨다면 다음 업무일에 확인해 드려요. 그동안 앱은 미리 받아두셔도 됩니다.
       </div>
 
       <div style="display:flex;flex-direction:column;gap:6px;align-items:center;background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:18px">
@@ -426,6 +436,130 @@
       </div>
     </div>
     </sc-if>
+
+<!-- ══════════ SC-A-01 앱 · 로그인 전 진입 ══════════ -->
+    <sc-if value="{{ isAppGate }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:32px 20px 40px;display:flex;flex-direction:column;gap:22px">
+      <div style="background:#1F3C5D;width:76px;height:76px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:34px" role="img" aria-label="앱">앱</div>
+      <div>
+        <h2 style="font-size:clamp(26px,calc(27px*var(--fs)),32px);font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0">맬리브레인에<br>오신 것을 환영합니다</h2>
+        <p style="font-size:clamp(17px,calc(17px*var(--fs)),22px);line-height:1.6;color:#4A545E;margin:12px 0 0">앱을 받으셨네요. 이제 전화번호만 넣으시면 됩니다.</p>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:22px 18px;display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:clamp(17px,calc(17px*var(--fs)),26px);font-weight:700;letter-spacing:-.025em">남동구 보건소 치매예방교실에<br>신청하셨나요?</span>
+        <p style="font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#59636D;margin:0">신청폼으로 신청하신 분은 따로 가입하지 않으셔도 됩니다. 그때 적으신 전화번호를 넣어주세요.</p>
+        <input id="appTel" type="tel" inputmode="numeric" autocomplete="tel" maxLength="13" placeholder="010-0000-0000" value="{{ appTel }}" onInput="{{ onAppTel }}" style="width:100%;height:clamp(58px,calc(62px*var(--fs)),88px);border:1.5px solid #D6D2C9;border-radius:14px;padding:0 18px;font-size:clamp(19px,calc(19px*var(--fs)),26px);font-weight:600;color:#1A1F26;background:#fff" style-focus="outline:3px solid rgba(31,60,93,.3);outline-offset:1px;border-color:#1F3C5D" />
+        <button type="button" onClick="{{ appLookup }}" style="width:100%;min-height:clamp(58px,calc(64px*var(--fs)),88px);border:0;border-radius:16px;font-size:clamp(19px,calc(20px*var(--fs)),27px);font-weight:800;cursor:pointer;background:#1F3C5D;color:#fff">{{ appLookupLabel }}</button>
+      </div>
+
+      <div style="background:#ECF1F6;border:1.5px solid #C6D6E4;border-radius:16px;padding:16px;font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#1A3654">
+        <b>아직 신청하지 않으셨다면</b><br>보건소에서 받은 문자의 링크로 먼저 신청해 주세요. 교실 없이 앱만 쓰시려면 아래 [앱만 둘러보기]를 눌러주세요.
+      </div>
+      <button type="button" onClick="{{ goForm }}" style="width:100%;min-height:clamp(56px,calc(58px*var(--fs)),84px);background:#fff;border:2px solid #C8C3B8;border-radius:16px;font-size:clamp(18px,calc(19px*var(--fs)),25px);font-weight:800;color:#1A1F26;cursor:pointer">앱만 둘러볼게요</button>
+    </div>
+    </sc-if>
+
+    <!-- ══════════ SC-A-02 앱 · 승인 대기 중 ══════════ -->
+    <sc-if value="{{ isPending }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:32px 20px 40px;display:flex;flex-direction:column;gap:22px">
+      <div style="background:#8A5412;width:76px;height:76px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:38px" role="img" aria-label="확인 중">⏳</div>
+      <div>
+        <h2 style="font-size:clamp(26px,calc(27px*var(--fs)),32px);font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0">보건소에서<br>확인하고 있어요</h2>
+        <p style="font-size:clamp(17px,calc(17px*var(--fs)),22px);line-height:1.6;color:#4A545E;margin:12px 0 0">신청은 잘 접수됐습니다.<br>확인이 끝나면 바로 쓰실 수 있어요.</p>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:6px 18px">
+        <sc-for list="{{ pendingRecap }}" as="r" hint-placeholder-count="4">
+          <div style="display:flex;gap:14px;align-items:baseline;padding:13px 0;border-top:1px solid #EFEDE7">
+            <span style="width:84px;flex-shrink:0;font-size:clamp(15px,calc(15px*var(--fs)),19px);color:#6B7680;font-weight:600">{{ r.k }}</span>
+            <span style="flex:1;font-size:clamp(17px,calc(17px*var(--fs)),22px);font-weight:700;letter-spacing:-.02em">{{ r.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#FAF2E3;border:1.5px solid #E6D3AE;border-radius:16px;padding:18px;font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#5F4517">
+        <b style="color:#4A340B;font-size:clamp(17px,calc(17px*var(--fs)),21px)">앱을 닫으셔도 괜찮아요</b><br>
+        확인이 끝나면 <b>문자로 알려드립니다.</b> 그때 앱을 다시 열어주세요.<br><br>
+        확인은 보건소 업무 시간에 합니다. 저녁이나 주말에 신청하셨다면 다음 업무일에 확인해 드려요.
+      </div>
+
+      <button type="button" onClick="{{ appRefresh }}" style="width:100%;min-height:clamp(58px,calc(64px*var(--fs)),88px);border:0;border-radius:16px;font-size:clamp(19px,calc(20px*var(--fs)),27px);font-weight:800;cursor:pointer;background:#1F3C5D;color:#fff">{{ appRefreshLabel }}</button>
+      <p style="text-align:center;font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#6B7680;margin:0">눌러도 아직 확인 중이면 이 화면이 그대로 있습니다.</p>
+
+      <div style="background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:20px 18px">
+        <h3 style="font-size:clamp(19px,calc(19px*var(--fs)),24px);font-weight:800;letter-spacing:-.03em;margin:0 0 6px">기다리는 동안 둘러보셔도 돼요</h3>
+        <p style="font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#59636D;margin:0 0 14px">게임과 걷기 기록은 지금도 쓰실 수 있습니다. 교실 프로그램만 확인 뒤에 열립니다.</p>
+        <button type="button" onClick="{{ goToday }}" style="width:100%;min-height:clamp(56px,calc(58px*var(--fs)),84px);background:#fff;border:2px solid #C8C3B8;border-radius:16px;font-size:clamp(18px,calc(19px*var(--fs)),25px);font-weight:800;color:#1A1F26;cursor:pointer">앱 둘러보기</button>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:center;background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:18px"><span style="font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#4A545E;text-align:center">남동구 보건소</span><b style="font-size:clamp(21px,calc(21px*var(--fs)),27px);font-weight:800;letter-spacing:-.02em">{전화번호}</b></div>
+    </div>
+    </sc-if>
+
+    <!-- ══════════ SC-A-03 앱 · 신청이 반려됨 ══════════ -->
+    <sc-if value="{{ isRejected }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:32px 20px 40px;display:flex;flex-direction:column;gap:22px">
+      <div style="background:#8A5412;width:76px;height:76px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:40px" role="img" aria-label="안내">!</div>
+      <div>
+        <h2 style="font-size:clamp(26px,calc(27px*var(--fs)),32px);font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0">신청을 받지<br>못했습니다</h2>
+        <p style="font-size:clamp(17px,calc(17px*var(--fs)),22px);line-height:1.6;color:#4A545E;margin:12px 0 0">보건소에서 확인한 결과입니다.<br>아래 이유를 봐주세요.</p>
+      </div>
+
+      <div style="background:#FBEFED;border:1.5px solid #EBC7C1;border-radius:16px;padding:20px 18px">
+        <span style="font-size:clamp(13px,calc(13px*var(--fs)),17px);font-weight:800;color:#9E241D;background:#fff;border:1px solid #EBC7C1;border-radius:6px;padding:3px 9px">받지 못한 이유</span>
+        <p style="font-size:clamp(19px,calc(19px*var(--fs)),25px);font-weight:800;letter-spacing:-.03em;color:#7A1C16;margin:12px 0 8px;line-height:1.45">{{ rejectReason }}</p>
+        <p style="font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#7A1C16;margin:0">{{ rejectDetail }}</p>
+      </div>
+
+      <div style="background:#ECF1F6;border:1.5px solid #C6D6E4;border-radius:16px;padding:18px;font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#1A3654">
+        <b style="font-size:clamp(17px,calc(17px*var(--fs)),21px)">잘못된 것 같으시면 전화 주세요</b><br>
+        착오로 이렇게 될 수도 있습니다. 보건소에 말씀하시면 다시 확인해 드립니다.
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:center;background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:18px"><span style="font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#4A545E;text-align:center">남동구 보건소</span><b style="font-size:clamp(21px,calc(21px*var(--fs)),27px);font-weight:800;letter-spacing:-.02em">{전화번호}</b></div>
+
+      <div style="background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:20px 18px">
+        <h3 style="font-size:clamp(19px,calc(19px*var(--fs)),24px);font-weight:800;letter-spacing:-.03em;margin:0 0 6px">맬리브레인 앱은 그냥 쓰실 수 있어요</h3>
+        <p style="font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#59636D;margin:0 0 14px">치매예방교실 없이도 게임과 걷기 기록은 누구나 쓰실 수 있습니다.</p>
+        <button type="button" onClick="{{ goToday }}" style="width:100%;min-height:clamp(56px,calc(58px*var(--fs)),84px);background:#fff;border:2px solid #C8C3B8;border-radius:16px;font-size:clamp(18px,calc(19px*var(--fs)),25px);font-weight:800;color:#1A1F26;cursor:pointer">앱 둘러보기</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ══════════ SC-A-04 앱 · 승인 완료 · 오늘의 프로그램 ══════════ -->
+    <sc-if value="{{ isToday }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:32px 20px 40px;display:flex;flex-direction:column;gap:22px">
+      <div style="background:#17624A;width:76px;height:76px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:40px" role="img" aria-label="승인 완료">✓</div>
+      <div>
+        <h2 style="font-size:clamp(26px,calc(27px*var(--fs)),32px);font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0">확인이 끝났어요<br>이제 쓰실 수 있습니다</h2>
+        <p style="font-size:clamp(17px,calc(17px*var(--fs)),22px);line-height:1.6;color:#4A545E;margin:12px 0 0">{{ todayGreeting }}</p>
+      </div>
+
+      <div style="background:linear-gradient(140deg,#1F3C5D,#132840);border-radius:18px;padding:24px 20px;color:#fff">
+        <span style="display:inline-flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 13px;font-size:clamp(13px,calc(13px*var(--fs)),16px);font-weight:700">오늘의 프로그램</span>
+        <h3 style="font-size:clamp(23px,calc(24px*var(--fs)),29px);font-weight:800;letter-spacing:-.04em;line-height:1.32;margin:14px 0 0">숫자 이어가기<br>그리고 30분 걷기</h3>
+        <p style="font-size:clamp(15px,calc(15px*var(--fs)),18px);color:rgba(255,255,255,.9);margin:9px 0 0;line-height:1.6">오늘 치매예방교실 1일차입니다. 천천히 하셔도 됩니다.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ todayCards }}" as="c" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid #E4E1DA;border-radius:16px;padding:18px;display:flex;gap:14px;align-items:center">
+            <span style="width:48px;height:48px;border-radius:14px;background:{{ c.bg }};display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">{{ c.icon }}</span>
+            <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+              <b style="font-size:clamp(17px,calc(17px*var(--fs)),22px);letter-spacing:-.025em">{{ c.t }}</b>
+              <span style="font-size:clamp(14px,calc(14px*var(--fs)),18px);color:#6B7680">{{ c.d }}</span>
+            </span>
+            <span style="font-size:22px;color:#8B95A1">›</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#ECF1F6;border:1.5px solid #C6D6E4;border-radius:16px;padding:16px;font-size:clamp(15px,calc(15px*var(--fs)),19px);line-height:1.65;color:#1A3654">
+        <b>이 화면은 참고용입니다.</b><br>실제 앱의 오늘의 프로그램 화면은 별도 기획입니다. 여기서는 <b>승인이 끝나면 어르신이 무엇을 보게 되는지</b>만 보여드립니다.
+      </div>
+    </div>
+    </sc-if>
   </div>
   </main>
 
@@ -455,7 +589,7 @@
   </aside>
   </sc-if>
 
-  <!-- ══════════ 시트 ══════════ -->
+<!-- ══════════ 시트 ══════════ -->
   <sc-if value="{{ sheetOn }}" hint-placeholder-val="{{ false }}">
   <div style="{{ sheetWrapStyle }}">
     <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(16,20,24,.55)"></div>
@@ -564,7 +698,7 @@ class Component extends DCLogic {
     t1: {n:0, title:"맬리브레인 서비스 이용약관", sub:"[필수] 동의하지 않으시면 신청할 수 없어요", req:true, rows:null, blocks:[
       {h:"제1조 (목적)", p:"이 약관은 주식회사 원메딕스인더스트리(이하 \"회사\")가 제공하는 맬리브레인 서비스의 이용 조건과 절차를 정합니다."},
       {h:"제2조 (서비스 내용)", p:"1. 인지건강 게임과 걷기 기록\n2. 인천 남동구 보건소 치매예방교실 참여 관리\n3. 참여 결과 리포트 제공"},
-      {h:"제3조 (가입과 승인)", p:"1. 이 신청폼은 인천 남동구 보건소 치매예방교실 전용입니다.\n2. 남동구 관내에 거주하시는 분이 신청하시면 별도 승인 절차 없이 바로 이용하실 수 있습니다.\n3. 신청하신 전화번호로 앱에 로그인합니다. 별도의 아이디와 비밀번호는 만들지 않습니다."},
+      {h:"제3조 (가입과 승인)", p:"1. 이 신청폼은 인천 남동구 보건소 치매예방교실 전용입니다.\n2. 신청하시면 앱은 바로 받으실 수 있고, 남동구 보건소가 확인한 뒤 치매예방교실 기능이 열립니다.\n3. 남동구에 사시는 분이 아니거나 적어주신 내용이 확인되지 않으면 신청을 받지 못할 수 있습니다. 이때는 이유를 알려드립니다.\n4. 신청하신 전화번호로 앱에 로그인합니다. 별도의 아이디와 비밀번호는 만들지 않습니다."},
       {h:"제4조 (이용자의 의무)", p:"1. 본인의 정보를 사실대로 적어주셔야 합니다.\n2. 다른 사람의 전화번호로 신청하실 수 없습니다."},
       {h:"제5조 (이용 제한)", p:"남동구 관외 거주가 확인되거나 타인 명의로 신청한 경우, 회사와 보건소는 이용을 제한할 수 있습니다."},
       {h:"제6조 (서비스 중단)", p:"점검·장애·보건소 사업 종료 시 서비스가 중단될 수 있으며, 회사는 사전에 안내합니다."},
@@ -596,6 +730,7 @@ class Component extends DCLogic {
 
   state = {
     screen:"form", mode:"user", preset:"FE-00", fs:1,
+    appTel:"", appChecking:false, rejectReason:"", rejectDetail:"",
     tel:"", name:"", dong:null, consents:[false,false,false],
     phoneState:null, checking:false,
     otpShown:false, otpSent:false, otp:"", otpVerified:false, otpTries:0, otpLocked:false,
@@ -605,7 +740,7 @@ class Component extends DCLogic {
     notes:false, openNote:null,
     handoffFrom:false, staffReleased:false, todayCount:1,
     msg:{tel:null, otp:null, name:null, dong:null, consent:null, submit:null},
-    done:{name:"", tel:"", dong:"", status:"승인 완료"}
+    done:{name:"", tel:"", dong:"", status:"승인 요청"}
   };
 
   _r = {};
@@ -625,7 +760,8 @@ class Component extends DCLogic {
   }
 
   screenKey(label) {
-    return {"신청폼":"form","신청 완료":"done","이미 신청함":"dup","거주 아님":"outer","모집 기간 아님":"closed"}[label] || "form";
+    return {"신청폼":"form","신청 완료":"done","이미 신청함":"dup","거주 아님":"outer","모집 기간 아님":"closed",
+            "앱 진입":"appGate","승인 대기":"pending","반려":"rejected","오늘의 프로그램":"today"}[label] || "form";
   }
   toast(t) {
     this.setState({toast:t});
@@ -814,6 +950,24 @@ class Component extends DCLogic {
       ? this.m("w", "어르신께 ", "신분증이나 우편물", "의 주소를 여쭤보고 골라주세요.")
       : this.m("w", "옆에 계신 ", "보건소 직원", "께 여쭤보시거나, 보건소 담당자{전화번호}에게 문의주세요. 우편물이나 신분증에 적힌 동을 보셔도 됩니다."));
   };
+  onAppTel = (e) => this.setState({appTel: this.fmtTel(e.target.value)});
+
+  // 앱 로그인 전 번호 조회 — 신청 상태에 따라 분기한다.
+  // 실제 구현에서는 GET /api/applications/status?tel= 의 status 값을 그대로 따른다.
+  appLookup = () => {
+    if (this.state.appChecking) return;
+    this.setState({appChecking:true});
+    setTimeout(() => this.setState({appChecking:false, screen:"pending"}), 700);
+  };
+
+  // 승인 대기 화면의 [확인됐는지 다시 보기].
+  // 데모에서는 한 번 누르면 승인된 것으로 처리한다.
+  appRefresh = () => {
+    if (this.state.appChecking) return;
+    this.setState({appChecking:true});
+    setTimeout(() => this.setState({appChecking:false, screen:"today"}), 700);
+  };
+
   goOuter = () => this.setState({sheet:null, screen:"outer"});
   backToDong = () => this.setState({screen:"form", sheet:"dong"});
   toggleOne(i) {
@@ -910,8 +1064,6 @@ class Component extends DCLogic {
     return out;
   }
 
-
-
   submit = () => {
     const s = this.state;
     if (s.submitting) return;
@@ -942,10 +1094,10 @@ class Component extends DCLogic {
         return;
       }
       const fromStaff = st.mode === "staff";
-      const status = fromStaff ? "보건소 직원 대리 접수 · 승인 완료"
-        : st.phoneState === "member" ? "기존 회원 연결 · 승인 완료"
-        : st.phoneState === "prev" ? "3기 이어서 참여 · 승인 완료"
-        : "승인 완료";
+      const status = fromStaff ? "보건소 직원 대리 접수 · 승인 요청"
+        : st.phoneState === "member" ? "기존 회원 연결 · 승인 요청"
+        : st.phoneState === "prev" ? "3기 이어서 참여 · 승인 요청"
+        : "승인 요청";
       this.setState({submitting:false, screen:"done",
         mode: fromStaff ? "user" : st.mode,
         staffReleased: fromStaff,
@@ -1058,11 +1210,13 @@ class Component extends DCLogic {
       {k:"직원", v:staff ? "제출 완료 시 직원 모드 자동 해제. 접수 건수 +1" : "해당 없음"}
     ]));
 
-    out.push(this.noteVals("done", "SC-F-02", "신청 완료", [
-      {k:"목적", v:"앱 설치와 첫 로그인까지 끊기지 않게 잇는 화면"},
-      {k:"표시", v:"신청 내역 4줄(번호 마스킹) · 3단계 안내 · 스토어 버튼 · QR"},
+    out.push(this.noteVals("done", "SC-F-02", "신청 접수 (승인 요청)", [
+      {k:"정책", v:"2026-09-21 변경 — 자동 승인을 없애고 관리자 승인 1회를 거칩니다. 상태값은 승인 완료가 아니라 승인 요청입니다"},
+      {k:"목적", v:"앱 설치와 첫 로그인까지 끊기지 않게 잇되, 아직 승인 전임을 분명히 알리는 화면"},
+      {k:"표시", v:"신청 내역 4줄(번호 마스킹) · 4단계 안내 · 스토어 버튼 · QR · 업무시간 안내"},
+      {k:"문구", v:"소요 시간을 숫자로 약속하지 않습니다. 현장 접수면 즉시, 저녁·주말이면 다음 업무일이라 범위가 너무 넓습니다. 시간 대신 사건(확인이 끝나면)에 묶었습니다"},
       {k:"기기", v:"UA로 iOS · Android 판별. 판별 실패 시 두 버튼 동일 크기(FR-01)"},
-      {k:"문자", v:"3분 내 설치 링크 문자 발송"},
+      {k:"문자", v:"3분 내 설치 링크 문자 + 승인 완료 시 두 번째 문자"},
       {k:"직원", v:"완료 후 [다음 분 신청받기]로 직원 모드 복귀"}
     ]));
 
@@ -1082,6 +1236,36 @@ class Component extends DCLogic {
       {k:"진입", v:"모집 기간 외 또는 정원 초과(FX-01). 폼 자체를 열지 않음"},
       {k:"수집", v:"알림용 전화번호만. 선택 입력"},
       {k:"값", v:"{모집시작일}은 아직 미정입니다. 보건소 확정 후 YYYY년 M월 D일 (요일) 형식으로 넣습니다 — 예: 2026년 10월 6일 (월). 요일까지 적는 이유는 어르신이 날짜보다 요일로 기억하시기 때문입니다"}
+    ]));
+
+    out.push(this.noteVals("appGate", "SC-A-01", "앱 · 로그인 전 진입", [
+      {k:"진입", v:"앱 설치 후 첫 화면. [남동구 보건소 치매예방교실에 신청하셨나요?]를 눌러 들어옵니다"},
+      {k:"정책", v:"신청폼으로 신청한 분은 앱에서 따로 가입하지 않습니다. 전화번호 하나로 신청 건과 연결합니다"},
+      {k:"조회", v:"GET /api/applications/status?tel= 의 결과로 분기 — PENDING / APPROVED / REJECTED / 없음"},
+      {k:"없음", v:"신청 이력이 없으면 신청폼 링크를 안내합니다. 막다른 길을 만들지 않습니다 (FV-01)"},
+      {k:"보안", v:"이 조회에도 레이트 리밋이 필요합니다. 번호 대입으로 신청 여부를 캐낼 수 있습니다"}
+    ]));
+
+    out.push(this.noteVals("pending", "SC-A-02", "앱 · 승인 대기 중", [
+      {k:"진입", v:"조회 결과가 PENDING일 때. 신청폼 완료 직후 앱을 열면 대부분 이 화면입니다"},
+      {k:"문구", v:"소요 시간을 숫자로 약속하지 않습니다. 현장 접수면 즉시, 저녁·주말이면 다음 업무일이라 범위가 너무 넓습니다"},
+      {k:"이탈", v:"앱을 닫아도 된다고 명시하고 승인 문자로 다시 부릅니다. 어르신을 화면 앞에 붙잡아 두지 않습니다"},
+      {k:"새로고침", v:"[확인됐는지 다시 보기]는 수동입니다. 자동 폴링으로 화면이 저절로 바뀌면 어르신이 놓칩니다"},
+      {k:"탈출", v:"기다리는 동안 게임·걷기는 쓸 수 있게 열어둡니다. 교실 프로그램만 잠급니다 (FV-03)"}
+    ]));
+
+    out.push(this.noteVals("rejected", "SC-A-03", "앱 · 신청 반려", [
+      {k:"진입", v:"조회 결과가 REJECTED일 때"},
+      {k:"사유", v:"관리자가 고른 사유를 그대로 보여줍니다 — 관외 거주 / 정보 불일치 / 중복 신청 / 기타"},
+      {k:"원칙", v:"반려는 막다른 길이 되기 쉽습니다. 사유 + 보건소 전화번호 + 앱 단독 이용 경로 셋을 반드시 함께 둡니다"},
+      {k:"착오", v:"잘못 반려됐을 수 있다고 먼저 말합니다. 어르신이 자기 탓으로 느끼지 않게 합니다"},
+      {k:"재신청", v:"반려 후 재신청 허용 여부는 미정 (FV-05)"}
+    ]));
+
+    out.push(this.noteVals("today", "SC-A-04", "앱 · 승인 완료 · 오늘의 프로그램", [
+      {k:"진입", v:"조회 결과가 APPROVED일 때. 승인 완료 문자를 받고 앱을 다시 연 경우가 대부분입니다"},
+      {k:"범위", v:"이 화면은 참고용입니다. 실제 오늘의 프로그램 화면은 앱 본체 기획이며 여기서는 승인 후 도착점만 보여줍니다"},
+      {k:"전환", v:"대기 → 승인 전환 시 화면이 저절로 바뀌지 않습니다. 사용자가 버튼을 눌러야 넘어갑니다"}
     ]));
 
     out.push(this.noteVals("dongSheet", "FD-01", "동 선택 시트", [
@@ -1176,7 +1360,10 @@ class Component extends DCLogic {
       staffModeStyle: panelBtn(staff),
       setUserMode: this.setUserMode,
       setStaffMode: this.setStaffMode,
-      screenJumps: [["form","신청폼"],["done","완료"],["dup","이미 신청"],["outer","관외"],["closed","기간 아님"]].map(([k, label]) => ({
+      screenJumps: [["form","신청폼"],["done","접수"],["dup","이미 신청"],["outer","관외"],["closed","기간 아님"]].map(([k, label]) => ({
+        label, style: jumpBtn(s.screen === k), go: () => this.go(k)
+      })),
+      appJumps: [["appGate","앱 진입"],["pending","승인 대기"],["rejected","반려"],["today","승인 완료"]].map(([k, label]) => ({
         label, style: jumpBtn(s.screen === k), go: () => this.go(k)
       })),
       staffMode: staff,
@@ -1191,6 +1378,10 @@ class Component extends DCLogic {
       isDup: s.screen === "dup",
       isOuter: s.screen === "outer",
       isClosed: s.screen === "closed",
+      isAppGate: s.screen === "appGate",
+      isPending: s.screen === "pending",
+      isRejected: s.screen === "rejected",
+      isToday: s.screen === "today",
 
       tel: s.tel, onTel: this.onTel, checking: s.checking,
       telRef: (el) => { this._r.tel = el; },
@@ -1245,19 +1436,43 @@ class Component extends DCLogic {
       installSteps: [
         {n:"1", a:"아래 ", b:"설치 버튼", c:"을 눌러 앱을 받습니다"},
         {n:"2", a:"앱을 열고 ", b:"방금 적은 전화번호", c:"를 넣습니다"},
-        {n:"3", a:"끝! ", b:"오늘의 프로그램", c:"이 바로 보입니다"}
+        {n:"3", a:"", b:"보건소에서 확인", c:"할 때까지 잠깐 기다립니다"},
+        {n:"4", a:"확인이 끝나면 ", b:"오늘의 프로그램", c:"이 보입니다"}
       ],
       storeButtons: stores,
       smsNoteTitle: (staff || s.staffReleased) ? "어르신 번호로 문자도 보냈어요." : "문자도 같이 보내드렸어요.",
       smsNoteBody: (staff || s.staffReleased)
-        ? "3분 안에 설치 링크 문자가 갑니다. 지금 설치가 어려우시면 집에서 문자 보고 하셔도 됩니다."
-        : "3분 안에 신청하신 번호로 설치 링크 문자가 갑니다. 지금 못 받으시면 문자 보고 천천히 하셔도 됩니다.",
+        ? "3분 안에 설치 링크 문자가 갑니다. 확인이 끝나면 다시 한 번 문자로 알려드립니다."
+        : "3분 안에 신청하신 번호로 설치 링크 문자가 갑니다. 보건소 확인이 끝나면 다시 한 번 문자로 알려드려요.",
       restart: this.restart,
       restartLabel: (staff || s.staffReleased) ? "다음 분 신청받기" : "처음으로 돌아가기",
 
+      appTel: s.appTel,
+      onAppTel: this.onAppTel,
+      appLookup: this.appLookup,
+      appLookupLabel: s.appChecking ? "확인하는 중이에요" : "확인하기",
+      pendingRecap: [
+        {k:"이름", v:(s.done.name || "홍길동")},
+        {k:"전화번호", v:(s.done.tel || this.mask("010-0000-5678"))},
+        {k:"신청한 날", v:"2026년 9월 21일"},
+        {k:"상태", v:"승인 요청 · 확인 중"}
+      ],
+      appRefresh: this.appRefresh,
+      appRefreshLabel: s.appChecking ? "다시 확인하는 중이에요" : "확인됐는지 다시 보기",
+      rejectReason: s.rejectReason || "남동구에 사시는 분이 아닙니다",
+      rejectDetail: s.rejectDetail || "이 교실은 남동구 국비·구비로 운영되어 남동구에 사시는 분만 참여하실 수 있습니다. 주소가 바뀌셨거나 잘못 고르셨다면 보건소로 전화 주세요.",
+      goToday: () => this.go("today"),
+      goForm: () => this.go("form"),
+      todayGreeting: (s.done.name ? s.done.name + "님, " : "") + "오늘도 반갑습니다.",
+      todayCards: [
+        {icon:"🧩", bg:"#EEF3F8", t:"숫자 이어가기", d:"오늘 한 번 · 약 5분"},
+        {icon:"👟", bg:"#EFF5EF", t:"30분 걷기", d:"지금 1,240걸음"},
+        {icon:"📋", bg:"#FAF2E3", t:"교실 출석 확인", d:"1일차 · 남동구 보건소"}
+      ],
+
       dupLeadA: "앱만 받으시면 바로 쓰실 수 있습니다.",
       dupLeadB: "다시 신청하지 않으셔도 됩니다.",
-      dupRecap: [{k:"신청한 날", v:"2026년 9월 12일"}, {k:"전화번호", v:this.mask(s.tel || "010-0000-5678")}, {k:"상태", v:"승인 완료"}],
+      dupRecap: [{k:"신청한 날", v:"2026년 9월 12일"}, {k:"전화번호", v:this.mask(s.tel || "010-0000-5678")}, {k:"상태", v:"승인 완료 · 바로 쓰실 수 있어요"}],
       backToDong: this.backToDong,
       notifyTap: this.notifyTap,
 

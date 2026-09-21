@@ -103,6 +103,7 @@ a{color:var(--g-d)}
   <a href="#s7f" class="sub">FR 완료·설치 (6)</a>
   <a href="#s7g" class="sub">FX 환경·세션 (10)</a>
   <a href="#s7h" class="sub">FP 직원 모드 (5)</a>
+  <a href="#s7i" class="sub">FV 승인 대기 · 앱 (8)</a>
   <a href="#s8">3. 상태 전이표</a>
   <a href="#s9">4. 서버 요구사항</a>
   <a href="#s11">5. 검수 체크리스트</a>
@@ -116,7 +117,7 @@ a{color:var(--g-d)}
 
 <div class="wrap">
 <h2 id="s1"><span class="no">1</span>이 문서가 다루는 것</h2>
-<p>신청폼에서 <b>일이 뜻대로 풀리지 않는 66가지 경우</b>와 각각의 처리 방법입니다.
+<p>신청폼과 그 뒤 승인 과정에서 <b>일이 뜻대로 풀리지 않는 74가지 경우</b>와 각각의 처리 방법입니다.
 화면 구조와 정상 흐름은 <a href="ia.html">IA · 화면설계서</a>에 있습니다.</p>
 <p>각 항목의 태그는 <span class="tag new">구현</span> 클라이언트에서 처리 ·
 <span class="tag sec">서버</span> 서버 협조 필요 ·
@@ -131,6 +132,7 @@ a{color:var(--g-d)}
 <tr><td><code>FR</code></td><td>6</td><td>완료 화면 · 앱 설치</td></tr>
 <tr><td><code>FX</code></td><td>10</td><td>환경 · 세션 (오프라인, 확대, 이탈)</td></tr>
 <tr><td><code>FP</code></td><td>5</td><td>보건소 직원 대리 접수</td></tr>
+<tr><td><code>FV</code> <span class="tag new">신설</span></td><td>8</td><td>승인 대기 · 앱 진입 (2026-09-21 정책 변경)</td></tr>
 </table>
 <p><b>세 가지 불변식</b> — 화면이 저절로 바뀌지 않는다 · 막다른 길을 만들지 않는다 ·
 실패를 사용자 탓으로 돌리지 않는다. 66종 전부가 이 셋을 지킵니다.</p>
@@ -334,6 +336,45 @@ QR은 <b>보조 수단</b>이고 설치 버튼이 주 경로입니다</td><td>�
 직원 PIN·QR 사원증 등 식별 수단 도입 여부 미정. 대리 동의의 책임 소재와 직결됩니다</td><td>—</td></tr>
 </table>
 
+<h3 id="s7i">FV — 승인 대기 · 앱 진입 (8) <span class="tag new">2026-09-21 신설</span></h3>
+<p class="lead">자동 승인을 철회하면서 <b>제출과 이용 사이에 관리자 승인이 끼었습니다.</b>
+그 틈에서 생기는 예외들입니다. 화면은 <code>SC-A-01</code>~<code>SC-A-04</code>,
+승인은 <a href="admin.html">관리자 승인 화면</a>에서 합니다.</p>
+<table class="w1">
+<tr><th>코드</th><th>상황</th><th>화면 처리 · 문구</th><th>복구 경로</th></tr>
+
+<tr><td><code>FV-01</code> <span class="tag new">구현</span></td><td>앱에서 번호를 넣었는데 <b>신청 이력이 없음</b></td>
+<td>"이 번호로 신청하신 기록이 없어요" + <b>신청폼 링크</b> + 보건소 전화.
+번호를 잘못 적었을 수도 있으니 다시 넣을 수 있게 둡니다. 막다른 길을 만들지 않습니다</td><td>신청폼 / 다시 입력</td></tr>
+
+<tr><td><code>FV-02</code> <span class="tag sec">서버</span></td><td>앱의 상태 조회로 <b>신청 여부를 캐냄</b></td>
+<td>번호를 대입하면 "신청함 / 안 함"이 그대로 드러납니다. 조회 API에
+<b>레이트 리밋과 번호 단위 쿨다운</b>이 필요합니다. 응답에 이름·거주지를 넣지 않습니다</td><td>—</td></tr>
+
+<tr><td><code>FV-03</code> <span class="tag new">구현</span></td><td>승인 대기 중에 <b>앱에서 할 게 아무것도 없음</b></td>
+<td>게임·걷기는 열어두고 <b>교실 프로그램만</b> 잠급니다. 대기 화면에 [앱 둘러보기]를 둡니다.
+기다리는 동안 빈손이면 어르신은 앱을 지웁니다</td><td>앱 둘러보기</td></tr>
+
+<tr><td><code>FV-04</code> <span class="tag new">구현</span></td><td>승인이 났는데 <b>어르신이 모름</b></td>
+<td>승인 즉시 <b>문자 발송</b>이 1차입니다. 앱을 열어두고 있었다면 화면은 <b>저절로 바뀌지 않고</b>
+[확인됐는지 다시 보기]를 눌러야 넘어갑니다. 자동 전환은 어르신이 놓칩니다</td><td>문자 / 수동 새로고침</td></tr>
+
+<tr><td><code>FV-05</code> <span class="tag fix">미정</span></td><td><b>반려 후 재신청</b></td>
+<td>같은 번호로 다시 신청할 수 있는지 미정. 관외 반려는 재신청해도 같은 결과이고,
+정보 불일치 반려는 고쳐서 다시 내야 맞습니다. <b>사유별로 다르게</b> 가야 할 수 있습니다</td><td>보건소 전화</td></tr>
+
+<tr><td><code>FV-06</code> <span class="tag fix">미정</span></td><td>승인 전에 <b>어르신이 취소하고 싶음</b></td>
+<td>대기 화면에 [신청 취소]를 둘지 미정. 없으면 보건소 전화가 유일한 경로입니다</td><td>보건소 전화</td></tr>
+
+<tr><td><code>FV-07</code> <span class="tag sec">서버</span></td><td>관리자가 <b>같은 건을 두 번 처리</b></td>
+<td>두 사람이 동시에 승인·반려를 누를 수 있습니다. 서버에서 <b>상태 전이를 멱등 처리</b>하고,
+이미 처리된 건이면 현재 상태를 돌려줘 화면이 그대로 갱신되게 합니다</td><td>목록 갱신</td></tr>
+
+<tr><td><code>FV-08</code> <span class="tag new">구현</span></td><td>관리자가 <b>잘못 눌렀음</b></td>
+<td>승인·반려 직후 토스트에 <b>[되돌리기]</b>(6초), 처리된 카드에도 [처리 되돌리기]를 둡니다.
+되돌리면 대기로 돌아갑니다. 이미 나간 문자는 회수할 수 없으므로 <b>되돌림 문자</b>를 보낼지 정해야 합니다</td><td>되돌리기</td></tr>
+</table>
+
 <h2 id="s8"><span class="no">3</span>상태 전이표</h2>
 <p class="lead">폼의 상태는 <b>전화번호 조회 결과</b>와 <b>인증 여부</b>가 결정합니다. 나머지 입력은 이 둘에 종속됩니다.</p>
 <table class="w1">
@@ -346,7 +387,19 @@ QR은 <b>보조 수단</b>이고 설치 버튼이 주 경로입니다</td><td>�
 <tr><td><code>OTP_EXPIRED</code></td><td><code>FA-03</code></td><td>잠김</td><td>불가</td><td>재발송 → <code>NEEDS_OTP</code></td></tr>
 <tr><td><code>VERIFIED</code></td><td><code>FA-08</code></td><td>열림 + 자동채움</td><td><b>가능</b></td><td>제출 → <code>SUBMITTING</code></td></tr>
 <tr><td><code>BLOCKED</code></td><td><code>FE-06</code> <code>FE-08</code> <code>FE-10</code></td><td>열림(무의미)</td><td>불가</td><td>SC-F-03 / 보건소 전화 / 대기</td></tr>
-<tr><td><code>SUBMITTING</code></td><td>제출 버튼</td><td>그대로</td><td>잠김</td><td>성공 → SC-F-02 · 실패 → 이전 상태 복귀</td></tr>
+<tr><td><code>SUBMITTING</code></td><td>제출 버튼</td><td>그대로</td><td>잠김</td><td>성공 → <code>PENDING</code> · 실패 → 이전 상태 복귀</td></tr>
+</table>
+
+<p class="lead" style="margin-top:22px"><b>제출 이후의 상태</b> <span class="tag new">2026-09-21 신설</span> — 여기서부터는 폼이 아니라 <b>신청 건</b>의 상태입니다.
+관리자 승인이 생기면서 <code>SUBMITTING</code> 다음이 곧장 "이용 가능"이 아니게 됐습니다.</p>
+<table class="w1">
+<tr><th>상태</th><th>진입</th><th>어르신이 보는 화면</th><th>앱에서 할 수 있는 것</th><th>나가는 곳</th></tr>
+<tr><td><code>PENDING</code></td><td>제출 성공</td><td><code>SC-F-02</code> 접수 완료 → 앱에서는 <code>SC-A-02</code> 승인 대기</td>
+<td>설치 · 전화번호 로그인 · 게임 · 걷기<br><b>교실 프로그램은 잠김</b></td>
+<td>관리자 승인 → <code>APPROVED</code><br>관리자 반려 → <code>REJECTED</code></td></tr>
+<tr><td><code>APPROVED</code></td><td>관리자 [승인하기]</td><td><code>SC-A-04</code> 오늘의 프로그램</td><td>전부</td><td>되돌리기 → <code>PENDING</code></td></tr>
+<tr><td><code>REJECTED</code></td><td>관리자 [받지 않음] + 사유</td><td><code>SC-A-03</code> 반려 — <b>사유가 그대로 노출됨</b></td>
+<td>게임 · 걷기만</td><td>되돌리기 → <code>PENDING</code><br>재신청 가부는 미정 <code>FV-05</code></td></tr>
 </table>
 
 <div class="box d">
@@ -354,9 +407,12 @@ QR은 <b>보조 수단</b>이고 설치 버튼이 주 경로입니다</td><td>�
 <p>① <b>번호가 바뀌면 무조건 <code>CHECKING</code> 이전으로</b> 돌아간다. 인증·자동채움은 남지 않는다.</p>
 <p>② <code>NEEDS_OTP</code> 계열에서는 <b>이름·동 필드에 어떤 값도 채워 넣지 않는다.</b></p>
 <p>③ <code>SUBMITTING</code> 중에는 어떤 입력도 받지 않고, 실패 시 <b>입력값을 하나도 잃지 않는다.</b></p>
+<p>④ <code>PENDING</code>에서도 <b>앱 설치와 로그인은 막지 않는다.</b> 교실 기능만 잠근다.</p>
+<p>⑤ <code>PENDING</code> → <code>APPROVED</code> 전환으로 <b>화면이 저절로 바뀌지 않는다.</b> 사용자가 버튼을 눌러야 넘어간다.</p>
 </div>
 
 <h2 id="s9"><span class="no">4</span>서버 요구사항</h2>
+<div class="box d"><p class="k">2026-09-21 정책 변경으로 추가된 것</p><p>① 제출은 <code>PENDING</code>으로 저장한다. 어떤 경로도 스스로 <code>APPROVED</code>가 되지 않는다.</p><p>② 승인·반려 API는 <b>멱등</b>하고, 처리자·시각·사유를 기록한다 <code>FV-07</code>.</p><p>③ 앱의 상태 조회 API에 <b>레이트 리밋</b>을 건다. 응답에 이름·거주지를 넣지 않는다 <code>FV-02</code>.</p><p>④ 승인·반려 즉시 문자를 보내되, <b>발송 실패가 상태 전이를 막지 않게</b> 분리한다.</p></div>
 <h3>API</h3>
 <table class="w1">
 <tr><th>용도</th><th>요청</th><th>응답</th><th>비고</th></tr>
@@ -372,6 +428,17 @@ QR은 <b>보조 수단</b>이고 설치 버튼이 주 경로입니다</td><td>�
 <td><code>{status: created|linked|already, applicationId}</code></td>
 <td><b>멱등</b>. 같은 번호 재제출은 기존 건 반환 <code>FS-01</code> <code>FS-04</code></td></tr>
 <tr><td>약관 본문</td><td><code>GET /api/terms/{org}/{version}</code></td><td>본문 + 버전</td><td>동의 시 버전을 함께 저장 <code>FC-06</code></td></tr>
+<tr><td><b>신청 상태 조회</b> <span class="tag new">신설</span></td><td><code>GET /api/applications/status?tel=</code></td>
+<td><code>PENDING</code> / <code>APPROVED</code> / <code>REJECTED</code> / 없음<br>반려면 사유 코드와 문장</td>
+<td>앱 로그인 전 분기. <b>레이트 리밋 필수</b>, 이름·거주지 미포함 <code>FV-02</code></td></tr>
+<tr><td><b>승인 목록</b> <span class="tag new">신설</span></td><td><code>GET /api/admin/applications?status=</code></td>
+<td>이름 · 번호 · 거주 동 · 신청 시각 · 작성 경로 · 접수 직원</td><td>관리자 화면. 권한 검사 필수</td></tr>
+<tr><td><b>승인</b> <span class="tag new">신설</span></td><td><code>POST /api/admin/applications/{id}/approve</code></td>
+<td>변경 후 상태</td><td><b>멱등</b>. 처리자·시각 기록 + 승인 문자 <code>FV-07</code></td></tr>
+<tr><td><b>반려</b> <span class="tag new">신설</span></td><td><code>POST /api/admin/applications/{id}/reject</code><br>body: <code>reasonCode</code>, <code>reasonText</code></td>
+<td>변경 후 상태</td><td><b>사유 필수</b>. 신청자 화면에 그대로 노출 <code>IA-R-01b</code></td></tr>
+<tr><td><b>처리 되돌리기</b> <span class="tag new">신설</span></td><td><code>POST /api/admin/applications/{id}/reopen</code></td>
+<td><code>PENDING</code></td><td>오처리 복구. 이미 나간 문자 회수 불가 — 되돌림 문자 정책 필요 <code>FV-08</code></td></tr>
 </table>
 
 <h3>서버가 반드시 지켜야 하는 것</h3>

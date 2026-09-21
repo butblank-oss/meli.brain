@@ -68,7 +68,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 <tr>
 <td>승인 방식</td>
-<td><strong>신청폼 경로는 자동 승인</strong> / 앱 직접 가입은 관리자 승인</td>
+<td><strong>모든 경로에서 관리자 승인 1회</strong> (2026-09-21 변경 — 자동 승인 철회)</td>
 </tr>
 <tr>
 <td>신청폼 경로 회원가입</td>
@@ -90,7 +90,8 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </table>
 <h2>이 폼의 4가지 전제</h2>
 <ol>
-<li><strong>자동 승인</strong> — 남동구 보건소 전용 폼이므로 제출 즉시 승인 상태로 회원을 생성합니다.
+<li><strong>관리자 승인 1회</strong> — 제출 시 <code>PENDING</code>(승인 대기)으로 회원을 만들고, 보건소 관리자가 승인해야 교실 기능이 열립니다.
+   앱 설치와 전화번호 로그인은 승인 전에도 가능합니다. 기다리는 동안 손이 비지 않게 하기 위해서입니다.
    관외 필터는 관리자 판단 대신 <strong>거주 동 선택</strong>이 대신합니다.</li>
 <li><strong>앱 회원가입 제거</strong> — 신청폼이 회원까지 만들고, 앱에서는 전화번호 로그인만 합니다.</li>
 <li><strong>그 자리에서 설치</strong> — 완료 화면이 "문자 기다리세요"로 끝나지 않고,
@@ -111,8 +112,13 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tbody>
 <tr>
 <td>IA-R-01</td>
-<td>이 폼으로 들어온 신청은 <strong>제출 즉시 승인 완료</strong>로 저장한다</td>
-<td>남동구 전용 폼이므로 관리자 판단이 필요 없다</td>
+<td>이 폼으로 들어온 신청은 <strong><code>PENDING</code>(승인 대기)</strong> 으로 저장하고, <strong>관리자가 한 번 승인</strong>해야 이용이 열린다</td>
+<td>2026-09-21 정책 변경. 관외 거주·타인 번호를 사람이 거른다</td>
+</tr>
+<tr>
+<td>IA-R-01b</td>
+<td>승인 결과는 <strong>승인 / 반려</strong> 둘뿐이고, 반려에는 <strong>사유가 반드시 붙는다</strong></td>
+<td>사유 없는 반려는 막다른 길이 된다. 사유 + 보건소 전화 + 앱 단독 이용을 함께 준다</td>
 </tr>
 <tr>
 <td>IA-R-02</td>
@@ -132,7 +138,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tr>
 <td>IA-R-05</td>
 <td>거주지는 <strong>관내 20개 행정동 선택</strong>으로만 받는다. 자유 입력·검색 없음</td>
-<td>자동 승인의 근거이자 시니어 입력 허들 제거</td>
+<td>관리자 승인 판단의 근거이자 시니어 입력 허들 제거</td>
 </tr>
 <tr>
 <td>IA-R-06</td>

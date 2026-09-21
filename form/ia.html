@@ -420,7 +420,8 @@ a{color:var(--g-d)}
 <h2 id="s6"><span class="no">5</span>분기 규칙 (IA-R)</h2>
 <table class="w1">
 <tr><th>코드</th><th>규칙</th><th>이유</th></tr>
-<tr><td><code>IA-R-01</code></td><td>이 폼으로 들어온 신청은 <b>제출 즉시 승인 완료</b>로 저장한다</td><td>회의 결정. 남동구 전용 폼이므로 관리자 판단이 필요 없다 <span class="tag fix">보건소 확인 대기</span></td></tr>
+<tr><td><code>IA-R-01</code> <span class="tag new">2026-09-21 변경</span></td><td>이 폼으로 들어온 신청은 <b><code>PENDING</code>(승인 대기)</b>으로 저장하고, <b>관리자가 한 번 승인</b>해야 이용이 열린다</td><td>정책 변경. 자동 승인을 철회했습니다. 관외 거주와 타인 번호 신청을 사람이 걸러야 한다는 판단입니다. 승인 화면은 <a href="admin.html">관리자 승인 화면</a></td></tr>
+<tr><td><code>IA-R-01b</code> <span class="tag new">신규</span></td><td>승인 결과는 <b>승인 / 반려</b> 둘뿐이다. 반려에는 <b>사유가 반드시 붙고</b> 신청자 화면에 그대로 보인다</td><td>사유 없는 반려는 어르신에게 막다른 길이 됩니다. 사유 + 보건소 전화번호 + 앱 단독 이용 경로 셋을 함께 둡니다 <code>SC-A-03</code></td></tr>
 <tr><td><code>IA-R-02</code></td><td>이 폼의 제출은 <b>회원 생성까지</b> 완료한다. 앱에서 다시 가입시키지 않는다</td><td>이중 게이트가 온보딩 이탈의 실제 원인</td></tr>
 <tr><td><code>IA-R-03</code></td><td>기존 회원으로 판정된 번호는 <b>SMS 인증 통과 전까지</b> 이름·동·동의 영역을 잠근다</td><td>번호만으로 타인 정보를 열람·탈취하는 경로 차단 <code>A-01</code></td></tr>
 <tr><td><code>IA-R-04</code></td><td>신규 번호는 SMS를 요구하지 않는다</td><td>노출할 기존 정보가 없다. 85% 경로의 단계를 늘리지 않는다</td></tr>
@@ -527,7 +528,8 @@ a{color:var(--g-d)}
 <tr><td>관내 행정동 목록</td><td>20개</td><td><code>H1-02</code> · 자동 승인 판정 · 서버 화이트리스트</td></tr>
 <tr><td>대표 전화번호</td><td>032-000-0000</td><td>모든 결과 화면</td></tr>
 <tr><td>제3자 제공 동의 내용</td><td>제공받는 곳 · 목적 · 보유기간</td><td>필수 동의 3</td></tr>
-<tr><td>자동 승인 여부</td><td>켜짐</td><td><code>IA-R-01</code> · 없으면 관리자 승인 경로로</td></tr>
+<tr><td>승인 방식</td><td><b>관리자 승인 1회</b></td><td><code>IA-R-01</code> · 자동 승인으로 되돌리면 <code>SC-A-02</code>(승인 대기)가 사라집니다</td></tr>
+<tr><td>반려 사유 목록</td><td>관외 · 정보 불일치 · 중복 · 정원 초과 · 기타</td><td><code>IA-R-01b</code> · 기관마다 다를 수 있습니다</td></tr>
 <tr><td>모집 기간 · 정원</td><td><code>{모집시작일}</code> ~ <span class="tag fix">미정</span></td><td><code>FX-01</code> <code>FX-02</code> · 형식 <code>YYYY년 M월 D일 (요일)</code></td></tr>
 <tr><td>URL 규칙</td><td><code>/invitations/{기관}/{기수}/form</code></td><td><span class="tag fix">규칙 미정</span></td></tr>
 </table>

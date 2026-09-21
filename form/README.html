@@ -90,6 +90,14 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <td><strong>신청폼 동의 문안 확정본</strong> — 필수 3종 (선택 동의 없음)</td>
 </tr>
 <tr>
+<td><a href="admin.html"><code>admin.html</code></a></td>
+<td><strong>관리자 승인 화면</strong> — 모바일 웹. 목록 · 승인/반려 · 검색</td>
+</tr>
+<tr>
+<td><a href="11_약관_재공지_초안.html"><code>11_약관_재공지_초안.md</code></a></td>
+<td>승인 정책 변경에 따른 약관 제4조 재공지 초안</td>
+</tr>
+<tr>
 <td><a href="terms/README.html"><code>terms/</code></a></td>
 <td><strong>약관 MD 7종 (확정)</strong> — 신청폼 동의 3 + 현행 이용약관·처리방침 2 + 구판 2. 시행일 2026-09-18</td>
 </tr>
@@ -133,7 +141,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tr>
 <td>승인</td>
 <td>어드민 PC에서 수동 승인</td>
-<td><strong>제출 즉시 자동 승인</strong> (관내 동 선택이 관외 필터를 대신함)</td>
+<td><strong>모바일 승인 화면에서 1회 승인</strong> — 현장에서 한 손으로. 자동 승인은 2026-09-21에 철회했습니다</td>
 </tr>
 <tr>
 <td>회원가입</td>
@@ -218,7 +226,8 @@ SC-F-02 신청완료   SC-F-03 이미신청   SC-F-04 관외거주   SC-F-05 모
 <p>전체는 <a href="exceptions.html#s9"><code>exceptions.html</code> §4</a> · <a href="09_개발팀_질의서.html"><code>09_개발팀_질의서.md</code></a> C-1~C-12.</p>
 <h2>6. 남은 확인 사항</h2>
 <ul>
-<li>[ ] <strong>자동승인 가부</strong> — 보건소 확인 (이게 안 되면 전체 전제가 바뀜)</li>
+<li>[ ] <strong>승인 권한자 범위 · 반려 후 재신청 허용 여부</strong> — 보건소 확인</li>
+<li>[ ] <strong>약관 제4조 재공지 시행일</strong> — <a href="11_약관_재공지_초안.html"><code>11_약관_재공지_초안.md</code></a> A·B·C 중 선택</li>
 <li>[ ] <strong>기존 회원의 제3자 제공 동의 근거</strong> — 3기 참여자 재동의 필요 여부 → <a href="10_약관_최종검토.html"><code>10_약관_최종검토.md</code></a> N-2</li>
 <li>[ ] 남동구 행정동 20개 목록 검증 / 보건소 대표번호 / 위탁사 실명</li>
 <li>[ ] 스토어 링크·QR URL·딥링크 스킴</li>
@@ -228,7 +237,7 @@ SC-F-02 신청완료   SC-F-03 이미신청   SC-F-04 관외거주   SC-F-05 모
 <h2>7. 타 기관 확장</h2>
 <p>기관별 설정값만 분리하면 됩니다. 폼 구조·동의 항목 수·문구 톤은 공통.</p>
 <pre><code>기관명 · 기수명 / 관내 행정동 목록 / 대표 전화번호 /
-제3자 제공 동의 내용 / 자동승인 여부 / 모집 기간 · 정원 / URL 규칙
+제3자 제공 동의 내용 / 승인 방식 · 반려 사유 목록 / 모집 기간 · 정원 / URL 규칙
 </code></pre>
 <h2>8. 클로드디자인 핸드오프</h2>
 <p><code>handoff/</code> — 신청폼 HTML을 클로드디자인으로 옮겨 리디자인시킬 때 함께 넘기는 묶음.</p>
