@@ -403,7 +403,7 @@ a{color:var(--g-d)}
 <tr><td><code>S4-02</code></td><td>대안 ①</td><td>맬리브레인 앱은 그냥 쓰실 수 있어요 + 설치 버튼</td><td>앱 일반 이용으로 유도 — 이탈을 완전 손실로 만들지 않음</td></tr>
 <tr><td><code>S4-03</code></td><td>대안 ②</td><td>사시는 곳 보건소에 물어보세요</td><td>타 지자체로 안내</td></tr>
 <tr><td><code>S4-04</code></td><td>오선택 구제</td><td>남동구에 사시는데 동이 안 보였다면 — 이사·동 이름 변경</td><td>행정동 개편으로 목록과 어긋난 경우의 구제</td></tr>
-<tr><td><code>S5-01</code></td><td>헤딩·리드</td><td>아직 신청받는 기간이 아니에요 / 4기 신청은 <b>10월 6일 월요일</b>부터</td><td>정원 마감 시 문구 교체 <code>FX-02</code></td></tr>
+<tr><td><code>S5-01</code></td><td>헤딩·리드</td><td>아직 신청받는 기간이 아니에요 / 4기 신청은 <b><code>{모집시작일}</code></b>부터</td><td><span class="tag fix">값 미정</span> <code>YYYY년 M월 D일 (요일)</code> 형식으로 나중에 넣습니다 · 정원 마감 시 문구 교체 <code>FX-02</code></td></tr>
 <tr><td><code>S5-02</code></td><td>알림 예약</td><td>휴대전화 번호 <span class="tag opt">안 남기셔도 돼요</span> + <code>알림 신청하기</code></td>
 <td>모집 기간 외 방문자를 DB로 남기는 유일한 접점 — 4기 배너 정책과 연결</td></tr>
 <tr><td><code>H1-01</code></td><td>동 시트 헤딩</td><td>어느 동에 사세요? / 지금 사시는 곳(주민등록 주소)을 골라주세요</td><td>기준 주소를 명시해 실거주·등본 혼선 차단</td></tr>
@@ -528,7 +528,7 @@ a{color:var(--g-d)}
 <tr><td>대표 전화번호</td><td>032-000-0000</td><td>모든 결과 화면</td></tr>
 <tr><td>제3자 제공 동의 내용</td><td>제공받는 곳 · 목적 · 보유기간</td><td>필수 동의 3</td></tr>
 <tr><td>자동 승인 여부</td><td>켜짐</td><td><code>IA-R-01</code> · 없으면 관리자 승인 경로로</td></tr>
-<tr><td>모집 기간 · 정원</td><td>10/6 ~</td><td><code>FX-01</code> <code>FX-02</code></td></tr>
+<tr><td>모집 기간 · 정원</td><td><code>{모집시작일}</code> ~ <span class="tag fix">미정</span></td><td><code>FX-01</code> <code>FX-02</code> · 형식 <code>YYYY년 M월 D일 (요일)</code></td></tr>
 <tr><td>URL 규칙</td><td><code>/invitations/{기관}/{기수}/form</code></td><td><span class="tag fix">규칙 미정</span></td></tr>
 </table>
 
