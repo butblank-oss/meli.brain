@@ -21,6 +21,8 @@
 html,body{height:100%}
 body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
  color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+/* 한국어는 어절 단위로만 끊는다 — 기본값이면 "아닙니 / 다"처럼 낱글자가 떨어진다 */
+body,button,input,select,textarea{word-break:keep-all;overflow-wrap:break-word}
 
 /* ─────────── 검수 프레임 (실기기에서는 무시됨) ─────────── */
 .frame{max-width:430px;margin:0 auto;min-height:100%;background:var(--bg);position:relative;
@@ -357,7 +359,7 @@ function card(a) {
 
     const u = el("button", "btn undo", "처리 되돌리기");
     u.type = "button"; u.style.marginTop = "11px";
-    u.onclick = () => { a.status = "wait"; a.reason = null; a.by = null; a.at = null; render(); toast(a.name + " 님을 다시 확인 대기로 옮겼습니다."); };
+    u.onclick = () => { a.status = "wait"; a.reason = null; a.by = null; a.at = null; render(); toast(a.name + " 님 다시 확인 대기로."); };
     c.append(u);
   }
   return c;
@@ -373,14 +375,14 @@ function approve(a) {
   a.status = "ok"; a.reason = null; a.by = "김소리"; a.at = stamp();
   lastAction = { a, prev:"wait" };
   render();
-  toast(a.name + " 님을 승인했습니다. 문자가 나갑니다.", true);
+  toast(a.name + " 님 승인 완료. 문자가 나갑니다.", true);
 }
 
 function reject(a, reason) {
   a.status = "no"; a.reason = reason; a.by = "김소리"; a.at = stamp();
   lastAction = { a, prev:"wait" };
   render();
-  toast(a.name + " 님의 신청을 받지 않았습니다.", true);
+  toast(a.name + " 님 반려 처리했습니다.", true);
 }
 
 /* ─────────── 반려 시트 ─────────── */
