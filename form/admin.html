@@ -24,6 +24,45 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic
 /* 한국어는 어절 단위로만 끊는다 — 기본값이면 "아닙니 / 다"처럼 낱글자가 떨어진다 */
 body,button,input,select,textarea{word-break:keep-all;overflow-wrap:break-word}
 
+
+/* ═══════════ 검수 셸 (실기기·모바일에서는 숨김) ═══════════ */
+.shell{display:flex;align-items:flex-start;min-height:100vh}
+.pane{width:300px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;
+ background:#14171B;color:#C6CCD3;padding:20px 18px 64px;font-size:13px;line-height:1.6;display:none}
+.pane h1{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.pane .lead{font-size:11.5px;color:#7C848D;line-height:1.7;margin:6px 0 16px}
+.pane section{border-top:1px solid #242930;padding-top:14px;margin-bottom:16px}
+.pane .lb{font-size:11px;font-weight:700;color:#9DB6D2;letter-spacing:.06em;margin-bottom:8px}
+.pane .lb.gold{color:#C9A227}
+.pane .row{display:flex;flex-wrap:wrap;gap:6px}
+.pane button,.pane a.vb{background:#1D2228;border:1px solid #2E353D;color:#C6CCD3;border-radius:8px;
+ padding:8px 11px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:block}
+.pane button.on{background:#1B2A3D;border-color:#2F4D70;color:#CFE2F7}
+.pane a.vb.on{background:#2A2112;border-color:#6B5312;color:#F0D6A4}
+.pane select{width:100%;background:#1D2228;color:#E7EBEF;border:1px solid #2E353D;border-radius:8px;
+ padding:9px 10px;font-size:12.5px;font-family:inherit}
+.pane .hint{font-size:11.5px;color:#89929B;line-height:1.75;margin:8px 0 0}
+.pane .spec{background:#1A1E23;border:1px solid #242930;border-radius:9px;padding:11px 12px;
+ font-size:11.5px;color:#9BA4AD;line-height:1.75;margin-top:12px}
+.pane .vb b{display:block;font-size:12.5px;font-weight:800}
+.pane .vb span{display:block;font-size:11px;color:#8B949E;margin-top:1px}
+
+.notes{width:348px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;
+ background:#EEF2F6;border-left:1px solid #D3DCE5;padding:20px 18px 64px;display:none}
+.notes h2{font-size:14px;font-weight:800;color:#1F3C5D;letter-spacing:-.02em;margin-bottom:4px}
+.notes .sub{font-size:11.5px;color:#5A7391;line-height:1.7;margin-bottom:14px}
+.notes .card{background:#fff;border:1px solid #D3DCE5;border-radius:12px;padding:13px 14px;margin-bottom:10px}
+.notes .card .code{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ font-size:10.5px;font-weight:700;color:#1F3C5D;background:#E3EBF3;border-radius:4px;padding:2px 6px}
+.notes .card h3{font-size:13.5px;font-weight:800;color:#16304B;letter-spacing:-.02em;margin:7px 0 6px}
+.notes .card .kv{display:flex;gap:9px;font-size:12px;line-height:1.7;color:#31445A;margin-bottom:4px}
+.notes .card .kv b{flex-shrink:0;width:48px;font-weight:800;color:#5A7391}
+.notes .card .kv span{flex:1}
+
+.stage{flex:1;min-width:0}
+@media(min-width:1180px){ .shell .pane{display:block} .shell.notes-on .notes{display:block} }
+@media(min-width:1180px){ .frame{margin:22px auto} }
+
 /* ─────────── 검수 프레임 (실기기에서는 무시됨) ─────────── */
 .frame{max-width:430px;margin:0 auto;min-height:100%;background:var(--bg);position:relative;
  box-shadow:0 0 0 1px var(--line)}
@@ -158,6 +197,50 @@ main{padding:14px 14px calc(26px + env(safe-area-inset-bottom))}
 </head>
 <body>
 
+<div class="shell" id="shell">
+
+<aside class="pane">
+  <h1>승인 화면 검수</h1>
+  <p class="lead">보건소 담당자가 현장에서 쓰는 모바일 웹입니다. 아래에서 상태와 예외를 바꿔가며 보세요.</p>
+
+  <section style="border-top:0;padding-top:0">
+    <div class="lb gold">버전</div>
+    <a class="vb on" href="admin.html"><b>v1.1 작업본</b><span>지금 보는 중 · 최신</span></a>
+    <a href="CHANGELOG.html" style="display:block;margin-top:9px;font-size:11.5px;color:#6EE7B7;text-decoration:none;font-weight:700">변경이력 보기 →</a>
+  </section>
+
+  <section>
+    <div class="lb">설명</div>
+    <button type="button" id="p-notes" style="width:100%">설명 켜기</button>
+    <p class="hint">오른쪽에 설명 창이 열립니다. 지금 고른 예외에 맞춰 내용이 바뀝니다.</p>
+  </section>
+
+  <section>
+    <div class="lb">예외 상태</div>
+    <select id="p-preset"></select>
+    <p class="hint" id="p-preset-d"></p>
+  </section>
+
+  <section>
+    <div class="lb">상태 필터</div>
+    <div class="row" id="p-filter"></div>
+  </section>
+
+  <section>
+    <div class="lb">빠른 확인</div>
+    <div class="row">
+      <button type="button" id="p-reset">처음 상태로</button>
+      <button type="button" id="p-phone">폰만 보기</button>
+    </div>
+    <p class="hint">[폰만 보기]는 패널을 숨겨 실기기와 같은 화면을 만듭니다. 주소 뒤에 <code>?panel=0</code>을 붙여도 됩니다.</p>
+    <div class="spec">
+      터치 52px 이상 · 승인 버튼은 초록, 반려는 흰 바탕 · 반려 사유는 신청자에게 그대로 노출 ·
+      모든 처리는 되돌릴 수 있음 · 상세 화면 없이 목록에서 처리.
+    </div>
+  </section>
+</aside>
+
+<div class="stage">
 <div class="frame">
 
 <header>
@@ -165,6 +248,8 @@ main{padding:14px 14px calc(26px + env(safe-area-inset-bottom))}
     <div class="ttl">신청 승인<small>인천 남동구 보건소 · 치매예방교실 4기</small></div>
     <div class="who"><i></i>김소리</div>
   </div>
+
+  <div id="offbar" style="display:none;background:#2B2723;color:#F0D6A4;margin:0 -16px 12px;padding:11px 16px;font-size:13.5px;font-weight:700;line-height:1.5;border-bottom:3px solid #A9701A">⚠ 인터넷이 끊겼어요. 연결되면 이어서 처리하실 수 있습니다.</div>
 
   <div class="search">
     <span class="ico" aria-hidden="true">🔍</span>
@@ -198,6 +283,17 @@ main{padding:14px 14px calc(26px + env(safe-area-inset-bottom))}
 </main>
 
 </div><!-- /frame -->
+
+</div><!-- /stage -->
+
+<aside class="notes" id="notes">
+  <h2>승인 화면 정책과 예외</h2>
+  <p class="sub">지금 고른 예외 상태에 맞춰 바뀝니다. 코드는 <a href="exceptions.html" style="color:#1F3C5D;font-weight:700">예외명세</a>의 AD 그룹과 같습니다.</p>
+  <div id="notes-body"></div>
+</aside>
+
+</div><!-- /shell -->
+
 
 <div class="dim" id="dim"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
@@ -265,6 +361,8 @@ const CH = { proxy:["대리 접수","proxy"], self:["본인 신청","self"], pre
 
 /* ─────────── 상태 ─────────── */
 let filter = "wait", query = "", sel = null, lastAction = null, toastTimer = null;
+/* 검수 패널 상태 — render() 가 참조하므로 반드시 먼저 선언한다 (let 은 TDZ 가 있다) */
+let preset = "AD-00", notesOn = false, offline = false, denied = false;
 
 const $  = (s) => document.querySelector(s);
 const el = (t, c, x) => { const n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; };
@@ -280,6 +378,9 @@ function matches(a) {
 
 /* ─────────── 렌더 ─────────── */
 function render() {
+  const ob = document.getElementById("offbar");
+  if (ob) ob.style.display = offline ? "block" : "none";
+  if (denied) { renderDenied(); return; }
   const counts = { wait:0, ok:0, no:0, all:DATA.length };
   DATA.forEach(a => counts[a.status]++);
   ["wait","ok","no","all"].forEach(k => $("#n-" + k).textContent = counts[k]);
@@ -301,6 +402,18 @@ function render() {
   if (!rows.length) { list.append(emptyBox(counts)); return; }
   rows.sort((a, b) => a.min - b.min);
   rows.forEach(a => list.append(card(a)));
+  syncPanel();
+}
+
+/* AD-12 권한 없음 — 목록 자체를 내려주지 않는다 */
+function renderDenied(){
+  ["wait","ok","no","all"].forEach(k => $("#n-"+k).textContent = "–");
+  $("#sum").innerHTML = "";
+  const w = el("div","empty");
+  w.append(el("div","big","🔒"), el("h3",null,"권한이 없습니다"),
+           el("p",null,"이 화면은 보건소 승인 담당자만 볼 수 있습니다. 담당자에게 문의해 주세요."));
+  $("#list").innerHTML = ""; $("#list").append(w);
+  syncPanel();
 }
 
 function emptyBox(counts) {
@@ -342,11 +455,13 @@ function card(a) {
   }
 
   if (a.status === "wait") {
+    const off = offline;
     const acts = el("div", "acts");
     const no = el("button", "btn reject", "받지 않음");
-    no.type = "button"; no.onclick = () => openSheet(a);
+    no.type = "button"; no.disabled = off; no.onclick = () => openSheet(a);
     const ok = el("button", "btn approve", "승인하기");
-    ok.type = "button"; ok.onclick = () => approve(a);
+    ok.type = "button"; ok.disabled = off; ok.onclick = () => approve(a);
+    if (off) { [no,ok].forEach(x=>{ x.style.opacity=".45"; x.style.cursor="not-allowed"; }); }
     acts.append(no, ok);
     c.append(acts);
   } else {
@@ -498,6 +613,203 @@ $("#toast-u").onclick = () => {
 document.addEventListener("keydown", (e) => { if (e.key === "Escape" && sheetFor) closeSheet(); });
 
 render();
+
+/* ══════════════════════════════════════════════════════════════
+   검수 패널 — 예외 프리셋 · 정책 설명
+   실기기에서는 화면 폭 때문에 자동으로 숨습니다 (?panel=0 으로도 숨김)
+   ══════════════════════════════════════════════════════════════ */
+
+const BASE = DATA.map(a => ({...a}));   // 처음 상태 보관
+
+/* 예외 프리셋 — 코드는 exceptions.html 의 AD 그룹과 같다 */
+const PRESETS = {
+  "AD-00": { d:"기본 흐름. 확인할 신청 8건이 올라와 있고 승인·반려 각 1건이 처리돼 있다." },
+  "AD-01": { d:"확인할 신청이 0건. 빈 화면에서 '새 신청이 들어오면 여기에 올라온다'고 알린다.",
+             apply:()=>{ DATA.forEach(a=>{ if(a.status==="wait") a.status="ok", a.by="김소리", a.at="오늘 09:50"; }); } },
+  "AD-03": { d:"단체 접수로 대기가 밀린 경우. 목록이 길어져도 오래 기다린 건이 위로 온다.",
+             apply:()=>{ for(let i=0;i<22;i++) DATA.push(mk({name:"대기"+(i+1)+"번", tel:"010-"+(1000+i*37)+"-"+(2000+i*53), dong:"만수"+((i%6)+1)+"동", min:8+i*3, ch: i%3===0?"proxy":"self", staff:i%3===0?"김소리":null})); } },
+  "AD-09": { d:"검색 결과 없음. 이름 전체 또는 번호 뒷자리로 다시 찾도록 안내한다.",
+             apply:()=>{ setTimeout(()=>{ query="없는이름"; $("#q").value=query; $("#clr").classList.add("on"); render(); },0); } },
+  "AD-15": { d:"관외 거주 의심. 거주 동이 관내 목록에 없어 붉은 줄로 먼저 알린다.",
+             apply:()=>{ DATA.filter(a=>a.status==="wait").slice(0,3).forEach((a,i)=>{ if(i===0){ a.dong="연수동"; a.flag="거주 동이 관내 목록에 없습니다. 최근 행정동 개편 대상일 수 있습니다."; } }); } },
+  "AD-16": { d:"중복 신청 의심. 같은 번호로 두 번 들어왔고 이름이 다르다.",
+             apply:()=>{ const a=DATA.find(x=>x.status==="wait"); if(a) a.flag="같은 번호로 오늘 두 번 신청됐습니다. 앞 건(오전 9시 12분)과 이름이 다릅니다."; } },
+  "AD-05": { d:"이미 처리된 건. 승인함·반려함 탭에서만 보이고 [처리 되돌리기]만 남는다.",
+             apply:()=>{ setTimeout(()=>{ document.querySelector('.tab[data-f="ok"]').click(); },0); } },
+  "AD-07": { d:"반려 사유를 고르지 않음. [반려하기]가 눌리지 않는다. 사유 없는 반려는 만들지 않는다.",
+             apply:()=>{ setTimeout(()=>{ const b=document.querySelector(".btn.reject"); if(b) b.click(); },120); } },
+  "AD-10": { d:"오프라인. 상단에 띠를 띄우고 승인·반려를 막는다. 끊긴 채로 누르면 사라진 것처럼 보인다.",
+             offline:true },
+  "AD-12": { d:"권한 없는 사용자. 목록 자체를 내려주지 않고 담당자 문의로 보낸다.",
+             denied:true }
+};
+
+
+/* 예외별 설명 카드 — 정책 · 디스크립션 */
+const NOTES = {
+  "AD-00": [
+    { code:"AD-R-01", t:"확인할 신청이 기본 화면", kv:[
+      ["목적","담당자가 열자마자 할 일이 보여야 합니다. 통계나 대시보드를 먼저 보여주지 않습니다"],
+      ["정렬","오래 기다린 건이 위로. 현장 접수는 몇 분 전 건이라 자연스럽게 위에 옵니다"],
+      ["표시","이름 · 번호 · 거주 동 · 경과시간 · 작성 경로(대리접수/본인신청/3기참여자)"]]},
+    { code:"AD-R-05", t:"상세 화면으로 들어가지 않는다", kv:[
+      ["이유","현장에서 한 손으로 씁니다. 목록 → 상세 → 승인 → 목록은 세 번을 더 누르게 합니다"],
+      ["대신","판단에 필요한 정보를 카드에 다 올립니다. 의심스러운 건에만 붉은 줄을 답니다"]]},
+    { code:"AD-R-07", t:"처리자와 시각을 남긴다", kv:[
+      ["기록","누가 · 언제 · 무엇을 · (반려면) 어떤 사유로"],
+      ["이유","보건소 사업 실적 보고와 민원 대응에 쓰입니다. 나중에 못 만듭니다"]]}
+  ],
+  "AD-01": [
+    { code:"AD-01", t:"확인할 신청이 없음", kv:[
+      ["화면","✓ 아이콘 + '확인할 신청이 없습니다' + '새 신청이 들어오면 여기에 바로 올라옵니다'"],
+      ["금지","빈 화면을 오류처럼 보이게 하지 않습니다. 할 일이 없는 것은 정상입니다"],
+      ["갱신","자동 새로고침은 걸지 않습니다. 화면이 저절로 바뀌면 처리 중이던 건을 놓칩니다"]]}
+  ],
+  "AD-03": [
+    { code:"AD-03", t:"대기가 아주 많음", kv:[
+      ["상황","복지관 단체 접수. 20~50건이 한꺼번에 들어옵니다"],
+      ["화면","탭 옆 숫자로 총량을 먼저 보여줍니다. 목록은 그대로 스크롤"],
+      ["서버","30건 넘어가면 페이지네이션이 필요합니다. 무한 스크롤은 처리 위치를 잃게 만듭니다"],
+      ["미정","일괄 승인 도입 여부. 오승인 위험이 있어 지금은 넣지 않았습니다"]]}
+  ],
+  "AD-09": [
+    { code:"AD-09", t:"검색 결과 없음", kv:[
+      ["화면","🔍 + '찾으시는 분이 없습니다' + '이름 전체 또는 전화번호 뒷자리로 다시 찾아보세요'"],
+      ["범위","이름은 부분 일치, 번호는 숫자만 남겨 부분 일치. 뒷자리 4자리로 찾는 게 현장에서 가장 빠릅니다"],
+      ["주의","검색은 현재 탭 안에서만 합니다. 반려한 사람을 대기 탭에서 찾으면 안 나옵니다"]]}
+  ],
+  "AD-15": [
+    { code:"AD-15", t:"관외 거주 의심", kv:[
+      ["판정","제출된 동이 관내 20개 화이트리스트에 없을 때"],
+      ["화면","붉은 줄로 먼저 알리고, 거주 동 값 자체도 붉게"],
+      ["주의","자동으로 반려하지 않습니다. 행정동 개편이나 최근 이사일 수 있어 사람이 판단합니다"],
+      ["서버","제출 시점에도 화이트리스트로 재검증합니다 (C-4)"]]}
+  ],
+  "AD-16": [
+    { code:"AD-16", t:"중복 신청 의심", kv:[
+      ["판정","같은 번호로 두 건 이상, 또는 같은 이름+동 조합"],
+      ["화면","앞 건의 접수 시각과 무엇이 다른지까지 적습니다"],
+      ["처리","반려 사유 '이미 신청하신 분입니다'를 고르면 앞 건으로 진행한다고 안내됩니다"],
+      ["서버","제출 멱등 처리로 대부분 막힙니다 (C-5). 이름이 다르면 다른 사람일 수 있어 걸러집니다"]]}
+  ],
+  "AD-05": [
+    { code:"AD-05", t:"이미 처리된 건", kv:[
+      ["화면","승인함/반려함 배지 + 처리자 + 시각. 반려면 사유도 함께"],
+      ["동작","승인·반려 버튼은 사라지고 [처리 되돌리기]만 남습니다"],
+      ["서버","같은 건에 승인이 두 번 들어와도 멱등하게 처리하고 현재 상태를 돌려줍니다 (FV-07)"]]},
+    { code:"AD-06", t:"처리 되돌리기", kv:[
+      ["경로","토스트 [되돌리기](6초) · 처리된 카드의 [처리 되돌리기](제한 없음)"],
+      ["결과","상태가 대기로 돌아갑니다"],
+      ["미해결","이미 나간 문자는 회수할 수 없습니다. 되돌림 문자를 보낼지 정해야 합니다 (FV-08)"]]}
+  ],
+  "AD-07": [
+    { code:"AD-07", t:"사유 없이 반려 시도", kv:[
+      ["동작","[반려하기]가 비활성입니다. 사유를 골라야 눌립니다"],
+      ["기타","직접 적는 경우 5자 미만이면 역시 눌리지 않습니다"],
+      ["근거","IA-R-01b — 반려에는 사유가 반드시 붙습니다. 사유는 신청자 화면에 그대로 보입니다"]]},
+    { code:"AD-R-03", t:"보일 문장을 먼저 보여준다", kv:[
+      ["장치","사유를 고르면 '신청자에게 이렇게 보입니다' 미리보기가 뜹니다"],
+      ["이유","관리자가 고른 분류가 어르신에게 어떤 문장으로 나가는지 모르면, 사무적인 말이 그대로 나갑니다"]]}
+  ],
+  "AD-10": [
+    { code:"AD-10", t:"오프라인", kv:[
+      ["화면","상단 띠 + 승인·반려 버튼 비활성"],
+      ["이유","끊긴 채로 누르면 아무 일도 안 일어나 담당자는 눌렀다고 생각합니다"],
+      ["복구","연결되면 띠가 사라지고 목록을 다시 받습니다"]]},
+    { code:"AD-11", t:"처리 중 통신 실패", kv:[
+      ["화면","'처리하지 못했습니다. 다시 눌러주세요' + 카드는 대기 상태 그대로"],
+      ["금지","실패했는데 성공한 것처럼 목록에서 빼지 않습니다"],
+      ["서버","재시도가 안전하도록 멱등 처리 (FV-07)"]]}
+  ],
+  "AD-12": [
+    { code:"AD-12", t:"권한 없는 접근", kv:[
+      ["화면","목록을 아예 내려주지 않고 '권한이 없습니다 · 보건소 담당자에게 문의' 안내"],
+      ["서버","화면에서 막는 것으로는 부족합니다. API에서 권한을 검사해야 합니다"],
+      ["미정","승인 권한자 범위 — 보건소 확인 대기"]]},
+    { code:"AD-13", t:"세션 만료", kv:[
+      ["상황","현장에서 앱을 오래 열어두고 씁니다"],
+      ["화면","처리 시점에 만료를 알리고 다시 로그인시킨 뒤 같은 자리로 돌려보냅니다"],
+      ["금지","작업 중 화면을 저절로 로그인 화면으로 바꾸지 않습니다"]]}
+  ]
+};
+
+/* 공통으로 항상 붙는 카드 */
+const NOTES_ALWAYS = [
+  { code:"AD-14", t:"문자 발송 실패", kv:[
+    ["상황","승인은 됐는데 문자만 실패"],
+    ["원칙","문자 발송이 상태 전이를 막지 않습니다. 접수·승인은 유효합니다"],
+    ["화면","담당자에게 '문자가 가지 않았습니다. 전화로 알려주세요'를 표시할지 미정"]]},
+  { code:"AD-R-04", t:"모든 처리는 되돌릴 수 있다", kv:[
+    ["이유","현장에서 한 손으로 누릅니다. 오터치가 반드시 생깁니다"],
+    ["장치","토스트 되돌리기(6초) + 카드의 처리 되돌리기(제한 없음)"]]}
+];
+
+function applyPreset(k){
+  preset = k;
+  DATA = BASE.map(a=>({...a}));
+  offline = false; denied = false;
+  query = ""; if($("#q")) { $("#q").value=""; $("#clr").classList.remove("on"); }
+  document.querySelectorAll(".tab").forEach((x,i)=>x.setAttribute("aria-selected", i===0?"true":"false"));
+  filter = "wait";
+  const P = PRESETS[k] || {};
+  offline = !!P.offline; denied = !!P.denied;
+  if (P.apply) P.apply();
+  $("#p-preset-d").textContent = P.d || "";
+  render(); renderNotes();
+}
+
+function renderNotes(){
+  const b = document.getElementById("notes-body"); if(!b) return;
+  b.innerHTML = "";
+  const cards = (NOTES[preset] || NOTES["AD-00"]).concat(NOTES_ALWAYS);
+  cards.forEach(c=>{
+    const w = el("div","card");
+    w.append(el("span","code",c.code), el("h3",null,c.t));
+    c.kv.forEach(([k,v])=>{ const r=el("div","kv"); r.append(el("b",null,k), el("span",null,v)); w.append(r); });
+    b.append(w);
+  });
+}
+
+function initPanel(){
+  const params = new URLSearchParams(location.search);
+  if (params.get("panel") === "0") { document.querySelector(".pane").style.display="none"; return; }
+
+  const sel = $("#p-preset");
+  Object.keys(PRESETS).forEach(k=>{
+    const o=document.createElement("option"); o.value=k;
+    o.textContent = k + " — " + PRESETS[k].d.slice(0,26);
+    sel.append(o);
+  });
+  sel.value = preset;
+  sel.onchange = e => applyPreset(e.target.value);
+
+  const fr = $("#p-filter");
+  [["wait","대기"],["ok","승인함"],["no","반려함"],["all","전체"]].forEach(([k,t])=>{
+    const bt=el("button",null,t); bt.type="button"; bt.dataset.f=k;
+    bt.onclick=()=>{ document.querySelector('.tab[data-f="'+k+'"]').click(); syncPanel(); };
+    fr.append(bt);
+  });
+
+  $("#p-notes").onclick = () => {
+    notesOn = !notesOn;
+    document.getElementById("shell").classList.toggle("notes-on", notesOn);
+    $("#p-notes").textContent = notesOn ? "설명 끄기" : "설명 켜기";
+    $("#p-notes").classList.toggle("on", notesOn);
+    if (notesOn) renderNotes();
+  };
+  $("#p-reset").onclick = () => { sel.value="AD-00"; applyPreset("AD-00"); };
+  $("#p-phone").onclick = () => { location.search = "?panel=0"; };
+
+  $("#p-preset-d").textContent = PRESETS[preset].d;
+  renderNotes();
+}
+
+function syncPanel(){
+  document.querySelectorAll("#p-filter button").forEach(b=>b.classList.toggle("on", b.dataset.f===filter));
+}
+
+initPanel();
+
 </script>
 </body>
 </html>

@@ -30,7 +30,7 @@
   <sc-if value="{{ showPanel }}" hint-placeholder-val="{{ true }}">
   <aside style="width:296px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;background:#14171B;color:#C6CCD3;padding:20px 18px 64px;font-size:13px;line-height:1.6">
     <div style="font-size:15px;font-weight:800;color:#fff;letter-spacing:-.02em">검수 패널</div>
-    <p style="font-size:11.5px;color:#7C848D;line-height:1.7;margin:6px 0 18px">보이는 것만 다시 잡았습니다. 구조 · 문구 · 입력 순서 · 분기는 확정본 그대로입니다.</p>
+    <div style="background:#2A2112;border:1px solid #6B5312;border-radius:9px;padding:10px 11px;margin:10px 0 16px"><b style="display:block;font-size:12px;font-weight:800;color:#F0D6A4">v1.0 · 박제된 판</b><span style="display:block;font-size:11px;color:#C9A227;line-height:1.65;margin-top:3px">2026-09-21 기획자에게 전달한 상태입니다. <b>이 파일은 고치지 않습니다.</b> 수정은 v1.1 작업본에서 합니다.</span></div><p style="font-size:11.5px;color:#7C848D;line-height:1.7;margin:0 0 18px">보이는 것만 다시 잡았습니다. 구조 · 문구 · 입력 순서 · 분기는 확정본 그대로입니다.</p>
 
     <div style="border-top:1px solid #242930;padding-top:14px;margin-bottom:16px">
       <div style="font-size:11px;font-weight:700;color:#9DB6D2;letter-spacing:.06em;margin-bottom:8px">설명</div>
@@ -1369,9 +1369,9 @@ class Component extends DCLogic {
 
     const vals = {
       showPanel: this.props.showInspector ?? true,
-      verLatestStyle: verBtn(true),
-      verLatestNote: "지금 보는 중 · 최신",
-      verV10Style: verBtn(false),
+      verLatestStyle: verBtn(false),
+      verLatestNote: "최신 작업본으로 가기",
+      verV10Style: verBtn(true),
       notesOn: s.notes,
       toggleNotes: this.toggleNotes,
       notesBtnStyle: "width:100%;padding:11px 12px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;border:1px solid " + (s.notes ? "#5F86B3" : "#2E353D") + ";background:" + (s.notes ? "#2A4364" : "#1D2228") + ";color:" + (s.notes ? "#DCE9F6" : "#99A2AB"),
