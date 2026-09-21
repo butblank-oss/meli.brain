@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>맬리브레인 신청 승인 — 관리자 (모바일)</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --navy:#1F3C5D; --navy-d:#16304B; --ink:#1A1F26; --ink2:#59636D; --ink3:#8B95A1;
+  --line:#E4E1DA; --bg:#F4F3F0; --wt:#fff;
+  --ok:#17624A; --ok-bg:#EAF3EF; --ok-line:#B9D5C9;
+  --no:#9E241D; --no-bg:#FBEFED; --no-line:#EBC7C1;
+  --wait:#8A5412; --wait-bg:#FAF2E3; --wait-line:#E6D3AE;
+  --shadow:0 6px 20px rgba(20,32,48,.10);
+  --hdr:0px; --act:0px;
+}
+html,body{height:100%}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+
+/* ─────────── 검수 프레임 (실기기에서는 무시됨) ─────────── */
+.frame{max-width:430px;margin:0 auto;min-height:100%;background:var(--bg);position:relative;
+ box-shadow:0 0 0 1px var(--line)}
+@media(min-width:900px){ body{background:#2B3038} .frame{box-shadow:0 0 60px rgba(0,0,0,.35)} }
+
+/* ─────────── 상단 고정 ─────────── */
+header{position:sticky;top:0;z-index:30;background:var(--navy);color:#fff;
+ padding:calc(14px + env(safe-area-inset-top)) 16px 0}
+header .top{display:flex;align-items:center;gap:10px;padding-bottom:12px}
+header .ttl{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.35}
+header .ttl small{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:0;margin-top:2px}
+header .who{margin-left:auto;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);
+ border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700}
+header .who i{width:7px;height:7px;border-radius:50%;background:#6EE7B7;font-style:normal}
+
+.search{padding-bottom:12px;position:relative}
+.search input{width:100%;height:46px;border:0;border-radius:12px;padding:0 40px 0 38px;
+ font-size:16px;font-weight:600;color:var(--ink);background:#fff}
+.search input::placeholder{color:#9AA4AE;font-weight:500}
+.search input:focus{outline:3px solid rgba(110,231,183,.45);outline-offset:1px}
+.search .ico{position:absolute;left:13px;top:13px;font-size:18px;color:#8B95A1;pointer-events:none}
+.search .clr{position:absolute;right:8px;top:9px;width:30px;height:30px;border:0;border-radius:50%;
+ background:#EDEBE5;color:#59636D;font-size:15px;font-weight:800;cursor:pointer;display:none}
+.search .clr.on{display:block}
+
+.tabs{display:flex;gap:6px;padding-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.10);
+ border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.82);border-radius:999px;
+ padding:9px 14px;font-size:13.5px;font-weight:700;cursor:pointer;min-height:40px;letter-spacing:-.01em}
+.tab[aria-selected="true"]{background:#fff;color:var(--navy);border-color:#fff}
+.tab b{font-size:13px;font-weight:800;background:rgba(0,0,0,.12);border-radius:999px;padding:1px 7px;min-width:22px;text-align:center}
+.tab[aria-selected="true"] b{background:#E8EEF4;color:var(--navy)}
+
+/* ─────────── 목록 ─────────── */
+main{padding:14px 14px calc(26px + env(safe-area-inset-bottom))}
+.sum{display:flex;align-items:baseline;gap:8px;padding:2px 4px 12px;font-size:13px;color:var(--ink3);font-weight:600}
+.sum b{color:var(--ink);font-size:14px;font-weight:800}
+
+.card{background:var(--wt);border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;
+ margin-bottom:12px;box-shadow:0 1px 2px rgba(20,32,48,.04)}
+.card.sel{border-color:var(--navy);box-shadow:var(--shadow)}
+.card .r1{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.card .nm{font-size:20px;font-weight:800;letter-spacing:-.035em}
+.pill{font-size:11.5px;font-weight:800;border-radius:6px;padding:3px 8px;letter-spacing:-.01em;white-space:nowrap}
+.pill.proxy{color:var(--wait);background:var(--wait-bg);border:1px solid var(--wait-line)}
+.pill.self{color:#4A545E;background:#EFEDE7;border:1px solid #DCD8CF}
+.pill.prev{color:var(--navy);background:#E8EEF4;border:1px solid #C6D6E4}
+.pill.ok{color:var(--ok);background:var(--ok-bg);border:1px solid var(--ok-line)}
+.pill.no{color:var(--no);background:var(--no-bg);border:1px solid var(--no-line)}
+.pill.wait{color:var(--wait);background:var(--wait-bg);border:1px solid var(--wait-line)}
+.card .ago{margin-left:auto;font-size:12.5px;color:var(--ink3);font-weight:700;white-space:nowrap}
+
+.kv{margin-top:11px;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:15px}
+.kv dt{color:var(--ink3);font-weight:600;font-size:13.5px;padding-top:1px}
+.kv dd{font-weight:700;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.kv dd.warnv{color:var(--no)}
+
+.flag{margin-top:11px;display:flex;gap:8px;background:var(--no-bg);border:1px solid var(--no-line);
+ border-radius:11px;padding:10px 12px;font-size:13.5px;line-height:1.55;color:#7A1C16;font-weight:600}
+.flag i{font-style:normal;flex-shrink:0}
+
+.acts{margin-top:13px;display:flex;gap:9px}
+.btn{flex:1;min-height:52px;border:0;border-radius:13px;font-size:16.5px;font-weight:800;
+ cursor:pointer;letter-spacing:-.02em;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn.approve{background:var(--ok);color:#fff}
+.btn.approve:active{background:#12503C}
+.btn.reject{flex:0 0 104px;background:#fff;border:1.5px solid #D6CFCB;color:var(--no)}
+.btn.reject:active{background:var(--no-bg)}
+.btn.undo{width:100%;background:#fff;border:1.5px solid #C8C3B8;color:var(--ink);min-height:46px;font-size:15px}
+
+.done{display:flex;align-items:flex-start;gap:9px;margin-top:12px;padding-top:12px;border-top:1px solid #EFEDE7;
+ font-size:14px;font-weight:700;color:var(--ink2);flex-wrap:wrap}
+.done .rsn{flex:1;min-width:120px;line-height:1.5}
+.done .by{margin-left:auto;font-size:12.5px;color:var(--ink3);font-weight:600;text-align:right;
+ line-height:1.45;white-space:nowrap;flex-shrink:0}
+
+.empty{text-align:center;padding:56px 24px;color:var(--ink3)}
+.empty .big{font-size:40px;margin-bottom:12px}
+.empty h3{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.03em;margin-bottom:6px}
+.empty p{font-size:14.5px;line-height:1.65}
+
+/* ─────────── 반려 시트 ─────────── */
+.dim{position:fixed;inset:0;background:rgba(18,22,28,.5);z-index:40;display:none}
+.dim.on{display:block}
+.sheet{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:430px;z-index:41;
+ background:var(--wt);border-radius:22px 22px 0 0;display:none;max-height:88vh;flex-direction:column}
+.sheet.on{display:flex}
+.sheet .sh{padding:20px 20px 12px;border-bottom:1px solid var(--line)}
+.sheet .sh h3{font-size:20px;font-weight:800;letter-spacing:-.035em}
+.sheet .sh p{font-size:14px;color:var(--ink2);margin-top:5px;line-height:1.6}
+.sheet .sb{padding:14px 20px;overflow-y:auto;flex:1}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;
+ border:1.5px solid var(--line);border-radius:13px;padding:14px;margin-bottom:9px;cursor:pointer;min-height:58px}
+.opt[aria-checked="true"]{border-color:var(--no);background:var(--no-bg)}
+.opt .bx{width:24px;height:24px;border-radius:50%;border:2px solid #C8C3B8;flex-shrink:0;margin-top:1px;
+ display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:800}
+.opt[aria-checked="true"] .bx{border-color:var(--no);background:var(--no)}
+.opt .tx{flex:1}
+.opt .tx b{display:block;font-size:16px;font-weight:800;letter-spacing:-.025em}
+.opt .tx span{display:block;font-size:13px;color:var(--ink2);margin-top:3px;line-height:1.55}
+.sheet textarea{width:100%;min-height:74px;border:1.5px solid var(--line);border-radius:12px;padding:12px;
+ font-family:inherit;font-size:15px;line-height:1.6;resize:vertical;color:var(--ink)}
+.sheet textarea:focus{outline:3px solid rgba(31,60,93,.25);outline-offset:1px;border-color:var(--navy)}
+.sheet .sf{padding:14px 20px calc(18px + env(safe-area-inset-bottom));border-top:1px solid var(--line);
+ display:flex;gap:9px;background:#fff}
+.sheet .sf .btn.cancel{flex:0 0 96px;background:#fff;border:1.5px solid #C8C3B8;color:var(--ink)}
+.sheet .sf .btn.confirm{background:var(--no);color:#fff}
+.sheet .sf .btn.confirm:disabled{background:#D8D4CC;color:#8B95A1;cursor:not-allowed}
+.prev{background:#F7F6F2;border:1px solid var(--line);border-radius:12px;padding:13px;margin-top:4px}
+.prev .lb{font-size:11.5px;font-weight:800;color:var(--ink3);letter-spacing:.04em;margin-bottom:7px}
+.prev .bd{font-size:14.5px;line-height:1.6;color:var(--ink)}
+.prev .bd b{color:var(--no)}
+
+/* ─────────── 토스트 ─────────── */
+.toast{position:fixed;left:50%;transform:translateX(-50%) translateY(14px);bottom:calc(22px + env(safe-area-inset-bottom));
+ z-index:50;background:#22282F;color:#fff;border-radius:14px;padding:14px 16px;font-size:15px;font-weight:700;
+ display:flex;align-items:center;gap:12px;box-shadow:0 10px 28px rgba(0,0,0,.28);opacity:0;pointer-events:none;
+ transition:opacity .16s,transform .16s;width:calc(100% - 28px);max-width:402px;line-height:1.45}
+.toast > span{flex:1;min-width:0}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.toast button{background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:9px;padding:9px 13px;
+ font-size:14px;font-weight:800;cursor:pointer;flex-shrink:0;min-height:40px}
+
+.note{margin:18px 2px 0;background:#ECF1F6;border:1px solid #C6D6E4;border-radius:14px;padding:14px 15px;
+ font-size:13px;line-height:1.7;color:#1A3654}
+.note b{display:block;font-size:13.5px;margin-bottom:5px}
+.note code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:#fff;
+ border:1px solid #C6D6E4;border-radius:4px;padding:1px 5px}
+.note a{color:var(--navy);font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+<header>
+  <div class="top">
+    <div class="ttl">신청 승인<small>인천 남동구 보건소 · 치매예방교실 4기</small></div>
+    <div class="who"><i></i>김소리</div>
+  </div>
+
+  <div class="search">
+    <span class="ico" aria-hidden="true">🔍</span>
+    <input id="q" type="search" inputmode="search" placeholder="이름 또는 전화번호 뒷자리" aria-label="이름 또는 전화번호로 찾기">
+    <button class="clr" id="clr" type="button" aria-label="검색어 지우기">✕</button>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="상태 필터">
+    <button class="tab" role="tab" data-f="wait" aria-selected="true">확인할 신청 <b id="n-wait">0</b></button>
+    <button class="tab" role="tab" data-f="ok"   aria-selected="false">승인함 <b id="n-ok">0</b></button>
+    <button class="tab" role="tab" data-f="no"   aria-selected="false">반려함 <b id="n-no">0</b></button>
+    <button class="tab" role="tab" data-f="all"  aria-selected="false">전체 <b id="n-all">0</b></button>
+  </div>
+</header>
+
+<main>
+  <div class="sum" id="sum"></div>
+  <div id="list"></div>
+
+  <div class="note">
+    <b>이 화면은 검수용 프로토타입입니다</b>
+    데이터는 화면 안에만 있고 새로고침하면 처음으로 돌아갑니다. 실제로는
+    <code>GET /api/admin/applications?status=</code> 로 목록을 받고
+    <code>POST /api/admin/applications/{id}/approve</code> ·
+    <code>/reject</code> 로 처리합니다.<br><br>
+    승인·반려 즉시 신청자에게 문자가 나가고, 앱을 열면
+    <a href="design/index.html">승인 대기 / 반려 / 오늘의 프로그램</a> 화면으로 갈립니다.
+    설계 근거는 <a href="ia.html">IA · 화면설계서</a>,
+    예외 처리는 <a href="exceptions.html">예외명세</a>를 보세요.
+  </div>
+</main>
+
+</div><!-- /frame -->
+
+<div class="dim" id="dim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+  <div class="sh">
+    <h3 id="sh-t">신청을 받지 않습니다</h3>
+    <p id="sh-p">이유를 고르시면 신청자에게 그대로 보입니다.</p>
+  </div>
+  <div class="sb" id="sh-b"></div>
+  <div class="sf">
+    <button class="btn cancel" type="button" id="sh-x">취소</button>
+    <button class="btn confirm" type="button" id="sh-ok" disabled>반려하기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span id="toast-t"></span>
+  <button type="button" id="toast-u">되돌리기</button>
+</div>
+
+<script>
+"use strict";
+
+/* ─────────── 반려 사유 ─────────── */
+const REASONS = [
+  { id:"outer", t:"남동구에 사시는 분이 아닙니다",
+    d:"관내 거주가 확인되지 않음",
+    msg:"이 교실은 남동구 국비·구비로 운영되어 남동구에 사시는 분만 참여하실 수 있습니다. 주소가 바뀌셨거나 잘못 고르셨다면 보건소로 전화 주세요." },
+  { id:"mismatch", t:"적어주신 내용이 맞지 않습니다",
+    d:"이름·번호·거주지가 확인되지 않음",
+    msg:"신청서에 적어주신 내용을 확인하지 못했습니다. 보건소로 전화 주시면 함께 확인해 드리겠습니다." },
+  { id:"dup", t:"이미 신청하신 분입니다",
+    d:"같은 분의 신청이 이미 있음",
+    msg:"이미 신청이 접수되어 있습니다. 앞서 신청하신 건으로 진행됩니다. 궁금하시면 보건소로 전화 주세요." },
+  { id:"full", t:"정원이 다 찼습니다",
+    d:"이번 기수 정원 초과",
+    msg:"이번 기수는 정원이 다 찼습니다. 다음 기수에 다시 신청하실 수 있도록 안내해 드리겠습니다. 보건소로 전화 주세요." },
+  { id:"etc", t:"그 밖의 이유",
+    d:"직접 적습니다 (신청자에게 그대로 보입니다)",
+    msg:"" }
+];
+
+/* ─────────── 데모 데이터 ─────────── */
+let SEQ = 100;
+const mk = (o) => Object.assign({ id:"A"+(++SEQ), status:"wait", reason:null, by:null, at:null }, o);
+let DATA = [
+  mk({ name:"김복순", tel:"010-2847-1130", dong:"만수3동", min:2,  ch:"proxy", staff:"김소리",
+       note:"현장 접수 · 어르신 본인 동의 완료" }),
+  mk({ name:"박영길", tel:"010-9921-4408", dong:"논현1동", min:6,  ch:"self" }),
+  mk({ name:"정말녀", tel:"010-3317-8852", dong:"간석4동", min:14, ch:"prev", note:"3기 참여자 · 이어서 신청" }),
+  mk({ name:"홍순덕", tel:"010-5540-2207", dong:"장수서창동", min:23, ch:"self",
+       flag:"같은 번호로 오늘 두 번 신청됐습니다. 앞 건(오전 9시 12분)과 이름이 다릅니다." }),
+  mk({ name:"이갑수", tel:"010-7712-6640", dong:"남촌도림동", min:41, ch:"proxy", staff:"김소리" }),
+  mk({ name:"최순애", tel:"010-4408-9913", dong:"구월1동", min:58, ch:"self" }),
+  mk({ name:"윤병철", tel:"010-6625-3374", dong:"만수6동", min:95, ch:"self",
+       flag:"거주 동이 관내 목록에 없습니다. 최근 행정동 개편 대상일 수 있습니다." }),
+  mk({ name:"서말순", tel:"010-2230-7781", dong:"논현2동", min:140, ch:"proxy", staff:"박용주" })
+];
+// 이미 처리된 예시 몇 건
+DATA.push(mk({ name:"강복동", tel:"010-8814-2256", dong:"간석1동", min:210, ch:"self",
+               status:"ok", by:"김소리", at:"오늘 09:41" }));
+DATA.push(mk({ name:"임순자", tel:"010-3390-6614", dong:"연수동", min:260, ch:"self",
+               status:"no", reason:REASONS[0], by:"김소리", at:"오늘 09:08" }));
+
+const CH = { proxy:["대리 접수","proxy"], self:["본인 신청","self"], prev:["3기 참여자","prev"] };
+
+/* ─────────── 상태 ─────────── */
+let filter = "wait", query = "", sel = null, lastAction = null, toastTimer = null;
+
+const $  = (s) => document.querySelector(s);
+const el = (t, c, x) => { const n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; };
+const ago = (m) => m < 1 ? "방금" : m < 60 ? m + "분 전" : Math.floor(m/60) + "시간 전";
+const tail = (t) => t.replace(/[^0-9]/g, "").slice(-4);
+
+function matches(a) {
+  if (filter !== "all" && a.status !== filter) return false;
+  if (!query) return true;
+  const q = query.trim().toLowerCase();
+  return a.name.toLowerCase().includes(q) || a.tel.replace(/[^0-9]/g, "").includes(q.replace(/[^0-9]/g, "") || "\u0000");
+}
+
+/* ─────────── 렌더 ─────────── */
+function render() {
+  const counts = { wait:0, ok:0, no:0, all:DATA.length };
+  DATA.forEach(a => counts[a.status]++);
+  ["wait","ok","no","all"].forEach(k => $("#n-" + k).textContent = counts[k]);
+
+  const rows = DATA.filter(matches);
+  const list = $("#list");
+  list.innerHTML = "";
+
+  const sum = $("#sum");
+  sum.innerHTML = "";
+  if (query) {
+    sum.append(el("span", null, "‘" + query + "’ 찾은 결과 "), el("b", null, rows.length + "건"));
+  } else if (filter === "wait") {
+    sum.append(el("b", null, counts.wait + "건"), el("span", null, "확인을 기다리고 있습니다"));
+  } else {
+    sum.append(el("b", null, rows.length + "건"));
+  }
+
+  if (!rows.length) { list.append(emptyBox(counts)); return; }
+  rows.sort((a, b) => a.min - b.min);
+  rows.forEach(a => list.append(card(a)));
+}
+
+function emptyBox(counts) {
+  const w = el("div", "empty");
+  if (query) {
+    w.append(el("div", "big", "🔍"), el("h3", null, "찾으시는 분이 없습니다"),
+             el("p", null, "이름 전체 또는 전화번호 뒷자리로 다시 찾아보세요."));
+  } else if (filter === "wait") {
+    w.append(el("div", "big", "✓"), el("h3", null, "확인할 신청이 없습니다"),
+             el("p", null, "새 신청이 들어오면 여기에 바로 올라옵니다."));
+  } else {
+    w.append(el("div", "big", "—"), el("h3", null, "아직 없습니다"),
+             el("p", null, filter === "ok" ? "승인한 신청이 여기에 쌓입니다." : "반려한 신청이 여기에 쌓입니다."));
+  }
+  return w;
+}
+
+function card(a) {
+  const c = el("div", "card" + (sel === a.id ? " sel" : ""));
+
+  const r1 = el("div", "r1");
+  r1.append(el("span", "nm", a.name));
+  if (CH[a.ch]) r1.append(el("span", "pill " + CH[a.ch][1], CH[a.ch][0]));
+  r1.append(el("span", "ago", ago(a.min)));
+  c.append(r1);
+
+  const kv = el("dl", "kv");
+  const add = (k, v, warn) => { kv.append(el("dt", null, k)); const d = el("dd", warn ? "warnv" : null, v); kv.append(d); };
+  add("전화번호", a.tel);
+  add("사시는 곳", "인천 남동구 " + a.dong, !!a.flag && /관내 목록에 없/.test(a.flag));
+  if (a.staff) add("접수한 직원", a.staff);
+  if (a.note)  add("메모", a.note);
+  c.append(kv);
+
+  if (a.flag && a.status === "wait") {
+    const f = el("div", "flag");
+    f.append(el("i", null, "⚠"), el("span", null, a.flag));
+    c.append(f);
+  }
+
+  if (a.status === "wait") {
+    const acts = el("div", "acts");
+    const no = el("button", "btn reject", "받지 않음");
+    no.type = "button"; no.onclick = () => openSheet(a);
+    const ok = el("button", "btn approve", "승인하기");
+    ok.type = "button"; ok.onclick = () => approve(a);
+    acts.append(no, ok);
+    c.append(acts);
+  } else {
+    const d = el("div", "done");
+    d.append(el("span", "pill " + (a.status === "ok" ? "ok" : "no"),
+                a.status === "ok" ? "승인함" : "반려함"));
+    if (a.status === "no" && a.reason) d.append(el("span", "rsn", a.reason.t));
+    d.append(el("span", "by", (a.by || "") + (a.at ? " · " + a.at : "")));
+    c.append(d);
+
+    const u = el("button", "btn undo", "처리 되돌리기");
+    u.type = "button"; u.style.marginTop = "11px";
+    u.onclick = () => { a.status = "wait"; a.reason = null; a.by = null; a.at = null; render(); toast(a.name + " 님을 다시 확인 대기로 옮겼습니다."); };
+    c.append(u);
+  }
+  return c;
+}
+
+/* ─────────── 처리 ─────────── */
+function stamp() {
+  const d = new Date();
+  return "오늘 " + String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
+}
+
+function approve(a) {
+  a.status = "ok"; a.reason = null; a.by = "김소리"; a.at = stamp();
+  lastAction = { a, prev:"wait" };
+  render();
+  toast(a.name + " 님을 승인했습니다. 문자가 나갑니다.", true);
+}
+
+function reject(a, reason) {
+  a.status = "no"; a.reason = reason; a.by = "김소리"; a.at = stamp();
+  lastAction = { a, prev:"wait" };
+  render();
+  toast(a.name + " 님의 신청을 받지 않았습니다.", true);
+}
+
+/* ─────────── 반려 시트 ─────────── */
+let sheetFor = null, pick = null, etcText = "";
+
+function openSheet(a) {
+  sheetFor = a; pick = null; etcText = "";
+  $("#sh-t").textContent = a.name + " 님의 신청을 받지 않습니다";
+  buildSheet();
+  $("#dim").classList.add("on");
+  $("#sheet").classList.add("on");
+  document.body.style.overflow = "hidden";
+  setTimeout(() => $("#sh-b").querySelector(".opt").focus(), 40);
+}
+
+function closeSheet() {
+  $("#dim").classList.remove("on");
+  $("#sheet").classList.remove("on");
+  document.body.style.overflow = "";
+  sheetFor = null;
+}
+
+function buildSheet() {
+  const b = $("#sh-b"); b.innerHTML = "";
+  REASONS.forEach(r => {
+    const o = el("button", "opt"); o.type = "button";
+    o.setAttribute("role", "radio");
+    o.setAttribute("aria-checked", pick && pick.id === r.id ? "true" : "false");
+    const bx = el("span", "bx", pick && pick.id === r.id ? "✓" : "");
+    const tx = el("span", "tx"); tx.append(el("b", null, r.t), el("span", null, r.d));
+    o.append(bx, tx);
+    o.onclick = () => { pick = r; buildSheet(); };
+    b.append(o);
+  });
+
+  if (pick && pick.id === "etc") {
+    const ta = el("textarea");
+    ta.placeholder = "어르신께 보일 문장을 적어주세요. 예) 신청하신 분과 전화번호 주인이 달라 확인이 필요합니다.";
+    ta.value = etcText;
+    ta.oninput = (e) => { etcText = e.target.value; syncOk(); updatePreview(); };
+    b.append(ta);
+  }
+
+  if (pick) {
+    const p = el("div", "prev");
+    p.append(el("div", "lb", "신청자에게 이렇게 보입니다"));
+    const bd = el("div", "bd"); bd.id = "prev-bd";
+    p.append(bd);
+    b.append(p);
+    updatePreview();
+  }
+  syncOk();
+}
+
+function updatePreview() {
+  const bd = document.getElementById("prev-bd");
+  if (!bd || !pick) return;
+  bd.innerHTML = "";
+  bd.append(el("b", null, pick.id === "etc" ? (etcText.trim() || "…") : pick.t));
+  const msg = pick.id === "etc"
+    ? "잘못된 것 같으시면 남동구 보건소로 전화 주세요."
+    : pick.msg;
+  bd.append(document.createElement("br"), el("span", null, msg));
+}
+
+function syncOk() {
+  $("#sh-ok").disabled = !pick || (pick.id === "etc" && etcText.trim().length < 5);
+}
+
+/* ─────────── 토스트 ─────────── */
+function toast(msg, undo) {
+  $("#toast-t").textContent = msg;
+  $("#toast-u").style.display = undo ? "" : "none";
+  $("#toast").classList.add("on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("#toast").classList.remove("on"), undo ? 6000 : 2600);
+}
+
+/* ─────────── 이벤트 ─────────── */
+document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", "false"));
+  t.setAttribute("aria-selected", "true");
+  filter = t.dataset.f;
+  render();
+});
+
+$("#q").oninput = (e) => {
+  query = e.target.value;
+  $("#clr").classList.toggle("on", !!query);
+  render();
+};
+$("#clr").onclick = () => { query = ""; $("#q").value = ""; $("#clr").classList.remove("on"); $("#q").focus(); render(); };
+
+$("#sh-x").onclick = closeSheet;
+$("#dim").onclick = closeSheet;
+$("#sh-ok").onclick = () => {
+  if (!pick || !sheetFor) return;
+  const r = pick.id === "etc" ? { id:"etc", t:etcText.trim(), msg:"" } : pick;
+  const a = sheetFor;
+  closeSheet();
+  reject(a, r);
+};
+
+$("#toast-u").onclick = () => {
+  if (!lastAction) return;
+  lastAction.a.status = lastAction.prev;
+  lastAction.a.reason = null; lastAction.a.by = null; lastAction.a.at = null;
+  lastAction = null;
+  $("#toast").classList.remove("on");
+  render();
+};
+
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && sheetFor) closeSheet(); });
+
+render();
+</script>
+</body>
+</html>

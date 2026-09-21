@@ -50,8 +50,12 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <div class="wrap">
 <h1>개발팀 질의서</h1>
 <p><strong>보내는 곳</strong> 맬리브레인 개발팀
-<strong>목적</strong> 신청폼 개편(신청 = 가입, 자동 승인) 착수 전 확인
+<strong>목적</strong> 신청폼 개편(신청 = 가입, <strong>관리자 승인 1회</strong>) 착수 전 확인</p>
+<blockquote>
+<p><strong>2026-09-21 정책 변경</strong> — 자동 승인을 철회했습니다. 제출은 <code>PENDING</code>으로 저장되고 관리자가 승인해야 이용이 열립니다.
+승인 화면은 <a href="admin.html"><code>admin.html</code></a>, 승인 이후 앱 화면은 <a href="design/index.html">프로토타입</a>의 앱 화면 탭에 있습니다.
 <strong>관련 문서</strong> <a href="exceptions.html#s9">예외명세</a> §4 서버 요구사항 · <a href="ia.html">IA·화면설계서</a> · <a href="07_약관_확인요청.html">약관 확인요청</a> · <a href="08_디자인본_검수_및_수정안.html">디자인본 검수</a></p>
+</blockquote>
 <hr />
 <h2>A. 지금 막고 있는 값 — 답만 주시면 됩니다 (3건)</h2>
 <table>
@@ -119,8 +123,8 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 <tr>
 <td>B-5</td>
-<td><strong>승인 상태</strong>는 어떤 필드/값입니까? (<code>대기</code> / <code>승인</code> enum?) 자동 승인은 이 값을 바로 세팅하면 되는 구조입니까?</td>
-<td>자동 승인 구현 방식</td>
+<td><strong>승인 상태</strong>는 어떤 필드/값입니까? <code>PENDING</code> / <code>APPROVED</code> / <code>REJECTED</code> 세 값과 <strong>반려 사유</strong>를 담을 수 있습니까?</td>
+<td>승인 화면과 앱 분기가 이 값을 그대로 씁니다</td>
 </tr>
 <tr>
 <td>B-6</td>
@@ -174,7 +178,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tr>
 <td><strong>C-4</strong></td>
 <td><strong>제출 시 거주 동 코드를 관내 화이트리스트로 재검증</strong></td>
-<td>클라이언트를 우회해 관외 신청이 자동 승인됩니다</td>
+<td>관리자 승인이 생겼어도 여전히 필요합니다. 승인 화면에 애초에 걸러야 할 건이 올라오지 않게 합니다</td>
 </tr>
 <tr>
 <td><strong>C-5</strong></td>
@@ -301,7 +305,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tbody>
 <tr>
 <td><strong>보건소</strong> (김소리)</td>
-<td>자동 승인 가부 · 관내 행정동 20개 검증 · 보건소 대표 전화번호 · 담당 부서명 · 4기 모집 시작일 · 보건소 제공분 보유기간</td>
+<td>승인 권한자 범위 · 반려 후 재신청 허용 여부 · 관내 행정동 20개 검증 · 보건소 대표 전화번호 · 담당 부서명 · 4기 모집 시작일 · 보건소 제공분 보유기간</td>
 </tr>
 <tr>
 <td><strong>법무</strong></td>

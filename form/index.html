@@ -94,7 +94,7 @@ footer a{color:var(--navy)}
     <div class="meta">
       <span>v0.3 · 디자인 확정본</span>
       <span>화면 5 + 시트 3</span>
-      <span>예외 66종</span>
+      <span>예외 74종</span>
       <span>2026-09-18 회의 반영</span>
       <span>약관 2026-09-18 시행 확정</span>
     </div>
@@ -104,26 +104,31 @@ footer a{color:var(--navy)}
 <main>
 
 <section>
-  <h2>신청폼 산출물 <em>이 네 가지가 전부입니다</em></h2>
+  <h2>신청폼 산출물 <em>관리자 승인 화면이 더해져 다섯 가지</em></h2>
   <div class="grid g2">
     <a class="hero card" href="design/index.html">
       <span class="t">① 프로토타입</span>
-      <span class="d">디자인 확정본. 왼쪽 검수 패널에서 어르신/직원 모드, 화면 5종, 예외 17종을 바로 전환하며 볼 수 있습니다. 문서와 어긋나면 이 화면이 기준입니다.</span>
+      <span class="d">디자인 확정본. 왼쪽 패널에서 어르신/직원 모드, 신청폼 화면 5종, <b>앱 화면 4종(진입·승인 대기·반려·승인 완료)</b>, 예외 17종을 바로 전환하며 볼 수 있습니다. 문서와 어긋나면 이 화면이 기준입니다.</span>
       <span class="tag">여기부터 보세요</span>
     </a>
     <a class="card" href="ia.html">
       <span class="t">② IA · 화면설계서</span>
-      <span class="d">화면 지도, 폼 내부 6단계 분기, 요소 명세 50여 개, 분기 규칙 16개, 시니어 UX 규칙, 타 기관 확장 설정값. 부록에 v0.1 감사 18건.</span>
+      <span class="d">화면 지도, 폼 내부 6단계 분기, 요소 명세 50여 개, 분기 규칙(<b>IA-R-01 승인 정책 변경 반영</b>), 시니어 UX 규칙, 타 기관 확장 설정값. 부록에 v0.1 감사 18건.</span>
       <span class="tag">설계</span>
     </a>
     <a class="card" href="exceptions.html">
       <span class="t">③ 예외명세 66종</span>
-      <span class="d">막히는 지점별 예외 전량(FE·FA·FN·FD·FC·FS·FR·FX·FP), 상태 전이표, 서버 요구사항, 검수 체크리스트 16항목.</span>
+      <span class="d">막히는 지점별 예외 <b>74종</b>(기존 66 + <b>FV 승인 대기 8종 신설</b>), 폼 상태 + <b>승인 상태</b> 전이표, 서버 요구사항, 검수 체크리스트.</span>
       <span class="tag">개발 전달용</span>
     </a>
+    <a class="card" href="admin.html">
+      <span class="t">④ 관리자 승인 화면</span>
+      <span class="d">보건소 담당자가 쓰는 모바일 웹. 승인 대기 목록 · 승인/반려 · 반려 사유 선택(신청자에게 보일 문장 미리보기) · 이름·번호 검색 · 되돌리기.</span>
+      <span class="tag">신규 · 2026-09-21</span>
+    </a>
     <a class="card" href="terms.html">
-      <span class="t">④ 약관 동의 문안</span>
-      <span class="d">신청폼 화면에 들어가는 동의 3종 확정본. 전부 필수이고 선택 동의는 없습니다. 시행일 2026-09-18 · 보유기간 3년 반영.</span>
+      <span class="t">⑤ 약관 동의 문안</span>
+      <span class="d">신청폼 화면에 들어가는 동의 3종 확정본. 전부 필수이고 선택 동의는 없습니다. 승인 절차 변경으로 제3조 문구를 고쳤습니다.</span>
       <span class="tag">확정</span>
     </a>
   </div>
@@ -135,6 +140,7 @@ footer a{color:var(--navy)}
     <summary style="cursor:pointer;font-weight:800;font-size:15.5px;padding:16px 0;letter-spacing:-.02em">펼쳐보기 — 약관 검토 · 개발팀 질의서 · 디자인 검수 · 핸드오프 스펙 7종</summary>
     <div class="rows" style="padding-bottom:18px">
       <a class="row" href="README.html"><span class="n">개요</span><span class="t">무엇이 왜 바뀌는지</span><span class="d">현재와 개선안 비교, 시니어 UX 규칙, 남은 확인 사항</span></a>
+      <a class="row" href="11_약관_재공지_초안.html"><span class="n">신규</span><span class="t">약관 재공지 초안</span><span class="d">승인 정책 변경에 따른 제4조 개정 · 공지문/통지문 초안 · 시행일 3안</span></a>
       <a class="row" href="10_약관_최종검토.html"><span class="n">검토</span><span class="t">약관 2차 검토</span><span class="d">시행일 강행 결정과 보완 4가지, 기존 회원 제3자 제공 동의(N-2) 미해결</span></a>
       <a class="row" href="09_개발팀_질의서.html"><span class="n">질의</span><span class="t">개발팀 질의서</span><span class="d">막고 있는 값 3, 구조 확인 9, 서버 요구사항 12, 클라이언트 주의 5</span></a>
       <a class="row" href="08_디자인본_검수_및_수정안.html"><span class="n">검수</span><span class="t">디자인본 검수 · 수정안</span><span class="d">수용 10 / 정책 회귀 3 / 확대 버그 1 / 문구 4</span></a>
@@ -159,8 +165,9 @@ footer a{color:var(--navy)}
     <h3>지금 막혀 있는 것</h3>
     <p>아래가 정해져야 다음 단계로 갑니다. 약관 시행일은 <b>강행 확정</b>되어 목록에서 빠지고, 대신 실행 항목으로 바뀌었습니다.</p>
     <ul>
-      <li><b>신청폼 자동 승인 가부</b> — "이 폼으로 신청한 분은 무조건 승인해도 되는지" 보건소 확인.
-          안 되면 전체 전제가 바뀌고 관리자 모바일 승인 화면이 필요합니다</li>
+      <li><b>승인 정책 변경 후속</b> <span style="color:#6A4A11;font-weight:700">(2026-09-21)</span> — 자동 승인을 철회하고
+          관리자 승인 1회로 확정했습니다. 남은 것은 <b>승인 권한자 범위</b>와 <b>반려 후 재신청 허용 여부</b>(보건소),
+          그리고 <b>약관 제4조 재공지 시행일</b>입니다 → <a href="11_약관_재공지_초안.html">재공지 초안</a></li>
       <li><b>개인정보 처리자가 원메딕스인지 보건소인지</b> — 동의서의 명의·구조·보유기간이 전부 여기서 갈립니다.
           판단 근거는 보건소와 맺은 계약 형태입니다 → <a href="07_약관_확인요청.html">확인 요청서</a></li>
       <li><b>약관 개정 공지 · 개별 통지</b> <span style="color:#6A4A11;font-weight:700">(오늘 처리)</span> — 시행일 2026-09-18은
