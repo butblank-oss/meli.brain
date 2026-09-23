@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>NOTION — 맬리브레인 신청폼</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1F26;--ink2:#4E5968;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--accent:#1F3C5D}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.8;font-size:16px}
+body,button,input,select,textarea{word-break:keep-all;overflow-wrap:break-word}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;position:sticky;top:0;z-index:10;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top a{color:var(--accent);text-decoration:none;font-weight:700;font-size:14px}
+.top a:hover{text-decoration:underline}
+.top .sep{color:#C8C3B8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0 0 20px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.035em;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--ink);line-height:1.4}
+h3{font-size:18px;font-weight:800;letter-spacing:-.03em;margin:30px 0 8px}
+h4{font-size:16px;font-weight:800;margin:22px 0 6px}
+p{margin:10px 0;color:var(--ink2)}
+ul,ol{margin:10px 0 10px 22px;color:var(--ink2)}
+li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+code{background:#EDEBE5;color:#1A3654;padding:2px 6px;border-radius:5px;font-size:13.5px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+pre{background:#1A1F26;color:#E6EAF0;padding:18px 20px;border-radius:12px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:inherit;padding:0;font-size:13px;font-weight:400}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:#fff;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#EDEBE5;font-weight:700;color:var(--ink);white-space:nowrap}
+blockquote{border-left:4px solid var(--accent);background:#ECF1F6;margin:16px 0;padding:14px 18px;border-radius:0 10px 10px 0}
+blockquote p{margin:6px 0;color:#1A3654}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:var(--ink3)}
+@media(max-width:640px){.wrap{padding:24px 18px 80px}h1{font-size:24px}h2{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="index.html">← 신청폼 목차</a><span class="sep">·</span>
+  <a href="design/index.html">프로토타입</a><span class="sep">·</span>
+  <a href="terms/README.html">약관</a>
+</nav>
+<div class="wrap">
+<h3>맬리브레인 신청폼 개편 : 변경이력</h3>
+<p><strong>최초 기획일자</strong> 2026-09-18 · <strong>최근 변경일자</strong> 2026-09-21 · <strong>현재 판</strong> v1.0 (초안 · 기획자 전달본)</p>
+<table>
+<thead>
+<tr>
+<th>번호</th>
+<th>변경일자</th>
+<th>판</th>
+<th>구분</th>
+<th>항목</th>
+<th>변경 전</th>
+<th>변경 후</th>
+<th>사유 · 근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2026-09-18</td>
+<td>초안</td>
+<td>최초 기획</td>
+<td>신청폼 개편 착수</td>
+<td>현행 <code>dementia3/form</code></td>
+<td>신청 = 가입 · 앱 가입 제거 · 그 자리에서 설치 · 화면 9 · 예외 66종</td>
+<td>2026-09-18 가입 절차 개선 회의</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2026-09-18</td>
+<td>초안</td>
+<td>약관</td>
+<td>약관 · 처리방침 · 동의서 확정</td>
+<td>초안 (자리표시 다수)</td>
+<td>시행일 2026-09-18 · 이용약관 28조 → 15조 · <strong>동의 필수 3종</strong>(선택 동의 삭제) · 보유기간 3년</td>
+<td>회원 직접 결제가 존재하지 않음 · 앱 광고성 발송 수단 미확정</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2026-09-21</td>
+<td><strong>v1.0</strong></td>
+<td><strong>정책</strong></td>
+<td><strong>승인 방식</strong></td>
+<td><strong>제출 즉시 자동 승인</strong></td>
+<td><strong>관리자 승인 1회</strong> — 제출은 <code>PENDING</code>, 보건소 승인 후 개방 · <strong>반려 사유 필수</strong></td>
+<td>관외 거주·타인 번호 신청을 사람이 걸러야 한다는 판단</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2026-09-21</td>
+<td>v1.0</td>
+<td>화면</td>
+<td>2번에 따른 신설</td>
+<td>—</td>
+<td>관리자 승인 화면 · 앱 화면 4종(진입·대기·반려·완료) · 완료 화면 상태값 <code>승인 요청</code> · 예외 66 → <strong>90종</strong></td>
+<td>2번 파생</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2026-09-21</td>
+<td>v1.0</td>
+<td>약관</td>
+<td>이용약관 제4조</td>
+<td>"제출 시점에 승낙한 것으로 본다"</td>
+<td>승낙과 <strong>프로그램 이용 개시를 분리</strong> · 3항 신설(확인 결과·반려 사유 고지 의무)</td>
+<td>2번으로 사실과 달라짐 — <strong>재공지 필요</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>2026-09-21</td>
+<td><strong>v1.0 박제</strong></td>
+<td>버전</td>
+<td>기획자 전달</td>
+<td>—</td>
+<td><code>design/v1.0.html</code> 박제 · 검수 패널에 버전 전환 메뉴 · CHANGELOG 신설</td>
+<td>전달 시점 고정</td>
+</tr>
+</tbody>
+</table>
+<p><strong>세부 변경은 각 문서에 있습니다</strong> — v0.x 감사 18건(치명 4 · 중대 8 · 개선 6)과 디자인본 검수 결과는 <a href="https://butblank-oss.github.io/meli.brain/form/CHANGELOG.html">CHANGELOG</a>, 약관 검토 15건은 <a href="https://butblank-oss.github.io/meli.brain/form/10_%EC%95%BD%EA%B4%80_%EC%B5%9C%EC%A2%85%EA%B2%80%ED%86%A0.html">약관 2차 검토</a>에 있습니다.</p>
+<p><strong>박제 규칙</strong> — 외부(기획자·개발팀·보건소)에 전달할 때만 번호를 올리고 <code>design/v{번호}.html</code>로 복사합니다. 내부 수정만으로는 올리지 않습니다.</p>
+<hr />
+<h3>산출물 (기획서)</h3>
+<p><strong>검수용 프로토타입 v1.1 (작업본)</strong> → 문서와 어긋나면 이 화면을 따릅니다</p>
+<p>https://butblank-oss.github.io/meli.brain/form/design/index.html</p>
+<p><strong>검수용 프로토타입 v1.0 (2026-09-21 기획자 전달본 · 박제)</strong></p>
+<p>https://butblank-oss.github.io/meli.brain/form/design/v1.0.html</p>
+<p><strong>관리자 승인 화면 (모바일 웹 · 검수 패널 포함)</strong></p>
+<p>https://butblank-oss.github.io/meli.brain/form/admin.html</p>
+<p><strong>목차 허브 (전체 산출물 한 화면)</strong></p>
+<p>https://butblank-oss.github.io/meli.brain/form/</p>
+<hr />
+<h3>정책 및 상태값, IA</h3>
+<p>맬리브레인 신청폼 : IA · 화면설계서 — https://butblank-oss.github.io/meli.brain/form/ia.html</p>
+<p>맬리브레인 신청폼 : 예외명세 90종 — https://butblank-oss.github.io/meli.brain/form/exceptions.html</p>
+<p>맬리브레인 신청폼 : 약관 동의 문안 (필수 3종) — https://butblank-oss.github.io/meli.brain/form/terms.html</p>
+<p>맬리브레인 신청폼 : 변경이력 (CHANGELOG) — https://butblank-oss.github.io/meli.brain/form/CHANGELOG.html</p>
+<p>맬리브레인 신청폼 : 개발팀 질의서 — https://butblank-oss.github.io/meli.brain/form/09_개발팀_질의서.html</p>
+<p>맬리브레인 신청폼 : 약관 2차 검토 — https://butblank-oss.github.io/meli.brain/form/10_약관_최종검토.html</p>
+<p>맬리브레인 신청폼 : 약관 재공지 초안 — https://butblank-oss.github.io/meli.brain/form/11_약관_재공지_초안.html</p>
+<hr />
+<h3>화면 목록</h3>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>화면</th>
+<th>모드 · 진입</th>
+<th>핵심</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SC-F-01</code></td>
+<td>신청폼</td>
+<td>어르신 / 보건소 직원 대리 접수</td>
+<td>단일 스크롤 · 번호 → 인증 → 이름 → 거주지 → 동의 · 제출 버튼 붙박이</td>
+</tr>
+<tr>
+<td><code>SC-F-02</code></td>
+<td>신청 접수 (승인 요청)</td>
+<td>제출 성공</td>
+<td>상태 <code>승인 요청</code> · 4단계 설치 안내 · 스토어 버튼 · QR · 업무시간 안내</td>
+</tr>
+<tr>
+<td><code>SC-F-03</code></td>
+<td>이미 신청함</td>
+<td><code>FE-06</code></td>
+<td>자동 이동 없음 — 버튼을 눌러야 이동</td>
+</tr>
+<tr>
+<td><code>SC-F-04</code></td>
+<td>남동구 거주 아님</td>
+<td>동 시트 <code>FD-02</code></td>
+<td>앱 단독 이용 + 거주지 보건소 안내 + 동 재선택</td>
+</tr>
+<tr>
+<td><code>SC-F-05</code></td>
+<td>모집 기간 아님</td>
+<td><code>FX-01</code></td>
+<td>폼을 열지 않고 알림 신청만 · <code>{모집시작일}</code></td>
+</tr>
+<tr>
+<td><code>SH-01</code></td>
+<td>시트 · 거주 동 선택</td>
+<td><code>S1-22</code></td>
+<td>관내 20개 + 탈출구 2개</td>
+</tr>
+<tr>
+<td><code>SH-02</code></td>
+<td>시트 · 약관 전문</td>
+<td><code>[보기]</code></td>
+<td>필수 3종 · 끝까지 스크롤 유도</td>
+</tr>
+<tr>
+<td><code>SH-03</code></td>
+<td>시트 · 도움</td>
+<td>모름 경로</td>
+<td>보건소 전화 안내</td>
+</tr>
+<tr>
+<td><code>SC-A-01</code></td>
+<td>앱 · 로그인 전 진입</td>
+<td>앱 설치 후</td>
+<td>"남동구 보건소 치매예방교실에 신청하셨나요?" → 번호 조회</td>
+</tr>
+<tr>
+<td><code>SC-A-02</code></td>
+<td>앱 · 승인 대기</td>
+<td><code>PENDING</code></td>
+<td>앱 닫아도 됨 · 문자로 다시 부름 · 게임·걷기는 개방</td>
+</tr>
+<tr>
+<td><code>SC-A-03</code></td>
+<td>앱 · 신청 반려</td>
+<td><code>REJECTED</code></td>
+<td>사유 + 보건소 전화 + 앱 단독 이용</td>
+</tr>
+<tr>
+<td><code>SC-A-04</code></td>
+<td>앱 · 승인 완료</td>
+<td><code>APPROVED</code></td>
+<td>오늘의 프로그램 (실제 화면은 앱 본체 기획)</td>
+</tr>
+<tr>
+<td>—</td>
+<td>관리자 승인 화면</td>
+<td>보건소 담당자</td>
+<td>목록 · 승인/반려 · 사유 미리보기 · 검색 · 되돌리기</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>확정된 정책</h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>내용</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>승인</td>
+<td><strong>관리자 승인 1회.</strong> 제출은 <code>PENDING</code>, 보건소 승인 후 교실 기능 개방</td>
+<td><code>IA-R-01</code> (2026-09-21 변경)</td>
+</tr>
+<tr>
+<td>반려</td>
+<td><strong>사유 필수.</strong> 관외 / 정보 불일치 / 중복 / 정원 초과 / 기타 · 신청자 화면에 그대로 노출</td>
+<td><code>IA-R-01b</code></td>
+</tr>
+<tr>
+<td>회원가입</td>
+<td>신청폼이 회원까지 생성. 앱에서 따로 가입하지 않음</td>
+<td>회의 결정</td>
+</tr>
+<tr>
+<td>로그인</td>
+<td>전화번호. 아이디·비밀번호 없음</td>
+<td>이용약관 제5조</td>
+</tr>
+<tr>
+<td>거주지</td>
+<td>인천 남동구 고정 + 관내 <strong>20개 행정동 버튼</strong>. 자유 입력·검색 없음</td>
+<td><code>IA-R-05</code></td>
+</tr>
+<tr>
+<td>동의</td>
+<td><strong>필수 3개.</strong> 선택 동의 없음</td>
+<td><code>IA-R-07</code></td>
+</tr>
+<tr>
+<td>약관</td>
+<td>시행일 2026-09-18 · 보유기간 3년 · 제4조로 승낙과 이용 개시 분리</td>
+<td>약관 확정본</td>
+</tr>
+<tr>
+<td>직원 대리 접수</td>
+<td>탭 아님 — <strong>폼 맨 아래 링크</strong>로만 진입 · SMS 인증 필수 · 동의는 본인이 직접</td>
+<td><code>IA-R-08</code> <code>FC-05</code></td>
+</tr>
+<tr>
+<td>앱 설치</td>
+<td>승인 전에도 설치·로그인 가능. <strong>교실 기능만 잠금</strong></td>
+<td><code>FV-03</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>시니어 UX 규칙</h3>
+<table>
+<thead>
+<tr>
+<th>규칙</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>크기</td>
+<td>본문 17px / 입력 19px / 터치 56~64px / 체크박스 34px</td>
+</tr>
+<tr>
+<td>확대</td>
+<td><strong>읽고 조작하는 것은 크게, 맥락만 주는 것은 상한.</strong> 전부 같은 비율이면 헤더가 화면을 다 먹음</td>
+</tr>
+<tr>
+<td>버튼</td>
+<td>주요 버튼을 문서 맨 아래에 두지 않음 — <strong>붙박이가 기본</strong></td>
+</tr>
+<tr>
+<td>전환</td>
+<td>화면이 <strong>저절로 바뀌지 않음</strong> · 첫 화면에 <strong>선택지를 주지 않음</strong> · <strong>막다른 길을 만들지 않음</strong></td>
+</tr>
+<tr>
+<td>시간</td>
+<td>소요 시간을 <strong>숫자로 약속하지 않음.</strong> "확인이 끝나면"처럼 사건에 묶음</td>
+</tr>
+<tr>
+<td>문장</td>
+<td>한 문장 40자 이내 · 명사 나열 금지 · 색으로만 지칭 금지 · 실패를 사용자 탓으로 돌리지 않음</td>
+</tr>
+<tr>
+<td>타이포</td>
+<td><code>word-break: keep-all</code> — 어절 단위로만 끊음</td>
+</tr>
+<tr>
+<td>구조</td>
+<td>조상에 <code>overflow:hidden</code> 금지 (붙박이가 조용히 죽음)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>예외 코드 체계 (90종)</h3>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>수</th>
+<th>막히는 지점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FE</code></td>
+<td>11</td>
+<td>전화번호 입력과 조회</td>
+</tr>
+<tr>
+<td><code>FA</code></td>
+<td>10</td>
+<td>SMS 인증번호</td>
+</tr>
+<tr>
+<td><code>FN</code> · <code>FD</code></td>
+<td>10</td>
+<td>이름 · 거주지</td>
+</tr>
+<tr>
+<td><code>FC</code></td>
+<td>6</td>
+<td>동의 (필수 3개)</td>
+</tr>
+<tr>
+<td><code>FS</code></td>
+<td>8</td>
+<td>제출</td>
+</tr>
+<tr>
+<td><code>FR</code></td>
+<td>6</td>
+<td>완료 화면 · 앱 설치</td>
+</tr>
+<tr>
+<td><code>FX</code></td>
+<td>10</td>
+<td>환경 · 세션 (오프라인, 확대, 이탈)</td>
+</tr>
+<tr>
+<td><code>FP</code></td>
+<td>5</td>
+<td>보건소 직원 대리 접수</td>
+</tr>
+<tr>
+<td><code>FV</code></td>
+<td>8</td>
+<td><strong>승인 대기 · 앱 진입</strong> (2026-09-21 신설)</td>
+</tr>
+<tr>
+<td><code>AD</code></td>
+<td>16</td>
+<td><strong>관리자 승인 화면</strong> (2026-09-21 신설)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>태그</strong> — <code>구현</code> 클라이언트에서 처리 · <code>서버</code> 서버 협조 필요 · <code>미정</code> 값이나 정책이 아직 없음</p>
+<hr />
+<h3>승인 화면 규칙 (AD-R)</h3>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AD-R-01</code></td>
+<td>확인할 신청이 기본 화면이다. 통계나 대시보드를 먼저 보여주지 않는다</td>
+</tr>
+<tr>
+<td><code>AD-R-02</code></td>
+<td>반려에는 사유가 반드시 붙는다. 사유 없이 반려할 수 없다</td>
+</tr>
+<tr>
+<td><code>AD-R-03</code></td>
+<td>처리 전에 <strong>신청자에게 보일 문장</strong>을 보여준다. 분류만 고르고 끝내지 않는다</td>
+</tr>
+<tr>
+<td><code>AD-R-04</code></td>
+<td>모든 처리는 되돌릴 수 있다. 오터치는 반드시 생긴다</td>
+</tr>
+<tr>
+<td><code>AD-R-05</code></td>
+<td>상세 화면으로 들어가지 않는다. 판단에 필요한 정보를 목록 카드에 다 올린다</td>
+</tr>
+<tr>
+<td><code>AD-R-06</code></td>
+<td>의심 건은 붉은 줄로 먼저 알린다. 다만 <strong>자동으로 반려하지는 않는다</strong></td>
+</tr>
+<tr>
+<td><code>AD-R-07</code></td>
+<td>처리자 · 시각 · 사유를 남긴다. 나중에 못 만든다</td>
+</tr>
+<tr>
+<td><code>AD-R-08</code></td>
+<td>문자 발송 실패가 상태 전이를 막지 않는다</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>상태 전이</h3>
+<p><strong>폼 상태</strong> (전화번호 조회 결과와 인증 여부가 결정)</p>
+<p><code>IDLE</code> → <code>CHECKING</code> → <code>NEW</code> / <code>NEEDS_OTP</code> / <code>BLOCKED</code> → (<code>VERIFIED</code>) → <code>SUBMITTING</code></p>
+<p><strong>신청 건 상태</strong> (제출 이후)</p>
+<table>
+<thead>
+<tr>
+<th>상태</th>
+<th>진입</th>
+<th>어르신이 보는 화면</th>
+<th>앱에서 가능한 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PENDING</code></td>
+<td>제출 성공</td>
+<td><code>SC-F-02</code> → 앱에서는 <code>SC-A-02</code></td>
+<td>설치 · 로그인 · 게임 · 걷기 (<strong>교실은 잠김</strong>)</td>
+</tr>
+<tr>
+<td><code>APPROVED</code></td>
+<td>관리자 [승인하기]</td>
+<td><code>SC-A-04</code> 오늘의 프로그램</td>
+<td>전부</td>
+</tr>
+<tr>
+<td><code>REJECTED</code></td>
+<td>관리자 [받지 않음] + 사유</td>
+<td><code>SC-A-03</code> — <strong>사유 그대로 노출</strong></td>
+<td>게임 · 걷기만</td>
+</tr>
+</tbody>
+</table>
+<p><strong>불변식 5가지</strong></p>
+<ol>
+<li>번호가 바뀌면 무조건 <code>CHECKING</code> 이전으로 돌아간다. 인증·자동채움은 남지 않는다</li>
+<li><code>NEEDS_OTP</code> 계열에서는 이름·동 필드에 어떤 값도 채워 넣지 않는다</li>
+<li><code>SUBMITTING</code> 중에는 어떤 입력도 받지 않고, 실패 시 입력값을 하나도 잃지 않는다</li>
+<li><code>PENDING</code>에서도 앱 설치와 로그인은 막지 않는다. 교실 기능만 잠근다</li>
+<li><code>PENDING</code> → <code>APPROVED</code> 전환으로 화면이 저절로 바뀌지 않는다. 사용자가 버튼을 눌러야 넘어간다</li>
+</ol>
+<hr />
+<h3>서버 요구사항 (12건)</h3>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>내용</th>
+<th>없으면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C-1</code></td>
+<td>조회 API 응답에 <strong>이름·거주 동을 포함하지 않는다</strong></td>
+<td>화면을 잠가도 응답에 있으면 그대로 보임 (<strong>가장 중요</strong>)</td>
+</tr>
+<tr>
+<td><code>C-2</code></td>
+<td>조회 API <strong>레이트 리밋</strong> (IP·번호 단위)</td>
+<td>번호 대입으로 참여자 명단을 통째로 캐냄</td>
+</tr>
+<tr>
+<td><code>C-3</code></td>
+<td>인증번호 검증·시도 횟수·잠금·쿨다운을 <strong>전부 서버에서</strong></td>
+<td>클라이언트 조작으로 인증을 건너뜀</td>
+</tr>
+<tr>
+<td><code>C-4</code></td>
+<td>제출 시 거주 동 코드를 <strong>관내 화이트리스트로 재검증</strong></td>
+<td>관외 신청이 승인 목록에 올라옴</td>
+</tr>
+<tr>
+<td><code>C-5</code></td>
+<td>제출 <strong>멱등 처리</strong></td>
+<td>연타·재시도로 중복 접수</td>
+</tr>
+<tr>
+<td><code>C-6</code></td>
+<td><strong>미로그인 30일 계정 자동 정리</strong></td>
+<td>타인 번호 계정이 실제 소유자 가입을 영구히 막음</td>
+</tr>
+<tr>
+<td><code>C-7</code></td>
+<td>동의 저장 시 <strong>항목별 동의·시각·약관 버전·작성 경로</strong> 기록</td>
+<td>분쟁 시 동의 입증 불가</td>
+</tr>
+<tr>
+<td><code>C-8</code></td>
+<td>직원 대리 접수는 <strong><code>channel=staff_proxy</code></strong> 로 구분 저장</td>
+<td>대리 작성 건을 사후에 가려낼 수 없음</td>
+</tr>
+<tr>
+<td><code>C-9</code></td>
+<td>인증 토큰 <strong>짧은 유효기간</strong> + 제출 시 재검증</td>
+<td>인증만 받아두고 나중에 다른 값으로 제출</td>
+</tr>
+<tr>
+<td><code>C-10</code></td>
+<td><strong>완료 문자 발송을 제출 성공과 분리</strong></td>
+<td>문자 장애가 가입 전체를 막음</td>
+</tr>
+<tr>
+<td><code>C-11</code></td>
+<td>미로그인 계정 정리 <strong>집행 시작일을 2026-10-18 이후로</strong></td>
+<td>제9조 2항 5호는 새로 생긴 해지 사유 — 30일 공지 미확보</td>
+</tr>
+<tr>
+<td><code>C-12</code></td>
+<td>약관 개정 공지 + 개별 통지 + <strong>발송 로그 보관</strong></td>
+<td>불리한 변경의 절차 증거가 남지 않음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>신설 API 5종</strong></p>
+<table>
+<thead>
+<tr>
+<th>용도</th>
+<th>엔드포인트</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>신청 상태 조회</td>
+<td><code>GET /api/applications/status?tel=</code></td>
+<td>앱 로그인 전 분기 · <strong>레이트 리밋 필수</strong> · 이름·거주지 미포함</td>
+</tr>
+<tr>
+<td>승인 목록</td>
+<td><code>GET /api/admin/applications?status=</code></td>
+<td>권한 검사 필수</td>
+</tr>
+<tr>
+<td>승인</td>
+<td><code>POST /api/admin/applications/{id}/approve</code></td>
+<td><strong>멱등</strong> · 처리자·시각 기록 + 문자</td>
+</tr>
+<tr>
+<td>반려</td>
+<td><code>POST /api/admin/applications/{id}/reject</code></td>
+<td>body에 <code>reasonCode</code> <code>reasonText</code> — <strong>사유 필수</strong></td>
+</tr>
+<tr>
+<td>처리 되돌리기</td>
+<td><code>POST /api/admin/applications/{id}/reopen</code></td>
+<td>오처리 복구 · 되돌림 문자 정책 필요</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>약관 (2026-09-18 시행 확정)</h3>
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>상태</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>서비스 이용약관</td>
+<td>확정</td>
+<td>28조 → 15조 · 유료 결제 조항 전부 삭제 · 제4조로 승낙과 이용 개시 분리</td>
+</tr>
+<tr>
+<td>개인정보 처리방침</td>
+<td>확정</td>
+<td>결제 항목 삭제 · 제3자 제공처 명시</td>
+</tr>
+<tr>
+<td>신청폼 동의 1 — 이용약관</td>
+<td>필수</td>
+<td>신청폼 경로용 요약본</td>
+</tr>
+<tr>
+<td>신청폼 동의 2 — 개인정보 수집·이용</td>
+<td>필수</td>
+<td>이름 · 휴대전화 · 거주 행정동 (성별 삭제)</td>
+</tr>
+<tr>
+<td>신청폼 동의 3 — 제3자 제공</td>
+<td>필수</td>
+<td>남동구 보건소 · 보유기간 3년</td>
+</tr>
+</tbody>
+</table>
+<p><strong>사업자 정보</strong> — 주식회사 원메딕스인더스트리 · 대표 한상호 · 256-81-01348 · 서울특별시 강남구 강남대로154길 40 한윤빌딩 2·3층 · 02-549-5494</p>
+<p><strong>개인정보 보호책임자</strong> 한상호 · <strong>열람청구 담당</strong> 안성호 · contact@onemedics.net</p>
+<p><strong>시행일 강행에 따른 보완 4가지</strong> — 개정 공지 게시(당일) · 기존 회원 개별 통지 · 공지 캡처·발송 로그 보관 · 제9조 2항 5호 집행을 2026-10-18 이후로 유예</p>
+<hr />
+<h3>남은 확인 사항</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>항목</th>
+<th>담당</th>
+<th>막히는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>승인 권한자 범위</strong> — 누가 승인 버튼을 누를 수 있는지</td>
+<td>보건소</td>
+<td><code>AD-12</code> 판정 기준 · 로그인·권한 설계</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>반려 후 재신청 허용 여부</strong> (사유별로 달라야 할 수 있음)</td>
+<td>보건소</td>
+<td><code>FV-05</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>약관 제4조 재공지 시행일</strong> (A 공지일+30일 / B 배포일 / C 모집일)</td>
+<td>법무 · 기획</td>
+<td>승인 기능 배포 일정과 4기 모집 일정</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>기존 회원(3기 참여자)의 제3자 제공 동의 근거</strong></td>
+<td>법무</td>
+<td>앱 내 재동의 화면 필요 여부</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>서버 운영 클라우드 사업자와 리전</strong></td>
+<td>개발</td>
+<td>처리방침 제5조 위탁 표 · 국외면 §28-8 고지 추가</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>모집 시작일</strong> <code>{모집시작일}</code></td>
+<td>보건소</td>
+<td><code>FX-01</code> 문구 — <code>YYYY년 M월 D일 (요일)</code> 형식으로 회신</td>
+</tr>
+<tr>
+<td>7</td>
+<td>남동구 행정동 20개 목록 검증 · 보건소 대표번호 · 담당 부서명</td>
+<td>보건소</td>
+<td><code>FD-05</code> · 모든 결과 화면의 탈출구</td>
+</tr>
+<tr>
+<td>8</td>
+<td>처리방침의 마케팅 목적·광고식별자 (신청폼에서 선택 동의를 뺀 것과 불일치)</td>
+<td>기획 · 법무</td>
+<td>정보통신망법 §50</td>
+</tr>
+<tr>
+<td>9</td>
+<td>앱 스토어 링크 · QR URL · 딥링크 스킴</td>
+<td>개발</td>
+<td><code>FR-05</code> 완료 화면</td>
+</tr>
+<tr>
+<td>10</td>
+<td>앱 직접 가입에서 성별을 받는지 (처리방침에서 뺀 것의 역방향 확인)</td>
+<td>개발</td>
+<td>미고지 수집 소지</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>되돌린 결정</h3>
+<table>
+<thead>
+<tr>
+<th>결정</th>
+<th>왜 되돌렸나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>자동 승인 → 관리자 승인</strong></td>
+<td>관외 거주와 타인 번호 신청을 사람이 걸러야 한다는 판단 (2026-09-21)</td>
+</tr>
+<tr>
+<td><strong>선택 동의(마케팅) → 삭제</strong></td>
+<td>앱에 광고성 발송 수단이 확정되지 않았고, 선택지가 늘수록 어르신의 판단 부담이 커짐</td>
+</tr>
+<tr>
+<td><strong>폼 안 글자 크기 버튼 → 삭제</strong></td>
+<td>어르신은 이미 폰 설정에서 키워둔 채로 들어옴 · 첫 화면에 선택지를 늘리지 않는다는 원칙과 충돌</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>기타 참고 파일</h3>
+<p>index.html (목차 허브)</p>
+<p>design/index.html (프로토타입 v1.1 작업본)</p>
+<p>design/v1.0.html (프로토타입 v1.0 박제본)</p>
+<p>admin.html (관리자 승인 화면)</p>
+<p>ia.html (IA · 화면설계서)</p>
+<p>exceptions.html (예외명세 90종)</p>
+<p>terms.html (약관 동의 문안)</p>
+<p>CHANGELOG.md (변경이력)</p>
+<p>09_개발팀_질의서.md · 10_약관_최종검토.md · 11_약관_재공지_초안.md</p>
+<p>design/screens.html (인쇄·PDF용 화면설계서)</p>
+<p>design/spec/01~06 (디자인 핸드오프 스펙)</p>
+<p>terms/ (약관 전문 7종 — 확정본 2 + 신청폼 동의 3 + 구판 2)</p>
+<p>prototype-v02.html (리디자인 이전 판 · 기능 참조용)</p>
+</div>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>NOTION.md</code> 에서 생성됐습니다</footer>
+</body>
+</html>
