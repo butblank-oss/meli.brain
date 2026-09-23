@@ -85,8 +85,8 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 <tr>
 <td>SC-F-02</td>
-<td>신청 완료</td>
-<td>승인 완료 통보 + 그 자리 설치</td>
+<td>신청 접수 (승인 요청)</td>
+<td><strong>접수 통보 + 보건소 확인 안내</strong> + 그 자리 설치</td>
 <td>제출 성공</td>
 <td>스토어 · QR · 처음으로</td>
 </tr>
@@ -121,7 +121,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tr>
 <td>SH-02</td>
 <td>시트 · 약관 전문</td>
-<td>동의 항목 4종의 본문</td>
+<td>동의 항목 <strong>3종</strong>의 본문</td>
 <td>동의 항목의 "보기"</td>
 <td>동의 · 닫기</td>
 </tr>
@@ -131,6 +131,56 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <td>자동 채움 전에 본인 확인</td>
 <td>조회 결과 = 이전 기수 참여자</td>
 <td>이어서 신청 · 번호 다시 넣기</td>
+</tr>
+</tbody>
+</table>
+<h3>앱 화면 (승인 이후) — 2026-09-21 신설</h3>
+<p>관리자 승인이 생기면서 <strong>제출과 이용 사이</strong>에 앱 쪽 화면이 필요해졌습니다.</p>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>화면</th>
+<th>목적</th>
+<th>진입</th>
+<th>나가는 길</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SC-A-01</td>
+<td>앱 · 로그인 전 진입</td>
+<td>"남동구 보건소 치매예방교실에 신청하셨나요?" → 번호로 신청 건 연결</td>
+<td>앱 설치 후 첫 화면</td>
+<td>상태에 따라 SC-A-02/03/04 · 이력 없으면 신청폼</td>
+</tr>
+<tr>
+<td>SC-A-02</td>
+<td>앱 · 승인 대기</td>
+<td>기다리는 동안 앱을 지우지 않게 붙잡음</td>
+<td>조회 결과 <code>PENDING</code></td>
+<td>수동 새로고침 · 앱 둘러보기</td>
+</tr>
+<tr>
+<td>SC-A-03</td>
+<td>앱 · 신청 반려</td>
+<td>사유를 알리고 막다른 길을 만들지 않음</td>
+<td>조회 결과 <code>REJECTED</code></td>
+<td>보건소 전화 · 앱 단독 이용</td>
+</tr>
+<tr>
+<td>SC-A-04</td>
+<td>앱 · 승인 완료</td>
+<td>오늘의 프로그램 (실제 화면은 앱 본체 기획)</td>
+<td>조회 결과 <code>APPROVED</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>—</td>
+<td>관리자 승인 화면</td>
+<td>보건소 담당자가 현장에서 승인·반려</td>
+<td>별도 URL (<code>admin.html</code>)</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>

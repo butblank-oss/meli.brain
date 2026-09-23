@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>03. 예외 66종 — 맬리브레인 신청폼</title>
+<title>03. 예외명세 90종 — 맬리브레인 신청폼</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
@@ -49,8 +49,9 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
   <a href="../../terms/README.html">약관</a>
 </nav>
 <div class="wrap">
-<h1>03. 예외 66종</h1>
-<p>화면이 가져야 하는 모든 상태입니다. <strong>새 상태를 만들거나 기존 상태를 합치지 마세요.</strong>
+<h1>03. 예외명세 90종</h1>
+<p>화면이 가져야 하는 모든 상태입니다. <strong>새 상태를 만들거나 기존 상태를 합치지 마세요.</strong></p>
+<p>기준은 <strong>프로토타입 v1.0 박제본</strong>(<code>design/v1.0.html</code>)입니다. 문서와 화면이 어긋나면 화면을 따릅니다.
 <code>구현</code> = 프로토타입에서 재현 가능 / <code>서버</code> = 서버가 판정 / <code>미정</code> = 값·정책 미확정</p>
 <h2>FE — 전화번호 조회 (11)</h2>
 <table>
@@ -333,7 +334,7 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <tr>
 <td>FS-07 <code>구현</code></td>
 <td>제출 성공 (신규)</td>
-<td>회원 생성 + 승인 완료 → SC-F-02. 임시저장 즉시 삭제</td>
+<td>회원 생성 + <strong><code>PENDING</code>(승인 대기)</strong> → SC-F-02. 임시저장 즉시 삭제</td>
 </tr>
 <tr>
 <td>FS-08 <code>서버</code></td>
@@ -483,6 +484,165 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 </tr>
 </tbody>
 </table>
+<h2>FV — 승인 대기 · 앱 진입 (8)</h2>
+<p>자동 승인을 철회하면서 <strong>제출과 이용 사이에 관리자 승인이 끼었습니다.</strong> 그 틈에서 생기는 예외입니다.</p>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>상황</th>
+<th>화면 처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FV-01 <code>구현</code></td>
+<td>앱에서 번호를 넣었는데 <strong>신청 이력이 없음</strong></td>
+<td>"이 번호로 신청하신 기록이 없어요" + 신청폼 링크 + 보건소 전화. 번호를 다시 넣을 수 있게 둔다</td>
+</tr>
+<tr>
+<td>FV-02 <code>서버</code></td>
+<td>상태 조회로 <strong>신청 여부를 캐냄</strong></td>
+<td>조회 API에 레이트 리밋과 번호 단위 쿨다운. 응답에 이름·거주지를 넣지 않는다</td>
+</tr>
+<tr>
+<td>FV-03 <code>구현</code></td>
+<td>승인 대기 중에 <strong>할 게 없음</strong></td>
+<td>게임·걷기는 열어두고 <strong>교실 프로그램만</strong> 잠근다. 대기 화면에 <code>앱 둘러보기</code></td>
+</tr>
+<tr>
+<td>FV-04 <code>구현</code></td>
+<td>승인이 났는데 <strong>어르신이 모름</strong></td>
+<td>승인 즉시 문자 발송이 1차. 화면은 <strong>저절로 바뀌지 않고</strong> <code>확인됐는지 다시 보기</code>를 눌러야 넘어간다</td>
+</tr>
+<tr>
+<td>FV-05 <code>미정</code></td>
+<td><strong>반려 후 재신청</strong></td>
+<td>사유별로 달라야 할 수 있음 — 관외는 재신청해도 같은 결과, 정보 불일치는 고쳐서 다시 내야 맞다</td>
+</tr>
+<tr>
+<td>FV-06 <code>미정</code></td>
+<td>승인 전에 <strong>취소하고 싶음</strong></td>
+<td>대기 화면에 <code>신청 취소</code>를 둘지 미정. 없으면 보건소 전화가 유일한 경로</td>
+</tr>
+<tr>
+<td>FV-07 <code>서버</code></td>
+<td>관리자가 <strong>같은 건을 두 번 처리</strong></td>
+<td>상태 전이를 멱등 처리하고 현재 상태를 돌려준다</td>
+</tr>
+<tr>
+<td>FV-08 <code>구현</code></td>
+<td>관리자가 <strong>잘못 눌렀음</strong></td>
+<td>토스트 <code>되돌리기</code>(6초) + 카드의 <code>처리 되돌리기</code>. 이미 나간 문자는 회수 불가 — 되돌림 문자 정책 필요</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>AD — 관리자 승인 화면 (16)</h2>
+<p>보건소 담당자가 쓰는 모바일 웹(<code>admin.html</code>)의 예외입니다.
+<strong>한 손으로, 서서, 어르신을 기다리게 하면서</strong> 쓰는 화면이라는 것이 모든 판단의 전제입니다.</p>
+<p><strong>승인 화면 규칙 (AD-R)</strong></p>
+<ol>
+<li>확인할 신청이 기본 화면이다. 통계나 대시보드를 먼저 보여주지 않는다</li>
+<li>반려에는 <strong>사유가 반드시 붙는다</strong></li>
+<li>처리 전에 <strong>신청자에게 보일 문장</strong>을 보여준다. 분류만 고르고 끝내지 않는다</li>
+<li>모든 처리는 되돌릴 수 있다</li>
+<li>상세 화면으로 들어가지 않는다. 판단에 필요한 정보를 목록 카드에 다 올린다</li>
+<li>의심 건은 붉은 줄로 먼저 알린다. 다만 <strong>자동으로 반려하지는 않는다</strong></li>
+<li>처리자 · 시각 · 사유를 남긴다</li>
+<li>문자 발송 실패가 상태 전이를 막지 않는다</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>상황</th>
+<th>화면 처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AD-01 <code>구현</code></td>
+<td>확인할 신청 <strong>0건</strong></td>
+<td>✓ + "확인할 신청이 없습니다". 빈 화면을 오류처럼 보이게 하지 않는다. 자동 새로고침 없음</td>
+</tr>
+<tr>
+<td>AD-02 <code>서버</code></td>
+<td>목록 로드 실패</td>
+<td>"목록을 불러오지 못했습니다" + <code>다시 불러오기</code>. <strong>빈 목록과 구분</strong>되게</td>
+</tr>
+<tr>
+<td>AD-03 <code>일부 미정</code></td>
+<td>대기가 아주 많음 (단체 접수)</td>
+<td>탭 숫자로 총량 표시. 30건 넘으면 페이지네이션 필요. 일괄 승인은 오승인 위험으로 미도입</td>
+</tr>
+<tr>
+<td>AD-04 <code>서버</code></td>
+<td>두 사람이 동시에 처리</td>
+<td>멱등 처리 + 현재 상태 반환 <code>FV-07</code></td>
+</tr>
+<tr>
+<td>AD-05 <code>구현</code></td>
+<td>이미 처리된 건</td>
+<td>승인·반려 버튼이 사라지고 <code>처리 되돌리기</code>만 남음</td>
+</tr>
+<tr>
+<td>AD-06 <code>구현</code></td>
+<td>처리 직후 되돌리기</td>
+<td>토스트 6초 + 카드 버튼(제한 없음)</td>
+</tr>
+<tr>
+<td>AD-07 <code>구현</code></td>
+<td>사유 없이 반려 시도</td>
+<td><code>반려하기</code> 비활성. 기타 사유는 5자 미만이면 막음</td>
+</tr>
+<tr>
+<td>AD-08 <code>구현</code></td>
+<td>기타 사유를 사무적으로 적음</td>
+<td>입력 아래 <strong>"신청자에게 이렇게 보입니다"</strong> 미리보기. 쓰는 동안 결과를 보게 한다</td>
+</tr>
+<tr>
+<td>AD-09 <code>구현</code></td>
+<td>검색 결과 없음</td>
+<td>"이름 전체 또는 전화번호 뒷자리로". 검색은 <strong>현재 탭 안에서만</strong></td>
+</tr>
+<tr>
+<td>AD-10 <code>구현</code></td>
+<td>오프라인에서 처리 시도</td>
+<td>상단 띠 + 버튼 비활성. 끊긴 채 누르면 담당자는 눌렀다고 생각한다</td>
+</tr>
+<tr>
+<td>AD-11 <code>서버</code></td>
+<td>처리 중 통신 실패</td>
+<td>"처리하지 못했습니다" + <strong>카드는 대기 상태 그대로</strong></td>
+</tr>
+<tr>
+<td>AD-12 <code>서버</code></td>
+<td>권한 없는 접근</td>
+<td>🔒 + 담당자 문의. <strong>목록 자체를 내려주지 않는다</strong></td>
+</tr>
+<tr>
+<td>AD-13 <code>미정</code></td>
+<td>세션 만료</td>
+<td>처리 시점에 알리고 재로그인 후 <strong>같은 자리로</strong> 복귀. 만료 시간 미정</td>
+</tr>
+<tr>
+<td>AD-14 <code>미정</code></td>
+<td>상태는 바뀌었는데 문자만 실패</td>
+<td>접수·승인은 유효. 담당자 알림 표시 여부 미정</td>
+</tr>
+<tr>
+<td>AD-15 <code>구현</code></td>
+<td><strong>관외 거주 의심</strong></td>
+<td>관내 화이트리스트에 없는 동 → 붉은 줄. 자동 반려하지 않음</td>
+</tr>
+<tr>
+<td>AD-16 <code>구현</code></td>
+<td><strong>중복 신청 의심</strong></td>
+<td>앞 건의 접수 시각과 무엇이 다른지까지 적는다</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2>상태 전이표</h2>
 <table>
@@ -557,17 +717,55 @@ footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:va
 <td>제출 버튼</td>
 <td>그대로</td>
 <td>잠김</td>
-<td>성공 → SC-F-02 / 실패 → 복귀</td>
+<td>성공 → <strong>PENDING</strong> / 실패 → 복귀</td>
 </tr>
 </tbody>
 </table>
-<p><strong>불변식 3가지</strong> — 이것만 깨지지 않으면 됩니다.</p>
+<h3>제출 이후 — 신청 건의 상태</h3>
+<p>여기서부터는 폼이 아니라 <strong>신청 건</strong>의 상태입니다. 관리자 승인이 생기면서 <code>SUBMITTING</code> 다음이 곧장 "이용 가능"이 아니게 됐습니다.</p>
+<table>
+<thead>
+<tr>
+<th>상태</th>
+<th>진입</th>
+<th>어르신이 보는 화면</th>
+<th>앱에서 가능한 것</th>
+<th>나가는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PENDING</td>
+<td>제출 성공</td>
+<td>SC-F-02 → 앱에서는 SC-A-02</td>
+<td>설치 · 로그인 · 게임 · 걷기 (<strong>교실은 잠김</strong>)</td>
+<td>승인 → APPROVED / 반려 → REJECTED</td>
+</tr>
+<tr>
+<td>APPROVED</td>
+<td>관리자 <code>승인하기</code></td>
+<td>SC-A-04 오늘의 프로그램</td>
+<td>전부</td>
+<td>되돌리기 → PENDING</td>
+</tr>
+<tr>
+<td>REJECTED</td>
+<td>관리자 <code>받지 않음</code> + 사유</td>
+<td>SC-A-03 — <strong>사유 그대로 노출</strong></td>
+<td>게임 · 걷기만</td>
+<td>되돌리기 → PENDING · 재신청 미정 <code>FV-05</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>불변식 5가지</strong> — 이것만 깨지지 않으면 됩니다.</p>
 <ol>
 <li>번호가 바뀌면 무조건 CHECKING 이전으로 돌아간다. 인증·자동채움은 남지 않는다.</li>
 <li>NEEDS_OTP 계열에서는 이름·동 필드에 <strong>어떤 값도 채워 넣지 않는다.</strong></li>
 <li>SUBMITTING 중에는 어떤 입력도 받지 않고, 실패 시 <strong>입력값을 하나도 잃지 않는다.</strong></li>
+<li>PENDING에서도 <strong>앱 설치와 로그인은 막지 않는다.</strong> 교실 기능만 잠근다.</li>
+<li>PENDING → APPROVED 전환으로 <strong>화면이 저절로 바뀌지 않는다.</strong> 사용자가 버튼을 눌러야 넘어간다.</li>
 </ol>
 </div>
-<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>design/spec/03_예외_66종.md</code> 에서 생성됐습니다</footer>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>design/spec/03_예외명세.md</code> 에서 생성됐습니다</footer>
 </body>
 </html>
