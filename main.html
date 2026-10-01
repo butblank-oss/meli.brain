@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>맬리브레인 3기 종료 리포트 — 검수용 v3.1</title>
+<title>맬리브레인 3기 종료 리포트 — 검수용 v3.2</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
@@ -131,7 +131,7 @@ button:active{transform:scale(.98)}
 
 <div id="panel">
   <h1>맬리브레인 3기 종료 리포트</h1>
-  <div class="sub"><b style="color:#6EE7B7">v3.1 · 2026-09-07 · 정본</b><br>검수용 · 디스크립션 기준<br>왼쪽에서 예외를 바꾸면 오른쪽 화면이 즉시 반영됩니다.</div>
+  <div class="sub"><b style="color:#6EE7B7">v3.2 · 2026-10-01 · 정본</b><br>검수용 · 디스크립션 기준<br>왼쪽에서 예외를 바꾸면 오른쪽 화면이 즉시 반영됩니다.</div>
 
   <div class="btnrow">
     <button onclick="resetAll()">전부 정상으로</button>
@@ -142,7 +142,7 @@ button:active{transform:scale(.98)}
     <button id="btnMotion" onclick="toggleMotion()">모션 끄기</button>
   </div>
   <div class="btnrow">
-    <button onclick="toggleHist()" style="background:#0E4A33;border-color:#0E7A52;color:#D1FAE5">📋 변경이력 (최초 기획 2026-07-21 → v3.1)</button>
+    <button onclick="toggleHist()" style="background:#0E4A33;border-color:#0E7A52;color:#D1FAE5">📋 변경이력 (최초 기획 2026-07-21 → v3.2)</button>
   </div>
   <div class="jump" id="jump"></div>
   <div id="controls"></div>
@@ -693,7 +693,7 @@ function sec08(){
       <div style="font-size:17px;font-weight:800;line-height:1.4">2027년 인천 남동구 보건소<br>치매예방 프로그램 4기</div>
       <div style="font-size:14px;color:#4E5968;line-height:1.4;margin-top:18px">
         ${fail?'잠시 후 다시 시도해 주세요.<br>문제가 계속되면 {전화번호}로 문의 바랍니다.'
-              :'자세한 문의사항은 {전화번호}로 문의 바랍니다.<br>감사합니다.'}</div>
+              :'4기가 시작될 때 보건소에서 연락드리겠습니다.<br>자세한 문의사항은 {전화번호}로 문의 바랍니다.<br>감사합니다.'}</div>
     </div>
     <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:40px">
       ${fail?`<button style="padding:17px;border-radius:14px;border:0;background:#0E7A52;color:#fff;
@@ -748,7 +748,7 @@ function toast(msg){ const L=phoneX(); const t=document.createElement('div'); t.
 
 /* ══════════ 변경이력 (07_변경이력.md 와 동일 내용) ══════════ */
 const HIST = {
-  meta:{first:'2026-07-21', last:'2026-09-07', ver:'v3.1'},
+  meta:{first:'2026-07-21', last:'2026-10-01', ver:'v3.2'},
   milestones:[
     ['0','2026-07-21','초안 · 최초 기획','3기 종료 리포트 기획 착수','—','8개 화면 · 오버레이 구조 · 수료 분기 초안','남동구보건소 3기 종료 리포트 기획_20260721'],
     ['—','2026-08-24','v1.0 핸드오프','개발팀 회신 반영 · 상수·산식·P코드 확정','8월 초 초안','화면설계서 · 예외 명세 · IA 3종','개발 핸드오프 v1.0'],
@@ -771,7 +771,25 @@ const HIST = {
     ['14','2026-09-07','상수','K-14 문의 전화번호','미정 (Q-13)','여전히 미정 — 설정값 구현 · {전화번호} 자리표시 유지','개발팀 확인 요청 17번 · 배포 전 확정'],
     ['15','2026-09-07','검수 HTML','05 고스트 바늘 투명도','opacity=.5 (CSS에 덮여 100%)','stroke-opacity=.5','검증 워크플로우 F3 지적'],
     ['16','2026-09-07','문서','회신 문서 신설','—','문서 5 (내부용) · 문서 6 (개발팀 회신용) · 문서 7 (변경이력)','개발팀 확인 요청 19건 회신'],
-    ['17','2026-09-07','검수 HTML','v3.1 반영','v3.0','증서 원문 이름 · 마스킹 함수 · 01-d / 04B-g 변형 · 저장 파일명 토스트 · 변경이력 패널','이 파일']]
+    ['17','2026-09-07','검수 HTML','v3.1 반영','v3.0','증서 원문 이름 · 마스킹 함수 · 01-d / 04B-g 변형 · 저장 파일명 토스트 · 변경이력 패널','이 파일']],
+  v32:[
+    ['18','2026-10-01','수료','F-16 활동 건수','3개 프로그램 중 1개 이상 한 날 수 (날짜 기준)','게임 완료 횟수 (F-03과 같은 값 · 1회 = 1건)','개발팀 기획 확인 요청(10/6) 1번 · 12명 B → A'],
+    ['19','2026-10-01','수료','K-06 · D-30 OR 두 번째 항','단독 발동하지 않음','단독 발동 — 참여일 30일 미만 + 게임 30회 이상 → A · 판정 항 로그 기록','1번'],
+    ['20','2026-10-01','수료','D-33 "3개 프로그램" 지정','미정','종결 — F-16 변경으로 불필요 (참고: 마음기록 · 게임 · 재활운동)','10번'],
+    ['21','2026-10-01','증서','Q-02 B분기 저장 버튼 라벨','가정 "참여기록 저장하기"','확정','개발팀 §4 기본값 수용 · Q-02 종결'],
+    ['22','2026-10-01','예외','3기 비대상자 (P20 · gate-nontarget 신설)','동작만 있고 문구 없음 (P10은 탈퇴자)','보건소 공식 톤 본문 한 덩어리 + [홈으로 돌아가기] · P09 / P18에는 쓰지 않음','2번 · §4 "못 찾을 때" 정정'],
+    ['23','2026-10-01','IA','B-01 배너 노출 홈','(구현) 체험 홈만','체험 홈 · 회원 홈 구분 없이 대상자 노출','4번'],
+    ['24','2026-10-01','IA','B-04 배너 썸네일 (IA-Q-02)','미정','전용 배너 이미지 · 10/7 피그마 전달','3번 · IA-Q-02 결정'],
+    ['25','2026-10-01','화면','스크롤 힌트 (S1-05 · FE-05)','하단 고정','섹션 진입 직후에만 고정 · 스크롤 시 해제','5번 · 작은 화면 본문 가림'],
+    ['26','2026-10-01','4기','S7-11 노출 범위','(구현) 4기 챌린지 생성 후 노출','10/27 출시부터 노출 · 참여 의사만 저장 · 승인 플로우와 별개','§5 · 9/7 회신 §2'],
+    ['27','2026-10-01','4기','07-m 폼 동의 기록 없음 (신설)','—','"4기도 참여하기" 미노출 (55명)','6번 · 약관 최종검토 N-2'],
+    ['28','2026-10-01','4기','S8-05 완료 본문','"자세한 문의사항은 {전화번호}로 문의 바랍니다. 감사합니다."','앞에 "4기가 시작될 때 보건소에서 연락드리겠습니다." 추가','기획 결정'],
+    ['29','2026-10-01','로깅','IA-Q-06 섹션별 측정','미정','종결 — 섹션별 방문 횟수 · 방문자 수 · 체류 시간 측정','8번'],
+    ['30','2026-10-01','검수','§14 커버 payload 항목','원문 이름이 없는가','cert_name 외 필드에 원문 이름이 없고 증서에서만 쓰이는가','13번 · 9/7 회신 19번과 정합'],
+    ['31','2026-10-01','검수','§14 수료증 캡처 항목','실명이 없는가','증서 이름이 원문(cert_name)으로 찍히는가','13번'],
+    ['32','2026-10-01','일정','Q-11 · Q-13 · IA-Q-04 · IA-Q-05','배포 전 · 10/25','캐릭터 10/13 · 전화번호 10/15 · 사전 안내 · 푸시 10/15','9 · 11 · 12번 · 10/20 심사 제출'],
+    ['33','2026-10-01','문서','회신 문서 신설','—','문서 9 (09_기획회신-20261001)','개발팀 기획 확인 요청 13건 회신'],
+    ['34','2026-10-01','검수 HTML','index.html v3.2 반영','v3.1','S8-05 완료 문구 · 변경이력 패널 v3.2','P20 · 07-m 변형은 문서 전용 (검수 패널 미추가)']]
 };
 function histTable(rows){ const H=['번호','변경일자','구분','항목','변경 전','변경 후','사유 · 근거'];
   return `<table class="histT"><thead><tr>${H.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${
@@ -783,8 +801,9 @@ function toggleHist(){ const h=document.getElementById('hist'); if(!h.hidden){ h
       <div style="font-size:12px;color:#9AA3AD;margin-top:2px">최초 기획 ${HIST.meta.first} · 최근 변경 ${HIST.meta.last} · 현재 판 ${HIST.meta.ver} · 정본 07_변경이력.md와 동일</div></div>
       <button onclick="toggleHist()" class="histX">✕</button></div>
     <div class="histSec">1. 판 이정표 — 최초 기획부터 최종판까지</div>${histTable(HIST.milestones)}
-    <div class="histSec">2. ${HIST.meta.ver} · 2026-09-07 변경 — 개발팀 확인 요청 19건 회신 결과 · ${HIST.v31.length}건</div>${histTable(HIST.v31)}
-    <div class="histFoot">피그마 반영 완료 (2026-09-07) — 1~10번은 디스크립션 보드 · 정책 보드 · 증서 프레임 27개에 반영. 11~14번은 문서 전용. 검수 HTML은 17번으로 v3.1 동기화.</div>
+    <div class="histSec">2. v3.1 · 2026-09-07 변경 — 개발팀 확인 요청 19건 회신 결과 · ${HIST.v31.length}건</div>${histTable(HIST.v31)}
+    <div class="histSec">3. v3.2 · 2026-10-01 변경 — 개발팀 기획 확인 요청(10/6) 13건 회신 결과 · ${HIST.v32.length}건</div>${histTable(HIST.v32)}
+    <div class="histFoot">피그마 반영 완료 (2026-09-07) — 1~10번은 디스크립션 보드 · 정책 보드 · 증서 프레임 27개에 반영. 11~14번은 문서 전용. 검수 HTML은 17번으로 v3.1 동기화.<br>v3.2 (2026-10-01) — 18~34번은 문서 1~4 · 7 · 9와 피그마 정책 · 디스크립션 보드에 반영(SC-RP-08 완료 목업 카드는 폰트 문제로 미반영). 검수 HTML은 34번(S8-05 문구 · 이 패널)만 반영하고 P20 · 07-m 변형은 문서 전용.</div>
   </div>`; h.hidden=false; }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const h=document.getElementById('hist'); if(h&&!h.hidden) h.hidden=true; } });
 
