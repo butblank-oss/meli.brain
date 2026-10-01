@@ -803,7 +803,7 @@ function toggleHist(){ const h=document.getElementById('hist'); if(!h.hidden){ h
     <div class="histSec">1. 판 이정표 — 최초 기획부터 최종판까지</div>${histTable(HIST.milestones)}
     <div class="histSec">2. v3.1 · 2026-09-07 변경 — 개발팀 확인 요청 19건 회신 결과 · ${HIST.v31.length}건</div>${histTable(HIST.v31)}
     <div class="histSec">3. v3.2 · 2026-10-01 변경 — 개발팀 기획 확인 요청(10/6) 13건 회신 결과 · ${HIST.v32.length}건</div>${histTable(HIST.v32)}
-    <div class="histFoot">피그마 반영 완료 (2026-09-07) — 1~10번은 디스크립션 보드 · 정책 보드 · 증서 프레임 27개에 반영. 11~14번은 문서 전용. 검수 HTML은 17번으로 v3.1 동기화.<br>v3.2 (2026-10-01) — 18~34번은 문서 1~4 · 7 · 9와 피그마 정책 · 디스크립션 보드에 반영. 검수 HTML은 34번(S8-05 문구 · 이 패널)만 반영하고 P20 · 07-m 변형은 문서 전용.</div>
+    <div class="histFoot">피그마 반영 완료 (2026-09-07) — 1~10번은 디스크립션 보드 · 정책 보드 · 증서 프레임 27개에 반영. 11~14번은 문서 전용. 검수 HTML은 17번으로 v3.1 동기화.<br>v3.2 (2026-10-01) — 18~34번은 문서 1~4 · 7 · 9와 피그마 정책 · 디스크립션 보드에 반영(SC-RP-08 완료 목업 카드는 폰트 문제로 미반영). 검수 HTML은 34번(S8-05 문구 · 이 패널)만 반영하고 P20 · 07-m 변형은 문서 전용.</div>
   </div>`; h.hidden=false; }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const h=document.getElementById('hist'); if(h&&!h.hidden) h.hidden=true; } });
 
