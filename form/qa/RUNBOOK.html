@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>현장 장애 대처 — 치매예방교실 접수 — 맬리브레인 신청폼</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1F26;--ink2:#4E5968;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--accent:#1F3C5D}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.8;font-size:16px}
+body,button,input,select,textarea{word-break:keep-all;overflow-wrap:break-word}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;position:sticky;top:0;z-index:10;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top a{color:var(--accent);text-decoration:none;font-weight:700;font-size:14px}
+.top a:hover{text-decoration:underline}
+.top .sep{color:#C8C3B8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.3;margin:0 0 20px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.035em;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--ink);line-height:1.4}
+h3{font-size:18px;font-weight:800;letter-spacing:-.03em;margin:30px 0 8px}
+h4{font-size:16px;font-weight:800;margin:22px 0 6px}
+p{margin:10px 0;color:var(--ink2)}
+ul,ol{margin:10px 0 10px 22px;color:var(--ink2)}
+li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+code{background:#EDEBE5;color:#1A3654;padding:2px 6px;border-radius:5px;font-size:13.5px;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}
+pre{background:#1A1F26;color:#E6EAF0;padding:18px 20px;border-radius:12px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:inherit;padding:0;font-size:13px;font-weight:400}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:#fff;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#EDEBE5;font-weight:700;color:var(--ink);white-space:nowrap}
+blockquote{border-left:4px solid var(--accent);background:#ECF1F6;margin:16px 0;padding:14px 18px;border-radius:0 10px 10px 0}
+blockquote p{margin:6px 0;color:#1A3654}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+footer{max-width:860px;margin:0 auto;padding:0 24px 80px;font-size:13px;color:var(--ink3)}
+@media(max-width:640px){.wrap{padding:24px 18px 80px}h1{font-size:24px}h2{font-size:19px}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="../index.html">← 신청폼 목차</a><span class="sep">·</span>
+  <a href="../design/index.html">프로토타입</a><span class="sep">·</span>
+  <a href="../terms/README.html">약관</a>
+</nav>
+<div class="wrap">
+<h1>현장 장애 대처 — 치매예방교실 접수</h1>
+<p><strong>대상</strong> 보건소 현장에서 어르신 접수를 진행하는 직원
+<strong>버전</strong> 개발본 2026-09-29 기준 (자동 승인 · 제출 = 참여 확정)
+<strong>원칙</strong> 어르신을 <strong>기다리게 하지 않는다.</strong> 막히면 종이로 받고 나중에 넣는다.</p>
+<hr />
+<h2>0. 시작하기 전 (현장 도착 후 10분)</h2>
+<p>접수를 시작하기 전에 <strong>직원 본인 폰으로</strong> 한 번 돌려봅니다. 어르신 앞에서 처음 열지 않습니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>확인</th>
+<th>안 되면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>폼 주소가 열린다</td>
+<td>네트워크·주소 확인 → §1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>직원 모드 로그인이 된다</td>
+<td>§2 — 로그인이 안 되면 <strong>현장 접수 전면 중단</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>본인 번호로 시험 접수 → 문자가 온다</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>시험 접수를 <strong>되돌리기로 지웠다</strong></td>
+<td>안 지우면 직원이 참여자로 남습니다</td>
+</tr>
+<tr>
+<td>5</td>
+<td>보건소 와이파이 대신 <strong>직원 폰 데이터</strong>로도 열린다</td>
+<td>와이파이가 죽어도 계속할 수 있습니다</td>
+</tr>
+</tbody>
+</table>
+<p><strong>챙길 것</strong> — 보조배터리, 종이 접수지·동의서 묶음(§8), 보건소 대표번호, 개발 담당 연락처.</p>
+<hr />
+<h2>1. 폼이 안 열린다</h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>먼저</th>
+<th>그래도 안 되면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>흰 화면 / 계속 도는 중</td>
+<td>새로고침 1회</td>
+<td>다른 브라우저(크롬↔사파리)</td>
+</tr>
+<tr>
+<td>"연결할 수 없음"</td>
+<td>와이파이 끄고 <strong>데이터로</strong></td>
+<td>다른 직원 폰</td>
+</tr>
+<tr>
+<td>주소를 눌렀는데 엉뚱한 곳</td>
+<td>지난 기수 링크일 수 있음 — 주소의 기수 확인</td>
+<td>올바른 링크 재전송</td>
+</tr>
+<tr>
+<td>글자가 깨지거나 버튼이 안 보임</td>
+<td>브라우저 확대 100%로</td>
+<td>다른 폰</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>5분 안에 안 되면 §8 종이 접수로 전환합니다.</strong> 어르신을 세워두고 고치지 않습니다.</p>
+</blockquote>
+<hr />
+<h2>2. 직원 로그인이 안 된다</h2>
+<ol>
+<li>번호를 정확히 넣었는지 — 본인 번호여야 합니다 (케어센터와 같은 계정).</li>
+<li>인증번호 문자가 오는지 — 안 오면 §3.</li>
+<li><strong>등록 안 된 직원</strong>이면 권한 없음이 뜹니다 → 담당자에게 계정 등록 요청.</li>
+</ol>
+<p><strong>로그인이 안 되면 대리 접수를 할 수 없습니다.</strong> 두 가지만 가능합니다.</p>
+<ul>
+<li><strong>어르신이 직접</strong> 자기 폰으로 링크를 받아 신청 (이것도 즉시 확정됩니다)</li>
+<li><strong>종이 접수</strong> (§8)</li>
+</ul>
+<hr />
+<h2>3. 문자가 안 온다</h2>
+<p>가장 흔한 문제입니다. <strong>순서대로</strong> 확인합니다.</p>
+<table>
+<thead>
+<tr>
+<th>순서</th>
+<th>확인</th>
+<th>조치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>번호를 잘못 적지 않았나</td>
+<td><strong>접수 내역에서 번호를 어르신께 소리 내어 읽어 확인</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>3분이 지났나</td>
+<td>3분까지는 기다립니다. 연타하지 않습니다</td>
+</tr>
+<tr>
+<td>3</td>
+<td>폰이 꺼져 있거나 신호가 없나</td>
+<td>켜고 신호 확인</td>
+</tr>
+<tr>
+<td>4</td>
+<td>스팸 차단 설정</td>
+<td>설정 → 메시지 → 차단 목록 확인</td>
+</tr>
+<tr>
+<td>5</td>
+<td>저장 공간 가득</td>
+<td>오래된 문자 삭제</td>
+</tr>
+</tbody>
+</table>
+<p><strong>문자가 끝내 안 와도 접수는 유효합니다.</strong> 어르신께 이렇게 안내합니다.</p>
+<blockquote>
+<p>"신청은 다 됐습니다. 문자가 늦을 수 있으니 <strong>앱스토어에서 '맬리브레인'을 직접 찾아 설치</strong>하시고,
+방금 적은 전화번호로 들어가시면 됩니다."</p>
+</blockquote>
+<p>번호가 틀렸던 경우에는 §5로 <strong>되돌린 뒤 다시 접수</strong>합니다.</p>
+<hr />
+<h2>4. 제출이 안 된다 / 눌러도 반응이 없다</h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>조치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>버튼을 눌러도 아무 일이 없다</td>
+<td><strong>빠진 항목이 있습니다.</strong> 버튼 아래 '아직 남은 것'을 확인</td>
+</tr>
+<tr>
+<td>이름·동·성별 칸이 눌리지 않는다</td>
+<td><strong>번호를 먼저 넣어야 풀립니다.</strong> 기존 회원이면 문자 인증까지</td>
+</tr>
+<tr>
+<td>"다시 시도" 안내가 뜬다</td>
+<td>네트워크 문제. <strong>입력값은 그대로 있습니다.</strong> 한 번만 더 누름</td>
+</tr>
+<tr>
+<td>눌렀는데 멈춰 있다</td>
+<td><strong>연타하지 않습니다.</strong> 10초 기다린 뒤 §6으로 중복 확인</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>절대 하지 말 것</strong> — 반응이 없다고 [신청하기]를 여러 번 누르기.
+두 건이 들어가면 정원과 명단이 틀어집니다.</p>
+</blockquote>
+<hr />
+<h2>5. 잘못 등록했다</h2>
+<p><strong>자동 승인이라 제출 즉시 확정됩니다.</strong> 되돌리기가 유일한 수습 경로입니다.</p>
+<h3>바로 알아챈 경우</h3>
+<ol>
+<li>직원 모드 → <strong>[오늘 내가 처리]</strong> 목록을 연다</li>
+<li>해당 건을 찾아 <strong>[되돌리기]를 두 번</strong> 누른다</li>
+<li>승인 대기로 돌아가고 교실 배정·상담 채널도 함께 걷힙니다</li>
+<li>올바른 정보로 <strong>다시 접수</strong>합니다</li>
+</ol>
+<h3>나중에 알아챈 경우 (다음 날 등)</h3>
+<p>[오늘 내가 처리]에는 당일 건만 보입니다. <strong>케어센터 신청자 화면</strong>에서 찾아 처리하거나 담당자에게 요청합니다.</p>
+<h3>번호를 잘못 적어 <strong>남의 번호로 승인된</strong> 경우 ⚠</h3>
+<p>가장 위험합니다. 그 번호의 <strong>실제 주인이 앱을 깔고 로그인하면 자동으로 참여자가 됩니다.</strong></p>
+<ol>
+<li>즉시 되돌리기</li>
+<li>이미 문자가 나갔으면 <strong>그 번호로 전화해 잘못 발송됐다고 안내</strong></li>
+<li>담당자에게 보고 — 개인정보 오발송 건으로 기록이 필요할 수 있습니다</li>
+</ol>
+<blockquote>
+<p><strong>예방이 전부입니다.</strong> 접수 전에 <strong>어르신 폰 화면의 번호를 직접 보고</strong> 입력하세요.
+어르신이 불러주는 번호를 받아적지 마세요. 가장 흔한 사고 원인입니다.</p>
+</blockquote>
+<hr />
+<h2>6. 중복으로 넣은 것 같다</h2>
+<ol>
+<li>같은 번호를 번호칸에 다시 넣어봅니다 → <strong>이미 신청</strong> 안내가 뜨면 한 건만 들어간 것입니다</li>
+<li>[오늘 내가 처리] 목록에서 같은 이름이 두 번 보이면 <strong>하나를 되돌립니다</strong></li>
+<li>어느 쪽을 지울지 모르면 <strong>나중 것</strong>을 지웁니다</li>
+</ol>
+<hr />
+<h2>7. 앱에서 교실이 안 보인다</h2>
+<p>어르신이 앱을 깔았는데 교실 화면이 아니라 체험 화면이 나오는 경우입니다.</p>
+<table>
+<thead>
+<tr>
+<th>확인</th>
+<th>조치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>신청한 번호로 로그인했나</td>
+<td>다른 번호로 가입했으면 <strong>신청한 번호로 다시 로그인</strong></td>
+</tr>
+<tr>
+<td>신청이 되어 있나</td>
+<td>폼에 번호를 넣어 확인. 없으면 지금 접수</td>
+</tr>
+<tr>
+<td><strong>앱을 먼저 깔고 가입한 경우</strong></td>
+<td>앱만으로는 교실에 못 들어갑니다. <strong>직원이 폼에서 그 번호로 접수</strong>해야 합니다</td>
+</tr>
+<tr>
+<td>방금 승인됐는데 화면이 그대로</td>
+<td><strong>앱을 완전히 껐다 켜기</strong> (안드로이드에서 특히)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>8. 종이 접수로 전환 (최후 수단)</h2>
+<p><strong>언제</strong> — 폼이 5분 넘게 안 열리거나, 직원 로그인이 안 되거나, 네트워크가 현장 전체에서 끊겼을 때.</p>
+<h3>받을 것</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>이름</td>
+<td></td>
+</tr>
+<tr>
+<td>휴대전화 번호</td>
+<td><strong>어르신 폰 화면을 직접 보고 적습니다</strong></td>
+</tr>
+<tr>
+<td>사시는 동</td>
+<td>남동구 관내만</td>
+</tr>
+<tr>
+<td>성별</td>
+<td></td>
+</tr>
+<tr>
+<td>생년월일</td>
+<td>8자리</td>
+</tr>
+<tr>
+<td><strong>동의 3종 서명</strong></td>
+<td>이용약관 · 개인정보 수집·이용 · 보건소 제3자 제공</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>동의서는 반드시 종이로 받습니다.</strong> 나중에 직원이 폼에 대신 넣으면
+어르신 본인이 동의를 누른 기록이 남지 않습니다. 종이 서명이 그 자리를 대신합니다.</p>
+</blockquote>
+<h3>복구할 때</h3>
+<ol>
+<li>네트워크가 돌아오면 직원 모드에서 <strong>종이 순서대로</strong> 입력합니다</li>
+<li>입력하면서 <strong>번호를 다시 한 번 확인</strong>합니다 (이 단계에서 오기입이 제일 많습니다)</li>
+<li>종이는 <strong>버리지 말고 보관</strong>합니다 — 동의 증빙입니다</li>
+<li>어르신께 <strong>문자가 늦게 간다고 미리 안내</strong>해 둡니다</li>
+</ol>
+<hr />
+<h2>9. 어르신께 드리는 말 (상황별)</h2>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>이렇게</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>접수 완료</td>
+<td>"신청 다 됐습니다. 바로 참여 확정이에요. 잠시 뒤 문자가 갈 거예요."</td>
+</tr>
+<tr>
+<td>문자가 늦음</td>
+<td>"신청은 끝났어요. 문자가 좀 늦을 수 있는데, 앱스토어에서 '맬리브레인' 찾아서 받으셔도 됩니다."</td>
+</tr>
+<tr>
+<td>폼이 안 열림</td>
+<td>"기계가 잠깐 느리네요. 종이로 먼저 받아두고 저희가 넣어드릴게요."</td>
+</tr>
+<tr>
+<td>관외 거주</td>
+<td>"이 교실은 남동구에 사시는 분만 참여하실 수 있어요. 앱은 그냥 쓰실 수 있고, 사시는 곳 보건소에도 비슷한 교실이 있을 거예요."</td>
+</tr>
+<tr>
+<td>앱이 안 깔림</td>
+<td>"폰이 좀 오래된 것 같아요. 가족분 도움 받으셔도 되고, 보건소로 전화 주시면 도와드릴게요."</td>
+</tr>
+</tbody>
+</table>
+<p><strong>쓰지 말 것</strong> — "승인", "대기", "서버", "오류", "에러". 어르신에게는 전부 "기계가 느리다"로 바꿔 말합니다.</p>
+<hr />
+<h2>10. 어디까지가 현장, 어디부터 전화</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>현장에서 해결</th>
+<th>담당자에게 전화</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>폼이 안 열림</td>
+<td>브라우저·네트워크 바꿔보기</td>
+<td>10분 넘게 전 직원 폰에서 안 될 때</td>
+</tr>
+<tr>
+<td>로그인 안 됨</td>
+<td>번호 확인</td>
+<td>등록된 직원인데 계속 안 될 때</td>
+</tr>
+<tr>
+<td>문자 안 옴</td>
+<td>§3 전부</td>
+<td>한 사람이 아니라 <strong>여러 명이 안 올 때</strong></td>
+</tr>
+<tr>
+<td>잘못 등록</td>
+<td>되돌리기</td>
+<td>남의 번호로 나갔을 때 <strong>즉시</strong></td>
+</tr>
+<tr>
+<td>중복</td>
+<td>되돌리기</td>
+<td>—</td>
+</tr>
+<tr>
+<td>앱 연결 안 됨</td>
+<td>§7</td>
+<td>번호도 맞고 신청도 있는데 안 될 때</td>
+</tr>
+</tbody>
+</table>
+<p><strong>연락처</strong> <code>{개발 담당}</code> · <code>{운영 담당}</code> · 남동구 보건소 <code>{전화번호}</code></p>
+<blockquote>
+<p>전화할 때는 <strong>번호·이름·시각·화면 캡처</strong>를 준비해 주세요. "안 돼요"만으로는 원인을 못 찾습니다.</p>
+</blockquote>
+<hr />
+<h2>부록. 현장에서 지킬 세 가지</h2>
+<ol>
+<li><strong>번호는 어르신 폰 화면을 직접 보고 넣는다.</strong> 받아적지 않는다.</li>
+<li><strong>동의 3개는 어르신이 직접 누른다.</strong> 직원이 대신 누르지 않는다.</li>
+<li><strong>막히면 5분 안에 종이로 전환한다.</strong> 어르신을 세워두고 고치지 않는다.</li>
+</ol>
+</div>
+<footer>맬리브레인 신청폼 개선 · 인천 남동구 보건소 치매예방교실 · 이 문서는 <code>qa/RUNBOOK.md</code> 에서 생성됐습니다</footer>
+</body>
+</html>
