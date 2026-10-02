@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>신청폼 QA — 테스트 케이스와 현장 대처</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1F3C5D;--ink:#1A1F26;--ink2:#59636D;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--wt:#fff;
+ --no:#9E241D;--no-bg:#FBEFED;--no-line:#EBC7C1;--wa:#6A4A11;--wa-bg:#FAF2E3;--wa-line:#E6D3AE;
+ --ok:#17624A;--ok-bg:#EAF3EF}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+ color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased}
+body,a{word-break:keep-all;overflow-wrap:break-word}
+header{background:linear-gradient(140deg,#1F3C5D,#132840);color:#fff;padding:52px 24px 44px}
+header .in{max-width:880px;margin:0 auto}
+header .chip{display:inline-flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);
+ border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:700}
+header h1{font-size:32px;font-weight:800;letter-spacing:-.045em;line-height:1.28;margin:16px 0 10px}
+header p{font-size:15.5px;color:rgba(255,255,255,.85);line-height:1.7;max-width:640px}
+header .meta{margin-top:22px;display:flex;gap:9px;flex-wrap:wrap;font-size:13px}
+header .meta span{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);
+ border-radius:8px;padding:5px 11px;color:rgba(255,255,255,.9);font-weight:600}
+main{max-width:880px;margin:0 auto;padding:40px 24px 100px}
+h2{font-size:15px;font-weight:800;letter-spacing:.02em;color:var(--ink3);text-transform:uppercase;margin:36px 0 14px}
+h2:first-child{margin-top:0}
+.alert{background:var(--no-bg);border:1px solid var(--no-line);border-left:4px solid var(--no);
+ border-radius:12px;padding:17px 19px;font-size:14.5px;line-height:1.75;color:#7A1C16;margin-bottom:16px}
+.alert b{color:#5E1511}
+.note{background:var(--wa-bg);border:1px solid var(--wa-line);border-left:4px solid #A9701A;
+ border-radius:12px;padding:16px 18px;font-size:14.5px;line-height:1.75;color:var(--wa);margin-bottom:30px}
+.note b{color:#4A340B}
+a.card{display:block;background:var(--wt);border:1px solid var(--line);border-radius:16px;
+ padding:22px;text-decoration:none;color:inherit;margin-bottom:11px;transition:border-color .12s,transform .12s}
+a.card:hover{border-color:var(--navy);transform:translateY(-1px)}
+a.card .t{font-size:19px;font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:9px}
+a.card .d{display:block;font-size:14.5px;color:var(--ink2);line-height:1.7;margin-top:7px}
+a.card .tag{font-size:11.5px;font-weight:800;border-radius:6px;padding:3px 9px;
+ color:var(--navy);background:#E8EEF4;border:1px solid #C6D6E4}
+a.card .tag.hot{color:var(--no);background:var(--no-bg);border-color:var(--no-line)}
+table{width:100%;border-collapse:collapse;margin:0 0 22px;font-size:14.5px;background:var(--wt)}
+th,td{border:1px solid var(--line);padding:11px 13px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:#F7F6F2;font-weight:700;white-space:nowrap}
+td b{color:var(--navy)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:#F0EEE9;
+ border-radius:4px;padding:1px 5px}
+ol,ul{margin:10px 0 22px 20px;font-size:15px;color:var(--ink2);line-height:1.85}
+li{margin-bottom:6px}
+li b{color:var(--ink)}
+footer{border-top:1px solid var(--line);background:var(--wt)}
+footer .in{max-width:880px;margin:0 auto;padding:30px 24px 64px;font-size:13.5px;color:var(--ink3);line-height:1.85}
+footer a{color:var(--navy);font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <span class="chip">인천 남동구 보건소 · 치매예방교실</span>
+    <h1>신청폼 QA</h1>
+    <p>개발본을 현장에 투입하기 전에 돌리는 테스트 케이스와, 현장에서 문제가 났을 때 직원이 보는 대처 절차입니다.</p>
+    <div class="meta">
+      <span>TC 75건</span>
+      <span>P0 32 · P1 37 · P2 6</span>
+      <span>개발본 2026-09-29 기준</span>
+      <span>작성 2026-10-02</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<div class="alert">
+  <b>개발본은 기획본과 승인 정책이 반대입니다.</b>
+  기획에서는 <b>관리자 승인 1회</b>를 거치게 했는데, 개발본은 <b>제출 = 즉시 참여 확정</b>입니다.
+  어르신 본인 SMS 인증도 직원 대리 접수에서 빠졌습니다.<br><br>
+  그래서 <b>번호를 잘못 적으면 그 번호가 승인된 채 남습니다.</b> 그 번호의 다른 사람이 앱을 깔고
+  로그인하면 자동으로 참여자가 됩니다. 승인 대기가 없어진 대가이고, <b>QA에서 가장 무겁게 봐야 할 지점</b>입니다
+  (<code>E-03</code>). 현장에서는 <b>되돌리기</b>가 유일한 수습 경로입니다 (<code>B-09</code>).
+</div>
+
+<div class="note">
+  <b>P0가 하나라도 실패하면 현장 투입을 미뤄야 합니다.</b>
+  P0는 "안 되면 접수 자체가 불가하거나 개인정보·명단 사고로 이어지는 것"입니다.
+  32건 중 22건이 <b>개발본에서 새로 생기거나 바뀐 동작</b>이라 기존 검수 결과를 재사용할 수 없습니다.
+</div>
+
+<h2>산출물</h2>
+
+<a class="card" href="TC_신청폼.html">
+  <span class="t">테스트 케이스 (체크리스트) <span class="tag">현장용</span></span>
+  <span class="d">75건을 폰에서 보며 통과·실패를 누르는 형태입니다. 우선순위·미완료·실패만 걸러 볼 수 있고,
+  기록은 브라우저에 남습니다. 혼자 돌릴 때 가장 빠릅니다.</span>
+</a>
+
+<a class="card" href="TC_신청폼.csv">
+  <span class="t">테스트 케이스 (CSV) <span class="tag">분담용</span></span>
+  <span class="d">구글시트·엑셀에 그대로 import 됩니다. 결과·실패 증상·담당 칸이 비어 있어
+  <b>여러 명이 나눠 돌리고 한곳에 모을 때</b> 씁니다. 한글 깨짐 없이 열리도록 BOM을 넣었습니다.</span>
+</a>
+
+<a class="card" href="RUNBOOK.html">
+  <span class="t">현장 장애 대처 <span class="tag hot">직원 배포용</span></span>
+  <span class="d">폼이 안 열릴 때 · 문자가 안 올 때 · 잘못 등록했을 때 · 종이 접수 전환까지.
+  어르신께 드릴 말까지 상황별로 적었습니다. <b>접수 담당 직원에게 인쇄해 주세요.</b></span>
+</a>
+
+<h2>어떻게 돌리나</h2>
+
+<ol>
+  <li><b>P0 32건을 먼저</b> 돌립니다. 체크리스트에서 [P0만]을 누르면 걸러집니다. 반나절이면 끝납니다.</li>
+  <li>P0가 전부 통과하면 <b>P1 37건</b>을 돌립니다. 여기까지가 현장 투입 전 최소선입니다.</li>
+  <li>실패한 건은 <b>무엇이 어떻게 됐는지</b>를 적습니다. "안 됨"만 적으면 개발자가 재현을 못 합니다.</li>
+  <li>P2는 시간이 남으면 돌립니다. 안 돌려도 투입은 가능합니다.</li>
+</ol>
+
+<table>
+  <tr><th>그룹</th><th>건수</th><th>무엇을 보나</th></tr>
+  <tr><td><b>어르신 직접</b></td><td>31</td><td>번호 조회·인증·이름·동·성별·생년월일·동의·제출·완료 화면</td></tr>
+  <tr><td><b>직원 모드</b></td><td>16</td><td>직원 로그인, 대리 접수, 오늘 처리 목록, 되돌리기, 반려 사유</td></tr>
+  <tr><td><b>연결 확인</b></td><td>8</td><td>문자 도착 → 앱 설치 → 가입 → <b>교실 화면이 뜨는지</b>, 케어센터 반영</td></tr>
+  <tr><td><b>현장 환경</b></td><td>12</td><td>네트워크 끊김, 느린 회선, <b>글자 200% 확대</b>, 구형 기기, 문자 지연</td></tr>
+  <tr><td><b>보안·오입력</b></td><td>8</td><td>조회 응답에 타인 정보가 없는지, 레이트 리밋, <b>타인 번호 신청</b></td></tr>
+</table>
+
+<h2>테스트 전에 준비할 것</h2>
+
+<ul>
+  <li><b>전화번호 3개</b> — 신규(한 번도 신청 안 한 번호) · 기존 앱 회원 번호 · 이미 이 기수에 신청한 번호.
+      <b>셋이 없으면 A-02·A-05·A-06을 못 돌립니다.</b></li>
+  <li><b>등록된 직원 계정</b>과 <b>미등록 번호</b> 하나씩 — B-02·B-03용</li>
+  <li><b>iOS 1대 + Android 1대</b> — D-09·C-04는 양쪽이 다를 수 있습니다</li>
+  <li><b>구형 안드로이드</b>가 있으면 D-08에 씁니다</li>
+  <li>케어센터 접근 권한 — C-06·C-07용</li>
+</ul>
+
+<div class="note">
+  <b>dev 환경에 쓰레기 데이터가 쌓입니다.</b> 테스트로 넣은 건은 <b>[되돌리기]로 정리</b>하고,
+  정리한 건과 남긴 건을 CSV 비고란에 적어주세요. 실서버 반영 전에 dev를 한 번 비울지 개발팀과 정해야 합니다.
+</div>
+
+<h2>기획본과 달라진 것 — 재검증이 필요한 22건</h2>
+
+<p style="font-size:15px;color:var(--ink2);margin-bottom:16px">
+  아래는 <b>우리 기획에 없거나 반대로 바뀐 동작</b>이라 기존 예외명세 90종의 검수 결과를 그대로 쓸 수 없습니다.
+</p>
+
+<table>
+  <tr><th>변경</th><th>TC</th><th>왜 중요한가</th></tr>
+  <tr><td><b>자동 승인</b><br>(승인 1회 → 제출 즉시 확정)</td><td>A-27 A-28<br>B-04 B-05<br>E-03</td>
+      <td>오기입을 걸러낼 사람이 없어졌습니다. 잘못 들어간 건은 <b>되돌리기로만</b> 수습됩니다</td></tr>
+  <tr><td><b>어르신 SMS 인증 제거</b><br>(직원 대리 접수)</td><td>B-04 E-03</td>
+      <td>직원 로그인이 신원 확인을 대신합니다. <b>번호 오기입이 그대로 통과</b>합니다</td></tr>
+  <tr><td><b>성별·생년월일 추가</b></td><td>A-17 ~ A-20</td>
+      <td>기획에서 뺐던 항목입니다. <b>검증 로직이 새로 들어간 자리</b>라 미래 날짜·없는 날짜를 꼭 봐야 합니다</td></tr>
+  <tr><td><b>승인 화면 → 폼 안으로 흡수</b></td><td>B-08 ~ B-13</td>
+      <td>별도 <code>admin.html</code> 대신 폼 안 목록 두 개입니다. <b>되돌리기 경로를 찾을 수 있는지</b>가 관건</td></tr>
+  <tr><td><b>앱 자동 결합</b></td><td>C-01 ~ C-05</td>
+      <td>가입 순간 승인된 신청서를 찾아 묶습니다. <b>여기서 막히면 개편의 의미가 없습니다</b></td></tr>
+  <tr><td>개발팀이 이미 아는 문제</td><td>C-04 C-05 C-08</td>
+      <td>Android 실시간 전환 · 앱 내 폼 링크 없음 · 생년월일 미전달. <b>확인하고 기록</b>하는 TC입니다</td></tr>
+</table>
+
+<h2>기획 산출물</h2>
+
+<ul>
+  <li><a href="../index.html" style="color:var(--navy);font-weight:700">신청폼 기획 목차</a> — 프로토타입 · IA · 예외명세 90종 · 약관</li>
+  <li><a href="../exceptions.html" style="color:var(--navy);font-weight:700">예외명세 90종</a> — TC의 '근거 코드'가 가리키는 문서</li>
+  <li><a href="../design/v1.0.html" style="color:var(--navy);font-weight:700">프로토타입 v1.0</a> — 기획 기준 화면. 개발본과 다른 점을 비교할 때</li>
+</ul>
+
+</main>
+
+<footer>
+  <div class="in">
+    신청폼 QA · 개발본 <code>dev-meli-web /invitations/namdong3/form</code> (2026-09-29 dev 반영) 기준 · 작성 2026-10-02<br>
+    TC 수정은 <code>qa/_tc_data.py</code> 에서 하고 <code>python3 build_qa.py</code> 를 다시 돌리면
+    CSV와 HTML이 함께 바뀝니다. 두 파일을 따로 고치지 마세요.<br><br>
+    <a href="../index.html">← 신청폼 목차로</a>
+  </div>
+</footer>
+
+</body>
+</html>

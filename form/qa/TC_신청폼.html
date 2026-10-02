@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>신청폼 QA 테스트 케이스 — 75건</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1F3C5D;--ink:#1A1F26;--ink2:#59636D;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;--wt:#fff;
+--ok:#17624A;--ok-bg:#EAF3EF;--no:#9E241D;--no-bg:#FBEFED;--wa:#8A5412;--wa-bg:#FAF2E3}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;color:var(--ink);
+background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+body,button,input{word-break:keep-all;overflow-wrap:break-word}
+header{background:linear-gradient(140deg,#1F3C5D,#132840);color:#fff;padding:40px 20px 34px;position:sticky;top:0;z-index:20}
+header .in{max-width:920px;margin:0 auto}
+header h1{font-size:26px;font-weight:800;letter-spacing:-.04em}
+header p{font-size:14.5px;color:rgba(255,255,255,.85);margin-top:8px;line-height:1.65}
+.bar{max-width:920px;margin:14px auto 0;display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.bar button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;
+border-radius:8px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.bar button.on{background:#fff;color:var(--navy)}
+.bar .stat{margin-left:auto;font-size:13px;font-weight:700;color:rgba(255,255,255,.9)}
+nav{max-width:920px;margin:0 auto;padding:16px 20px 0;display:flex;gap:7px;flex-wrap:wrap}
+nav a{background:var(--wt);border:1px solid var(--line);border-radius:999px;padding:7px 13px;
+font-size:13px;font-weight:700;text-decoration:none;color:var(--ink)}
+nav a b{color:var(--navy)}
+main{max-width:920px;margin:0 auto;padding:20px 20px 90px}
+h2{font-size:17px;font-weight:800;letter-spacing:-.03em;margin:28px 0 12px;display:flex;gap:9px;align-items:baseline}
+h2 em{font-style:normal;font-size:12.5px;font-weight:600;color:var(--ink3)}
+.tc{background:var(--wt);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.tc.done{opacity:.5}
+.hd{display:flex;align-items:center;gap:9px;padding:12px 14px;cursor:pointer;flex-wrap:wrap}
+.ck{width:19px;height:19px;flex-shrink:0;accent-color:#17624A}
+.id{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;font-weight:800;color:var(--navy);
+background:#E8EEF4;border-radius:5px;padding:2px 7px}
+.pri{font-size:11px;font-weight:800;border-radius:5px;padding:2px 7px}
+.pri.p0{color:var(--no);background:var(--no-bg)}.pri.p1{color:var(--wa);background:var(--wa-bg)}
+.pri.p2{color:var(--ink2);background:#EFEDE7}
+.scr{font-size:13px;font-weight:700;color:var(--ink2)}
+.ref{margin-left:auto;font-size:11.5px;color:var(--ink3);font-family:ui-monospace,Menlo,monospace}
+.bd{padding:0 14px 14px;border-top:1px solid #F0EEE9}
+.kv{display:flex;gap:10px;font-size:14px;line-height:1.65;margin-top:9px}
+.kv b{flex-shrink:0;width:38px;font-size:12px;font-weight:800;color:var(--ink3);padding-top:2px}
+.kv.ok span{color:var(--ok);font-weight:600}
+.kv.rk span{color:var(--no)}
+.res{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.b{border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:7px 13px;font-size:13px;
+font-weight:700;cursor:pointer;font-family:inherit;min-height:38px}
+.b.pass.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.b.fail.on{background:var(--no);border-color:var(--no);color:#fff}
+.b.na.on{background:#8B95A1;border-color:#8B95A1;color:#fff}
+.memo{flex:1;min-width:180px;border:1.5px solid var(--line);border-radius:8px;padding:7px 11px;
+font-size:13.5px;font-family:inherit}
+.note{background:var(--wa-bg);border:1px solid #E6D3AE;border-left:4px solid #A9701A;border-radius:12px;
+padding:15px 17px;font-size:14px;line-height:1.75;color:#6A4A11;margin-bottom:22px}
+.note b{color:#4A340B}
+@media print{header,nav,.bar,.res{display:none} .tc{break-inside:avoid;border:1px solid #999} body{background:#fff}}
+</style></head><body>
+<header><div class="in">
+<h1>신청폼 QA 테스트 케이스</h1>
+<p>개발본 <code>dev-meli-web /invitations/namdong3/form</code> 기준 · 75건 (P0 32 · P1 37 · P2 6)</p>
+<div class="bar">
+<button type="button" data-f="all" class="on">전체</button>
+<button type="button" data-f="P0">P0만</button>
+<button type="button" data-f="P1">P1까지</button>
+<button type="button" data-f="todo">안 한 것만</button>
+<button type="button" data-f="fail">실패만</button>
+<span class="stat" id="stat"></span>
+</div></div></header>
+<nav><a href="#g0">어르신 직접 <b>31</b></a><a href="#g1">직원 모드 <b>16</b></a><a href="#g2">연결 확인 <b>8</b></a><a href="#g3">현장 환경 <b>12</b></a><a href="#g4">보안·오입력 <b>8</b></a></nav>
+<main>
+<div class="note">
+<b>P0는 하나라도 실패하면 현장 투입을 미뤄야 합니다.</b>
+P0 = 안 되면 접수 자체가 불가하거나 개인정보·명단 사고로 이어지는 것, P1 = 반드시 확인, P2 = 가능하면.<br>
+기록은 이 브라우저에만 남습니다. 여러 명이 나눠 돌리면 <b>CSV를 구글시트로 올려서</b> 쓰세요.
+실패한 건은 <b>무엇이 어떻게 됐는지</b>를 적어야 개발자가 재현할 수 있습니다.
+</div>
+<h2 id="g0">어르신 직접 <em>31건 · P0 14건</em></h2>
+<div class="tcs">
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-01</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FX-08</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>폼 URL을 연다</span></div>
+<div class="kv ok"><b>기대</b><span>제목·부제·첫 입력칸이 스크롤 없이 보인다. 부제에 &#x27;신청하면 바로 참여가 확정되고, 앱 설치 안내 문자가 갑니다&#x27;</span></div>
+<div class="kv rk"><b>위험</b><span>폼이 안 뜨면 접수 자체 불가</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-02</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FE-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>번호칸에 신규 번호 11자리를 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>자동 조회 → &#x27;처음 오셨네요&#x27; 안내. 이름·동·성별·생년월일 잠금이 풀린다</span></div>
+<div class="kv rk"><b>위험</b><span>풀리지 않으면 아무도 신청 못 함</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-03</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FE-01</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>번호를 10자리만 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>조회가 돌지 않고 &#x27;번호를 다시 확인해 주세요&#x27; 류 안내. 아래 칸은 잠금 유지</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-04</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FE-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>010이 아닌 번호(02-123-4567)를 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>휴대전화 번호만 받는다고 안내</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-05</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FE-06</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span><b>이미 이 기수에 신청한 번호</b>를 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>중복 안내가 뜨고 <b>자동으로 화면이 바뀌지 않는다</b>. 버튼을 눌러야 이동</span></div>
+<div class="kv rk"><b>위험</b><span>중복 접수가 그대로 들어가면 정원이 틀어진다</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-06</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FE-05</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span><b>이미 앱 회원인 번호</b>를 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>이름·동이 화면에 <b>자동으로 채워지지 않는다.</b> 문자 인증을 먼저 요구</span></div>
+<div class="kv rk"><b>위험</b><span>번호만 알면 타인 정보가 보이는 사고</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-07</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FA-08</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-06 상태</span></div>
+<div class="kv"><b>절차</b><span>문자로 온 인증번호 6자리를 넣고 [확인]</span></div>
+<div class="kv ok"><b>기대</b><span>인증 통과 후에야 이름·동이 채워진다. 자동 통과 없음</span></div>
+<div class="kv rk"><b>위험</b><span>인증 없이 통과하면 A-06과 같은 사고</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-08</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FA-05</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-06 상태</span></div>
+<div class="kv"><b>절차</b><span>인증번호를 <b>틀리게</b> 5번 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>5회에서 잠기고 남은 시간·보건소 전화 안내</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-09</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FA-03</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-06 상태</span></div>
+<div class="kv"><b>절차</b><span>인증번호 유효시간이 지난 뒤 [확인]</span></div>
+<div class="kv ok"><b>기대</b><span>만료 안내 + 재발송 경로. 입력값은 사라지지 않는다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P2">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-10</span>
+<span class="pri p2">P2</span><span class="scr">신청폼</span>
+<span class="ref">FA-06</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-06 상태</span></div>
+<div class="kv"><b>절차</b><span>[다시 보내기]를 쿨다운 전에 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>남은 시간을 알리고 막는다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-11</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FD-01</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>[동을 골라주세요]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>관내 행정동 시트가 열린다. 목록 + &#x27;잘 모르겠어요&#x27; · &#x27;남동구에 살지 않아요&#x27;</span></div>
+<div class="kv rk"><b>위험</b><span>동을 못 고르면 제출 불가</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-12</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FD-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>동 시트</span></div>
+<div class="kv"><b>절차</b><span>[남동구에 살지 않아요]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>관외 안내 화면. <b>앱 단독 이용 경로와 보건소 전화</b>가 함께 보인다</span></div>
+<div class="kv rk"><b>위험</b><span>막다른 길이 되면 현장에서 민원</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-13</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FD-03</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>동 시트</span></div>
+<div class="kv"><b>절차</b><span>[잘 모르겠어요]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>직원에게 물어보라는 안내 + 보건소 전화. 시트로 되돌아갈 수 있다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-14</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FX-06</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>동 시트</span></div>
+<div class="kv"><b>절차</b><span>시트를 연 채 <b>단말 뒤로가기</b></span></div>
+<div class="kv ok"><b>기대</b><span>페이지를 벗어나지 않고 시트만 닫힌다</span></div>
+<div class="kv rk"><b>위험</b><span>이탈하면 입력을 처음부터</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-15</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FN-01</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>이름에 숫자·특수문자를 넣고 제출</span></div>
+<div class="kv ok"><b>기대</b><span>제출 시점에 검사해 안내. 입력 중에는 막지 않는다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-16</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FN-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>이름을 1자만 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>2자 이상 안내</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-17</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">신규</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>성별을 고르지 않고 제출</span></div>
+<div class="kv ok"><b>기대</b><span>제출되지 않고 성별로 데려간다. <b>&#x27;아직 남은 것&#x27;에 성별이 표시</b></span></div>
+<div class="kv rk"><b>위험</b><span>개발본 신규 항목 — 기획에 없던 필드</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-18</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">신규</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>생년월일에 8자리가 아닌 값(1955)을 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>형식 안내. 예시(19551023)가 보인다</span></div>
+<div class="kv rk"><b>위험</b><span>개발본 신규 항목</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-19</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">신규</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>생년월일에 <b>미래 날짜·비현실 값</b>(20991231 / 18001010)을 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>범위 밖임을 알린다</span></div>
+<div class="kv rk"><b>위험</b><span>검증이 없으면 쓰레기 데이터</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-20</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">신규</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>생년월일에 <b>없는 날짜</b>(19550230)를 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>유효하지 않은 날짜임을 알린다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-21</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FC-01</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>동의 3개 중 1개만 켜고 제출</span></div>
+<div class="kv ok"><b>기대</b><span>제출되지 않고 <b>빠진 항목을 이름으로 나열</b></span></div>
+<div class="kv rk"><b>위험</b><span>동의 누락은 법적 문제</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-22</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FC-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>[모두 동의]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>3개가 한 번에 켜진다. 선택 동의는 없다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-23</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FC-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-02 상태</span></div>
+<div class="kv"><b>절차</b><span>각 동의의 [보기]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>전문 시트가 열리고 [읽었어요, 동의합니다]로 <b>해당 항목만</b> 체크</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-24</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FC-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>약관 시트</span></div>
+<div class="kv"><b>절차</b><span>[닫기 (동의 안 함)]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>체크 상태가 바뀌지 않는다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-25</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FS-01</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>아무것도 안 넣음</span></div>
+<div class="kv"><b>절차</b><span>[신청하기]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>버튼이 <b>죽어 있지 않고</b> 눌리며, 빠진 첫 항목으로 데려간다</span></div>
+<div class="kv rk"><b>위험</b><span>비활성 버튼은 어르신이 고장으로 오해</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-26</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FS-03</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>전부 입력</span></div>
+<div class="kv"><b>절차</b><span>[신청하기]를 <b>연속 두 번</b> 빠르게 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>접수는 <b>한 건만</b> 생성된다</span></div>
+<div class="kv rk"><b>위험</b><span>중복 접수 = 정원·명단 오류</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-27</span>
+<span class="pri p0">P0</span><span class="scr">완료</span>
+<span class="ref">개발본 변경</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>전부 입력</span></div>
+<div class="kv"><b>절차</b><span>제출한다</span></div>
+<div class="kv ok"><b>기대</b><span><b>바로 참여 확정</b> 화면. 설치 안내와 스토어 버튼. &#x27;승인 대기&#x27; 문구가 없다</span></div>
+<div class="kv rk"><b>위험</b><span>자동 승인이 핵심 변경점</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-28</span>
+<span class="pri p0">P0</span><span class="scr">완료</span>
+<span class="ref">개발본 변경</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-27 직후</span></div>
+<div class="kv"><b>절차</b><span>신청한 번호의 폰을 확인한다</span></div>
+<div class="kv ok"><b>기대</b><span><b>선정 안내 + 앱 설치 링크 문자</b>가 도착한다</span></div>
+<div class="kv rk"><b>위험</b><span>문자가 안 오면 어르신은 아무것도 못 함</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-29</span>
+<span class="pri p1">P1</span><span class="scr">완료</span>
+<span class="ref">FR-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-27 직후</span></div>
+<div class="kv"><b>절차</b><span>완료 화면의 내역을 본다</span></div>
+<div class="kv ok"><b>기대</b><span>이름·번호(마스킹)·동·상태가 입력값과 일치</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-30</span>
+<span class="pri p1">P1</span><span class="scr">완료</span>
+<span class="ref">FR-01</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-27 직후</span></div>
+<div class="kv"><b>절차</b><span>스토어 버튼을 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>본인 기기에 맞는 스토어가 열린다. 반대 기기 버튼도 있다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P2">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">A-31</span>
+<span class="pri p2">P2</span><span class="scr">완료</span>
+<span class="ref">FR-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-27 직후</span></div>
+<div class="kv"><b>절차</b><span>QR을 다른 폰으로 찍는다</span></div>
+<div class="kv ok"><b>기대</b><span>같은 설치 페이지로 간다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+</div>
+<h2 id="g34">직원 모드 <em>16건 · P0 10건</em></h2>
+<div class="tcs">
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-01</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">IA-R-08</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>[보건소 직원이신가요?]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>직원 로그인(전화번호 인증)으로 간다. <b>첫 화면에는 노출되지 않는다</b></span></div>
+<div class="kv rk"><b>위험</b><span>어르신이 잘못 들어가면 혼란</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-02</span>
+<span class="pri p0">P0</span><span class="scr">직원 로그인</span>
+<span class="ref">개발본</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>등록된 직원 번호</span></div>
+<div class="kv"><b>절차</b><span>번호를 넣고 인증번호로 로그인</span></div>
+<div class="kv ok"><b>기대</b><span>직원 모드 진입. 상단에 직원 모드 배너</span></div>
+<div class="kv rk"><b>위험</b><span>로그인 실패 시 현장 접수 전면 중단</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-03</span>
+<span class="pri p0">P0</span><span class="scr">직원 로그인</span>
+<span class="ref">AD-12</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span><b>미등록</b> 번호</span></div>
+<div class="kv"><b>절차</b><span>로그인 시도</span></div>
+<div class="kv ok"><b>기대</b><span>권한 없음 안내. 목록·접수 기능이 열리지 않는다</span></div>
+<div class="kv rk"><b>위험</b><span>아무나 들어가면 개인정보 사고</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-04</span>
+<span class="pri p0">P0</span><span class="scr">직원 접수</span>
+<span class="ref">개발본 변경</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>직원 로그인 상태</span></div>
+<div class="kv"><b>절차</b><span>어르신 정보를 넣고 접수</span></div>
+<div class="kv ok"><b>기대</b><span><b>어르신 폰 인증 없이</b> 접수된다. 접수 즉시 승인</span></div>
+<div class="kv rk"><b>위험</b><span>기획에서 뺀 인증 — 오기입 위험 증가</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-05</span>
+<span class="pri p0">P0</span><span class="scr">직원 접수</span>
+<span class="ref">개발본</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>B-04 직후</span></div>
+<div class="kv"><b>절차</b><span>어르신 폰을 확인한다</span></div>
+<div class="kv ok"><b>기대</b><span>선정 안내 + 설치 링크 문자 도착</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-06</span>
+<span class="pri p0">P0</span><span class="scr">직원 접수</span>
+<span class="ref">FC-05</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>직원 로그인 상태</span></div>
+<div class="kv"><b>절차</b><span><b>동의 3개를 어르신이 직접</b> 누르게 한다</span></div>
+<div class="kv ok"><b>기대</b><span>안내 문구가 보이고, 대리 작성 기록과 동의 시각이 저장된다</span></div>
+<div class="kv rk"><b>위험</b><span>대리 동의는 법적으로 무효 소지</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-07</span>
+<span class="pri p1">P1</span><span class="scr">직원 접수</span>
+<span class="ref">FP-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>B-04 직후</span></div>
+<div class="kv"><b>절차</b><span>연속으로 다음 분을 접수한다</span></div>
+<div class="kv ok"><b>기대</b><span>모드는 유지되고 입력값만 비워진다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-08</span>
+<span class="pri p0">P0</span><span class="scr">오늘 처리</span>
+<span class="ref">개발본</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>B-04 직후</span></div>
+<div class="kv"><b>절차</b><span>[오늘 내가 처리] 목록을 연다</span></div>
+<div class="kv ok"><b>기대</b><span>방금 접수한 건이 보인다</span></div>
+<div class="kv rk"><b>위험</b><span>되돌릴 대상을 못 찾으면 수습 불가</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-09</span>
+<span class="pri p0">P0</span><span class="scr">오늘 처리</span>
+<span class="ref">개발본</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>B-08 상태</span></div>
+<div class="kv"><b>절차</b><span>[되돌리기]를 두 번 눌러 되돌린다</span></div>
+<div class="kv ok"><b>기대</b><span>승인 대기로 돌아가고 <b>참여자 등록(교실 배정·상담 채널·홈 설정)도 함께 걷힌다</b></span></div>
+<div class="kv rk"><b>위험</b><span>잘못 등록 수습의 유일한 경로</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-10</span>
+<span class="pri p1">P1</span><span class="scr">오늘 처리</span>
+<span class="ref">개발본</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>B-09 직후</span></div>
+<div class="kv"><b>절차</b><span>되돌린 건을 다시 본다</span></div>
+<div class="kv ok"><b>기대</b><span>상태가 &#x27;승인 대기&#x27;로 보인다. 채팅 기록은 지워지지 않는다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-11</span>
+<span class="pri p0">P0</span><span class="scr">반려</span>
+<span class="ref">AD-07</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>승인 대기 건</span></div>
+<div class="kv"><b>절차</b><span>반려 사유를 고르지 않고 반려</span></div>
+<div class="kv ok"><b>기대</b><span><b>반려되지 않는다</b></span></div>
+<div class="kv rk"><b>위험</b><span>사유 없는 반려는 어르신에게 막다른 길</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-12</span>
+<span class="pri p0">P0</span><span class="scr">반려</span>
+<span class="ref">AD-08</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>승인 대기 건</span></div>
+<div class="kv"><b>절차</b><span>사유를 고른다</span></div>
+<div class="kv ok"><b>기대</b><span><b>신청자에게 보일 문장 미리보기</b>가 뜬다</span></div>
+<div class="kv rk"><b>위험</b><span>사무적 문구가 그대로 나가는 것을 막는 장치</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-13</span>
+<span class="pri p1">P1</span><span class="scr">반려</span>
+<span class="ref">AD-R-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>B-12 상태</span></div>
+<div class="kv"><b>절차</b><span>반려를 확정한다</span></div>
+<div class="kv ok"><b>기대</b><span>어르신에게 반려 문자. 사유가 그대로 전달된다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-14</span>
+<span class="pri p1">P1</span><span class="scr">직원 모드</span>
+<span class="ref">FP-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>직원 모드 상태</span></div>
+<div class="kv"><b>절차</b><span>[나가기]를 누른다</span></div>
+<div class="kv ok"><b>기대</b><span>일반 모드로 돌아가고 입력값이 비워진다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P2">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-15</span>
+<span class="pri p2">P2</span><span class="scr">직원 모드</span>
+<span class="ref">FP-03</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>직원 모드 상태</span></div>
+<div class="kv"><b>절차</b><span>직원 모드로 둔 채 자리를 뜬다(N분 방치)</span></div>
+<div class="kv ok"><b>기대</b><span>자동 해제 여부 확인 — <b>정책 미정이면 결함으로 기록</b></span></div>
+<div class="kv rk"><b>위험</b><span>남의 폰에서 남의 정보 접수</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">B-16</span>
+<span class="pri p1">P1</span><span class="scr">직원 접수</span>
+<span class="ref">개발본 2-3</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>기존 앱 회원 번호</span></div>
+<div class="kv"><b>절차</b><span>직원이 번호를 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>기존 회원으로 감지되어 이름·동 자동 채움 + 즉시 참여자 전환</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+</div>
+<h2 id="g53">연결 확인 <em>8건 · P0 3건</em></h2>
+<div class="tcs">
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-01</span>
+<span class="pri p0">P0</span><span class="scr">앱</span>
+<span class="ref">개발본 2-1</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-27 또는 B-04 완료</span></div>
+<div class="kv"><b>절차</b><span>문자 링크로 앱을 설치하고 전화번호로 로그인</span></div>
+<div class="kv ok"><b>기대</b><span><b>출생연도·성별만 입력</b>하면 가입이 끝난다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-02</span>
+<span class="pri p0">P0</span><span class="scr">앱</span>
+<span class="ref">개발본 2-1</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>C-01 직후</span></div>
+<div class="kv"><b>절차</b><span>앱을 연다</span></div>
+<div class="kv ok"><b>기대</b><span><b>교실 화면이 바로 보인다.</b> 체험 화면에 갇히지 않는다</span></div>
+<div class="kv rk"><b>위험</b><span>여기서 막히면 개편의 의미가 없다</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-03</span>
+<span class="pri p0">P0</span><span class="scr">앱</span>
+<span class="ref">개발본 2-3</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>기존 회원 · B-16 완료</span></div>
+<div class="kv"><b>절차</b><span>앱을 연다</span></div>
+<div class="kv ok"><b>기대</b><span>&#x27;참여가 확정되었어요&#x27;가 뜬다. 재설치·재가입 없음</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-04</span>
+<span class="pri p1">P1</span><span class="scr">앱</span>
+<span class="ref">개발본 6</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>승인 시점에 앱이 열려 있음</span></div>
+<div class="kv"><b>절차</b><span>승인 직후 앱 화면을 본다</span></div>
+<div class="kv ok"><b>기대</b><span>iOS는 실시간 전환. <b>Android는 재실행 필요 여부를 기록</b></span></div>
+<div class="kv rk"><b>위험</b><span>플랫폼별 차이가 현장 혼선</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-05</span>
+<span class="pri p1">P1</span><span class="scr">앱</span>
+<span class="ref">개발본 6</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>앱을 먼저 설치한 사람</span></div>
+<div class="kv"><b>절차</b><span>앱만 설치하고 가입</span></div>
+<div class="kv ok"><b>기대</b><span><b>체험 화면에 머문다.</b> 폼 링크가 앱 안에 없음을 확인</span></div>
+<div class="kv rk"><b>위험</b><span>운영으로 커버 — 직원이 폼에서 넣어야 함</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-06</span>
+<span class="pri p1">P1</span><span class="scr">케어센터</span>
+<span class="ref">개발본 4</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-27 또는 B-04 완료</span></div>
+<div class="kv"><b>절차</b><span>케어센터 신청자 화면을 연다</span></div>
+<div class="kv ok"><b>기대</b><span>방금 건이 보이고 접수 경로·직원·처리자·시각이 남아 있다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P2">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-07</span>
+<span class="pri p2">P2</span><span class="scr">케어센터</span>
+<span class="ref">개발본</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>B-09 되돌린 건</span></div>
+<div class="kv"><b>절차</b><span>케어센터에서 확인한다</span></div>
+<div class="kv ok"><b>기대</b><span>승인 대기로 보인다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">C-08</span>
+<span class="pri p1">P1</span><span class="scr">데이터</span>
+<span class="ref">개발본 6</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-27 완료</span></div>
+<div class="kv"><b>절차</b><span>폼에 넣은 <b>생년월일</b>이 회원 정보에 들어갔는지 확인</span></div>
+<div class="kv ok"><b>기대</b><span>회원에는 출생연도만 저장됨을 확인 — <b>차이를 기록</b></span></div>
+<div class="kv rk"><b>위험</b><span>경미하나 통계에 영향</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+</div>
+<h2 id="g64">현장 환경 <em>12건 · P0 3건</em></h2>
+<div class="tcs">
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-01</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FX-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span><b>비행기 모드</b>로 바꾸고 제출</span></div>
+<div class="kv ok"><b>기대</b><span>제출이 막히고 안내가 뜬다. <b>입력값이 사라지지 않는다</b></span></div>
+<div class="kv rk"><b>위험</b><span>현장 와이파이는 자주 끊긴다</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-02</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FS-02</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>제출 중</span></div>
+<div class="kv"><b>절차</b><span>제출 직후 <b>네트워크를 끊는다</b></span></div>
+<div class="kv ok"><b>기대</b><span>실패 안내 + [다시 시도]. 입력값 보존. <b>중복 접수가 생기지 않는다</b></span></div>
+<div class="kv rk"><b>위험</b><span>가장 흔한 현장 사고</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-03</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FS-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>느린 네트워크(3G 수준)</span></div>
+<div class="kv"><b>절차</b><span>폼을 열고 제출까지 진행</span></div>
+<div class="kv ok"><b>기대</b><span>각 단계에 진행 표시가 있고 무반응 구간이 없다</span></div>
+<div class="kv rk"><b>위험</b><span>무반응이면 어르신이 연타</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-04</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">FX-08</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span><b>OS 글자 크기를 200%</b>로 올리고 폼을 연다</span></div>
+<div class="kv ok"><b>기대</b><span>가로 스크롤이 생기지 않고, 첫 입력칸이 첫 화면에 보이며, 고정 버튼이 화면의 30%를 넘지 않는다</span></div>
+<div class="kv rk"><b>위험</b><span>어르신 폰은 대부분 확대 상태</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-05</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FX-08</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>OS 글자 200%</span></div>
+<div class="kv"><b>절차</b><span>끝까지 입력하고 제출</span></div>
+<div class="kv ok"><b>기대</b><span>모든 버튼이 눌리고 글자가 잘리지 않는다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-06</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FX-09</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span><b>가로 모드</b>로 돌린다</span></div>
+<div class="kv ok"><b>기대</b><span>레이아웃이 깨지지 않는다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-07</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FX-05</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>입력 중</span></div>
+<div class="kv"><b>절차</b><span>전화를 받고 <b>5분 뒤 복귀</b></span></div>
+<div class="kv ok"><b>기대</b><span>입력값이 남아 있거나 복구 안내가 뜬다</span></div>
+<div class="kv rk"><b>위험</b><span>현장에서 실제로 자주 생긴다</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-08</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FX-07</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>구형 안드로이드(Android 9 이하) 브라우저로 연다</span></div>
+<div class="kv ok"><b>기대</b><span>레이아웃·동작 이상 없음. 안 되면 <b>최저 지원 버전을 기록</b></span></div>
+<div class="kv rk"><b>위험</b><span>어르신 폰은 구형이 많다</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-09</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FX-07</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>iOS Safari / Android Chrome 양쪽에서 전 과정 1회</span></div>
+<div class="kv ok"><b>기대</b><span>동일하게 동작</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P2">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-10</span>
+<span class="pri p2">P2</span><span class="scr">신청폼</span>
+<span class="ref">FP-04</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>직원 폰</span></div>
+<div class="kv"><b>절차</b><span>직원 모드로 <b>10명 연속 접수</b></span></div>
+<div class="kv ok"><b>기대</b><span>속도 저하·누적 오류 없음</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-11</span>
+<span class="pri p1">P1</span><span class="scr">문자</span>
+<span class="ref">FR-03</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>A-28 / B-05</span></div>
+<div class="kv"><b>절차</b><span>문자 수신까지 <b>걸린 시간을 잰다</b></span></div>
+<div class="kv ok"><b>기대</b><span>3분 이내 도착. 초과 시 기록</span></div>
+<div class="kv rk"><b>위험</b><span>현장에서 기다리는 시간</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">D-12</span>
+<span class="pri p1">P1</span><span class="scr">문자</span>
+<span class="ref">FR-03</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>스팸 차단 설정된 폰</span></div>
+<div class="kv"><b>절차</b><span>문자를 기다린다</span></div>
+<div class="kv ok"><b>기대</b><span>도착 여부 확인. 안 오면 <b>대처 절차로 연결</b></span></div>
+<div class="kv rk"><b>위험</b><span>차단 설정은 생각보다 흔하다</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+</div>
+<h2 id="g79">보안·오입력 <em>8건 · P0 2건</em></h2>
+<div class="tcs">
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-01</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">C-1</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>개발자도구 Network에서 <b>번호 조회 응답</b>을 본다</span></div>
+<div class="kv ok"><b>기대</b><span>응답에 <b>이름·거주 동이 들어있지 않다</b></span></div>
+<div class="kv rk"><b>위험</b><span>화면을 잠가도 응답에 있으면 무의미</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-02</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">C-2</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>번호를 바꿔가며 <b>빠르게 20회 조회</b></span></div>
+<div class="kv ok"><b>기대</b><span>레이트 리밋이 걸린다</span></div>
+<div class="kv rk"><b>위험</b><span>번호 대입으로 명단을 캐낼 수 있다</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P0">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-03</span>
+<span class="pri p0">P0</span><span class="scr">신청폼</span>
+<span class="ref">개발본 2-2</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span><b>타인 번호</b>(동의 없는 제3자)로 신청한다</span></div>
+<div class="kv ok"><b>기대</b><span>접수되고 그 번호로 문자가 간다 — <b>자동 승인의 대가. 되돌리기로만 수습 가능함을 확인</b></span></div>
+<div class="kv rk"><b>위험</b><span>실제 위험. 현장 수칙으로 막아야 함</span></div>
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-04</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">C-4</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>동 코드를 <b>조작해</b> 관외 값으로 제출(개발자도구)</span></div>
+<div class="kv ok"><b>기대</b><span>서버가 관내 화이트리스트로 재검증해 거부</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-05</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">보안</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>이름에 <code>&lt;script&gt;</code> 등 스크립트를 넣는다</span></div>
+<div class="kv ok"><b>기대</b><span>그대로 실행되지 않고 문자열로 저장·표시</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-06</span>
+<span class="pri p1">P1</span><span class="scr">직원 모드</span>
+<span class="ref">AD-12</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>직원 로그인 상태</span></div>
+<div class="kv"><b>절차</b><span>로그아웃 후 <b>뒤로가기</b>로 직원 화면 복귀 시도</span></div>
+<div class="kv ok"><b>기대</b><span>접근이 막힌다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P2">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-07</span>
+<span class="pri p2">P2</span><span class="scr">신청폼</span>
+<span class="ref">FX-03</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span>지난 기수 URL(<code>namdong2</code> 등)로 접근</span></div>
+<div class="kv ok"><b>기대</b><span>현재 기수 안내 또는 마감 화면. 빈 화면이 아니다</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+<div class="tc" data-p="P1">
+<label class="hd"><input type="checkbox" class="ck"><span class="id">E-08</span>
+<span class="pri p1">P1</span><span class="scr">신청폼</span>
+<span class="ref">FX-10</span></label>
+<div class="bd">
+<div class="kv"><b>전제</b><span>없음</span></div>
+<div class="kv"><b>절차</b><span><b>가족 공용 기기</b>에서 브라우저 자동완성으로 다른 사람 정보가 채워진다</span></div>
+<div class="kv ok"><b>기대</b><span>제출 전 내역 확인 단계에서 걸러지는지 확인</span></div>
+
+<div class="res"><button type="button" class="b pass">통과</button><button type="button" class="b fail">실패</button><button type="button" class="b na">해당없음</button><input class="memo" placeholder="실패하면 무엇이 어떻게 됐는지 적어주세요"></div>
+</div></div>
+</div>
+</main>
+<script>
+const K='qa-tc-v1';
+let S={}; try{S=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+document.querySelectorAll('.tc').forEach(tc=>{
+  const id=tc.querySelector('.id').textContent, st=S[id]||{};
+  const ck=tc.querySelector('.ck'), memo=tc.querySelector('.memo');
+  if(st.r){tc.querySelector('.b.'+st.r)?.classList.add('on'); ck.checked=true; tc.classList.add('done');}
+  if(st.m) memo.value=st.m;
+  tc.querySelectorAll('.b').forEach(b=>b.onclick=()=>{
+    const r=[...b.classList].find(c=>['pass','fail','na'].includes(c));
+    tc.querySelectorAll('.b').forEach(x=>x.classList.remove('on'));
+    if(st.r===r){delete st.r; ck.checked=false; tc.classList.remove('done');}
+    else{b.classList.add('on'); st.r=r; ck.checked=true; tc.classList.add('done');}
+    S[id]=st; save(); stat();
+  });
+  memo.oninput=()=>{st.m=memo.value; S[id]=st; save();};
+  ck.onchange=()=>{tc.classList.toggle('done',ck.checked); if(!ck.checked){delete st.r; tc.querySelectorAll('.b').forEach(x=>x.classList.remove('on'));} S[id]=st; save(); stat();};
+});
+function stat(){
+  const all=[...document.querySelectorAll('.tc')];
+  const p0=all.filter(t=>t.dataset.p==='P0');
+  const d=all.filter(t=>S[t.querySelector('.id').textContent]?.r).length;
+  const f=all.filter(t=>S[t.querySelector('.id').textContent]?.r==='fail').length;
+  const p0f=p0.filter(t=>S[t.querySelector('.id').textContent]?.r==='fail').length;
+  document.getElementById('stat').textContent=`진행 ${d}/${all.length} · 실패 ${f}` + (p0f?`  ⚠ P0 실패 ${p0f}`:'');
+}
+document.querySelectorAll('.bar button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.bar button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  const f=b.dataset.f;
+  document.querySelectorAll('.tc').forEach(tc=>{
+    const r=S[tc.querySelector('.id').textContent]?.r, p=tc.dataset.p;
+    let show=true;
+    if(f==='P0') show = p==='P0';
+    else if(f==='P1') show = p!=='P2';
+    else if(f==='todo') show = !r;
+    else if(f==='fail') show = r==='fail';
+    tc.style.display=show?'':'none';
+  });
+  document.querySelectorAll('h2,.tcs').forEach(h=>{});
+});
+stat();
+</script></body></html>
