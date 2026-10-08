@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3기 수료식 초대 명세</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{--bg:#F4F3F0;--card:#fff;--ink:#1A1F26;--sub:#4A5562;--line:#E2DED6;--acc:#265F4D;--head:#EEF3F0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171B;--card:#1D2228;--ink:#E7EBEF;--sub:#AEB6BF;--line:#2E353D;--acc:#6EE7B7;--head:#232A31}}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard Variable',Pretendard,"Noto Sans KR",system-ui,sans-serif;word-break:keep-all;line-height:1.75}
+.top{position:sticky;top:0;background:var(--acc);color:#fff;padding:12px 16px;font-weight:800;font-size:14px;z-index:2}
+.top a{color:#fff;margin-right:14px;text-decoration:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .top{color:#0F1A15} :root:not([data-theme="light"]) .top a{color:#0F1A15}}
+article{max-width:880px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:28px;line-height:1.35;margin:8px 0 14px} h2{font-size:21px;margin:40px 0 12px;padding-top:14px;border-top:2px solid var(--line)} h3{font-size:17px;margin:26px 0 8px;color:var(--acc)}
+blockquote{margin:0 0 16px;padding:12px 16px;background:var(--card);border-left:4px solid var(--acc);border-radius:8px;color:var(--sub)} blockquote p{margin:4px 0}
+.tw{overflow-x:auto;margin:10px 0 16px} table{border-collapse:collapse;width:100%;background:var(--card);font-size:14.5px;border-radius:10px;overflow:hidden}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top} th{background:var(--head);font-weight:800}
+code{background:var(--head);padding:1px 6px;border-radius:5px;font-size:.92em} a{color:var(--acc)} li{margin:3px 0} pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;white-space:pre-wrap;font-size:14px;line-height:1.7} pre code{background:none;padding:0}
+</style></head><body><div class="top"><a href="index.html">← 프로토타입</a>명세서 v3.0 안내형</div><article><h1>3기 수료식 초대: 앱 배너 + 안내 모달 명세 (안내형 v3.0 · 최종)</h1>
+<blockquote>
+<p>개발 일정을 줄이려고 방문 신청 · 취소 · 문자를 모두 빼고 <strong>안내만</strong> 하기로 정했습니다 (2026-10-08).
+Figma: 새 섹션 "10/30 이벤트 앱 배너·모달 v3.0 (안내형 · 최종)" (2041:1391). 기존 신청형 디자인(1929:1241)은 히스토리로 그대로 둡니다.</p>
+</blockquote>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>버전</td>
+<td>v3.0 안내형 (최종)</td>
+</tr>
+<tr>
+<td>행사</td>
+<td>10월 30일(금) 오후 1~5시 · 남동구 보건소 4층 대강당</td>
+</tr>
+<tr>
+<td>대상</td>
+<td>3기 수강 이력이 있는 앱 계정 (그 외 계정은 배너 · 모달 없음)</td>
+</tr>
+<tr>
+<td>화면</td>
+<td>① 홈 배너 (1929:1242) · ② 안내 모달 v3.0 (2041:1407)</td>
+</tr>
+<tr>
+<td>예상 개발</td>
+<td>12~15시간 + 스토어 심사</td>
+</tr>
+</tbody>
+</table></div>
+<h2>0. 개발팀 요청: 노출 설정값을 미리 넣어주세요 (필수)</h2>
+<p>지금(10/16~10/26)은 배너를 눌러야 모달을 볼 수 있지만, <strong>행사 3일 전인 10/27(화)부터는 배너를 누르지 않고 앱에 접속만 해도 모달이 자동으로 떠서 모든 3기 어르신이 안내를 보도록</strong> 해야 합니다. 날짜가 되면 저절로 바뀌도록 설정값으로 미리 넣어두고, 앱 배포 없이 바꿀 수 있게 서버(원격) 설정으로 관리해 주세요.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>설정값</th>
+<th>값</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>banner_start_at</td>
+<td>2026-10-16 00:00 (KST)</td>
+<td>3기 계정 홈 배너 노출 시작</td>
+</tr>
+<tr>
+<td>popup_auto_start_at</td>
+<td>2026-10-27 00:00 (KST)</td>
+<td>접속 시 모달 자동 노출 시작 (행사 3일 전)</td>
+</tr>
+<tr>
+<td>popup_auto_frequency</td>
+<td>하루 1번</td>
+<td>그날 첫 앱 진입 때</td>
+</tr>
+<tr>
+<td>end_at</td>
+<td>2026-10-30 17:00 (KST)</td>
+<td>배너 · 모달 내림</td>
+</tr>
+</tbody>
+</table></div>
+<h2>1. 동작</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>상황</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10/16(금) ~ 10/30(금) 17시</td>
+<td>홈에 ① 배너 노출</td>
+</tr>
+<tr>
+<td>10/16 ~ 10/26</td>
+<td>앱에 접속해도 모달은 안 뜸. 배너를 눌러야 ② 안내 모달이 열림</td>
+</tr>
+<tr>
+<td>10/27(화) ~ 10/30 17시</td>
+<td>배너를 누르지 않아도 하루 첫 앱 진입 때 ② 자동 노출 (하루 1번). 배너 탭으로도 열림</td>
+</tr>
+<tr>
+<td><code>닫기</code> · 바깥 탭 · 뒤로가기</td>
+<td>닫힘. 그날 자동 노출 끝, 다음 날 다시 자동 노출</td>
+</tr>
+<tr>
+<td><code>다시 보지 않기</code></td>
+<td>닫히고 이후 자동 노출 안 함. 배너는 그대로, 누르면 모달 열림</td>
+</tr>
+<tr>
+<td>10/27 전에 누른 <code>다시 보지 않기</code></td>
+<td>무시. 자동 노출 첫날엔 모두 1번은 보도록</td>
+</tr>
+<tr>
+<td>10/30 17시 이후</td>
+<td>배너 · 모달 내림 (종료 화면 없음). 10/31 3기 리포트 배너로 교체</td>
+</tr>
+<tr>
+<td>3기 아닌 계정</td>
+<td>배너 자리 없음, 모달 없음</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>날짜 · 시각은 서버 시간(KST) 기준.</li>
+<li>"오늘 봤음" · "다시 보지 않기"는 폰에 기록 (서버 저장 없음). 앱 재설치 · 기기 변경 시 초기화되는 건 허용.</li>
+</ul>
+<h2>2. 화면 문구</h2>
+<p><strong>① 홈 배너</strong>: <code>10월 30일(금) 오후 1~5시</code> / <code>3기 수료식에 초대합니다</code> / <code>건강기능식품 받으러 가기 ›</code></p>
+<p><strong>② 안내 모달</strong>: <code>2026 두뇌운동 치매예방교실</code> / <code>3기 수료식에 초대합니다</code> / <code>의견을 들려주시면 건강기능식품을 드려요</code> / 일시 <code>10월 30일(금) 오후 1~5시</code> · 장소 <code>남동구 보건소 4층 대강당</code> · 준비물 <code>휴대폰</code> / <code>4기 미리 신청 혜택 · 선물 하나 더 드려요</code> / <code>자세한 문의 032-453-6160</code> (누르면 전화) / 주 버튼 <code>닫기</code> / 보조 버튼 <code>다시 보지 않기</code></p>
+<h2>3. 로그 (효과 확인용)</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>이벤트</th>
+<th>언제</th>
+<th>속성</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>event_banner_click</td>
+<td>배너 탭</td>
+<td>event_id</td>
+</tr>
+<tr>
+<td>event_modal_view</td>
+<td>모달 열림</td>
+<td>event_id, trigger(auto / banner)</td>
+</tr>
+<tr>
+<td>event_modal_close</td>
+<td>모달 닫힘</td>
+<td>event_id, trigger, how(close / dim / back / never)</td>
+</tr>
+<tr>
+<td>event_modal_tel</td>
+<td>문의 번호 탭</td>
+<td>event_id</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. 하지 않는 것</h2>
+<ul>
+<li>방문 신청 · 취소, 서버 저장</li>
+<li>앱 자동 문자 (행사 문자는 보건소 단체 문자 4회로 진행)</li>
+<li>완료 · 취소 · 저장 중 · 실패 화면</li>
+</ul>
+<h2>5. 남은 확인 사항</h2>
+<ol>
+<li>위 설정값을 서버(원격) 설정으로 관리할 수 있는지 (가능하면 앱 배포 없이 10/16 오픈, 10/27 자동 전환)</li>
+<li>버튼 대비: 흰 글자 + #13BD7E는 대비 약 2.4:1 (기준 4.5:1 미달). #0B7A51(5.4:1)로 진하게 할지</li>
+</ol></article></body></html>
