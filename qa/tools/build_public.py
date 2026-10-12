@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """QA 공개 보기 페이지 생성 — qa/index.html
 
-작성용 claude.ai 보드(https://claude.ai/artifact/Y8DdDe5WdCxZ6CWPFee3tf)의 데이터를
+노션 QA 체크표(또는 예전 claude.ai 보드) 데이터를
 읽기 전용 정적 페이지로 바꿔 GitHub Pages(…/meli.brain/qa/)에 올린다.
 
 사용:
@@ -82,9 +82,14 @@ def main(data_dir, caps_dir):
         if "보류" in v: return "보류"
         if all(R.get(sl, {}).get(k) for sl in accs_of(t)): return "해당없음" if all(x == "해당없음" for x in v) else "통과"
         return "진행 중" if v else "미실행"
+    def tc_all(t):
+        ra, ri = tc_res(t, "a"), tc_res(t, "i")
+        if "실패" in (ra, ri): return "실패"
+        if "보류" in (ra, ri): return "보류"
+        return ra if ra == ri else "진행 중"
     by = lambda p: [t for t in tcs if t["pr"] == p]
-    cnt = lambda a, v: sum(1 for t in a if tc_res(t) == v)
-    p1 = by("P1"); f1 = cnt(p1, "실패"); done1 = sum(1 for t in p1 if tc_res(t) not in ("미실행", "진행 중"))
+    cnt = lambda a, v: sum(1 for t in a if tc_all(t) == v)
+    p1 = by("P1"); f1 = cnt(p1, "실패"); done1 = sum(1 for t in p1 if tc_all(t) not in ("미실행", "진행 중"))
     verdict = f"배포 불가 — P1 실패 {f1}건" if f1 else (f"판단 보류 — P1 미완료 {len(p1)-done1}건" if done1 < len(p1) else "배포 가능 — P1 전부 통과")
     autos = sorted([(k, v) for k, v in BUGS.items() if v.get("auto")], key=lambda x: x[0])
 
@@ -115,12 +120,12 @@ def main(data_dir, caps_dir):
             ty = " ".join('<span class="rp fail">' + E(y) + '</span>' for y in x.get("types", [])) or dash
             return f'<tr><td>{E(acc_name(sl))}</td><td>{res_pill(x.get("a"))}</td><td>{res_pill(x.get("i"))}</td><td>{ty}</td><td>{E(x.get("memo")) or dash}</td><td class="note">{E(x.get("date", ""))}</td></tr>'
         rows = "".join(row(sl) for sl in keys)
-        tc_html.append(f'''<div class="card" id="tc-{E(t["id"])}" data-pr="{E(t["pr"])}" data-stage="{E(t["stage"])}" data-res="{E(tc_res(t))}">
+        tc_html.append(f'''<div class="card" id="tc-{E(t["id"])}" data-pr="{E(t["pr"])}" data-stage="{E(t["stage"])}" data-res="{E(tc_all(t))}">
 <div class="hd"><span class="id">{E(t["id"])}</span><span class="pill {E(t["pr"])}">{E(t["pr"])}</span><span class="pill">{E(t["stage"])}</span><span class="pill">{E(t["scr"])}</span><span class="pill">대상 {E(" ".join(SYM.get(x, "무관") for x in accs_of(t)))}</span><span class="pill">{E(t["env"])}</span>{bugs}</div>
 <dl>{f'<dt>사전 조건</dt><dd>{E(t["pre"])}</dd>' if t["pre"] and t["pre"] != "—" else ""}<dt>절차</dt><dd>{E(t["step"])}</dd><dt>기대 결과</dt><dd><b>{E(t["exp"])}</b></dd><dt>근거</dt><dd class="note">{E(t["ref"])}</dd>
 </dl>
 {cmp_block(fig.get(t["id"]), shots)}
-<div class="judge"><div class="jt">계정별 판정 · 종합 {res_pill(tc_res(t))}</div><div class="tablewrap"><table class="runs"><tr><th>계정</th><th>Android</th><th>iOS</th><th>오류 유형</th><th>다른 점</th><th>날짜</th></tr>{rows}</table></div></div></div>''')
+<div class="judge"><div class="jt">계정별 판정 · 종합 {res_pill(tc_all(t))}</div><div class="tablewrap"><table class="runs"><tr><th>계정</th><th>Android</th><th>iOS</th><th>오류 유형</th><th>다른 점</th><th>날짜</th></tr>{rows}</table></div></div></div>''')
 
     # 결함
     def bug_card(bid, base, auto):
@@ -156,8 +161,8 @@ def main(data_dir, caps_dir):
     body = f'''<div class="wrap">
 <h1>3기 종료 리포트 QA</h1>
 <p class="sub">dev 10/7 빌드 · 기준은 피그마 목업 + 디스크립션 (페이지 1028:3313) · <b>읽기 전용 공개본</b> · 마지막 동기화 <b>__SYNCED__</b></p>
-<div class="banner">결과 입력 · 캡처 업로드는 내부 작성 보드에서 합니다. 이 페이지는 그 내용을 매시간(또는 [공개본에 반영]을 누를 때) 옮겨 온 사본입니다.</div>
-<div class="top">{stats}<div class="stat verdict" style="color:{'var(--fail)' if f1 else 'var(--ink)'}">{verdict} <span class="note">(Android · 대상 계정 전부 기준)</span></div></div>
+<div class="banner">결과 기록은 노션 'QA 체크표'(3기 종료 리포트 &gt; QA 페이지)에서 합니다. 이 페이지는 노션 기록을 옮겨 온 읽기 전용 사본이며, TC 번호는 노션과 같습니다.</div>
+<div class="top">{stats}<div class="stat verdict" style="color:{'var(--fail)' if f1 else 'var(--ink)'}">{verdict} <span class="note">(Android · iOS · 대상 계정 전부 기준)</span></div></div>
 <div class="tabs" role="tablist">{"".join(f'<button class="tab" role="tab" data-k="{k}" aria-selected="{str(i==0).lower()}">{n}</button>' for i,(k,n) in enumerate([("tc",f"TC ({len(tcs)})"),("bug",f"결함 ({len(S['bugs'])+len(autos)})"),("fig",f"피그마 정리 ({len(S['fig'])})"),("dec",f"결정 필요 ({len(S['dec'])})"),("data","데이터 요청"),("shot","개발 웹 샘플 비교"),("guide","계정 · 설치")]))}</div>
 <section id="v-tc"><div class="bar"><select id="fp" aria-label="우선순위"><option value="">우선순위 전체</option><option>P1</option><option>P2</option><option>P3</option></select><select id="fs" aria-label="여정"><option value="">여정 전체</option>{"".join(f"<option>{E(s)}</option>" for s in stages)}</select><select id="fr" aria-label="결과"><option value="">결과 전체</option>{"".join(f"<option>{v}</option>" for v in ["미실행","진행 중","통과","실패","보류","해당없음"])}</select><span class="note" id="cnt"></span></div>{"".join(tc_html)}</section>
 <section id="v-bug" hidden>{bug_html}</section><section id="v-fig" hidden><p class="note">피그마 안에서 목업과 디스크립션이 서로 달랐던 곳 · 목업 우선으로 정리(10/12).</p>{fig_html}</section>
