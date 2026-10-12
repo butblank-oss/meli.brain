@@ -20,6 +20,7 @@ h1{font-size:22px;margin:0 0 4px}.sub{color:var(--ink2);margin:0 0 12px}h3{margi
 .pill{font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--nabg);color:var(--ink2);text-decoration:none}.pill.P1,.pill.bug{background:var(--failbg);color:var(--fail)}.pill.st{background:var(--accbg);color:var(--acc)}
 dl{display:grid;grid-template-columns:72px minmax(0,1fr);gap:3px 10px;margin:6px 0}dt{color:var(--ink3);font-size:12px;padding-top:2px}dd{margin:0;min-width:0;overflow-wrap:anywhere}.note{color:var(--ink3);font-size:12px}
 .rp{font-size:12px;font-weight:700;border-radius:6px;padding:1px 8px;background:var(--nabg);color:var(--ink2)}.rp.pass{background:var(--passbg);color:var(--pass)}.rp.fail{background:var(--failbg);color:var(--fail)}.rp.hold{background:var(--holdbg);color:var(--hold)}
+.judge{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.jt{font-size:13px;font-weight:700;margin-bottom:4px}
 .cmpbox{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:10px}.col{min-width:0;display:flex;flex-direction:column;gap:6px}
 .cap{font-size:12px;font-weight:700;color:var(--ink2)}.tag{font-size:11px;border-radius:999px;padding:1px 8px;background:var(--accbg);color:var(--acc)}.tag.app{background:var(--failbg);color:var(--fail)}
 .frame{border:1px solid var(--line);border-radius:12px;background:var(--bg);height:460px;display:flex;align-items:center;justify-content:center;overflow:hidden}.frame img{max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in}.frame .none{color:var(--ink3);font-size:12px;text-align:center;padding:12px}
@@ -31,215 +32,368 @@ table{width:100%;border-collapse:collapse;background:var(--card)}th,td{border-bo
 </style></head><body>
 <div class="wrap">
 <h1>3기 종료 리포트 QA</h1>
-<p class="sub">dev 10/7 빌드 · 기준은 피그마 목업 + 디스크립션 (페이지 1028:3313) · <b>읽기 전용 공개본</b> · 마지막 동기화 <b>2026-10-12 12:10 KST</b></p>
+<p class="sub">dev 10/7 빌드 · 기준은 피그마 목업 + 디스크립션 (페이지 1028:3313) · <b>읽기 전용 공개본</b> · 마지막 동기화 <b>2026-10-12 13:05 KST</b></p>
 <div class="banner">결과 입력 · 캡처 업로드는 내부 작성 보드에서 합니다. 이 페이지는 그 내용을 매시간(또는 [공개본에 반영]을 누를 때) 옮겨 온 사본입니다.</div>
 <div class="top"><div class="stat"><span>P1 · 배포 차단</span><b>0 / 23</b><span>실패 0 · 보류 0</span></div><div class="stat"><span>P2 · 화면 · 문구</span><b>0 / 25</b><span>실패 0 · 보류 0</span></div><div class="stat"><span>P3 · 예외 · 환경</span><b>0 / 3</b><span>실패 0 · 보류 0</span></div><div class="stat"><span>결함</span><b>10</b><span>새로 생긴 결함 0</span></div><div class="stat verdict" style="color:var(--ink)">판단 보류 — P1 미완료 23건 <span class="note">(Android 결과 기준)</span></div></div>
 <div class="tabs" role="tablist"><button class="tab" role="tab" data-k="tc" aria-selected="true">TC (51)</button><button class="tab" role="tab" data-k="bug" aria-selected="false">결함 (10)</button><button class="tab" role="tab" data-k="fig" aria-selected="false">피그마 정리 (9)</button><button class="tab" role="tab" data-k="dec" aria-selected="false">결정 필요 (8)</button><button class="tab" role="tab" data-k="data" aria-selected="false">데이터 요청</button><button class="tab" role="tab" data-k="shot" aria-selected="false">개발 웹 샘플 비교</button><button class="tab" role="tab" data-k="guide" aria-selected="false">계정 · 우선순위</button></div>
 <section id="v-tc"><div class="bar"><select id="fp" aria-label="우선순위"><option value="">우선순위 전체</option><option>P1</option><option>P2</option><option>P3</option></select><select id="fs" aria-label="여정"><option value="">여정 전체</option><option>1 진입</option><option>2 8개 섹션</option><option>3 증서 저장</option><option>4 4기 신청</option><option>5 닫기 · 뒤로가기</option><option>6 4기 전환</option><option>6 측정</option><option>6 전화번호</option><option>6 신청폼 4기</option><option>6 신청폼 3기</option><option>6 케어센터</option></select><select id="fr" aria-label="결과"><option value="">결과 전체</option><option>미실행</option><option>통과</option><option>실패</option><option>보류</option><option>해당없음</option></select><span class="note" id="cnt"></span></div><div class="card" id="tc-E-01" data-pr="P1" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-01</span><span class="pill P1">P1</span><span class="pill">1 진입</span><span class="pill">체험 홈</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>dev 빌드 설치 · 로그인</dd><dt>절차</dt><dd>체험 홈으로 들어간다</dd><dt>기대 결과</dt><dd><b>상단에 3기 리포트 카드(전용 배너 이미지)가 보인다</b></dd><dt>근거</dt><dd class="note">B-01 · IA-R-08</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-02" data-pr="P1" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-02" data-pr="P1" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-02</span><span class="pill P1">P1</span><span class="pill">1 진입</span><span class="pill">자동 팝업</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>리포트를 한 번도 열지 않은 상태</dd><dt>절차</dt><dd>로그인 직후 홈 진입</dd><dt>기대 결과</dt><dd><b>리포트가 자동으로 1회 열리고 표지(SC-RP-01)부터 보인다</b></dd><dt>근거</dt><dd class="note">IA-R-01</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-03" data-pr="P2" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-03" data-pr="P2" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-03</span><span class="pill P2">P2</span><span class="pill">1 진입</span><span class="pill">자동 팝업</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>E-02 이후</dd><dt>절차</dt><dd>리포트를 닫고 앱을 껐다 다시 연다</dd><dt>기대 결과</dt><dd><b>자동 팝업이 다시 뜨지 않는다 · 홈 카드는 그대로 있다</b></dd><dt>근거</dt><dd class="note">IA-R-01</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-04" data-pr="P1" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-04" data-pr="P1" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-04</span><span class="pill P1">P1</span><span class="pill">1 진입</span><span class="pill">홈 카드</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>홈 카드를 누른다</dd><dt>기대 결과</dt><dd><b>리포트가 표지부터 열린다</b></dd><dt>근거</dt><dd class="note">IA-R-03</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-05" data-pr="P1" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-05" data-pr="P1" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-05</span><span class="pill P1">P1</span><span class="pill">1 진입</span><span class="pill">진행 내역</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>10/20 제출 빌드</dd><dt>절차</dt><dd>내 정보 &gt; 프로그램 진행 내역 &gt; 3기 항목을 누른다</dd><dt>기대 결과</dt><dd><b>리포트가 표지부터 열린다</b></dd><dt>근거</dt><dd class="note">F4 · IA-R-07</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-06" data-pr="P2" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-06" data-pr="P2" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-06</span><span class="pill P2">P2</span><span class="pill">1 진입</span><span class="pill">체험 홈</span><span class="pill">계정 ⑤</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>다른 프로그램 진행 중</dd><dt>절차</dt><dd>홈으로 들어간다</dd><dt>기대 결과</dt><dd><b>리포트 카드가 없다</b></dd><dt>근거</dt><dd class="note">IA-R-08</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-07" data-pr="P2" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-07" data-pr="P2" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-07</span><span class="pill P2">P2</span><span class="pill">1 진입</span><span class="pill">공개 전</span><span class="pill">계정 ⑥</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>홈 확인 후 리포트 링크로 직접 연다</dd><dt>기대 결과</dt><dd><b>카드 없음 · &quot;아직 볼 수 없어요&quot; 안내</b></dd><dt>근거</dt><dd class="note">P09</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-08" data-pr="P1" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-08" data-pr="P1" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-08</span><span class="pill P1">P1</span><span class="pill">1 진입</span><span class="pill">비대상 P20</span><span class="pill">계정 ⑦</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>리포트 링크로 직접 연다</dd><dt>기대 결과</dt><dd><b>제목 없이 본문 &quot;2026년 인천 남동구 보건소 두뇌운동 치매 예방 교실 3기 참여자에게만 제공되는 리포트입니다. 자세한 문의는 인천 남동구 보건소로 문의 부탁드립니다.&quot; + [홈으로 돌아가기]</b></dd><dt>근거</dt><dd class="note">P20 · gate-nontarget</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_sys05.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-09" data-pr="P1" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_sys05.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-09" data-pr="P1" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-09</span><span class="pill P1">P1</span><span class="pill">1 진입</span><span class="pill">강제 업데이트</span><span class="pill">계정 아무 계정</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>앱 4.1.0 이하 설치</dd><dt>절차</dt><dd>앱을 연다</dd><dt>기대 결과</dt><dd><b>4.1.1 미만은 업데이트 안내 · 앱 사용 차단</b></dd><dt>근거</dt><dd class="note">K-15 · IA-R-13 · 개발 D-5</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-E-10" data-pr="P1" data-stage="1 진입" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-E-10" data-pr="P1" data-stage="1 진입" data-res="미실행">
 <div class="hd"><span class="id">E-10</span><span class="pill P1">P1</span><span class="pill">1 진입</span><span class="pill">네트워크 오류</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>비행기 모드</dd><dt>절차</dt><dd>홈 카드를 누른다</dd><dt>기대 결과</dt><dd><b>전체 화면 오류 + [다시 시도] · &quot;참여자에게만&quot; 문구가 나오지 않는다</b></dd><dt>근거</dt><dd class="note">P18</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_sys03.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-01" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_sys03.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-01" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-01</span><span class="pill P2">P2</span><span class="pill">2 8개 섹션</span><span class="pill">01 표지</span><span class="pill">계정 ② ③ ④</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>표지를 본다</dd><dt>기대 결과</dt><dd><b>피그마 목업처럼 배지 &quot;2026 인천 남동구 보건소 치매 예방 3기&quot; · &quot;{마스킹 이름}님,&quot; · 기간 · 참여일 · 왼쪽 정렬 · 메달 그래픽</b></dd><dt>근거</dt><dd class="note">S1-01~04 · 목업 1097:791</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-02" data-pr="P1" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_01.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-02" data-pr="P1" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-02</span><span class="pill P1">P1</span><span class="pill">2 8개 섹션</span><span class="pill">02 숫자로 먼저</span><span class="pill">계정 ②</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>§데이터 요청 5번 원값 수령</dd><dt>절차</dt><dd>화면 숫자와 원값을 대조한다</dd><dt>기대 결과</dt><dd><b>뇌 점수 시작→종료 · 함께한 날 · 참여율 · 게임 횟수 · 마음 기록이 원값과 같다</b></dd><dt>근거</dt><dd class="note">S2 · F-01~F-04 · F-08</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_02.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-03" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_02.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-03" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-03</span><span class="pill P2">P2</span><span class="pill">2 8개 섹션</span><span class="pill">03 집중의 리듬</span><span class="pill">계정 ②</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>요일 · 시간 · 막대를 본다</dd><dt>기대 결과</dt><dd><b>월~금만 · &quot;프로그램 운영일은 평일(월–금)입니다&quot;</b></dd><dt>근거</dt><dd class="note">S3 · F-07</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_03.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-04" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_03.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-04" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-04</span><span class="pill P2">P2</span><span class="pill">2 8개 섹션</span><span class="pill">04 게임</span><span class="pill">계정 ②</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>최다 게임 · 횟수 · 종수 · TOP3</dd><dt>기대 결과</dt><dd><b>&quot;해본 게임 N종 / 전체 16종 중&quot; · TOP3 정렬</b></dd><dt>근거</dt><dd class="note">S4 · F-03b · F-05</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_04.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-05" data-pr="P1" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_04.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-05" data-pr="P1" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-05</span><span class="pill P1">P1</span><span class="pill">2 8개 섹션</span><span class="pill">04B 랭킹</span><span class="pill">계정 ② ①</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>순위 · 상위 % 타일 · 배지 · 하단 문구</dd><dt>기대 결과</dt><dd><b>타일 % = 배지 % · 1~3위면 내 행 없음 · &quot;아래로 {823-순위}명이 더 함께했어요&quot; · 최하위면 문구 없음</b></dd><dt>근거</dt><dd class="note">S4B-04~08 · F-06 · F-06b · P08</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_04B.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-06" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_04B.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-06" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-06</span><span class="pill P2">P2</span><span class="pill">2 8개 섹션</span><span class="pill">05 마음</span><span class="pill">계정 ② + 측정 1회 · 0회 계정</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>사전 조건</dt><dd>측정 1회 · 0회 계정은 개발에 요청</dd><dt>절차</dt><dd>게이지 · 상태 · 안내박스</dd><dt>기대 결과</dt><dd><b>종료 점수 구간으로 판정 · 1회면 고스트 없음 · 0회면 &quot;검사 기록이 없습니다.&quot;</b></dd><dt>근거</dt><dd class="note">S5 · P03 · P04</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_05.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-07" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_05.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-07" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-07</span><span class="pill P2">P2</span><span class="pill">2 8개 섹션</span><span class="pill">06 걸음</span><span class="pill">계정 ② + 미연동 계정</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>사전 조건</dt><dd>미연동 계정은 개발에 요청</dd><dt>절차</dt><dd>걸음 · 환산 · 칼로리</dd><dt>기대 결과</dt><dd><b>미연동이면 섹션 자체 없음 · 7km 미만이면 환산 카드 없음 · N=1이면 회차 없이 &quot;걸었어요&quot;</b></dd><dt>근거</dt><dd class="note">S6 · P16 · P17</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_06.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-08" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_06.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-08" data-pr="P2" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-08</span><span class="pill P2">P2</span><span class="pill">2 8개 섹션</span><span class="pill">스크롤 힌트</span><span class="pill">계정 ②</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>작은 폰(iPhone SE급)</dd><dt>절차</dt><dd>각 섹션에 들어간 직후와 스크롤한 뒤</dd><dt>기대 결과</dt><dd><b>진입 직후만 하단 고정 · 스크롤하면 풀림 · 본문을 계속 가리지 않음</b></dd><dt>근거</dt><dd class="note">S1-05 · FE-05</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_05.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-09" data-pr="P1" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_05.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-09" data-pr="P1" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-09</span><span class="pill P1">P1</span><span class="pill">2 8개 섹션</span><span class="pill">닫기 버튼</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>아무 섹션에서 스크롤 중</dd><dt>기대 결과</dt><dd><b>✕가 항상 우상단에 고정</b></dd><dt>근거</dt><dd class="note">S1-06</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_02.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-S-10" data-pr="P3" data-stage="2 8개 섹션" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_02.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-S-10" data-pr="P3" data-stage="2 8개 섹션" data-res="미실행">
 <div class="hd"><span class="id">S-10</span><span class="pill P3">P3</span><span class="pill">2 8개 섹션</span><span class="pill">큰 글씨</span><span class="pill">계정 ②</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>OS 글자 크기 최대</dd><dt>절차</dt><dd>전 섹션을 본다</dd><dt>기대 결과</dt><dd><b>줄 넘침 · 겹침 · 잘림 없음</b></dd><dt>근거</dt><dd class="note">IA-R-14 · D-28</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-C-01" data-pr="P1" data-stage="3 증서 저장" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-C-01" data-pr="P1" data-stage="3 증서 저장" data-res="미실행">
 <div class="hd"><span class="id">C-01</span><span class="pill P1">P1</span><span class="pill">3 증서 저장</span><span class="pill">07 A</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>사진 권한 허용</dd><dt>절차</dt><dd>수료증 저장하기</dd><dt>기대 결과</dt><dd><b>사진첩에 1:1 이미지 1장 · 숫자 0이나 빈칸 없음</b></dd><dt>근거</dt><dd class="note">S7-10 · §12</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-C-02" data-pr="P1" data-stage="3 증서 저장" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-C-02" data-pr="P1" data-stage="3 증서 저장" data-res="미실행">
 <div class="hd"><span class="id">C-02</span><span class="pill P1">P1</span><span class="pill">3 증서 저장</span><span class="pill">07 A</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>C-01 이후</dd><dt>절차</dt><dd>파일명 · 형식 확인</dd><dt>기대 결과</dt><dd><b>맬리브레인_3기_수료증_{원문이름} · Android JPEG / iOS PNG</b></dd><dt>근거</dt><dd class="note">S7-10 · Q-10</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-C-03" data-pr="P2" data-stage="3 증서 저장" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-C-03" data-pr="P2" data-stage="3 증서 저장" data-res="미실행">
 <div class="hd"><span class="id">C-03</span><span class="pill P2">P2</span><span class="pill">3 증서 저장</span><span class="pill">07 B</span><span class="pill">계정 ③</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>참여기록 저장하기</dd><dt>기대 결과</dt><dd><b>라벨 &quot;참여기록 저장하기&quot; · 파일명 …_참여기록_…</b></dd><dt>근거</dt><dd class="note">S7-10 · Q-02</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07B.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-C-04" data-pr="P1" data-stage="3 증서 저장" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07B.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-C-04" data-pr="P1" data-stage="3 증서 저장" data-res="미실행">
 <div class="hd"><span class="id">C-04</span><span class="pill P1">P1</span><span class="pill">3 증서 저장</span><span class="pill">07 C</span><span class="pill">계정 ④</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>증서 화면</dd><dt>기대 결과</dt><dd><b>저장 버튼 없음 · 참여 실적 줄 없음 · 4기 · 홈 버튼만</b></dd><dt>근거</dt><dd class="note">S7-08 · S7-10</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07C.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-C-05" data-pr="P3" data-stage="3 증서 저장" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07C.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-C-05" data-pr="P3" data-stage="3 증서 저장" data-res="미실행">
 <div class="hd"><span class="id">C-05</span><span class="pill P3">P3</span><span class="pill">3 증서 저장</span><span class="pill">07 A</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>사진 권한 거부</dd><dt>절차</dt><dd>수료증 저장하기</dd><dt>기대 결과</dt><dd><b>권한 안내 · 앱이 멈추지 않음</b></dd><dt>근거</dt><dd class="note">P15</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-C-06" data-pr="P2" data-stage="3 증서 저장" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-C-06" data-pr="P2" data-stage="3 증서 저장" data-res="미실행">
 <div class="hd"><span class="id">C-06</span><span class="pill P2">P2</span><span class="pill">3 증서 저장</span><span class="pill">07 A</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>저장 후</dd><dt>기대 결과</dt><dd><b>리포트가 닫히지 않고 그대로</b></dd><dt>근거</dt><dd class="note">IA-R-10</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-C-07" data-pr="P2" data-stage="3 증서 저장" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-C-07" data-pr="P2" data-stage="3 증서 저장" data-res="미실행">
 <div class="hd"><span class="id">C-07</span><span class="pill P2">P2</span><span class="pill">3 증서 저장</span><span class="pill">07 A</span><span class="pill">계정 ①</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>증서 이름 확인</dd><dt>기대 결과</dt><dd><b>표지는 마스킹(김*리) · 증서는 원문 이름</b></dd><dt>근거</dt><dd class="note">S7-06 · P12</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-01" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-01" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-01</span><span class="pill P1">P1</span><span class="pill">4 4기 신청</span><span class="pill">07-h 시트</span><span class="pill">계정 ①</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>4기도 참여하기</dd><dt>기대 결과</dt><dd><b>바텀시트 · 문구는 결정 Q-1대로 · [닫기] [네, 신청합니다]</b></dd><dt>근거</dt><dd class="note">07-h · K-13</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07h.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-02" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07h.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-02" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-02</span><span class="pill P2">P2</span><span class="pill">4 4기 신청</span><span class="pill">07-h 시트</span><span class="pill">계정 ①</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>[닫기] / 딤 탭</dd><dt>기대 결과</dt><dd><b>시트만 닫힘 · 신청 저장 안 됨</b></dd><dt>근거</dt><dd class="note">07-h</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07h.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-03" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07h.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-03" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-03</span><span class="pill P1">P1</span><span class="pill">4 4기 신청</span><span class="pill">08 완료</span><span class="pill">계정 ①</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>절차</dt><dd>[네, 신청합니다]</dd><dt>기대 결과</dt><dd><b>완료 화면 · 본문 4줄 &quot;4기가 시작될 때 보건소에서 연락드리겠습니다. 자세한 문의사항은 032-453-6160으로 문의 바랍니다. 감사합니다.&quot;</b></dd><dt>근거</dt><dd class="note">SC-RP-08 · S8-05 · K-14</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-04" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-04" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-04</span><span class="pill P2">P2</span><span class="pill">4 4기 신청</span><span class="pill">08 완료</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>[네, 신청합니다] 연타</dd><dt>기대 결과</dt><dd><b>신청 1건만 저장</b></dd><dt>근거</dt><dd class="note">IA-R-12</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-05" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-05" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-05</span><span class="pill P1">P1</span><span class="pill">4 4기 신청</span><span class="pill">07-l</span><span class="pill">계정 ①</span><span class="pill">앱 · 웹</span></div>
 <dl><dt>사전 조건</dt><dd>A-03 이후</dd><dt>절차</dt><dd>홈 → 리포트 다시 열기</dd><dt>기대 결과</dt><dd><b>4기 버튼 비활성 + &quot;4기 신청이 완료되었습니다&quot;</b></dd><dt>근거</dt><dd class="note">07-l · IA-R-12</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07l.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-06" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07l.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-06" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-06</span><span class="pill P1">P1</span><span class="pill">4 4기 신청</span><span class="pill">07-l</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>A-03 이후</dd><dt>절차</dt><dd>다른 폰에서 같은 계정 로그인</dd><dt>기대 결과</dt><dd><b>07-l 상태 그대로 (서버 값 기준)</b></dd><dt>근거</dt><dd class="note">apply.season4_applied</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07l.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-07" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07l.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-07" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-07</span><span class="pill P1">P1</span><span class="pill">4 4기 신청</span><span class="pill">08-a 실패</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>비행기 모드</dd><dt>절차</dt><dd>[네, 신청합니다]</dd><dt>기대 결과</dt><dd><b>실패 화면 · 제목은 FIG-03 결정대로 · 032-453-6160 · [다시 시도] 누르면 확인 없이 자동 재신청</b></dd><dt>근거</dt><dd class="note">08-a · S8-06</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08a.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-08" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08a.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-08" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-08</span><span class="pill P2">P2</span><span class="pill">4 4기 신청</span><span class="pill">07-l</span><span class="pill">계정 ②</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>리포트 열기</dd><dt>기대 결과</dt><dd><b>처음부터 07-l</b></dd><dt>근거</dt><dd class="note">07-l</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07l.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-09" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07l.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-09" data-pr="P1" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-09</span><span class="pill P1">P1</span><span class="pill">4 4기 신청</span><span class="pill">07-m</span><span class="pill">계정 ⑤</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>증서 화면</dd><dt>기대 결과</dt><dd><b>4기 버튼 없음</b></dd><dt>근거</dt><dd class="note">07-m</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07m.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-A-10" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07m.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-A-10" data-pr="P2" data-stage="4 4기 신청" data-res="미실행">
 <div class="hd"><span class="id">A-10</span><span class="pill P2">P2</span><span class="pill">4 4기 신청</span><span class="pill">노출 시점</span><span class="pill">계정 운영</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>10/27 출시 빌드</dd><dt>절차</dt><dd>출시 전 · 후 버튼 노출</dd><dt>기대 결과</dt><dd><b>10/27부터 노출</b></dd><dt>근거</dt><dd class="note">S7-11</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-X-01" data-pr="P1" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_07A.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-X-01" data-pr="P1" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
 <div class="hd"><span class="id">X-01</span><span class="pill P1">P1</span><span class="pill">5 닫기 · 뒤로가기</span><span class="pill">공통</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>아무 섹션에서 ✕</dd><dt>기대 결과</dt><dd><b>홈으로 복귀</b></dd><dt>근거</dt><dd class="note">IA-R-05</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-X-02" data-pr="P1" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-X-02" data-pr="P1" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
 <div class="hd"><span class="id">X-02</span><span class="pill P1">P1</span><span class="pill">5 닫기 · 뒤로가기</span><span class="pill">공통</span><span class="pill">계정 ①</span><span class="pill">Android</span></div>
 <dl><dt>절차</dt><dd>리포트 / 시트 열림 / 완료 화면에서 뒤로가기</dd><dt>기대 결과</dt><dd><b>시트가 열려 있으면 시트만 닫힘 · 그 외 홈</b></dd><dt>근거</dt><dd class="note">IA-R-05</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-X-03" data-pr="P2" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-X-03" data-pr="P2" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
 <div class="hd"><span class="id">X-03</span><span class="pill P2">P2</span><span class="pill">5 닫기 · 뒤로가기</span><span class="pill">공통</span><span class="pill">계정 ①</span><span class="pill">iOS</span></div>
 <dl><dt>절차</dt><dd>밀어서 닫기</dd><dt>기대 결과</dt><dd><b>홈 복귀 · 화면 깨짐 없음</b></dd><dt>근거</dt><dd class="note">개발 B-7</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-X-04" data-pr="P2" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-X-04" data-pr="P2" data-stage="5 닫기 · 뒤로가기" data-res="미실행">
 <div class="hd"><span class="id">X-04</span><span class="pill P2">P2</span><span class="pill">5 닫기 · 뒤로가기</span><span class="pill">08 완료</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>[홈으로 돌아가기]</dd><dt>기대 결과</dt><dd><b>홈 복귀</b></dd><dt>근거</dt><dd class="note">S8-07</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-T-01" data-pr="P2" data-stage="6 4기 전환" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-T-01" data-pr="P2" data-stage="6 4기 전환" data-res="미실행">
 <div class="hd"><span class="id">T-01</span><span class="pill P2">P2</span><span class="pill">6 4기 전환</span><span class="pill">체험 홈</span><span class="pill">계정 4기 승인 계정</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>개발에 4기 시작일 당겨 달라고 요청</dd><dt>절차</dt><dd>4기 홈 전환 후 확인</dd><dt>기대 결과</dt><dd><b>리포트 카드 사라짐 · 진행 내역으로는 열림</b></dd><dt>근거</dt><dd class="note">IA-R-08 · F4</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-M-01" data-pr="P2" data-stage="6 측정" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-M-01" data-pr="P2" data-stage="6 측정" data-res="미실행">
 <div class="hd"><span class="id">M-01</span><span class="pill P2">P2</span><span class="pill">6 측정</span><span class="pill">이벤트</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>사전 조건</dt><dd>개발에 이벤트 로그 확인 요청</dd><dt>절차</dt><dd>카드 / 자동 팝업 / 진행 내역으로 각각 진입</dd><dt>기대 결과</dt><dd><b>entry 값이 경로별로 다르게 남음 · programId 채워짐</b></dd><dt>근거</dt><dd class="note">IA-Q-06 · 개발 D-4</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-M-02" data-pr="P2" data-stage="6 측정" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-M-02" data-pr="P2" data-stage="6 측정" data-res="미실행">
 <div class="hd"><span class="id">M-02</span><span class="pill P2">P2</span><span class="pill">6 측정</span><span class="pill">이벤트</span><span class="pill">계정 ①</span><span class="pill">앱</span></div>
 <dl><dt>절차</dt><dd>한 섹션에 30초 머문 뒤 이동</dd><dt>기대 결과</dt><dd><b>해당 섹션 dwell ≈ 30초</b></dd><dt>근거</dt><dd class="note">IA-Q-06</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-PH-01" data-pr="P1" data-stage="6 전화번호" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-PH-01" data-pr="P1" data-stage="6 전화번호" data-res="미실행">
 <div class="hd"><span class="id">PH-01</span><span class="pill P1">P1</span><span class="pill">6 전화번호</span><span class="pill">전 화면</span><span class="pill">계정 ①</span><span class="pill">앱 · 웹 · 문자</span></div>
 <dl><dt>사전 조건</dt><dd>개발 수정 반영 후</dd><dt>절차</dt><dd>리포트 완료 · 실패 화면 · 신청폼 결과 화면 · 문자 본문의 번호</dd><dt>기대 결과</dt><dd><b>모두 032-453-6160 (6163 · 담당자 번호 없음)</b></dd><dt>근거</dt><dd class="note">K-14 · 보건소 요청 10/12</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-F-01" data-pr="P2" data-stage="6 신청폼 4기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-F-01" data-pr="P2" data-stage="6 신청폼 4기" data-res="미실행">
 <div class="hd"><span class="id">F-01</span><span class="pill P2">P2</span><span class="pill">6 신청폼 4기</span><span class="pill">첫 화면</span><span class="pill">계정 —</span><span class="pill">휴대폰 브라우저</span></div>
 <dl><dt>절차</dt><dd>/invitations/namdong4</dd><dt>기대 결과</dt><dd><b>명칭 · 기관명은 결정 Q-1 · Q-2대로 · &quot;2027년 2월~11월&quot;</b></dd><dt>근거</dt><dd class="note">개발 B-8</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-F-02" data-pr="P1" data-stage="6 신청폼 4기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-F-02" data-pr="P1" data-stage="6 신청폼 4기" data-res="미실행">
 <div class="hd"><span class="id">F-02</span><span class="pill P1">P1</span><span class="pill">6 신청폼 4기</span><span class="pill">입력 · 결과</span><span class="pill">계정 본인 번호</span><span class="pill">휴대폰 브라우저</span></div>
 <dl><dt>사전 조건</dt><dd>실제 문자 발송 — 본인 번호로 1회만</dd><dt>절차</dt><dd>입력 폼 제출</dd><dt>기대 결과</dt><dd><b>결과 화면 문구 · 문자 내용 · 케어센터 신청자 관리에 1건</b></dd><dt>근거</dt><dd class="note">개발 B-8 · Q-3</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-F-03" data-pr="P2" data-stage="6 신청폼 4기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-F-03" data-pr="P2" data-stage="6 신청폼 4기" data-res="미실행">
 <div class="hd"><span class="id">F-03</span><span class="pill P2">P2</span><span class="pill">6 신청폼 4기</span><span class="pill">중복</span><span class="pill">계정 본인 번호</span><span class="pill">휴대폰 브라우저</span></div>
 <dl><dt>사전 조건</dt><dd>F-02 이후</dd><dt>절차</dt><dd>같은 번호로 다시 제출</dd><dt>기대 결과</dt><dd><b>중복 안내 (정의 없음 → Q-4)</b></dd><dt>근거</dt><dd class="note">—</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-F-04" data-pr="P3" data-stage="6 신청폼 4기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-F-04" data-pr="P3" data-stage="6 신청폼 4기" data-res="미실행">
 <div class="hd"><span class="id">F-04</span><span class="pill P3">P3</span><span class="pill">6 신청폼 4기</span><span class="pill">대리 등록</span><span class="pill">계정 —</span><span class="pill">휴대폰 브라우저</span></div>
 <dl><dt>절차</dt><dd>&quot;보건소 직원이신가요?&quot;</dd><dt>기대 결과</dt><dd><b>대리 등록 경로가 열림 (제출하지 않음)</b></dd><dt>근거</dt><dd class="note">—</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-F-05" data-pr="P2" data-stage="6 신청폼 3기" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-F-05" data-pr="P2" data-stage="6 신청폼 3기" data-res="미실행">
 <div class="hd"><span class="id">F-05</span><span class="pill P2">P2</span><span class="pill">6 신청폼 3기</span><span class="pill">3기 링크</span><span class="pill">계정 —</span><span class="pill">휴대폰 브라우저</span></div>
 <dl><dt>절차</dt><dd>/invitations/namdong3</dd><dt>기대 결과</dt><dd><b>결정 Q-6대로</b></dd><dt>근거</dt><dd class="note">개발 §A ⑤</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="tc-K-01" data-pr="P2" data-stage="6 케어센터" data-res="미실행">
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div><div class="card" id="tc-K-01" data-pr="P2" data-stage="6 케어센터" data-res="미실행">
 <div class="hd"><span class="id">K-01</span><span class="pill P2">P2</span><span class="pill">6 케어센터</span><span class="pill">4기</span><span class="pill">계정 —</span><span class="pill">PC</span></div>
 <dl><dt>사전 조건</dt><dd>로그인</dd><dt>절차</dt><dd>목록 · 신청자 관리</dd><dt>기대 결과</dt><dd><b>4기 &quot;진행 예정&quot; · 신청자 관리 탭 열림</b></dd><dt>근거</dt><dd class="note">개발 B-9</dd>
-<dt>결과</dt><dd>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></dd></dl>
-<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div></section>
+</dl>
+<div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><div class="none">피그마 목업 없음</div></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div>
+<div class="judge"><div class="jt">판정</div><div>Android <span class="rp ">미실행</span> · iOS <span class="rp ">미실행</span></div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> <span class="note">—</span></div>
+<div style="margin-top:4px"><span class="note">다른 점</span> <span class="note">아직 입력 없음</span></div></div></div></section>
 <section id="v-bug" hidden><h3>기획이 웹 샘플로 찾은 결함 (10)</h3><div class="card" id="bug-BUG-01"><div class="hd"><span class="id">BUG-01</span><span class="pill P1">P1</span><span class="pill">Major</span><span class="pill st">개발 수정</span><b>문의 전화번호 6163 → 대표번호 6160</b></div>
 <dl><dt>화면</dt><dd>SC-RP-08 완료 · 실패 · 신청폼 · 문자</dd><dt>재현 경로</dt><dd>https://dev-meli-web.meli.health/report-3gi?state=nice → 4기도 참여하기 → 네, 신청합니다</dd><dt>기대</dt><dd>032-453-6160 (보건소 대표번호 · 10/12 확정 · 피그마 S8-05 디스크립션)</dd><dt>실제</dt><dd><b>032-453-6163</b></dd><dt>근거</dt><dd class="note">K-14 · 변경이력 39</dd><dt>관련 TC</dt><dd>PH-01 · A-03 · A-07</dd></dl>
 <div class="cmpbox"><div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame"><img src="fig/fig_08.png" alt="피그마 목업" data-zoom loading="lazy"></div></div><div class="col"><div class="cap"><span class="tag app">앱 캡처</span></div><div class="frame"><div class="none">아직 올린 앱 캡처가 없습니다</div></div></div></div></div><div class="card" id="bug-BUG-02"><div class="hd"><span class="id">BUG-02</span><span class="pill P1">P1</span><span class="pill">Major</span><span class="pill st">기획 선행</span><b>4기 신청 완료 본문 첫 줄 누락</b></div>
