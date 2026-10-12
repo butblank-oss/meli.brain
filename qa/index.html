@@ -53,7 +53,7 @@ let S={};try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){S={}}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const g=(id)=>S[id]||(S[id]={});const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const RES=['통과','실패','보류','해당없음'];
-const img=f=>f?`<img src="qa/${esc(f)}" alt="${esc(f)}" loading="lazy" onclick="zoomIt(this.src)">`:'<div class="none">스크린샷 없음<br>앱에서 캡처 후 링크 입력</div>';
+const img=f=>f?`<img src="shots/${esc(f)}" alt="${esc(f)}" loading="lazy" onclick="zoomIt(this.src)">`:'<div class="none">스크린샷 없음<br>앱에서 캡처 후 링크 입력</div>';
 function zoomIt(src){const z=document.getElementById('zoom');z.querySelector('img').src=src;z.style.display='flex'}
 const TABS=[['tc','TC ('+D.tc.length+')'],['bug','결함 ('+D.bugs.length+')'],['fig','피그마 정리 ('+D.fig.length+')'],['dec','결정 필요 ('+D.dec.length+')'],['data','데이터 요청'],['shot','스크린샷 비교'],['guide','계정 · 안내']];
 document.getElementById('tabs').innerHTML=TABS.map(([k,n],i)=>`<button class="tab${i?'':' on'}" data-k="${k}">${n}</button>`).join('');
@@ -100,7 +100,7 @@ function shot(){const L=[['01','SC-RP-01 표지 · BUG-03'],['02','SC-RP-02 · B
 function guide(){document.getElementById('v-guide').innerHTML=`<h3>테스트 계정</h3><div class="tablewrap"><table><tr><th></th><th>번호</th><th>이름</th><th>등급</th><th>주로 볼 것</th></tr>${D.acc.map(a=>`<tr><td>${a.k}</td><td>${a.tel}</td><td>${esc(a.name)}</td><td>${esc(a.tier)}</td><td>${esc(a.see)}</td></tr>`).join('')}</table></div>
  <h3>우선순위</h3><div class="tablewrap"><table>${D.pri.map(p=>`<tr><td><b>${p.p}</b></td><td>${p.name}</td><td>${esc(p.desc)}</td></tr>`).join('')}</table></div>
  <h3>쓰는 법</h3><ol><li>앱에서 TC를 돌리고 Android · iOS 결과 버튼을 누릅니다. 다시 누르면 해제됩니다.</li><li>실패면 결함 탭의 BUG 번호를 적거나 새 번호(BUG-06~)를 적고, 증빙 스크린샷 링크를 붙입니다.</li><li>입력값은 <b>이 브라우저에만</b> 저장됩니다. 다른 사람과 맞추려면 <b>CSV 내보내기</b> → 스프레드시트 TC 시트에 붙여 넣으세요.</li><li>신청폼 4기는 제출하면 실제 문자가 갑니다. <b>본인 번호로만</b> 1회 제출합니다.</li></ol>
- <p class="note">스프레드시트: <a href="qa/3기리포트_QA_TC_20261012.xlsx">3기리포트_QA_TC_20261012.xlsx</a></p>`;}
+ <p class="note">스프레드시트: <a href="3기리포트_QA_TC.xlsx">3기리포트_QA_TC.xlsx</a> · <a href="../docs/11_QA_개발검수-20261012.md">검수 요약</a> · <a href="../index.html">프로토타입</a> · <a href="../docs.html">문서 목록</a></p>`;}
 function csv(){const H=['TC ID','우선순위','여정 단계','화면','결과 Android','결과 iOS','실제 결과','결함 ID','증빙 스크린샷 링크','테스트일'];
  const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const rows=D.tc.map(t=>{const s=S[t.id]||{};return [t.id,t.pr,t.stage,t.scr,s.a||'미실행',s.i||'',s.memo||'',s.bug||'',s.link||'',s.date||'']});
  const blob=new Blob(['﻿'+[H,...rows].map(r=>r.map(q).join(',')).join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='3기리포트_QA_결과.csv';a.click();}
