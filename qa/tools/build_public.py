@@ -56,6 +56,9 @@ def main(data_dir, caps_dir):
         return "caps/" + name
 
     S = STATIC
+    def acc_label(k):
+        a = next((x for x in S["acc"] if x["k"] == k), None)
+        return f'{a["k"]} {a["name"]} · {a["tier"]}' if a else str(k)
     fig = S["fig_of"]
     tcs = S["tc"]
     r = lambda t: TC.get(t["id"], {})
@@ -89,7 +92,7 @@ def main(data_dir, caps_dir):
 <dl>{f'<dt>사전 조건</dt><dd>{E(t["pre"])}</dd>' if t["pre"] and t["pre"] != "—" else ""}<dt>절차</dt><dd>{E(t["step"])}</dd><dt>기대 결과</dt><dd><b>{E(t["exp"])}</b></dd><dt>근거</dt><dd class="note">{E(t["ref"])}</dd>
 </dl>
 {cmp_block(fig.get(t["id"]), s.get("shots", []))}
-<div class="judge"><div class="jt">판정</div><div>Android {res_pill(s.get("a"))} · iOS {res_pill(s.get("i"))}{f' <span class="note">· {E(s.get("date"))}</span>' if s.get("date") else ""}</div>
+<div class="judge"><div class="jt">판정</div><div style="margin-bottom:4px"><span class="note">테스트 계정</span> {E(acc_label(s.get("acct"))) if s.get("acct") else '<span class="note">— (권장 '+E(t["acc"])+')</span>'}</div><div>Android {res_pill(s.get("a"))} · iOS {res_pill(s.get("i"))}{f' <span class="note">· {E(s.get("date"))}</span>' if s.get("date") else ""}</div>
 <div style="margin-top:4px"><span class="note">오류 유형</span> {" ".join(f'<span class="rp fail">{E(x)}</span>' for x in s.get("types", [])) or '<span class="note">—</span>'}</div>
 <div style="margin-top:4px"><span class="note">다른 점</span> {E(s.get("memo")) or '<span class="note">아직 입력 없음</span>'}</div></div></div>''')
 
@@ -107,7 +110,7 @@ def main(data_dir, caps_dir):
         status = s.get("status") or (base or {}).get("status", "")
         memo = s.get("memo", "")
         return f'''<div class="card{' new' if auto else ''}" id="bug-{E(bid)}"><div class="hd"><span class="id">{E(bid)}</span><span class="pill {E(pr)}">{E(pr)}</span><span class="pill">{E(sev)}</span><span class="pill st">{E(status)}</span><b>{E(title)}</b></div>
-<dl><dt>화면</dt><dd>{E(scr)}</dd><dt>재현 경로</dt><dd>{E(path)}</dd><dt>기대</dt><dd>{E(exp)}</dd><dt>실제</dt><dd><b>{E(act)}</b></dd><dt>근거</dt><dd class="note">{E(ref)}</dd><dt>관련 TC</dt><dd>{E(tcid)}</dd>{f'<dt>메모</dt><dd>{E(memo)}</dd>' if memo else ''}</dl>
+<dl><dt>화면</dt><dd>{E(scr)}</dd><dt>재현 경로</dt><dd>{E(path)}</dd><dt>기대</dt><dd>{E(exp)}</dd><dt>실제</dt><dd><b>{E(act)}</b></dd><dt>근거</dt><dd class="note">{E(ref)}</dd><dt>관련 TC</dt><dd>{E(tcid)}</dd>{f'<dt>테스트 계정</dt><dd>{E(acc_label(TC.get(tcid, {}).get("acct")))}</dd>' if TC.get(tcid, {}).get('acct') else ''}{f'<dt>메모</dt><dd>{E(memo)}</dd>' if memo else ''}</dl>
 {cmp_block(fk, shots)}</div>'''
     bug_html = ("".join(bug_card(k, None, True) for k, _ in autos) and f'<h3>새로 생긴 결함 ({len(autos)})</h3>' + "".join(bug_card(k, None, True) for k, _ in autos)) + f'<h3>기획이 웹 샘플로 찾은 결함 ({len(S["bugs"])})</h3>' + "".join(bug_card(b["id"], b, False) for b in S["bugs"])
 
@@ -116,7 +119,7 @@ def main(data_dir, caps_dir):
     data_html = '<div class="tablewrap"><table><tr><th>#</th><th>요청 (개발)</th><th>왜</th><th>관련 TC</th></tr>' + "".join(f'<tr><td>{d["n"]}</td><td>{E(d["req"])}</td><td>{E(d["why"])}</td><td>{E(d["tc"])}</td></tr>' for d in S["data"]) + "</table></div>"
     CMP = [("01","SC-RP-01 표지"),("02","SC-RP-02"),("03","SC-RP-03"),("04","SC-RP-04"),("04B","SC-RP-04B"),("05","SC-RP-05"),("06","SC-RP-06"),("07A","SC-RP-07 A"),("07B","SC-RP-07 B"),("07C","SC-RP-07 C"),("07h","07-h 시트"),("07l","07-l"),("08","SC-RP-08"),("sys05","SYS-05")]
     shot_html = '<p class="note">기획이 10/12에 개발 서버 웹 샘플을 열어 찍은 비교입니다. 왼쪽 빨간 테두리 = 개발 dev · 오른쪽 초록 테두리 = 피그마 목업.</p><div class="cmpgrid">' + "".join(f'<figure><img src="shots/cmp_{k}.png" alt="{c} 비교" data-zoom loading="lazy"><figcaption>{c}</figcaption></figure>' for k, c in CMP) + "</div>"
-    acc_html = '<div class="tablewrap"><table><tr><th></th><th>번호</th><th>이름</th><th>등급</th><th>주로 볼 것</th></tr>' + "".join(f'<tr><td>{a["k"]}</td><td>{E(a["tel"])}</td><td>{E(a["name"])}</td><td>{E(a["tier"])}</td><td>{E(a["see"])}</td></tr>' for a in S["acc"]) + "</table></div>"
+    acc_html = f'<p class="note">{E(S.get("acc_note",""))}</p><div class="tablewrap"><table><tr><th></th><th>번호</th><th>이름</th><th>등급</th><th>주로 볼 것</th><th>이 계정으로 한 TC</th></tr>' + "".join(f'<tr><td>{a["k"]}</td><td>{E(a["tel"])}</td><td>{E(a["name"])}</td><td>{E(a["tier"])}</td><td>{E(a["see"])}</td><td>{E(", ".join(k for k, v in TC.items() if v.get("acct") == a["k"]) or "—")}</td></tr>' for a in S["acc"]) + "</table></div>" + '<h3>앱 설치 — [QA]맬리브레인 (안드로이드 · Firebase App Distribution)</h3><ol>' + "".join(f"<li>{E(x)}</li>" for x in S.get("install", [])) + "</ol>"
     stages = list(dict.fromkeys(t["stage"] for t in tcs))
     stats = "".join(f'<div class="stat"><span>{p} · {next(x["name"] for x in S["pri"] if x["p"]==p)}</span><b>{cnt(by(p),"통과")} / {len(by(p))}</b><span>실패 {cnt(by(p),"실패")} · 보류 {cnt(by(p),"보류")}</span></div>' for p in ("P1","P2","P3"))
     stats += f'<div class="stat"><span>결함</span><b>{len(S["bugs"])+len(autos)}</b><span>새로 생긴 결함 {len(autos)}</span></div>'
@@ -126,7 +129,7 @@ def main(data_dir, caps_dir):
 <p class="sub">dev 10/7 빌드 · 기준은 피그마 목업 + 디스크립션 (페이지 1028:3313) · <b>읽기 전용 공개본</b> · 마지막 동기화 <b>__SYNCED__</b></p>
 <div class="banner">결과 입력 · 캡처 업로드는 내부 작성 보드에서 합니다. 이 페이지는 그 내용을 매시간(또는 [공개본에 반영]을 누를 때) 옮겨 온 사본입니다.</div>
 <div class="top">{stats}<div class="stat verdict" style="color:{'var(--fail)' if f1 else 'var(--ink)'}">{verdict} <span class="note">(Android 결과 기준)</span></div></div>
-<div class="tabs" role="tablist">{"".join(f'<button class="tab" role="tab" data-k="{k}" aria-selected="{str(i==0).lower()}">{n}</button>' for i,(k,n) in enumerate([("tc",f"TC ({len(tcs)})"),("bug",f"결함 ({len(S['bugs'])+len(autos)})"),("fig",f"피그마 정리 ({len(S['fig'])})"),("dec",f"결정 필요 ({len(S['dec'])})"),("data","데이터 요청"),("shot","개발 웹 샘플 비교"),("guide","계정 · 우선순위")]))}</div>
+<div class="tabs" role="tablist">{"".join(f'<button class="tab" role="tab" data-k="{k}" aria-selected="{str(i==0).lower()}">{n}</button>' for i,(k,n) in enumerate([("tc",f"TC ({len(tcs)})"),("bug",f"결함 ({len(S['bugs'])+len(autos)})"),("fig",f"피그마 정리 ({len(S['fig'])})"),("dec",f"결정 필요 ({len(S['dec'])})"),("data","데이터 요청"),("shot","개발 웹 샘플 비교"),("guide","계정 · 설치")]))}</div>
 <section id="v-tc"><div class="bar"><select id="fp" aria-label="우선순위"><option value="">우선순위 전체</option><option>P1</option><option>P2</option><option>P3</option></select><select id="fs" aria-label="여정"><option value="">여정 전체</option>{"".join(f"<option>{E(s)}</option>" for s in stages)}</select><select id="fr" aria-label="결과"><option value="">결과 전체</option>{"".join(f"<option>{v}</option>" for v in ["미실행","통과","실패","보류","해당없음"])}</select><span class="note" id="cnt"></span></div>{"".join(tc_html)}</section>
 <section id="v-bug" hidden>{bug_html}</section><section id="v-fig" hidden><p class="note">피그마 안에서 목업과 디스크립션이 서로 달랐던 곳 · 목업 우선으로 정리(10/12).</p>{fig_html}</section>
 <section id="v-dec" hidden>{dec_html}</section><section id="v-data" hidden>{data_html}</section><section id="v-shot" hidden>{shot_html}</section>
