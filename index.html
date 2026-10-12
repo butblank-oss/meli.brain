@@ -277,22 +277,23 @@ const nf = n => n.toLocaleString('ko-KR');
 function sec01(){
   const v=S.s01;
   const raw = (v==='b'||v==='c') ? null : v==='d' ? '남궁민수' : 표기명();
-  const 이름 = raw ? mask(raw)+' 님,' : '회원님,';
+  const 이름 = raw ? mask(raw)+'님,' : '회원님,';
   const 일수 = (v==='a'||v==='c') ? 0 : D.참여일;
   return `<section id="s01"><span class="secmark">SC-RP-01</span>
     <div class="closeBtn" title="S1-06 닫기 · 스크롤해도 우상단 고정">✕</div>
-    <div class="pill c">2026 맬리브레인 3기</div>
-    <h2 class="head center">${이름}<br>지난 8개월을 돌아볼게요</h2>
-    <div class="center" style="margin-top:14px">
+    <div class="pill">2026 인천 남동구 보건소 치매 예방 3기</div>
+    <h2 class="head">${이름}<br>지난 8개월을 돌아볼게요</h2>
+    <div style="margin-top:14px">
       <p style="font-size:15px;color:#5C6675">${D.기간}</p>
       <p style="font-size:15px;color:#5C6675;margin-top:4px">${D.분모}일 중
-        <b style="color:#0A6B47;font-weight:800">${일수}일</b>의 기록이 담겨 있어요</p>
+        <b style="color:#191F28;font-weight:800">${일수}일</b>의 기록이 담겨 있어요</p>
     </div>
-    <div style="margin:26px auto 0;width:250px;height:250px;border-radius:50%;
-      background:radial-gradient(circle,rgba(19,189,126,.18),transparent 65%);
-      display:flex;align-items:center;justify-content:center" aria-hidden="true">
-      <div style="width:168px;height:168px;border-radius:50%;background:rgba(16,84,62,.10);
-        display:flex;align-items:center;justify-content:center;font-size:12px;color:#0A6B47">3D 마스코트<br>168×168</div>
+    <div style="position:relative;margin:40px auto 0;width:250px;height:250px" aria-hidden="true">
+      <div style="position:absolute;left:62px;top:10px;width:46px;height:84px;background:linear-gradient(#13BD7E,#0A6B47);transform:skewX(8deg);border-radius:4px"></div>
+      <div style="position:absolute;right:62px;top:10px;width:46px;height:84px;background:linear-gradient(#13BD7E,#0A6B47);transform:skewX(-8deg);border-radius:4px"></div>
+      <div style="position:absolute;left:41px;top:58px;width:168px;height:168px;border-radius:50%;
+        background:radial-gradient(circle,#F4FBF8 55%,#DDEFE7 100%);box-shadow:0 0 0 8px rgba(19,189,126,.12),0 10px 30px rgba(16,84,62,.15);
+        display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:#0A6B47">메달 + 3D 마스코트<br>168×168</div>
     </div>
     ${hint()}</section>`;
 }
@@ -320,9 +321,11 @@ function sec02(){
     if(mode==='one'){ const x = v==='a'?8:292;
       return `<polyline points="8,70 292,70" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-dasharray="5 5" fill="none"/>
               <circle cx="${x}" cy="70" r="5" fill="#13BD7E"/>`; }
-    const y1=110-(a/100*80), y2=110-(b/100*80);
+    // 피그마 목업 기준 — 시작 · 종료 차이가 보이도록 두 값 사이를 세로 범위 전체로 펼침 · 마커는 종료점에만
+    const lo=Math.min(a,b), hi=Math.max(a,b), y=s=> hi===lo ? 65 : 108-(s-lo)/(hi-lo)*84;
+    const y1=y(a), y2=y(b);
     return `<polyline points="8,${y1} 292,${y2}" stroke="#13BD7E" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <circle cx="8" cy="${y1}" r="5" fill="#13BD7E"/><circle cx="292" cy="${y2}" r="5" fill="#13BD7E"/>`;
+            <circle cx="292" cy="${y2}" r="6" fill="#13BD7E"/>`;
   })();
   const stat=(l,val,u)=>`<div class="tile"><div class="lbl">${l}</div>
     <div class="val">${val}<span class="u">${u}</span></div></div>`;
@@ -335,7 +338,7 @@ function sec02(){
       <svg viewBox="0 0 300 130" style="width:100%;height:110px;margin-top:10px" role="img"
            aria-label="뇌 점수 ${a??'–'}점에서 ${b??'–'}점으로 변화">${그래프}</svg>
       <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5)">
-        <span>3월</span><span>7월</span><span>10월</span></div>
+        <span>3월</span><span>7월</span><b style="color:#fff">10월</b></div>
     </div>
     <div class="grid2">
       ${stat('함께한 날', z?0:D.참여일,'일')}
@@ -363,13 +366,13 @@ function sec03(){
       <span style="width:22px;font-size:15px;${on?'font-weight:800;color:#191F28':'color:#5C6675'}">${d}</span>
       <div style="flex:1;height:10px;border-radius:6px;background:#E5E8EB;overflow:hidden">
         <div style="height:100%;border-radius:6px;width:${vals[i]}%;background:${on?'#13BD7E':'#D1D6DB'}"></div></div>
-      <span style="width:40px;text-align:right;font-size:14px;${on?'font-weight:800;color:#191F28':'color:#5C6675'}">${vals[i]}%</span>
+      <span style="width:40px;text-align:right;font-size:14px;${on?'font-weight:800;color:#0A6B47':'color:#5C6675'}">${vals[i]}%</span>
     </div>`;}).join('');
   const 멘트 = (v==='e')
     ? {h:'아직 기록이 없어요', b:'4기에는 함께 리듬을 만들어봐요.'}
     : (요일==='골고루'
-        ? {h:`${시간}에 자주 만났어요`, b:'그 시간대에 습관이 자리 잡았어요.<br>건강한 습관이 자리 잡았네요!'}
-        : {h:`${요일} ${시간}에 자주 만났어요`, b:'그 시간대에 습관이 자리 잡았어요.<br>건강한 습관이 자리 잡았네요!'});
+        ? {h:`${시간}에 자주 만났어요`, b:'가볍게 뇌를 깨우는 건강한 습관이 자리 잡았네요!'}
+        : {h:`${요일} ${시간}에 자주 만났어요`, b:'가볍게 뇌를 깨우는 건강한 습관이 자리 잡았네요!'});
   return `<section id="s03"><span class="secmark">SC-RP-03</span>
     <div class="pill">집중의 리듬</div>
     <h2 class="head">언제 가장 집중했을까요</h2>
@@ -381,8 +384,7 @@ function sec03(){
       <div class="lbl" style="margin-bottom:6px">요일별 참여율</div>${rows}
       <p style="font-size:12px;color:#9AA3AD;margin-top:8px">프로그램 운영일은 평일(월–금)입니다</p>
     </div>
-    <div class="card" style="margin-top:12px;display:flex;gap:12px;align-items:flex-start;background:rgba(16,84,62,.06)">
-      <div style="width:46px;height:46px;border-radius:50%;background:rgba(16,84,62,.10);flex-shrink:0"></div>
+    <div class="card" style="margin-top:12px;background:rgba(19,189,126,.10);border:1px solid rgba(16,84,62,.12)">
       <div><div style="font-size:17px;font-weight:800">${멘트.h}</div>
         <div style="font-size:14px;color:#4E5968;line-height:1.5;margin-top:4px">${멘트.b}</div></div>
     </div>
@@ -405,10 +407,10 @@ function sec04(){
     const ph = !g;
     return `<div style="display:flex;align-items:center;gap:12px;padding:9px 0;
         ${i<2?'border-bottom:1px solid rgba(16,64,48,.07)':''}">
-      <span style="width:16px;font-size:17px;font-weight:700;color:${i===0?'#0A6B47':'#4E5968'}">${i+1}</span>
-      <div style="width:34px;height:34px;border-radius:50%;background:rgba(16,84,62,.075);${ph?'opacity:.35':''}"></div>
-      <span style="flex:1;font-size:17px;font-weight:600;${ph?'color:#9AA3AD':''}">${ph?'게임 기록이 없어요':g[0]}</span>
-      ${ph?'':`<span style="font-size:17px;color:${i===0?'#0A6B47':'#4E5968'};font-weight:${i===0?700:400}">${g[1]}회</span>`}
+      <span style="width:16px;font-size:15px;font-weight:700;color:#0A6B47">${i+1}</span>
+      <div style="width:32px;height:32px;border-radius:8px;background:rgba(16,84,62,.075);${ph?'opacity:.35':''}"></div>
+      <span style="flex:1;font-size:15px;font-weight:500;${ph?'color:#9AA3AD':''}">${ph?'게임 기록이 없어요':g[0]}</span>
+      ${ph?'':`<span style="font-size:15px;color:#191F28;font-weight:700">${g[1]}회</span>`}
     </div>`;}).join('');
   return `<section id="s04"><span class="secmark">SC-RP-04</span>
     <div class="pill">게임 하이라이트</div>
@@ -536,9 +538,9 @@ function sec05(){
         <path d="M 50 150 A 100 100 0 0 1 88.4 71.2"   stroke="#13BD7E" stroke-width="18" fill="none" stroke-linecap="round"/>
         <path d="M 94.1 67.1 A 100 100 0 0 1 187.5 57.3" stroke="#C9CFD6" stroke-width="18" fill="none" stroke-linecap="round"/>
         <path d="M 193.8 60.1 A 100 100 0 0 1 250 150"   stroke="#E1E5EA" stroke-width="18" fill="none" stroke-linecap="round"/>
-        <text x="50"  y="176" text-anchor="middle" font-size="15" fill="#0A6B47" font-weight="700">양호</text>
+        <text x="20"  y="108" text-anchor="middle" font-size="15" fill="#0A6B47" font-weight="700">양호</text>
         <text x="150" y="30"  text-anchor="middle" font-size="15" fill="#4E5968" font-weight="700">주의</text>
-        <text x="250" y="176" text-anchor="middle" font-size="15" fill="#4E5968" font-weight="700">위험</text>
+        <text x="280" y="108" text-anchor="middle" font-size="15" fill="#4E5968" font-weight="700">위험</text>
         ${고스트}${바늘}
         ${none?'':'<circle cx="150" cy="150" r="10" fill="#191F28"/><circle cx="150" cy="150" r="4" fill="#fff"/>'}
       </svg>
@@ -648,6 +650,9 @@ function sec07(){
       <div class="certWrap"><div class="certPaper" style="position:relative;aspect-ratio:1/1;background:#FBFBF7;
         border:8px solid transparent;border-image:linear-gradient(135deg,#A8842F,#E8D08A 28%,#F7EBC4 50%,#C8A44D 72%,#A8842F) 1;
         display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 20px 26px;text-align:center">
+        <div aria-hidden="true" style="position:absolute;inset:5px;border:1px solid #D9BE74;pointer-events:none"></div>
+        <div aria-hidden="true" style="position:absolute;inset:9px;border:1px solid #E8D08A;pointer-events:none"></div>
+        ${[['5px','5px'],['5px','50%'],['5px','calc(100% - 5px)']].flatMap(([y,x])=>[[y,x,'top'],[y,x,'bottom']]).map(([y,x,side])=>`<span aria-hidden="true" style="position:absolute;${side}:${y};left:${x};width:8px;height:8px;margin:-4px 0 0 -4px;background:#C8A44D;transform:rotate(45deg);${side==='bottom'?'margin:0 0 -4px -4px;':''}"></span>`).join('')}
         <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;letter-spacing:.24em">${제목}</div>
         <div style="width:40px;height:2px;background:#13BD7E;margin:14px 0"></div>
         <div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:10px">${이름}</div>
@@ -659,9 +664,10 @@ function sec07(){
           <span>참여율 <b style="font-size:14px;font-weight:800;color:#191F28">${율}%</b></span></div>`}
         <div style="position:relative;margin-top:${통계?'auto':'18px'}">
           <div style="font-size:10px;color:#55636E;line-height:1.7">인천남동구 보건소<br>발급일 2026년 11월 1일</div>
-          <div style="position:absolute;right:-37px;top:-24px;width:48px;height:48px;border-radius:50%;
-            border:2px solid rgba(194,65,12,.6);color:rgba(194,65,12,.75);font-size:10px;font-weight:900;
-            display:flex;align-items:center;justify-content:center;line-height:1.15;transform:rotate(-8deg);
+          <div style="position:absolute;right:-37px;top:-24px;width:42px;height:42px;border-radius:10px;
+            border:2px solid rgba(200,40,40,.75);background:rgba(220,60,60,.10);color:rgba(190,30,30,.85);font-size:10px;font-weight:900;
+            display:flex;align-items:center;justify-content:center;line-height:1.15;transform:rotate(-10deg);
+            box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),inset 0 0 0 3px rgba(200,40,40,.45);
             mix-blend-mode:multiply">맬 리<br>브레인</div>
         </div>
       </div></div>
@@ -687,15 +693,15 @@ function sec08(){
   const fail = S.s08==='a';
   return `<section id="s08" style="justify-content:flex-start"><span class="secmark">${fail?'08-a':'SC-RP-08'}</span>
     <div class="pill c">${fail?'4기 신청':'맬리브레인 4기'}</div>
-    <h2 class="head center" style="font-size:26px">${fail?'신청하지 못했습니다.':'신청이 완료되었습니다.'}</h2>
-    <div class="card" style="margin-top:34px;text-align:center;padding:36px 24px">
+    ${fail?'':`<div class="center" style="font-size:17px;font-weight:500;line-height:1.45;margin-top:14px">2027년 인천 남동구 보건소<br>치매예방 프로그램 4기</div>`}
+    <div class="card" style="margin-top:${fail?'110px':'34px'};text-align:center;padding:36px 24px">
       <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 18px;
         background:${fail?'rgba(194,65,12,.10)':'rgba(14,122,82,.10)'};
         display:flex;align-items:center;justify-content:center;font-size:28px;
         color:${fail?'#C2410C':'#0E7A52'};font-weight:900">${fail?'!':'✓'}</div>
-      <div style="font-size:17px;font-weight:800;line-height:1.4">2027년 인천 남동구 보건소<br>치매예방 프로그램 4기</div>
-      <div style="font-size:14px;color:#4E5968;line-height:1.4;margin-top:18px">
-        ${fail?'잠시 후 다시 시도해 주세요.<br>문제가 계속되면 032-453-6160으로 문의 바랍니다.'
+      <h2 class="head center" style="font-size:${fail?'23px':'26px'};margin:0;max-width:none;width:auto;white-space:nowrap">${fail?'신청이 완료되지 못했습니다':'신청이 완료되었습니다.'}</h2>
+      <div style="font-size:14px;color:#4E5968;line-height:1.4;margin-top:14px;word-break:keep-all">
+        ${fail?'잠시 후 다시 시도해 주세요.<br>문제가 계속되면 032-453-6160으로<br>문의 바랍니다.'
               :'4기가 시작될 때 보건소에서<br>연락드리겠습니다.<br>자세한 문의사항은 032-453-6160으로<br>문의 바랍니다. 감사합니다.'}</div>
     </div>
     <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:40px">
@@ -761,7 +767,7 @@ function toast(msg){ const L=phoneX(); const t=document.createElement('div'); t.
 
 /* ══════════ 변경이력 (07_변경이력.md 와 동일 내용) ══════════ */
 const HIST = {
-  meta:{first:'2026-07-21', last:'2026-10-01', ver:'v3.2'},
+  meta:{first:'2026-07-21', last:'2026-10-12', ver:'v3.2'},
   milestones:[
     ['0','2026-07-21','초안 · 최초 기획','3기 종료 리포트 기획 착수','—','8개 화면 · 오버레이 구조 · 수료 분기 초안','남동구보건소 3기 종료 리포트 기획_20260721'],
     ['—','2026-08-24','v1.0 핸드오프','개발팀 회신 반영 · 상수·산식·P코드 확정','8월 초 초안','화면설계서 · 예외 명세 · IA 3종','개발 핸드오프 v1.0'],
@@ -807,7 +813,8 @@ const HIST = {
     ['36','2026-10-01','IA','B-01 · IA-R-08 홈 카드 노출','체험 홈 · 회원 홈 구분 없이 노출 (24번)','기수 종료 후 체험 홈 상단 · 기한 없음 · 4기 홈 전환 시 사라짐','개발팀 회신 · 24번 대체'],
     ['37','2026-10-01','IA','F4 프로그램 진행 내역 재진입 (신설)','별도 진입점 없음 (IA-R-08)','내 정보 > 프로그램 진행 내역 > 3기 항목 탭 → 리포트','개발팀 회신 · 10/20 포함'],
     ['38','2026-10-01','IA','기수 종료 전용 화면 · 3기 홈 재오픈 (IA-Q-08)','—','출시 후 검토','개발팀 회신 · 일정'],
-    ['39','2026-10-12','상수','K-14 문의 전화번호 · Q-13','{전화번호} (개발 임시 032-453-6163)','032-453-6160 보건소 대표번호로 일괄 · Q-13 종결','보건소 요청 (10/12)']]
+    ['39','2026-10-12','상수','K-14 문의 전화번호 · Q-13','{전화번호} (개발 임시 032-453-6163)','032-453-6160 보건소 대표번호로 일괄 · Q-13 종결','보건소 요청 (10/12)'],
+    ['40','2026-10-12','화면','피그마 목업 기준 정합 (01 · 02 · 03 · 04 · 05 · 07 · 08 · 08-a)','프로토타입이 피그마 목업과 다름','표지 배지·왼쪽 정렬·{표기명}님,·메달 / 꺾은선 / 요일 % 강조색·멘트 캐릭터 없음 / TOP 3 / 게이지 라벨 / 증서 장식·인장 / 08 배치 / 08-a 제목','기획 결정 — 피그마 최종 (목업 우선)']]
 };
 function histTable(rows){ const H=['번호','변경일자','구분','항목','변경 전','변경 후','사유 · 근거'];
   return `<table class="histT"><thead><tr>${H.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${
