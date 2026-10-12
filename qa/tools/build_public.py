@@ -87,8 +87,11 @@ def main(data_dir, caps_dir):
         tc_html.append(f'''<div class="card" id="tc-{E(t["id"])}" data-pr="{E(t["pr"])}" data-stage="{E(t["stage"])}" data-res="{E(s.get("a") or "미실행")}">
 <div class="hd"><span class="id">{E(t["id"])}</span><span class="pill {E(t["pr"])}">{E(t["pr"])}</span><span class="pill">{E(t["stage"])}</span><span class="pill">{E(t["scr"])}</span><span class="pill">계정 {E(t["acc"])}</span><span class="pill">{E(t["env"])}</span>{bugs}</div>
 <dl>{f'<dt>사전 조건</dt><dd>{E(t["pre"])}</dd>' if t["pre"] and t["pre"] != "—" else ""}<dt>절차</dt><dd>{E(t["step"])}</dd><dt>기대 결과</dt><dd><b>{E(t["exp"])}</b></dd><dt>근거</dt><dd class="note">{E(t["ref"])}</dd>
-<dt>결과</dt><dd>Android {res_pill(s.get("a"))} · iOS {res_pill(s.get("i"))}{f' <span class="note">· {E(s.get("date"))}</span>' if s.get("date") else ""}</dd>{f'<dt>메모</dt><dd>{E(s.get("memo"))}</dd>' if s.get("memo") else ""}</dl>
-{cmp_block(fig.get(t["id"]), s.get("shots", []))}</div>''')
+</dl>
+{cmp_block(fig.get(t["id"]), s.get("shots", []))}
+<div class="judge"><div class="jt">판정</div><div>Android {res_pill(s.get("a"))} · iOS {res_pill(s.get("i"))}{f' <span class="note">· {E(s.get("date"))}</span>' if s.get("date") else ""}</div>
+<div style="margin-top:4px"><span class="note">오류 유형</span> {" ".join(f'<span class="rp fail">{E(x)}</span>' for x in s.get("types", [])) or '<span class="note">—</span>'}</div>
+<div style="margin-top:4px"><span class="note">다른 점</span> {E(s.get("memo")) or '<span class="note">아직 입력 없음</span>'}</div></div></div>''')
 
     # 결함
     def bug_card(bid, base, auto):
@@ -169,6 +172,7 @@ h1{font-size:22px;margin:0 0 4px}.sub{color:var(--ink2);margin:0 0 12px}h3{margi
 .pill{font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--nabg);color:var(--ink2);text-decoration:none}.pill.P1,.pill.bug{background:var(--failbg);color:var(--fail)}.pill.st{background:var(--accbg);color:var(--acc)}
 dl{display:grid;grid-template-columns:72px minmax(0,1fr);gap:3px 10px;margin:6px 0}dt{color:var(--ink3);font-size:12px;padding-top:2px}dd{margin:0;min-width:0;overflow-wrap:anywhere}.note{color:var(--ink3);font-size:12px}
 .rp{font-size:12px;font-weight:700;border-radius:6px;padding:1px 8px;background:var(--nabg);color:var(--ink2)}.rp.pass{background:var(--passbg);color:var(--pass)}.rp.fail{background:var(--failbg);color:var(--fail)}.rp.hold{background:var(--holdbg);color:var(--hold)}
+.judge{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.jt{font-size:13px;font-weight:700;margin-bottom:4px}
 .cmpbox{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:10px}.col{min-width:0;display:flex;flex-direction:column;gap:6px}
 .cap{font-size:12px;font-weight:700;color:var(--ink2)}.tag{font-size:11px;border-radius:999px;padding:1px 8px;background:var(--accbg);color:var(--acc)}.tag.app{background:var(--failbg);color:var(--fail)}
 .frame{border:1px solid var(--line);border-radius:12px;background:var(--bg);height:460px;display:flex;align-items:center;justify-content:center;overflow:hidden}.frame img{max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in}.frame .none{color:var(--ink3);font-size:12px;text-align:center;padding:12px}
