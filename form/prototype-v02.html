@@ -606,7 +606,7 @@ input[readonly]{background:#F1F3F5;color:var(--ink2)}
       3분 안에 신청하신 번호로 설치 링크 문자가 갑니다. 지금 못 받으시면 문자 보고 천천히 하셔도 됩니다.
     </div>
 
-    <div class="tel">잘 안 되시면 남동구 보건소로 전화 주세요<b>032-000-0000</b></div>
+    <div class="tel">잘 안 되시면 남동구 보건소로 전화 주세요<b>032-453-6160</b></div>
     <button class="btn line" id="againBtn" onclick="restart()">처음으로 돌아가기</button>
   </div>
 </div>
@@ -633,7 +633,7 @@ input[readonly]{background:#F1F3F5;color:var(--ink2)}
       <b>내가 신청한 적이 없는데 이 화면이 나왔다면</b><br>
       번호를 잘못 적으셨을 수 있어요. 번호를 다시 확인하시거나 남동구 보건소로 전화 주세요.
     </div>
-    <div class="tel">남동구 보건소<b>032-000-0000</b></div>
+    <div class="tel">남동구 보건소<b>032-453-6160</b></div>
     <button class="btn line" onclick="restart()">번호 다시 넣기</button>
   </div>
 </div>
@@ -659,7 +659,7 @@ input[readonly]{background:#F1F3F5;color:var(--ink2)}
       <b>남동구에 사시는데 동이 안 보였다면</b><br>
       최근에 이사하셨거나 동 이름이 바뀌었을 수 있어요. 남동구 보건소로 전화 주시면 도와드립니다.
     </div>
-    <div class="tel">남동구 보건소<b>032-000-0000</b></div>
+    <div class="tel">남동구 보건소<b>032-453-6160</b></div>
     <button class="btn line" onclick="go('form');openSheet('dong')">다시 골라볼게요</button>
   </div>
 </div>
@@ -681,7 +681,7 @@ input[readonly]{background:#F1F3F5;color:var(--ink2)}
       <input type="tel" id="waitTel" inputmode="numeric" maxlength="13" placeholder="010-0000-0000">
     </div>
     <button class="btn" onclick="tap('신청이 열리면 문자로 알려드릴게요')">알림 신청하기</button>
-    <div class="tel">궁금하시면 남동구 보건소로<b>032-000-0000</b></div>
+    <div class="tel">궁금하시면 남동구 보건소로<b>032-453-6160</b></div>
   </div>
 </div>
 
@@ -777,7 +777,7 @@ var T2 = '<table class="tbl"><tr><th>수집 항목</th><td>이름, 휴대전화 
 '<tr><th>수집 목적</th><td>회원 식별과 로그인, 치매예방교실 참여자 관리, 참여 결과 리포트 제공</td></tr>'+
 '<tr><th>보유·이용 기간</th><td>회원 탈퇴 시 또는 보건소 사업 종료 후 <b>1년</b>까지<br>(관계 법령에 보존 의무가 있는 경우 그 기간)</td></tr>'+
 '<tr><th>처리 위탁</th><td>문자 발송 — <b>NHN Cloud</b> (SMS·카카오 알림톡) / 서버 운영 — ○○클라우드</td></tr></table>'+
-'<b>동의를 거부할 권리</b>\n동의를 거부하실 수 있습니다. 다만 위 항목은 서비스 제공에 꼭 필요한 최소한의 정보라, 동의하지 않으시면 신청과 앱 이용이 어렵습니다.\n\n<b>대신 작성해 드린 경우</b>\n보건소 직원이 대신 입력한 신청은, 본인 휴대폰으로 받은 인증번호를 확인한 뒤 <b>본인이 직접</b> 이 동의를 눌러주셔야 유효합니다.\n\n<b>열람·정정·삭제</b>\n앱 [내 정보]에서 확인·수정하실 수 있고, 남동구 보건소(032-000-0000)로 요청하셔도 됩니다.\n개인정보 보호책임자 한상호 · 02-549-5494 · contact@onemedics.net';
+'<b>동의를 거부할 권리</b>\n동의를 거부하실 수 있습니다. 다만 위 항목은 서비스 제공에 꼭 필요한 최소한의 정보라, 동의하지 않으시면 신청과 앱 이용이 어렵습니다.\n\n<b>대신 작성해 드린 경우</b>\n보건소 직원이 대신 입력한 신청은, 본인 휴대폰으로 받은 인증번호를 확인한 뒤 <b>본인이 직접</b> 이 동의를 눌러주셔야 유효합니다.\n\n<b>열람·정정·삭제</b>\n앱 [내 정보]에서 확인·수정하실 수 있고, 남동구 보건소(032-453-6160)로 요청하셔도 됩니다.\n개인정보 보호책임자 한상호 · 02-549-5494 · contact@onemedics.net';
 
 var T3 = '<table class="tbl"><tr><th>제공받는 곳</th><td>인천광역시 남동구 보건소</td></tr>'+
 '<tr><th>제공 항목</th><td>이름, 휴대전화 번호, 거주 행정동, 프로그램 참여 기록(출석·활동 횟수), 수료 여부</td></tr>'+
@@ -791,7 +791,7 @@ var TERMS = {
  t2:{n:1, title:"개인정보 수집·이용 동의", sub:"[필수] 동의하지 않으시면 신청할 수 없어요", body:"T2"},
  t3:{n:2, title:"남동구 보건소 제3자 제공 동의", sub:"[필수] 동의하지 않으시면 신청할 수 없어요", body:"T3"},
  t4:{n:3, title:"프로그램·행사 안내 문자 받기", sub:"[선택] 동의하지 않으셔도 아무 불이익이 없어요", body:
-"<b>수집·이용 목적</b>\n치매예방교실 일정 안내, 신규 기수 모집 안내, 보건소 행사·이벤트 안내 문자 발송\n\n<b>수집 항목</b>\n이름, 휴대전화 번호\n\n<b>보유 기간</b>\n동의를 철회하실 때까지\n\n<b>동의하지 않으셔도 됩니다</b>\n이 항목은 선택입니다. 동의하지 않으셔도 치매예방교실 참여와 앱 이용에는 아무런 불이익이 없습니다.\n\n<b>철회 방법</b>\n앱 [내 정보] > [알림 설정]에서 언제든 끄실 수 있고, 남동구 보건소(032-000-0000)로 전화 주셔도 됩니다."}
+"<b>수집·이용 목적</b>\n치매예방교실 일정 안내, 신규 기수 모집 안내, 보건소 행사·이벤트 안내 문자 발송\n\n<b>수집 항목</b>\n이름, 휴대전화 번호\n\n<b>보유 기간</b>\n동의를 철회하실 때까지\n\n<b>동의하지 않으셔도 됩니다</b>\n이 항목은 선택입니다. 동의하지 않으셔도 치매예방교실 참여와 앱 이용에는 아무런 불이익이 없습니다.\n\n<b>철회 방법</b>\n앱 [내 정보] > [알림 설정]에서 언제든 끄실 수 있고, 남동구 보건소(032-453-6160)로 전화 주셔도 됩니다."}
 };
 
 /* ── 유틸 ─────────────────────────────────────────────── */
@@ -910,7 +910,7 @@ function checkPhone(){
       msg("telMsg","이 번호로 <b>이미 신청</b>하셨어요. 다시 신청하지 않으셔도 됩니다.","w",
         {label:"신청한 내용 보기",fn:"go('dup')"});                                   /* FE-06 */
     }else if(r==="blocked"){
-      msg("telMsg","이 번호로는 신청이 어렵습니다. 남동구 보건소(032-000-0000)로 전화 주시면 확인해 드릴게요.","e"); /* FE-08 */
+      msg("telMsg","이 번호로는 신청이 어렵습니다. 남동구 보건소(032-453-6160)로 전화 주시면 확인해 드릴게요.","e"); /* FE-08 */
     }else if(r==="rate"){
       msg("telMsg","확인을 너무 여러 번 하셨어요. <b>1분 뒤에</b> 다시 해주세요.","w");   /* FE-10 */
     }else{
@@ -926,7 +926,7 @@ function sendOtp(){
   var p=PRESETS[S.preset]||{};
   if(S.otpLocked){msg("otpMsg","5번 틀리셨어요. <b>10분 뒤에</b> 다시 해주세요.","e");return}
   if(p.resend===0 && S.resendCount>0){
-    msg("otpMsg","오늘은 더 보낼 수 없어요. 남동구 보건소(032-000-0000)로 전화 주세요.","e"); /* FA-07 */
+    msg("otpMsg","오늘은 더 보낼 수 없어요. 남동구 보건소(032-453-6160)로 전화 주세요.","e"); /* FA-07 */
     return;
   }
   $("fOtp").hidden=false;
@@ -937,7 +937,7 @@ function sendOtp(){
   if(p.sms==="fail"){                                                                /* FA-02 */
     S.otpSent=false;
     $("otpTtl").hidden=true;$("otp").readOnly=true;
-    msg("otpMsg","문자가 보내지지 않았어요. 번호를 다시 보시거나 남동구 보건소(032-000-0000)로 전화 주세요.","e");
+    msg("otpMsg","문자가 보내지지 않았어요. 번호를 다시 보시거나 남동구 보건소(032-453-6160)로 전화 주세요.","e");
     startCooldown(RESEND_CD);update();return;
   }
   $("otpTtl").hidden=false;
@@ -983,11 +983,11 @@ function resend(){
   var p=PRESETS[S.preset]||{};
   S.resendCount++;
   if(p.resend===0){                                                                  /* FA-07 */
-    msg("otpMsg","오늘은 더 보낼 수 없어요. 남동구 보건소(032-000-0000)로 전화 주세요.","e");
+    msg("otpMsg","오늘은 더 보낼 수 없어요. 남동구 보건소(032-453-6160)로 전화 주세요.","e");
     $("resendBtn").disabled=true;update();return;
   }
   if(S.resendCount>=RESEND_MAX){
-    msg("otpMsg","오늘은 더 보낼 수 없어요. 남동구 보건소(032-000-0000)로 전화 주세요.","e");
+    msg("otpMsg","오늘은 더 보낼 수 없어요. 남동구 보건소(032-453-6160)로 전화 주세요.","e");
     $("resendBtn").disabled=true;update();return;
   }
   S.otpExpired=false;S.otpTries=0;
@@ -1016,7 +1016,7 @@ function verifyOtp(){
     if(p.otp==="lock"||S.otpTries>=OTP_MAX_TRY){                                     /* FA-05 */
       S.otpLocked=true;clearInterval(window._ttl);clearInterval(window._cd);
       $("otpBtn").disabled=true;$("resendBtn").disabled=true;$("otpTtl").hidden=true;
-      msg("otpMsg","5번 틀리셨어요. <b>10분 뒤에</b> 다시 해주세요. 급하시면 남동구 보건소(032-000-0000)로 전화 주세요.","e");
+      msg("otpMsg","5번 틀리셨어요. <b>10분 뒤에</b> 다시 해주세요. 급하시면 남동구 보건소(032-453-6160)로 전화 주세요.","e");
     }else{                                                                           /* FA-04 */
       msg("otpMsg","번호가 다릅니다. 문자를 다시 봐주세요. <b>("+S.otpTries+"/"+OTP_MAX_TRY+"번째)</b>","e");
       el.select();
@@ -1064,7 +1064,7 @@ function dongUnknown(){                                                         
   closeSheet();
   msg("dongMsg", S.mode==="staff"
     ? "어르신께 <b>신분증이나 우편물</b>의 주소를 여쭤보고 골라주세요."
-    : "옆에 계신 <b>보건소 직원</b>께 여쭤보시거나, 남동구 보건소(032-000-0000)로 전화 주시면 알려드려요. 우편물이나 신분증에 적힌 동을 보셔도 됩니다.","w");
+    : "옆에 계신 <b>보건소 직원</b>께 여쭤보시거나, 남동구 보건소(032-453-6160)로 전화 주시면 알려드려요. 우편물이나 신분증에 적힌 동을 보셔도 됩니다.","w");
   $("dongBtn").focus();
 }
 
