@@ -443,7 +443,7 @@ function sec04b(){
   if(v==='f'){ 순위=11; 랭킹=[['박*지',3120],['이*현',3120],['최*호',2590]]; }
   if(v==='g'){ 순위=1;  랭킹=[['나',3120],['박*지',3120],['이*현',3120]]; }   /* 공동 1위 4명 → 본인 → 참여일 → 가입일 순 3명 (F-06) */
   const rankNo = i => v==='g' ? 1 : i+1;
-  const 상위 = Math.ceil(순위/D.모수*100);
+  const 상위 = Math.min(100, Math.max(1, Math.ceil(순위/D.모수*100)));  // F-06b · 모수 = 실제 인원
   const 내가상위권 = 순위<=3;
   const 최하위 = 순위===D.모수;
   const 상위권 = 랭킹.map((r,i)=>{
@@ -653,9 +653,9 @@ function sec07(){
         <div aria-hidden="true" style="position:absolute;inset:5px;border:1px solid #D9BE74;pointer-events:none"></div>
         <div aria-hidden="true" style="position:absolute;inset:9px;border:1px solid #E8D08A;pointer-events:none"></div>
         ${[['5px','5px'],['5px','50%'],['5px','calc(100% - 5px)']].flatMap(([y,x])=>[[y,x,'top'],[y,x,'bottom']]).map(([y,x,side])=>`<span aria-hidden="true" style="position:absolute;${side}:${y};left:${x};width:8px;height:8px;margin:-4px 0 0 -4px;background:#C8A44D;transform:rotate(45deg);${side==='bottom'?'margin:0 0 -4px -4px;':''}"></span>`).join('')}
-        <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;letter-spacing:.24em">${제목}</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:.24em">${제목}</div>
         <div style="width:40px;height:2px;background:#13BD7E;margin:14px 0"></div>
-        <div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:10px">${이름}</div>
+        <div style="font-size:20px;font-weight:700;margin-bottom:10px">${이름}</div>
         <div style="font-size:14px;color:#4E5968;line-height:1.4;white-space:pre-line">${본문}</div>
         ${통계?'':`<div style="display:flex;align-items:center;gap:14px;margin-top:auto;font-size:12px;color:#5C6675">
           <span>함께한 날 <b style="font-size:14px;font-weight:800;color:#191F28">${일수}일</b>
@@ -814,7 +814,9 @@ const HIST = {
     ['37','2026-10-01','IA','F4 프로그램 진행 내역 재진입 (신설)','별도 진입점 없음 (IA-R-08)','내 정보 > 프로그램 진행 내역 > 3기 항목 탭 → 리포트','개발팀 회신 · 10/20 포함'],
     ['38','2026-10-01','IA','기수 종료 전용 화면 · 3기 홈 재오픈 (IA-Q-08)','—','출시 후 검토','개발팀 회신 · 일정'],
     ['39','2026-10-12','상수','K-14 문의 전화번호 · Q-13','{전화번호} (개발 임시 032-453-6163)','032-453-6160 보건소 대표번호로 일괄 · Q-13 종결','보건소 요청 (10/12)'],
-    ['40','2026-10-12','화면','피그마 목업 기준 정합 (01 · 02 · 03 · 04 · 05 · 07 · 08 · 08-a)','프로토타입이 피그마 목업과 다름','표지 배지·왼쪽 정렬·{표기명}님,·메달 / 꺾은선 / 요일 % 강조색·멘트 캐릭터 없음 / TOP 3 / 게이지 라벨 / 증서 장식·인장 / 08 배치 / 08-a 제목','기획 결정 — 피그마 최종 (목업 우선)']]
+    ['40','2026-10-12','화면','피그마 목업 기준 정합 (01 · 02 · 03 · 04 · 05 · 07 · 08 · 08-a)','프로토타입이 피그마 목업과 다름','표지 배지·왼쪽 정렬·{표기명}님,·메달 / 꺾은선 / 요일 % 강조색·멘트 캐릭터 없음 / TOP 3 / 게이지 라벨 / 증서 장식·인장 / 08 배치 / 08-a 제목','기획 결정 — 피그마 최종 (목업 우선)'],
+    ['41','2026-10-12','산식','F-06b 상위 % · K-07 랭킹 모수','모수 823 고정 · 최소/최대 없음','CEIL(순위÷모수×100) · 1~100 · 모수 = 실제 인원(운영 823)','QA S-05 — 숫자 고정 금지'],
+    ['42','2026-10-12','화면','전 화면 글꼴 Pretendard','증서 Georgia · 일부 Inter','전 화면 Pretendard (증서 포함)','QA G-01 · 기획 결정']]
 };
 function histTable(rows){ const H=['번호','변경일자','구분','항목','변경 전','변경 후','사유 · 근거'];
   return `<table class="histT"><thead><tr>${H.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${
