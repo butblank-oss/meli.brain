@@ -65,13 +65,27 @@ footer a{color:var(--navy);font-weight:700;text-decoration:none}
     <div class="meta">
       <span>TC 75건</span>
       <span>P0 32 · P1 37 · P2 6</span>
-      <span>개발본 2026-09-29 기준</span>
+      <span>작성 기준 2026-09-29 개발본</span>
+      <span>대상 namdong4 (dev)</span>
       <span>작성 2026-10-02</span>
     </div>
   </div>
 </header>
 
 <main>
+
+<div class="note">
+  <b>QA 대상 주소가 바뀌었습니다.</b>
+  아래 TC 75건은 <code>dev-meli-web.d2sh1su7nq2k6c.amplifyapp.com/invitations/namdong3/form</code>
+  (2026-09-29 확인본)을 보고 쓴 것입니다. 지금 QA를 돌릴 곳은
+  <b><a href="https://dev-meli-web.meli.health/invitations/namdong4" style="color:#6A4A11">dev-meli-web.meli.health/invitations/namdong4</a></b>
+  (4기 초대 링크)이고, 신청자 확인은
+  <b><a href="https://dev-care-center.meli.health" style="color:#6A4A11">dev-care-center.meli.health</a></b>
+  → "두뇌운동 치매예방교실-27년"(4기) → 신청자 관리에서 합니다.<br><br>
+  <b>제출하면 개발 서버에 저장되고 실제 문자가 발송됩니다. 본인 번호로만 확인하고, 끝난 건은 지우세요.</b><br>
+  주소와 기수가 모두 바뀌었으니 <b>화면이 그대로인지 먼저 한 번 훑고</b> TC를 돌립니다.
+  바뀐 곳이 있으면 해당 TC의 기대결과를 고쳐야 합니다.
+</div>
 
 <div class="alert">
   <b>개발본은 기획본과 승인 정책이 반대입니다.</b>
@@ -176,7 +190,8 @@ footer a{color:var(--navy);font-weight:700;text-decoration:none}
 
 <footer>
   <div class="in">
-    신청폼 QA · 개발본 <code>dev-meli-web /invitations/namdong3/form</code> (2026-09-29 dev 반영) 기준 · 작성 2026-10-02<br>
+    신청폼 QA · 작성 기준 <code>namdong3/form</code> (2026-09-29 dev 반영) · 작성 2026-10-02<br>
+    현재 QA 대상 <code>dev-meli-web.meli.health/invitations/namdong4</code> · 확인은 <code>dev-care-center.meli.health</code><br>
     TC 수정은 <code>qa/_tc_data.py</code> 에서 하고 <code>python3 build_qa.py</code> 를 다시 돌리면
     CSV와 HTML이 함께 바뀝니다. 두 파일을 따로 고치지 마세요.<br><br>
     <a href="../index.html">← 신청폼 목차로</a>

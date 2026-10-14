@@ -105,7 +105,7 @@ padding:15px 17px;font-size:14px;line-height:1.75;color:#6A4A11;margin-bottom:22
 </style></head><body>
 <header><div class="in">
 <h1>신청폼 QA 테스트 케이스</h1>
-<p>개발본 <code>dev-meli-web /invitations/namdong3/form</code> 기준 · {len(TC)}건 (P0 {sum(1 for t in TC if t[2]=="P0")} · P1 {sum(1 for t in TC if t[2]=="P1")} · P2 {sum(1 for t in TC if t[2]=="P2")})</p>
+<p>작성 기준 <code>namdong3/form</code> (2026-09-29 개발본) · 현재 대상 <code>dev-meli-web.meli.health/invitations/namdong4</code> · {len(TC)}건 (P0 {sum(1 for t in TC if t[2]=="P0")} · P1 {sum(1 for t in TC if t[2]=="P1")} · P2 {sum(1 for t in TC if t[2]=="P2")})</p>
 <div class="bar">
 <button type="button" data-f="all" class="on">전체</button>
 <button type="button" data-f="P0">P0만</button>
