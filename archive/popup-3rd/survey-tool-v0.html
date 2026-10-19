@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>맬리브레인 팝업 · 설문 입력</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101A2E;--ink2:#3C4761;--mut:#6E7890;--faint:#98A0B4;
+  --paper:#EEF0F4;--card:#FFF;--line:#D9DDE6;--line2:#EAEDF2;--hov:#F5F7FA;
+  --a:#15654A;--aBg:#E2EFE9;--b:#A85A0C;--bBg:#F8EDDD;--c:#9C2B2B;--cBg:#F7E5E5;
+  --blue:#2244C4;--blueBg:#E2E8FB;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#EDEFF4;--ink2:#C3C9D6;--mut:#98A0B4;--faint:#6E7890;
+  --paper:#0E1219;--card:#181E29;--line:#2B3342;--line2:#222936;--hov:#1F2634;
+  --a:#5FC79E;--aBg:#16302A;--b:#E0A050;--bBg:#332616;--c:#E08080;--cBg:#331C1C;
+  --blue:#7D9BF5;--blueBg:#1A2340;}}
+:root[data-theme="dark"]{
+  --ink:#EDEFF4;--ink2:#C3C9D6;--mut:#98A0B4;--faint:#6E7890;
+  --paper:#0E1219;--card:#181E29;--line:#2B3342;--line2:#222936;--hov:#1F2634;
+  --a:#5FC79E;--aBg:#16302A;--b:#E0A050;--bBg:#332616;--c:#E08080;--cBg:#331C1C;
+  --blue:#7D9BF5;--blueBg:#1A2340;}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Gothic A1',-apple-system,BlinkMacSystemFont,'Malgun Gothic',system-ui,sans-serif;
+  font-size:15px;line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;overflow:hidden}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
+
+#top{flex:0 0 auto;background:var(--card);border-bottom:1px solid var(--line);
+  padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+#top h1{font-size:15px;font-weight:800;margin:0;letter-spacing:-.02em;white-space:nowrap}
+#top h1 small{font-weight:500;color:var(--faint);font-size:12px;margin-left:8px}
+.prog{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.pchip{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:7px;background:var(--paper);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.pchip.A{background:var(--aBg);color:var(--a)}
+.pchip.B{background:var(--bBg);color:var(--b)}
+.pchip.C{background:var(--cBg);color:var(--c)}
+.tbtn{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:5px 11px;
+  font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.tbtn:hover{background:var(--hov)}
+.tbtn.pri{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.tbtn.adm{background:var(--blueBg);color:var(--blue);border-color:transparent}
+#wholab{display:flex;align-items:center;gap:7px;background:var(--blueBg);padding:3px 8px 3px 11px;border-radius:8px;white-space:nowrap}
+#wholab span{font-size:11.5px;font-weight:800;color:var(--blue)}
+#who{font-size:13px;font-weight:700;color:var(--ink);background:var(--card);
+  padding:4px 7px;border-radius:6px;cursor:pointer;border:1px solid var(--line)}
+#who.unset{background:var(--cBg);color:var(--c);border-color:var(--c)}
+#dbstate{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap}
+
+#main{flex:1 1 auto;display:flex;min-height:0}
+#side{flex:0 0 330px;border-right:1px solid var(--line);display:flex;flex-direction:column;
+  background:var(--card);min-height:0}
+#filters{flex:0 0 auto;padding:11px 13px;border-bottom:1px solid var(--line2)}
+#qwrap{position:relative;margin-bottom:8px}
+#q{width:100%;padding:8px 32px 8px 11px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+#qx{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:23px;height:23px;border:none;
+  background:var(--line);color:var(--ink2);border-radius:50%;cursor:pointer;font-size:11px;line-height:1;
+  display:none;padding:0}
+#qx:hover{background:var(--c);color:#fff}
+#qwrap.has #qx{display:block}
+.frow{display:flex;gap:5px;flex-wrap:wrap}
+.fchip{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;border:1px solid var(--line);
+  background:transparent;cursor:pointer;color:var(--mut)}
+.fchip[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+#list .emptylist{font-size:13px;color:var(--ink2);line-height:1.75;padding:18px 14px 14px}
+#list .emptylist b{color:var(--ink)}
+#listmeta{font-size:11.5px;color:var(--faint);padding:7px 14px 3px;font-variant-numeric:tabular-nums}
+#list{flex:1 1 auto;overflow-y:auto;min-height:0}
+.row{display:flex;align-items:center;gap:9px;padding:8px 13px;border-bottom:1px solid var(--line2);
+  cursor:pointer;width:100%;background:transparent;border-left:4px solid transparent;text-align:left}
+.row:hover{background:var(--hov)}
+.row[aria-current="true"]{background:var(--blueBg)}
+.row.A{border-left-color:var(--a)} .row.B{border-left-color:var(--b)} .row.C{border-left-color:var(--c)}
+.rnm{font-weight:700;font-size:14.5px;flex:0 0 auto;min-width:60px}
+.rmeta{font-size:11.5px;color:var(--mut);flex:1 1 auto;font-variant-numeric:tabular-nums;min-width:0}
+.rst{font-size:10.5px;font-weight:800;padding:2px 6px;border-radius:5px;flex:0 0 auto;white-space:nowrap}
+.st-done{background:var(--aBg);color:var(--a)}
+.st-prog{background:var(--blueBg);color:var(--blue)}
+.st-no{background:var(--cBg);color:var(--c)}
+
+#pane{flex:1 1 auto;overflow-y:auto;min-height:0;padding:0 0 70px}
+.inner{max-width:720px;margin:0 auto;padding:22px 26px}
+#empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--faint);
+  font-size:15px;text-align:center;padding:30px;line-height:1.8}
+
+.shead{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.sname{font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.tbadge{font-size:12.5px;font-weight:800;padding:5px 11px;border-radius:8px;margin-top:5px}
+.tbadge.A{background:var(--aBg);color:var(--a)}
+.tbadge.B{background:var(--bBg);color:var(--b)}
+.tbadge.C{background:var(--cBg);color:var(--c)}
+.sfacts{font-size:13px;color:var(--mut);margin:0 0 4px;font-variant-numeric:tabular-nums}
+.vcard{background:var(--card);border:2px solid var(--blue);border-radius:13px;padding:20px 22px;margin:18px 0 0}
+.vh{font-size:16px;font-weight:800;margin-bottom:14px}
+.vask{font-size:22px;font-weight:800;letter-spacing:-.02em;color:var(--blue);margin-bottom:18px;line-height:1.35}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
+.vcell{background:var(--paper);border-radius:9px;padding:10px 13px}
+.vcell.big{grid-column:span 2;background:var(--blueBg)}
+.vl{display:block;font-size:11.5px;font-weight:700;color:var(--mut);margin-bottom:2px}
+.vv{display:block;font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.vcell.big .vv{font-size:27px;letter-spacing:.09em}
+.vbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.vbtns .tbtn{padding:9px 16px;font-size:13.5px}
+.idok{display:flex;align-items:center;gap:11px;flex-wrap:wrap;background:var(--aBg);color:var(--a);
+  border-radius:9px;padding:8px 14px;margin:14px 0 0;font-size:12.5px;font-weight:800}
+.idokv{color:var(--ink2);font-weight:700;font-variant-numeric:tabular-nums}
+.idre{margin-left:auto;background:none;border:none;color:var(--mut);font-size:12px;font-weight:700;
+  text-decoration:underline;cursor:pointer;padding:0}
+.idbox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--blueBg);
+  border-radius:10px;padding:11px 15px;margin:14px 0 0;font-size:14px}
+.idlab{font-size:11.5px;font-weight:800;color:var(--blue)}
+.idval{font-variant-numeric:tabular-nums;font-size:17px;font-weight:800;letter-spacing:.02em}
+.idval b{font-size:11.5px;font-weight:700;color:var(--mut);margin-right:5px;letter-spacing:0}
+.idnote{font-size:12.5px;color:var(--ink2);flex:1 1 100%}
+.sguide{font-size:13.5px;color:var(--ink2);background:var(--paper);border-radius:9px;
+  padding:11px 14px;margin:14px 0 22px;border-left:3px solid var(--line);white-space:pre-wrap}
+.lock{background:var(--bBg);color:var(--b);font-size:13px;font-weight:700;padding:9px 13px;
+  border-radius:9px;margin-bottom:16px}
+
+.qb{margin-bottom:21px}
+.ql{font-weight:700;font-size:15.5px;margin-bottom:8px;display:block}
+.ql .req{color:var(--c);margin-left:4px}
+.ql .hint{display:block;font-weight:500;font-size:12.5px;color:var(--mut);margin-top:2px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 12px;
+  font-size:14px;cursor:pointer;color:var(--ink2)}
+.opt:hover{background:var(--hov)}
+.opt[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink);font-weight:700}
+.opt.many[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+textarea,input[type=text]{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;
+  background:var(--card);resize:vertical}
+textarea{min-height:62px}
+select{border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--card)}
+.sec{font-size:12px;font-weight:800;color:var(--faint);margin:30px 0 13px;
+  padding-bottom:7px;border-bottom:1px solid var(--line)}
+
+#save{position:fixed;right:22px;bottom:20px;background:var(--ink);color:var(--card);
+  font-size:13px;font-weight:700;padding:9px 16px;border-radius:999px;opacity:0;
+  transition:opacity .25s;pointer-events:none;z-index:120}
+#save.on{opacity:1}
+
+/* admin */
+#admin{position:fixed;inset:0;background:var(--paper);z-index:90;display:none;flex-direction:column}
+#admin.on{display:flex}
+#abar{flex:0 0 auto;background:var(--card);border-bottom:1px solid var(--line);padding:11px 18px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#abar h2{font-size:15px;font-weight:800;margin:0}
+#abody{flex:1 1 auto;overflow-y:auto;min-height:0}
+#abody .inner{max-width:840px}
+.atabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.atab{font-size:13px;font-weight:700;padding:6px 13px;border-radius:999px;border:1px solid var(--line);
+  background:var(--card);cursor:pointer;color:var(--mut)}
+.atab[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:11px;margin-bottom:10px;overflow:hidden}
+.qcard.isSec{background:var(--paper)}
+.qhead{display:flex;align-items:center;gap:9px;padding:11px 14px;cursor:pointer}
+.qtype{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:5px;background:var(--paper);
+  color:var(--mut);flex:0 0 auto}
+.qcard.isSec .qtype{background:var(--ink);color:var(--card)}
+.qtext{flex:1 1 auto;font-weight:700;font-size:14.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qkey{font-size:11px;color:var(--faint);flex:0 0 auto}
+.qacts{display:flex;gap:3px;flex:0 0 auto}
+.mini{width:26px;height:26px;border:1px solid var(--line);background:var(--card);border-radius:6px;
+  cursor:pointer;font-size:13px;font-weight:700;color:var(--mut);line-height:1;padding:0}
+.mini:hover{background:var(--hov);color:var(--ink)}
+.mini.del:hover{background:var(--cBg);color:var(--c);border-color:var(--c)}
+.qedit{padding:4px 14px 16px;border-top:1px solid var(--line2);display:none}
+.qcard.open .qedit{display:block}
+.fld{margin-top:13px}
+.fld label{display:block;font-size:12px;font-weight:700;color:var(--mut);margin-bottom:5px}
+.frow2{display:flex;gap:10px;flex-wrap:wrap}
+.frow2 .fld{flex:1 1 180px}
+.note{font-size:13px;color:var(--ink2);background:var(--blueBg);border-radius:9px;padding:11px 14px;margin-bottom:20px}
+
+#cards{position:fixed;inset:0;background:#fff;color:#000;z-index:100;overflow:auto;display:none;padding:26px}
+#cards.on{display:block}
+#cards .bar{display:flex;gap:10px;margin-bottom:22px}
+.cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gcard{border:2.5px solid #111;border-radius:12px;padding:30px 16px;text-align:center;
+  font-size:26px;font-weight:800;line-height:1.3;min-height:150px;display:flex;
+  align-items:center;justify-content:center;break-inside:avoid}
+@media print{
+  body{overflow:visible} #top,#main,#save,#admin{display:none!important}
+  #cards{position:static;display:block;padding:0} #cards .bar{display:none}
+  .cardgrid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .gcard{min-height:230px;font-size:30px}
+}
+@media (max-width:860px){
+  #main{flex-direction:column} #side{flex:0 0 auto;max-height:36vh;border-right:none;border-bottom:1px solid var(--line)}
+  .inner{padding:18px 16px} .cardgrid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div id="top">
+  <h1>맬리브레인 팝업 · 설문 입력<small>10/30 남동구 보건소</small></h1>
+  <label id="wholab"><span>입력자</span><select id="who"></select></label>
+  <span id="dbstate"></span>
+  <div class="prog" id="prog"></div>
+  <button class="tbtn adm" id="admbtn" type="button" style="display:none">설문지 편집</button>
+  <button class="tbtn" id="cardsbtn" type="button">게임 카드 인쇄</button>
+  <button class="tbtn" id="csvbtn" type="button">응답 내보내기</button>
+</div>
+
+<div id="main">
+  <div id="side">
+    <div id="filters">
+      <div id="qwrap"><input id="q" type="text" placeholder="이름 · 전화 뒷 4자리 · 생년" autocomplete="off"><button id="qx" type="button" title="지우기">✕</button></div>
+      <div class="frow" id="ftrack"></div>
+      <div class="frow" id="fstat" style="margin-top:5px"></div>
+      <div class="frow" id="fco" style="margin-top:5px"></div>
+      <button class="tbtn" id="addbtn" type="button" style="margin-top:9px;width:100%">명단에 없는 분 추가</button>
+    </div>
+    <div id="listmeta"></div>
+    <div id="list"></div>
+  </div>
+  <div id="pane"><div id="empty">왼쪽에서 어르신을 찾아 선택하세요.<br>트랙과 질문지가 자동으로 맞춰집니다.</div></div>
+</div>
+
+<div id="save">저장됨</div>
+
+<div id="admin">
+  <div id="abar">
+    <h2>설문지 편집</h2>
+    <span id="ameta" style="font-size:12px;color:var(--faint)"></span>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="tbtn" id="areset" type="button">기본값으로 되돌리기</button>
+      <button class="tbtn" id="acancel" type="button">취소</button>
+      <button class="tbtn pri" id="asave" type="button">저장하고 현장에 반영</button>
+    </div>
+  </div>
+  <div id="abody"><div class="inner" id="ainner"></div></div>
+</div>
+
+<div id="cards">
+  <div class="bar">
+    <button class="tbtn" onclick="window.print()">인쇄</button>
+    <button class="tbtn" onclick="document.getElementById('cards').classList.remove('on')">닫기</button>
+    <span style="font-size:13px;color:#555;align-self:center">A4 가로로 뽑아 코팅하면 트랙 B에서 짚어 보여드리기 좋습니다.</span>
+  </div>
+  <div class="cardgrid" id="cardgrid"></div>
+</div>
+
+<script>
+const ROSTER = [["p0001", "참여자001", "5305", "", "80", "?", 5, 36, "A", "26"], ["p0002", "참여자002", "2471", "", "80", "?", 97, 2, "C", "26"], ["p0003", "참여자003", "6468", "", "80", "?", 10, 11560, "A", "26"], ["p0004", "참여자004", "0791", "", "60", "?", -1, 0, "C", "2"], ["p0005", "참여자005", "1186", "", "60", "?", 78, 2319, "B", "26"], ["p0006", "참여자006", "8779", "", "60", "?", 402, 87, "B", "2"], ["p0007", "참여자007", "1542", "", "70", "?", 3, 963, "A", "26"], ["p0008", "참여자008", "5991", "", "60", "?", 45, 36, "B", "26"], ["p0009", "참여자009", "9548", "", "70", "?", -1, 0, "C", "26"], ["p0010", "참여자010", "0950", "", "60", "?", -1, 0, "C", "26"], ["p0011", "참여자011", "8313", "", "70", "?", 13, 17, "A", "2"], ["p0012", "참여자012", "3517", "", "70", "?", 189, 84, "B", "26"], ["p0013", "참여자013", "0614", "", "70", "?", 5, 869, "A", "26"], ["p0014", "참여자014", "1408", "", "70", "?", 46, 3, "C", "26"], ["p0015", "참여자015", "7104", "", "60", "?", -1, 0, "C", "26"], ["p0016", "참여자016", "6851", "", "70", "?", 404, 376, "B", "2"], ["p0017", "참여자017", "1144", "", "70", "?", -1, 0, "C", "26"], ["p0018", "참여자018", "3943", "", "80", "?", 690, 46, "B", "2"], ["p0019", "참여자019", "1486", "", "70", "?", 24, 191, "A", "26"], ["p0020", "참여자020", "9028", "", "?", "?", 12, 154, "A", "26"], ["p0021", "참여자021", "6955", "", "60", "?", -1, 0, "C", "2"], ["p0022", "참여자022", "0968", "", "80", "?", -1, 0, "C", "26"], ["p0023", "참여자023", "9264", "", "80", "?", 124, 315, "B", "2"], ["p0024", "참여자024", "2028", "", "70", "?", 20, 201, "A", "26"], ["p0025", "참여자025", "3657", "", "80", "?", 5, 7, "A", "26"], ["p0026", "참여자026", "9551", "", "80", "?", -1, 0, "C", "26"], ["p0027", "참여자027", "1013", "", "70", "?", 45, 11, "C", "26"], ["p0028", "참여자028", "9455", "", "50", "?", 7, 10, "A", "26"], ["p0029", "참여자029", "9593", "", "60", "?", 1, 126, "A", "26"], ["p0030", "참여자030", "6499", "", "60", "?", 364, 372, "B", "2"], ["p0031", "참여자031", "0812", "", "60", "?", 0, 4133, "A", "26"], ["p0032", "참여자032", "3622", "", "70", "?", 537, 2, "C", "2"], ["p0033", "참여자033", "0763", "", "70", "?", 412, 16, "C", "2"], ["p0034", "참여자034", "9120", "", "80", "?", 382, 1217, "B", "2"], ["p0035", "참여자035", "2181", "", "70", "?", 60, 26, "B", "26"], ["p0036", "참여자036", "4744", "", "70", "?", 0, 2863, "A", "26"], ["p0037", "참여자037", "6867", "", "80", "?", -1, 0, "C", "26"], ["p0038", "참여자038", "2363", "", "?", "?", 486, 22, "B", "2"], ["p0039", "참여자039", "8858", "", "60", "?", 473, 21, "B", "2"], ["p0040", "참여자040", "1929", "", "60", "?", 119, 1028, "B", "26"], ["p0041", "참여자041", "9353", "", "80", "?", 430, 81, "B", "2"], ["p0042", "참여자042", "5054", "", "?", "?", 86, 89, "B", "2"], ["p0043", "참여자043", "9179", "", "60", "?", -1, 0, "C", "2"], ["p0044", "참여자044", "2961", "", "70", "?", 82, 3, "C", "26"], ["p0045", "참여자045", "1688", "", "70", "?", 6, 120, "A", "26"], ["p0046", "참여자046", "9528", "", "60", "?", 0, 4786, "A", "26"], ["p0047", "참여자047", "9358", "", "?", "?", 502, 100, "B", "2"], ["p0048", "참여자048", "3078", "", "70", "?", 0, 2219, "A", "26"], ["p0049", "참여자049", "6101", "", "80", "?", 97, 1, "C", "26"], ["p0050", "참여자050", "1596", "", "70", "?", 5, 214, "A", "2"], ["p0051", "참여자051", "8974", "", "70", "?", 10, 207, "A", "26"], ["p0052", "참여자052", "1028", "", "70", "?", 41, 169, "B", "26"], ["p0053", "참여자053", "9246", "", "80", "?", 6, 87, "A", "2"], ["p0054", "참여자054", "0976", "", "?", "?", 515, 16, "C", "2"], ["p0055", "참여자055", "3374", "", "90", "?", 547, 7, "C", "2"], ["p0056", "참여자056", "8133", "", "80", "?", 33, 1, "C", "26"], ["p0057", "참여자057", "8711", "", "60", "?", -1, 0, "C", "26"], ["p0058", "참여자058", "7005", "", "?", "?", 145, 19, "C", "2"], ["p0059", "참여자059", "5146", "", "?", "?", -1, 0, "C", "2"], ["p0060", "참여자060", "7628", "", "70", "?", 90, 22, "B", "26"], ["p0061", "참여자061", "9593", "", "60", "?", -1, 0, "C", "26"], ["p0062", "참여자062", "7424", "", "?", "?", 444, 93, "B", "2"], ["p0063", "참여자063", "5924", "", "80", "?", 21, 1582, "A", "26"], ["p0064", "참여자064", "4911", "", "70", "?", 93, 26, "B", "26"], ["p0065", "참여자065", "4070", "", "70", "?", 97, 7, "C", "26"], ["p0066", "참여자066", "2945", "", "70", "?", 0, 1190, "A", "26"], ["p0067", "참여자067", "3999", "", "70", "?", 62, 2, "C", "26"], ["p0068", "참여자068", "1341", "", "80", "?", -1, 0, "C", "2"], ["p0069", "참여자069", "9411", "", "80", "?", 0, 3087, "A", "26"], ["p0070", "참여자070", "4919", "", "80", "?", 12, 1397, "A", "26"], ["p0071", "참여자071", "8604", "", "90", "?", 1, 8534, "A", "2"], ["p0072", "참여자072", "8111", "", "?", "?", 876, 8, "C", "?"], ["p0073", "참여자073", "5627", "", "70", "?", 544, 112, "B", "2"], ["p0074", "참여자074", "7353", "", "70", "?", 118, 12, "C", "26"], ["p0075", "참여자075", "4717", "", "?", "?", 319, 3279, "B", "26"], ["p0076", "참여자076", "9977", "", "70", "?", 187, 106, "B", "2"], ["p0077", "참여자077", "1199", "", "60", "?", 552, 2, "C", "2"], ["p0078", "참여자078", "1934", "", "70", "?", 0, 113, "A", "26"], ["p0079", "참여자079", "8387", "", "?", "?", -1, 0, "C", "2"], ["p0080", "참여자080", "6850", "", "70", "?", 0, 4095, "A", "26"], ["p0081", "참여자081", "2702", "", "80", "?", 553, 20, "C", "2"], ["p0082", "참여자082", "5604", "", "70", "?", -1, 0, "C", "26"], ["p0083", "참여자083", "2490", "", "70", "?", 3, 6125, "A", "26"], ["p0084", "참여자084", "8011", "", "60", "?", -1, 0, "C", "26"], ["p0085", "참여자085", "6909", "", "?", "?", 544, 8, "C", "?"], ["p0086", "참여자086", "0642", "", "70", "?", 90, 16, "C", "26"], ["p0087", "참여자087", "1271", "", "80", "?", -1, 0, "C", "26"], ["p0088", "참여자088", "9143", "", "70", "?", 411, 1424, "B", "2"], ["p0089", "참여자089", "9388", "", "70", "?", 178, 5, "C", "26"], ["p0090", "참여자090", "5140", "", "60", "?", 4, 83, "A", "26"], ["p0091", "참여자091", "5572", "", "70", "?", -1, 0, "C", "26"], ["p0092", "참여자092", "5737", "", "60", "?", 301, 58, "B", "26"], ["p0093", "참여자093", "9738", "", "70", "?", 144, 6, "C", "26"], ["p0094", "참여자094", "8137", "", "70", "?", 0, 3669, "A", "26"], ["p0095", "참여자095", "9501", "", "80", "?", 77, 13, "C", "26"], ["p0096", "참여자096", "7474", "", "70", "?", 23, 1046, "A", "2"], ["p0097", "참여자097", "1126", "", "?", "?", 62, 5, "C", "2"], ["p0098", "참여자098", "1533", "", "60", "?", 129, 1, "C", "26"], ["p0099", "참여자099", "4422", "", "60", "?", 58, 1, "C", "26"], ["p0100", "참여자100", "7767", "", "60", "?", 556, 31, "B", "2"], ["p0101", "참여자101", "1064", "", "70", "?", 3, 2915, "A", "26"], ["p0102", "참여자102", "0994", "", "60", "?", 25, 110, "A", "26"], ["p0103", "참여자103", "5072", "", "?", "?", 523, 16, "C", "2"], ["p0104", "참여자104", "9469", "", "70", "?", 201, 54, "B", "2"], ["p0105", "참여자105", "7301", "", "40", "?", 221, 1069, "B", "2"], ["p0106", "참여자106", "4662", "", "80", "?", 417, 3, "C", "2"], ["p0107", "참여자107", "6320", "", "70", "?", 0, 3279, "A", "26"], ["p0108", "참여자108", "5685", "", "?", "?", 533, 25, "B", "2"], ["p0109", "참여자109", "0369", "", "70", "?", 29, 2975, "A", "2"], ["p0110", "참여자110", "7564", "", "90", "?", 466, 131, "B", "2"], ["p0111", "참여자111", "5823", "", "80", "?", 168, 536, "B", "2"], ["p0112", "참여자112", "2753", "", "60", "?", 137, 1, "C", "26"], ["p0113", "참여자113", "1918", "", "60", "?", -1, 0, "C", "2"], ["p0114", "참여자114", "8088", "", "60", "?", 20, 67, "A", "26"], ["p0115", "참여자115", "0965", "", "50", "?", 417, 4, "C", "2"], ["p0116", "참여자116", "3575", "", "80", "?", 531, 10, "C", "2"], ["p0117", "참여자117", "4709", "", "60", "?", 94, 112, "B", "26"], ["p0118", "참여자118", "2119", "", "70", "?", 458, 34, "B", "2"], ["p0119", "참여자119", "4056", "", "70", "?", 0, 3450, "A", "26"], ["p0120", "참여자120", "6519", "", "80", "?", 72, 224, "B", "2"], ["p0121", "참여자121", "6405", "", "60", "?", 52, 5, "C", "26"], ["p0122", "참여자122", "8134", "", "70", "?", 20, 7, "A", "26"], ["p0123", "참여자123", "1320", "", "70", "?", 195, 16, "C", "26"], ["p0124", "참여자124", "2725", "", "70", "?", 7, 11, "A", "26"], ["p0125", "참여자125", "7359", "", "80", "?", 139, 17, "C", "26"], ["p0126", "참여자126", "6580", "", "70", "?", 11, 61, "A", "26"], ["p0127", "참여자127", "9002", "", "70", "?", -1, 0, "C", "26"], ["p0128", "참여자128", "4552", "", "70", "?", 147, 1424, "B", "26"], ["p0129", "참여자129", "2243", "", "70", "?", 97, 6, "C", "26"], ["p0130", "참여자130", "7053", "", "60", "?", 94, 6, "C", "26"], ["p0131", "참여자131", "9014", "", "80", "?", 532, 6, "C", "2"], ["p0132", "참여자132", "4561", "", "60", "?", 40, 2, "C", "26"], ["p0133", "참여자133", "6804", "", "70", "?", 20, 28, "A", "26"], ["p0134", "참여자134", "5878", "", "70", "?", 5, 88, "A", "26"], ["p0135", "참여자135", "6233", "", "70", "?", 910, 5, "C", "2"], ["p0136", "참여자136", "3780", "", "60", "?", -1, 0, "C", "26"], ["p0137", "참여자137", "2472", "", "60", "?", 93, 40, "B", "26"], ["p0138", "참여자138", "1359", "", "60", "?", 12, 121, "A", "26"], ["p0139", "참여자139", "2887", "", "?", "?", 6, 3397, "A", "26"], ["p0140", "참여자140", "2478", "", "60", "?", 3, 13912, "A", "2"], ["p0141", "참여자141", "3800", "", "70", "?", 5, 310, "A", "26"], ["p0142", "참여자142", "3822", "", "70", "?", 399, 51, "B", "2"], ["p0143", "참여자143", "0197", "", "80", "?", 187, 1, "C", "26"], ["p0144", "참여자144", "7945", "", "70", "?", 454, 59, "B", "2"], ["p0145", "참여자145", "9652", "", "60", "?", 51, 5, "C", "26"], ["p0146", "참여자146", "2987", "", "?", "?", 195, 209, "B", "26"], ["p0147", "참여자147", "4304", "", "50", "?", -1, 0, "C", "26"], ["p0148", "참여자148", "4619", "", "60", "?", 305, 2138, "B", "26"], ["p0149", "참여자149", "0067", "", "60", "?", 0, 990, "A", "26"], ["p0150", "참여자150", "2386", "", "80", "?", 473, 34, "B", "2"], ["p0151", "참여자151", "6864", "", "60", "?", -1, 0, "C", "26"], ["p0152", "참여자152", "8758", "", "60", "?", -1, 0, "C", "26"], ["p0153", "참여자153", "6049", "", "60", "?", 502, 410, "B", "2"], ["p0154", "참여자154", "9991", "", "40", "?", 411, 42, "B", "2"], ["p0155", "참여자155", "9278", "", "?", "?", 20, 3, "A", "26"], ["p0156", "참여자156", "5220", "", "?", "?", 504, 203, "B", "2"], ["p0157", "참여자157", "2056", "", "70", "?", 448, 4, "C", "2"], ["p0158", "참여자158", "8445", "", "70", "?", 97, 2, "C", "26"], ["p0159", "참여자159", "0884", "", "60", "?", 74, 31, "B", "26"], ["p0160", "참여자160", "7481", "", "80", "?", 45, 29, "B", "26"], ["p0161", "참여자161", "9163", "", "70", "?", 0, 4704, "A", "26"], ["p0162", "참여자162", "6428", "", "80", "?", 2, 16, "A", "26"], ["p0163", "참여자163", "6521", "", "80", "?", 94, 4, "C", "26"], ["p0164", "참여자164", "6536", "", "60", "?", 111, 17, "C", "26"], ["p0165", "참여자165", "6457", "", "80", "?", 201, 42, "B", "26"], ["p0166", "참여자166", "1696", "", "80", "?", 553, 3, "C", "2"], ["p0167", "참여자167", "7889", "", "60", "?", 7, 89, "A", "26"], ["p0168", "참여자168", "6560", "", "80", "?", -1, 0, "C", "2"], ["p0169", "참여자169", "1019", "", "80", "?", 88, 71, "B", "26"], ["p0170", "참여자170", "3122", "", "60", "?", 3, 126, "A", "26"], ["p0171", "참여자171", "1103", "", "60", "?", 61, 33, "B", "26"], ["p0172", "참여자172", "3420", "", "60", "?", 129, 2, "C", "26"], ["p0173", "참여자173", "7219", "", "70", "?", 0, 7089, "A", "26"], ["p0174", "참여자174", "2659", "", "70", "?", 97, 9, "C", "26"], ["p0175", "참여자175", "1801", "", "60", "?", 4, 42, "A", "26"], ["p0176", "참여자176", "5571", "", "70", "?", 406, 5, "C", "2"], ["p0177", "참여자177", "9842", "", "60", "?", -1, 0, "C", "26"], ["p0178", "참여자178", "0861", "", "60", "?", 97, 12, "C", "26"], ["p0179", "참여자179", "1677", "", "?", "?", -1, 0, "C", "2"], ["p0180", "참여자180", "0003", "", "?", "?", -1, 0, "C", "2"], ["p0181", "참여자181", "9286", "", "70", "?", 54, 8, "C", "26"], ["p0182", "참여자182", "2478", "", "70", "?", 102, 1622, "B", "2"], ["p0183", "참여자183", "8791", "", "?", "?", 459, 45, "B", "2"], ["p0184", "참여자184", "1662", "", "70", "?", 2, 14, "A", "26"], ["p0185", "참여자185", "5957", "", "70", "?", 80, 12, "C", "26"], ["p0186", "참여자186", "0417", "", "60", "?", 97, 2, "C", "2"], ["p0187", "참여자187", "1152", "", "60", "?", 128, 2, "C", "26"], ["p0188", "참여자188", "3407", "", "?", "?", -1, 0, "C", "2"], ["p0189", "참여자189", "6164", "", "60", "?", -1, 0, "C", "26"], ["p0190", "참여자190", "2433", "", "70", "?", 536, 5, "C", "2"], ["p0191", "참여자191", "4132", "", "60", "?", 89, 32, "B", "26"], ["p0192", "참여자192", "5691", "", "?", "?", -1, 0, "C", "2"], ["p0193", "참여자193", "9867", "", "60", "?", -1, 0, "C", "26"], ["p0194", "참여자194", "5966", "", "60", "?", 502, 7, "C", "2"], ["p0195", "참여자195", "7768", "", "60", "?", 0, 1704, "A", "2"], ["p0196", "참여자196", "2012", "", "60", "?", 494, 2, "C", "2"], ["p0197", "참여자197", "1889", "", "60", "?", 25, 517, "A", "26"], ["p0198", "참여자198", "7996", "", "70", "?", -1, 0, "C", "26"], ["p0199", "참여자199", "7634", "", "70", "?", 42, 1077, "B", "26"], ["p0200", "참여자200", "7870", "", "60", "?", 66, 14, "C", "26"], ["p0201", "참여자201", "7927", "", "60", "?", 55, 36, "B", "26"], ["p0202", "참여자202", "5109", "", "60", "?", 416, 37, "B", "2"], ["p0203", "참여자203", "1407", "", "?", "?", 523, 9, "C", "2"], ["p0204", "참여자204", "2361", "", "60", "?", 136, 34, "B", "26"], ["p0205", "참여자205", "1674", "", "70", "?", 7, 1194, "A", "26"], ["p0206", "참여자206", "5613", "", "70", "?", 10, 2292, "A", "26"], ["p0207", "참여자207", "4337", "", "70", "?", -1, 0, "C", "2"], ["p0208", "참여자208", "7841", "", "70", "?", 16, 151, "A", "26"], ["p0209", "참여자209", "2645", "", "70", "?", -1, 0, "C", "26"], ["p0210", "참여자210", "8459", "", "80", "?", -1, 0, "C", "26"], ["p0211", "참여자211", "0378", "", "80", "?", 213, 169, "B", "2"], ["p0212", "참여자212", "3362", "", "70", "?", 124, 1, "C", "26"], ["p0213", "참여자213", "8654", "", "70", "?", 552, 710, "B", "2"], ["p0214", "참여자214", "5926", "", "70", "?", 238, 1995, "B", "26"], ["p0215", "참여자215", "2401", "", "80", "?", 490, 23, "B", "2"], ["p0216", "참여자216", "8899", "", "?", "?", 445, 39, "B", "2"], ["p0217", "참여자217", "0443", "", "70", "?", 87, 32, "B", "26"], ["p0218", "참여자218", "8652", "", "70", "?", 581, 1, "C", "2"], ["p0219", "참여자219", "4883", "", "70", "?", 370, 68, "B", "26"], ["p0220", "참여자220", "1491", "", "60", "?", 4, 97, "A", "26"], ["p0221", "참여자221", "4278", "", "60", "?", 185, 6, "C", "26"], ["p0222", "참여자222", "8493", "", "60", "?", 58, 1, "C", "26"], ["p0223", "참여자223", "6008", "", "70", "?", 124, 3, "C", "26"], ["p0224", "참여자224", "2736", "", "80", "?", 187, 1, "C", "26"], ["p0225", "참여자225", "5827", "", "60", "?", 58, 140, "B", "2"], ["p0226", "참여자226", "3650", "", "60", "?", 69, 1, "C", "26"], ["p0227", "참여자227", "8725", "", "60", "?", 558, 4, "C", "2"], ["p0228", "참여자228", "8873", "", "70", "?", 84, 12, "C", "26"], ["p0229", "참여자229", "8236", "", "70", "?", 104, 579, "B", "2"], ["p0230", "참여자230", "5401", "", "80", "?", 679, 19, "C", "2"], ["p0231", "참여자231", "3654", "", "60", "?", -1, 0, "C", "2"], ["p0232", "참여자232", "3197", "", "70", "?", -1, 0, "C", "26"], ["p0233", "참여자233", "3922", "", "60", "?", 178, 2, "C", "26"], ["p0234", "참여자234", "6564", "", "60", "?", 0, 4, "A", "26"], ["p0235", "참여자235", "3714", "", "70", "?", 599, 1, "C", "2"], ["p0236", "참여자236", "3275", "", "60", "?", 22, 34, "A", "26"], ["p0237", "참여자237", "8480", "", "60", "?", -1, 0, "C", "26"], ["p0238", "참여자238", "8073", "", "80", "?", 113, 401, "B", "26"], ["p0239", "참여자239", "5825", "", "70", "?", 49, 77, "B", "26"], ["p0240", "참여자240", "0474", "", "?", "?", 14, 1801, "A", "26"], ["p0241", "참여자241", "0457", "", "?", "?", 0, 14530, "A", "26"], ["p0242", "참여자242", "4577", "", "80", "?", 182, 15, "C", "26"], ["p0243", "참여자243", "7737", "", "80", "?", 558, 8, "C", "2"], ["p0244", "참여자244", "4246", "", "?", "?", 322, 184, "B", "2"], ["p0245", "참여자245", "3172", "", "60", "?", 549, 10, "C", "2"], ["p0246", "참여자246", "9914", "", "?", "?", 537, 10, "C", "2"], ["p0247", "참여자247", "5640", "", "60", "?", 67, 3, "C", "26"], ["p0248", "참여자248", "7327", "", "70", "?", 81, 46, "B", "26"], ["p0249", "참여자249", "5726", "", "70", "?", 0, 1143, "A", "26"], ["p0250", "참여자250", "5974", "", "60", "?", 124, 27, "B", "26"], ["p0251", "참여자251", "1319", "", "70", "?", 6, 817, "A", "26"], ["p0252", "참여자252", "3612", "", "70", "?", 549, 1, "C", "2"], ["p0253", "참여자253", "1673", "", "70", "?", 8, 188, "A", "2"], ["p0254", "참여자254", "3716", "", "?", "?", -1, 0, "C", "2"], ["p0255", "참여자255", "7701", "", "?", "?", 0, 4806, "A", "2"], ["p0256", "참여자256", "3222", "", "70", "?", 1, 79, "A", "26"], ["p0257", "참여자257", "5533", "", "70", "?", 0, 2458, "A", "26"], ["p0258", "참여자258", "3348", "", "?", "?", 531, 12, "C", "2"], ["p0259", "참여자259", "7907", "", "70", "?", 509, 126, "B", "2"], ["p0260", "참여자260", "9998", "", "60", "?", 88, 1599, "B", "2"], ["p0261", "참여자261", "0031", "", "70", "?", 157, 4, "C", "26"], ["p0262", "참여자262", "7855", "", "60", "?", -1, 0, "C", "26"], ["p0263", "참여자263", "5636", "", "60", "?", 89, 68, "B", "26"], ["p0264", "참여자264", "1389", "", "60", "?", 54, 2427, "B", "2"], ["p0265", "참여자265", "1964", "", "70", "?", -1, 0, "C", "26"], ["p0266", "참여자266", "6365", "", "70", "?", -1, 0, "C", "26"], ["p0267", "참여자267", "3265", "", "70", "?", 21, 165, "A", "26"], ["p0268", "참여자268", "7832", "", "80", "?", 901, 2, "C", "2"], ["p0269", "참여자269", "2924", "", "70", "?", 448, 49, "B", "2"], ["p0270", "참여자270", "7109", "", "60", "?", 432, 2058, "B", "2"], ["p0271", "참여자271", "5447", "", "80", "?", -1, 0, "C", "26"], ["p0272", "참여자272", "1421", "", "60", "?", 0, 1615, "A", "26"], ["p0273", "참여자273", "6485", "", "70", "?", 515, 68, "B", "2"], ["p0274", "참여자274", "7588", "", "70", "?", 46, 2, "C", "26"], ["p0275", "참여자275", "6576", "", "70", "?", 473, 4, "C", "2"], ["p0276", "참여자276", "1391", "", "70", "?", -1, 0, "C", "26"], ["p0277", "참여자277", "2602", "", "70", "?", 186, 16, "C", "26"], ["p0278", "참여자278", "2785", "", "70", "?", 62, 1, "C", "26"], ["p0279", "참여자279", "2081", "", "70", "?", -1, 0, "C", "26"], ["p0280", "참여자280", "0451", "", "?", "?", 525, 7, "C", "2"], ["p0281", "참여자281", "2476", "", "70", "?", -1, 0, "C", "2"], ["p0282", "참여자282", "9679", "", "70", "?", 1, 334, "A", "26"], ["p0283", "참여자283", "7624", "", "80", "?", 558, 4, "C", "2"], ["p0284", "참여자284", "2394", "", "70", "?", 143, 21, "B", "26"], ["p0285", "참여자285", "9762", "", "?", "?", 509, 192, "B", "2"], ["p0286", "참여자286", "7771", "", "50", "?", 416, 1, "C", "2"], ["p0287", "참여자287", "5741", "", "60", "?", 124, 1, "C", "26"], ["p0288", "참여자288", "2554", "", "70", "?", 539, 82, "B", "2"], ["p0289", "참여자289", "8989", "", "80", "?", 449, 338, "B", "2"], ["p0290", "참여자290", "8983", "", "60", "?", 543, 5, "C", "2"], ["p0291", "참여자291", "2146", "", "80", "?", 63, 24, "B", "26"], ["p0292", "참여자292", "0350", "", "70", "?", 138, 27, "B", "26"], ["p0293", "참여자293", "0233", "", "?", "?", 258, 34, "B", "2"], ["p0294", "참여자294", "1683", "", "80", "?", 543, 2, "C", "2"], ["p0295", "참여자295", "8627", "", "70", "?", 445, 21, "B", "2"], ["p0296", "참여자296", "2281", "", "70", "?", -1, 0, "C", "26"], ["p0297", "참여자297", "7107", "", "60", "?", 3, 2984, "A", "26"], ["p0298", "참여자298", "3191", "", "?", "?", -1, 0, "C", "2"], ["p0299", "참여자299", "3457", "", "70", "?", 3, 1, "A", "26"], ["p0300", "참여자300", "0458", "", "80", "?", 237, 6, "C", "26"], ["p0301", "참여자301", "4126", "", "80", "?", 104, 66, "B", "2"], ["p0302", "참여자302", "3486", "", "80", "?", 92, 203, "B", "26"], ["p0303", "참여자303", "4799", "", "60", "?", 264, 27, "B", "2"], ["p0304", "참여자304", "8211", "", "60", "?", 45, 3, "C", "26"], ["p0305", "참여자305", "3940", "", "80", "?", 183, 2, "C", "26"], ["p0306", "참여자306", "9608", "", "70", "?", 4, 76, "A", "26"], ["p0307", "참여자307", "5341", "", "80", "?", 544, 13, "C", "2"], ["p0308", "참여자308", "4249", "", "70", "?", 524, 3, "C", "2"], ["p0309", "참여자309", "8918", "", "70", "?", 24, 1715, "A", "26"], ["p0310", "참여자310", "6865", "", "?", "?", 584, 1, "C", "2"], ["p0311", "참여자311", "2147", "", "80", "?", -1, 0, "C", "2"], ["p0312", "참여자312", "0997", "", "70", "?", 569, 8, "C", "2"], ["p0313", "참여자313", "5796", "", "60", "?", -1, 0, "C", "26"], ["p0314", "참여자314", "7506", "", "60", "?", -1, 0, "C", "26"], ["p0315", "참여자315", "9557", "", "70", "?", 350, 89, "B", "2"], ["p0316", "참여자316", "8466", "", "70", "?", 444, 35, "B", "2"], ["p0317", "참여자317", "6891", "", "90", "?", 177, 141, "B", "26"], ["p0318", "참여자318", "8219", "", "60", "?", 17, 55, "A", "26"], ["p0319", "참여자319", "2142", "", "?", "?", -1, 0, "C", "2"], ["p0320", "참여자320", "8713", "", "80", "?", 123, 26, "B", "26"], ["p0321", "참여자321", "2487", "", "70", "?", 129, 4, "C", "26"], ["p0322", "참여자322", "8577", "", "50", "?", 64, 9, "C", "26"], ["p0323", "참여자323", "8364", "", "80", "?", 549, 28, "B", "2"], ["p0324", "참여자324", "0306", "", "70", "?", 116, 39, "B", "26"], ["p0325", "참여자325", "7211", "", "70", "?", -1, 0, "C", "2"], ["p0326", "참여자326", "3000", "", "60", "?", 318, 2223, "B", "26"], ["p0327", "참여자327", "9970", "", "?", "?", 93, 449, "B", "2"], ["p0328", "참여자328", "0064", "", "70", "?", 289, 649, "B", "2"], ["p0329", "참여자329", "2454", "", "70", "?", 363, 68, "B", "2"], ["p0330", "참여자330", "2823", "", "70", "?", 0, 3012, "A", "26"], ["p0331", "참여자331", "2319", "", "60", "?", 19, 46, "A", "26"], ["p0332", "참여자332", "7757", "", "?", "?", 783, 1, "C", "?"], ["p0333", "참여자333", "1971", "", "80", "?", 223, 6, "C", "26"], ["p0334", "참여자334", "9117", "", "60", "?", 13, 47, "A", "26"], ["p0335", "참여자335", "1011", "", "60", "?", -1, 0, "C", "26"], ["p0336", "참여자336", "5340", "", "80", "?", 129, 10, "C", "26"], ["p0337", "참여자337", "8492", "", "70", "?", 97, 3, "C", "26"], ["p0338", "참여자338", "8695", "", "60", "?", 6, 130, "A", "26"], ["p0339", "참여자339", "9100", "", "70", "?", 2, 863, "A", "26"], ["p0340", "참여자340", "7905", "", "80", "?", 69, 1, "C", "26"], ["p0341", "참여자341", "1738", "", "70", "?", 5, 2667, "A", "26"], ["p0342", "참여자342", "9179", "", "70", "?", 116, 13, "C", "26"], ["p0343", "참여자343", "0930", "", "70", "?", 0, 1530, "A", "26"], ["p0344", "참여자344", "4071", "", "70", "?", 528, 10, "C", "2"], ["p0345", "참여자345", "3134", "", "70", "?", -1, 0, "C", "26"], ["p0346", "참여자346", "4537", "", "?", "?", 54, 291, "B", "2"], ["p0347", "참여자347", "0691", "", "70", "?", 760, 58, "B", "2"], ["p0348", "참여자348", "1601", "", "?", "?", 502, 3, "C", "2"], ["p0349", "참여자349", "8318", "", "70", "?", 537, 11, "C", "2"], ["p0350", "참여자350", "7408", "", "60", "?", 202, 2, "C", "26"], ["p0351", "참여자351", "9203", "", "?", "?", 483, 58, "B", "2"], ["p0352", "참여자352", "0456", "", "80", "?", 112, 58, "B", "26"], ["p0353", "참여자353", "1038", "", "70", "?", 18, 915, "A", "2"], ["p0354", "참여자354", "7262", "", "30", "?", -1, 0, "C", "2"], ["p0355", "참여자355", "5334", "", "?", "?", 559, 1, "C", "2"], ["p0356", "참여자356", "8282", "", "70", "?", 0, 472, "A", "26"], ["p0357", "참여자357", "9930", "", "?", "?", 841, 3, "C", "?"], ["p0358", "참여자358", "8391", "", "60", "?", -1, 0, "C", "26"], ["p0359", "참여자359", "3267", "", "80", "?", 556, 12, "C", "2"], ["p0360", "참여자360", "4541", "", "80", "?", 46, 1, "C", "26"], ["p0361", "참여자361", "7411", "", "60", "?", 195, 825, "B", "26"], ["p0362", "참여자362", "8325", "", "60", "?", 0, 9358, "A", "26"], ["p0363", "참여자363", "8737", "", "?", "?", -1, 0, "C", "2"], ["p0364", "참여자364", "7832", "", "80", "?", 187, 6, "C", "26"], ["p0365", "참여자365", "8319", "", "60", "?", 6, 817, "A", "26"], ["p0366", "참여자366", "4057", "", "70", "?", 95, 5, "C", "26"], ["p0367", "참여자367", "8572", "", "?", "?", 7, 1136, "A", "26"], ["p0368", "참여자368", "4253", "", "60", "?", 108, 34, "B", "26"], ["p0369", "참여자369", "9167", "", "60", "?", 132, 34, "B", "26"], ["p0370", "참여자370", "3319", "", "60", "?", 21, 3, "A", "26"], ["p0371", "참여자371", "7332", "", "70", "?", 7, 1145, "A", "26"], ["p0372", "참여자372", "2246", "", "?", "?", 767, 54, "B", "?"], ["p0373", "참여자373", "6826", "", "50", "?", 94, 5, "C", "26"], ["p0374", "참여자374", "1992", "", "70", "?", 206, 1, "C", "26"], ["p0375", "참여자375", "6428", "", "80", "?", 18, 24, "A", "26"], ["p0376", "참여자376", "7243", "", "60", "?", -1, 0, "C", "2"], ["p0377", "참여자377", "5177", "", "70", "?", 917, 1, "C", "?"], ["p0378", "참여자378", "1188", "", "70", "?", 0, 3377, "A", "26"], ["p0379", "참여자379", "3942", "", "70", "?", 452, 2, "C", "2"], ["p0380", "참여자380", "7017", "", "?", "?", 65, 1, "C", "2"], ["p0381", "참여자381", "1198", "", "70", "?", 207, 2, "C", "26"], ["p0382", "참여자382", "3484", "", "80", "?", 394, 3, "C", "2"], ["p0383", "참여자383", "4960", "", "80", "?", 224, 5, "C", "26"], ["p0384", "참여자384", "2004", "", "70", "?", 94, 6, "C", "26"], ["p0385", "참여자385", "2530", "", "80", "?", 325, 170, "B", "2"], ["p0386", "참여자386", "5999", "", "70", "?", 483, 25, "B", "2"], ["p0387", "참여자387", "2342", "", "60", "?", 459, 7, "C", "2"], ["p0388", "참여자388", "4146", "", "70", "?", 54, 31, "B", "26"], ["p0389", "참여자389", "2248", "", "60", "?", -1, 0, "C", "26"], ["p0390", "참여자390", "7663", "", "80", "?", 0, 1974, "A", "26"], ["p0391", "참여자391", "3597", "", "60", "?", 94, 2, "C", "26"], ["p0392", "참여자392", "1542", "", "70", "?", 3, 1533, "A", "26"], ["p0393", "참여자393", "6525", "", "60", "?", 265, 170, "B", "2"], ["p0394", "참여자394", "7983", "", "?", "?", 8, 1004, "A", "26"], ["p0395", "참여자395", "2667", "", "60", "?", -1, 0, "C", "2"], ["p0396", "참여자396", "3665", "", "80", "?", -1, 0, "C", "2"], ["p0397", "참여자397", "2645", "", "70", "?", 111, 3282, "B", "26"], ["p0398", "참여자398", "7070", "", "70", "?", 444, 44, "B", "2"], ["p0399", "참여자399", "8447", "", "60", "?", 3, 1, "A", "26"], ["p0400", "참여자400", "6616", "", "70", "?", 8, 8, "A", "26"], ["p0401", "참여자401", "5556", "", "60", "?", 4, 31, "A", "26"], ["p0402", "참여자402", "6902", "", "?", "?", 441, 120, "B", "2"], ["p0403", "참여자403", "3207", "", "70", "?", 94, 7, "C", "26"], ["p0404", "참여자404", "5842", "", "60", "?", 368, 2, "C", "2"], ["p0405", "참여자405", "5218", "", "60", "?", 417, 8, "C", "2"], ["p0406", "참여자406", "1510", "", "?", "?", 3, 1006, "A", "2"], ["p0407", "참여자407", "5995", "", "70", "?", 260, 870, "B", "26"], ["p0408", "참여자408", "0319", "", "60", "?", 13, 5, "A", "2"], ["p0409", "참여자409", "5537", "", "40", "?", 651, 10, "C", "?"], ["p0410", "참여자410", "9077", "", "70", "?", 549, 1, "C", "2"], ["p0411", "참여자411", "7514", "", "70", "?", 112, 43, "B", "26"], ["p0412", "참여자412", "7216", "", "60", "?", 38, 560, "B", "26"], ["p0413", "참여자413", "0296", "", "90", "?", -1, 0, "C", "26"], ["p0414", "참여자414", "6297", "", "80", "?", -1, 0, "C", "26"], ["p0415", "참여자415", "5431", "", "70", "?", 52, 5, "C", "26"], ["p0416", "참여자416", "8477", "", "70", "?", 0, 3493, "A", "26"], ["p0417", "참여자417", "4840", "", "?", "?", 550, 83, "B", "2"], ["p0418", "참여자418", "8392", "", "60", "?", -1, 0, "C", "26"], ["p0419", "참여자419", "1053", "", "70", "?", 106, 58, "B", "26"], ["p0420", "참여자420", "1848", "", "60", "?", 16, 463, "A", "2"], ["p0421", "참여자421", "3744", "", "70", "?", 466, 29, "B", "2"], ["p0422", "참여자422", "1716", "", "70", "?", 2, 3684, "A", "26"], ["p0423", "참여자423", "1377", "", "70", "?", 3, 2, "A", "26"], ["p0424", "참여자424", "4351", "", "70", "?", 321, 354, "B", "2"], ["p0425", "참여자425", "4455", "", "70", "?", 7, 8, "A", "26"], ["p0426", "참여자426", "0648", "", "70", "?", -1, 0, "C", "26"], ["p0427", "참여자427", "2974", "", "60", "?", 369, 12, "C", "2"], ["p0428", "참여자428", "4430", "", "80", "?", 391, 78, "B", "2"], ["p0429", "참여자429", "2122", "", "70", "?", -1, 0, "C", "26"], ["p0430", "참여자430", "6918", "", "60", "?", 1, 34, "A", "26"], ["p0431", "참여자431", "4237", "", "60", "?", 3, 505, "A", "2"], ["p0432", "참여자432", "6651", "", "60", "?", 502, 28, "B", "2"], ["p0433", "참여자433", "2447", "", "70", "?", 70, 56, "B", "26"], ["p0434", "참여자434", "8791", "", "60", "?", -1, 0, "C", "26"], ["p0435", "참여자435", "8434", "", "70", "?", 24, 40, "A", "26"], ["p0436", "참여자436", "9348", "", "80", "?", -1, 0, "C", "26"], ["p0437", "참여자437", "8103", "", "?", "?", 221, 11, "C", "2"], ["p0438", "참여자438", "5358", "", "50", "?", 256, 10, "C", "2"], ["p0439", "참여자439", "1465", "", "80", "?", -1, 0, "C", "26"], ["p0440", "참여자440", "4572", "", "30", "?", 7, 222, "A", "26"], ["p0441", "참여자441", "0942", "", "80", "?", -1, 0, "C", "26"], ["p0442", "참여자442", "3003", "", "80", "?", 90, 88, "B", "26"], ["p0443", "참여자443", "6968", "", "70", "?", 1, 63, "A", "26"], ["p0444", "참여자444", "1186", "", "70", "?", 144, 1, "C", "26"], ["p0445", "참여자445", "4406", "", "60", "?", -1, 0, "C", "26"], ["p0446", "참여자446", "0275", "", "60", "?", 31, 780, "B", "?"], ["p0447", "참여자447", "1451", "", "70", "?", 61, 81, "B", "26"], ["p0448", "참여자448", "4268", "", "60", "?", 143, 1, "C", "26"], ["p0449", "참여자449", "1372", "", "70", "?", 1, 91, "A", "26"], ["p0450", "참여자450", "9964", "", "70", "?", 187, 3, "C", "26"], ["p0451", "참여자451", "3643", "", "60", "?", -1, 0, "C", "26"], ["p0452", "참여자452", "1091", "", "50", "?", 69, 5, "C", "26"], ["p0453", "참여자453", "4332", "", "80", "?", 2, 1015, "A", "26"], ["p0454", "참여자454", "1993", "", "60", "?", 138, 2, "C", "26"], ["p0455", "참여자455", "7434", "", "70", "?", 3, 66, "A", "26"], ["p0456", "참여자456", "0189", "", "70", "?", 58, 122, "B", "26"], ["p0457", "참여자457", "5556", "", "80", "?", 125, 10, "C", "2"], ["p0458", "참여자458", "9061", "", "60", "?", 150, 39, "B", "26"], ["p0459", "참여자459", "6844", "", "70", "?", -1, 0, "C", "26"], ["p0460", "참여자460", "4388", "", "70", "?", 3, 81, "A", "26"], ["p0461", "참여자461", "2117", "", "70", "?", -1, 0, "C", "26"], ["p0462", "참여자462", "0707", "", "70", "?", 86, 11, "C", "26"], ["p0463", "참여자463", "8632", "", "60", "?", -1, 0, "C", "26"], ["p0464", "참여자464", "3906", "", "?", "?", 319, 370, "B", "2"], ["p0465", "참여자465", "1793", "", "70", "?", 473, 124, "B", "2"], ["p0466", "참여자466", "2645", "", "70", "?", 42, 220, "B", "2"], ["p0467", "참여자467", "4290", "", "?", "?", 318, 127, "B", "2"], ["p0468", "참여자468", "0825", "", "60", "?", 0, 4330, "A", "26"], ["p0469", "참여자469", "2967", "", "?", "?", 297, 624, "B", "2"], ["p0470", "참여자470", "3305", "", "70", "?", 0, 193, "A", "26"], ["p0471", "참여자471", "5111", "", "70", "?", -1, 0, "C", "26"], ["p0472", "참여자472", "4997", "", "70", "?", 14, 36, "A", "26"], ["p0473", "참여자473", "8701", "", "70", "?", 5, 45, "A", "26"], ["p0474", "참여자474", "3372", "", "60", "?", 454, 17, "C", "2"], ["p0475", "참여자475", "4750", "", "80", "?", 7, 685, "A", "26"], ["p0476", "참여자476", "7302", "", "80", "?", 77, 109, "B", "26"], ["p0477", "참여자477", "8193", "", "70", "?", 544, 1, "C", "2"], ["p0478", "참여자478", "2914", "", "80", "?", 345, 149, "B", "2"], ["p0479", "참여자479", "4432", "", "60", "?", 3, 90, "A", "26"], ["p0480", "참여자480", "5685", "", "60", "?", 295, 238, "B", "2"], ["p0481", "참여자481", "0297", "", "60", "?", 97, 11, "C", "26"], ["p0482", "참여자482", "4103", "", "70", "?", -1, 0, "C", "2"], ["p0483", "참여자483", "0605", "", "70", "?", 168, 19, "C", "2"], ["p0484", "참여자484", "0251", "", "60", "?", 2, 313, "A", "26"], ["p0485", "참여자485", "0302", "", "60", "?", 46, 5, "C", "26"], ["p0486", "참여자486", "8284", "", "80", "?", -1, 0, "C", "26"], ["p0487", "참여자487", "9028", "", "60", "?", 0, 492, "A", "26"], ["p0488", "참여자488", "3104", "", "60", "?", 538, 78, "B", "2"], ["p0489", "참여자489", "8425", "", "80", "?", -1, 0, "C", "26"], ["p0490", "참여자490", "7778", "", "60", "?", 0, 146, "A", "26"], ["p0491", "참여자491", "4025", "", "70", "?", 559, 10, "C", "2"], ["p0492", "참여자492", "7324", "", "70", "?", 5, 274, "A", "26"], ["p0493", "참여자493", "1741", "", "70", "?", 111, 25, "B", "26"], ["p0494", "참여자494", "7080", "", "70", "?", 29, 63, "A", "?"], ["p0495", "참여자495", "8110", "", "70", "?", 320, 18, "C", "2"], ["p0496", "참여자496", "8944", "", "60", "?", 326, 130, "B", "2"], ["p0497", "참여자497", "6440", "", "60", "?", 319, 190, "B", "2"], ["p0498", "참여자498", "8301", "", "70", "?", -1, 0, "C", "26"], ["p0499", "참여자499", "5042", "", "70", "?", 61, 404, "B", "2"], ["p0500", "참여자500", "3525", "", "70", "?", 111, 34, "B", "26"], ["p0501", "참여자501", "3761", "", "60", "?", 42, 3, "C", "26"], ["p0502", "참여자502", "5614", "", "70", "?", 7, 414, "A", "2"], ["p0503", "참여자503", "3254", "", "?", "?", -1, 0, "C", "2"], ["p0504", "참여자504", "2289", "", "70", "?", 230, 1, "C", "26"], ["p0505", "참여자505", "6630", "", "?", "?", 41, 84, "B", "2"], ["p0506", "참여자506", "5694", "", "80", "?", 63, 140, "B", "2"], ["p0507", "참여자507", "0891", "", "?", "?", 910, 4, "C", "?"], ["p0508", "참여자508", "2126", "", "60", "?", 31, 51, "B", "2"], ["p0509", "참여자509", "0233", "", "60", "?", 0, 9253, "A", "26"], ["p0510", "참여자510", "1158", "", "70", "?", -1, 0, "C", "2"], ["p0511", "참여자511", "4187", "", "70", "?", 7, 146, "A", "26"], ["p0512", "참여자512", "7057", "", "70", "?", 70, 71, "B", "26"], ["p0513", "참여자513", "2674", "", "70", "?", -1, 0, "C", "2"], ["p0514", "참여자514", "0907", "", "70", "?", 7, 193, "A", "26"], ["p0515", "참여자515", "1384", "", "60", "?", -1, 0, "C", "26"], ["p0516", "참여자516", "6240", "", "60", "?", 36, 1237, "B", "26"], ["p0517", "참여자517", "8289", "", "80", "?", 97, 8, "C", "26"], ["p0518", "참여자518", "4619", "", "60", "?", 60, 100, "B", "26"], ["p0519", "참여자519", "9810", "", "60", "?", 550, 1, "C", "2"], ["p0520", "참여자520", "3968", "", "80", "?", 10, 67, "A", "26"], ["p0521", "참여자521", "4801", "", "70", "?", 118, 6, "C", "26"], ["p0522", "참여자522", "0741", "", "70", "?", -1, 0, "C", "26"], ["p0523", "참여자523", "7527", "", "70", "?", 117, 36, "B", "26"], ["p0524", "참여자524", "3036", "", "70", "?", 124, 5, "C", "26"], ["p0525", "참여자525", "2581", "", "60", "?", 187, 2, "C", "26"], ["p0526", "참여자526", "4407", "", "80", "?", 97, 2, "C", "26"], ["p0527", "참여자527", "7304", "", "70", "?", 20, 8, "A", "26"], ["p0528", "참여자528", "0059", "", "?", "?", 9, 3245, "A", "2"], ["p0529", "참여자529", "4312", "", "70", "?", 98, 114, "B", "2"], ["p0530", "참여자530", "5966", "", "70", "?", 547, 16, "C", "2"], ["p0531", "참여자531", "5389", "", "70", "?", 224, 8, "C", "26"], ["p0532", "참여자532", "8963", "", "?", "?", 460, 135, "B", "2"], ["p0533", "참여자533", "5300", "", "50", "?", 447, 132, "B", "2"], ["p0534", "참여자534", "4005", "", "70", "?", 6, 85, "A", "26"], ["p0535", "참여자535", "0564", "", "80", "?", 26, 187, "A", "26"], ["p0536", "참여자536", "5071", "", "?", "?", -1, 0, "C", "2"], ["p0537", "참여자537", "3569", "", "70", "?", 47, 193, "B", "26"], ["p0538", "참여자538", "5842", "", "70", "?", 129, 17, "C", "26"], ["p0539", "참여자539", "2997", "", "70", "?", 2, 427, "A", "2"], ["p0540", "참여자540", "0017", "", "60", "?", 97, 2, "C", "26"], ["p0541", "참여자541", "5494", "", "70", "?", -1, 0, "C", "26"], ["p0542", "참여자542", "6252", "", "80", "?", -1, 0, "C", "26"], ["p0543", "참여자543", "1374", "", "70", "?", 0, 3338, "A", "26"], ["p0544", "참여자544", "7776", "", "80", "?", 535, 8, "C", "2"], ["p0545", "참여자545", "4569", "", "70", "?", -1, 0, "C", "26"], ["p0546", "참여자546", "8237", "", "60", "?", 243, 15, "C", "2"], ["p0547", "참여자547", "3292", "", "80", "?", 549, 87, "B", "2"], ["p0548", "참여자548", "4066", "", "80", "?", 55, 1, "C", "26"], ["p0549", "참여자549", "8269", "", "80", "?", 40, 47, "B", "26"], ["p0550", "참여자550", "0081", "", "?", "?", 320, 209, "B", "2"], ["p0551", "참여자551", "1488", "", "70", "?", 20, 365, "A", "26"], ["p0552", "참여자552", "4328", "", "60", "?", 94, 1, "C", "26"], ["p0553", "참여자553", "1470", "", "70", "?", 124, 163, "B", "26"], ["p0554", "참여자554", "2357", "", "60", "?", -1, 0, "C", "26"], ["p0555", "참여자555", "6545", "", "70", "?", 0, 11501, "A", "26"], ["p0556", "참여자556", "9614", "", "60", "?", -1, 0, "C", "26"], ["p0557", "참여자557", "0682", "", "80", "?", -1, 0, "C", "26"], ["p0558", "참여자558", "6454", "", "70", "?", 28, 166, "A", "26"], ["p0559", "참여자559", "0368", "", "60", "?", 559, 1, "C", "2"], ["p0560", "참여자560", "4909", "", "70", "?", 495, 2, "C", "2"], ["p0561", "참여자561", "4984", "", "60", "?", -1, 0, "C", "26"], ["p0562", "참여자562", "3814", "", "60", "?", 19, 35, "A", "26"], ["p0563", "참여자563", "1384", "", "?", "?", 930, 1, "C", "?"], ["p0564", "참여자564", "9594", "", "50", "?", 453, 27, "B", "2"], ["p0565", "참여자565", "8670", "", "70", "?", -1, 0, "C", "26"], ["p0566", "참여자566", "2543", "", "50", "?", -1, 0, "C", "2"], ["p0567", "참여자567", "9774", "", "70", "?", 770, 205, "B", "2"], ["p0568", "참여자568", "6381", "", "70", "?", 403, 75, "B", "2"], ["p0569", "참여자569", "5343", "", "70", "?", 36, 23, "B", "26"], ["p0570", "참여자570", "8096", "", "60", "?", 417, 3, "C", "2"], ["p0571", "참여자571", "2448", "", "70", "?", 535, 4, "C", "2"], ["p0572", "참여자572", "4655", "", "30", "?", 539, 17, "C", "2"], ["p0573", "참여자573", "2371", "", "60", "?", 0, 605, "A", "26"], ["p0574", "참여자574", "0717", "", "60", "?", -1, 0, "C", "26"], ["p0575", "참여자575", "8404", "", "70", "?", 538, 4, "C", "2"], ["p0576", "참여자576", "7032", "", "80", "?", 4, 335, "A", "26"], ["p0577", "참여자577", "8282", "", "?", "?", 423, 400, "B", "2"], ["p0578", "참여자578", "2282", "", "60", "?", 3, 1041, "A", "26"], ["p0579", "참여자579", "8581", "", "60", "?", 35, 88, "B", "26"], ["p0580", "참여자580", "8263", "", "70", "?", 2, 333, "A", "26"], ["p0581", "참여자581", "9313", "", "?", "?", 552, 12, "C", "2"], ["p0582", "참여자582", "0263", "", "70", "?", 87, 12, "C", "26"], ["p0583", "참여자583", "9569", "", "60", "?", 12, 142, "A", "26"], ["p0584", "참여자584", "3767", "", "60", "?", 83, 61, "B", "26"], ["p0585", "참여자585", "1394", "", "60", "?", 474, 10, "C", "2"], ["p0586", "참여자586", "0510", "", "70", "?", 120, 9, "C", "26"], ["p0587", "참여자587", "0685", "", "70", "?", 5, 204, "A", "26"], ["p0588", "참여자588", "2180", "", "70", "?", 0, 2876, "A", "26"], ["p0589", "참여자589", "5909", "", "80", "?", 129, 4, "C", "26"], ["p0590", "참여자590", "1718", "", "70", "?", 14, 26, "A", "26"], ["p0591", "참여자591", "6170", "", "?", "?", 51, 11, "C", "2"], ["p0592", "참여자592", "7395", "", "?", "?", 915, 1, "C", "?"], ["p0593", "참여자593", "9150", "", "60", "?", 68, 2, "C", "26"], ["p0594", "참여자594", "0831", "", "70", "?", 494, 16, "C", "2"], ["p0595", "참여자595", "0308", "", "70", "?", 42, 280, "B", "2"], ["p0596", "참여자596", "8707", "", "60", "?", 220, 2, "C", "26"], ["p0597", "참여자597", "4006", "", "70", "?", 1, 17, "A", "26"], ["p0598", "참여자598", "8016", "", "70", "?", 13, 78, "A", "26"], ["p0599", "참여자599", "4321", "", "70", "?", -1, 0, "C", "26"], ["p0600", "참여자600", "0054", "", "70", "?", 63, 507, "B", "26"], ["p0601", "참여자601", "7486", "", "60", "?", 39, 314, "B", "2"], ["p0602", "참여자602", "1148", "", "80", "?", -1, 0, "C", "2"], ["p0603", "참여자603", "8240", "", "40", "?", 574, 6, "C", "2"], ["p0604", "참여자604", "8768", "", "60", "?", 530, 1, "C", "2"], ["p0605", "참여자605", "1506", "", "70", "?", -1, 0, "C", "26"], ["p0606", "참여자606", "8617", "", "60", "?", 119, 29, "B", "26"], ["p0607", "참여자607", "1082", "", "70", "?", 246, 1167, "B", "26"], ["p0608", "참여자608", "7763", "", "70", "?", 16, 1, "A", "2"], ["p0609", "참여자609", "4131", "", "70", "?", 103, 26, "B", "2"], ["p0610", "참여자610", "1219", "", "60", "?", 4, 147, "A", "26"], ["p0611", "참여자611", "4350", "", "70", "?", 109, 2187, "B", "2"], ["p0612", "참여자612", "3846", "", "?", "?", 556, 2, "C", "2"], ["p0613", "참여자613", "3362", "", "60", "?", 130, 9, "C", "26"], ["p0614", "참여자614", "3780", "", "70", "?", 638, 306, "B", "2"], ["p0615", "참여자615", "7542", "", "60", "?", 16, 476, "A", "2"], ["p0616", "참여자616", "8092", "", "80", "?", 357, 274, "B", "2"], ["p0617", "참여자617", "6267", "", "70", "?", 58, 26, "B", "26"], ["p0618", "참여자618", "1257", "", "60", "?", 390, 13, "C", "2"], ["p0619", "참여자619", "7848", "", "70", "?", 33, 2, "C", "26"], ["p0620", "참여자620", "4707", "", "70", "?", 8, 22, "A", "26"], ["p0621", "참여자621", "0765", "", "?", "?", 559, 9, "C", "2"], ["p0622", "참여자622", "3248", "", "?", "?", 404, 67, "B", "2"], ["p0623", "참여자623", "1269", "", "80", "?", 40, 70, "B", "2"], ["p0624", "참여자624", "9825", "", "70", "?", 97, 1, "C", "26"], ["p0625", "참여자625", "2415", "", "70", "?", 7, 114, "A", "26"], ["p0626", "참여자626", "5435", "", "70", "?", 423, 77, "B", "2"], ["p0627", "참여자627", "4160", "", "70", "?", 500, 11, "C", "2"], ["p0628", "참여자628", "4987", "", "60", "?", 348, 178, "B", "2"], ["p0629", "참여자629", "9302", "", "60", "?", 14, 172, "A", "2"], ["p0630", "참여자630", "2186", "", "70", "?", 2, 228, "A", "2"], ["p0631", "참여자631", "0204", "", "70", "?", 315, 1874, "B", "26"], ["p0632", "참여자632", "7903", "", "70", "?", 44, 209, "B", "26"], ["p0633", "참여자633", "0993", "", "70", "?", 139, 2, "C", "26"], ["p0634", "참여자634", "7959", "", "70", "?", 720, 7, "C", "2"], ["p0635", "참여자635", "4403", "", "70", "?", 35, 194, "B", "26"], ["p0636", "참여자636", "1630", "", "70", "?", 147, 83, "B", "26"], ["p0637", "참여자637", "3566", "", "70", "?", 3, 166, "A", "26"], ["p0638", "참여자638", "8021", "", "70", "?", -1, 0, "C", "26"], ["p0639", "참여자639", "4765", "", "60", "?", -1, 0, "C", "2"], ["p0640", "참여자640", "8462", "", "60", "?", 181, 200, "B", "26"], ["p0641", "참여자641", "4678", "", "?", "?", 468, 27, "B", "2"], ["p0642", "참여자642", "7613", "", "70", "?", 74, 10, "C", "26"], ["p0643", "참여자643", "7633", "", "80", "?", 558, 24, "B", "2"], ["p0644", "참여자644", "7640", "", "70", "?", 271, 482, "B", "2"], ["p0645", "참여자645", "1941", "", "70", "?", 74, 1, "C", "26"], ["p0646", "참여자646", "8996", "", "?", "?", 580, 1, "C", "2"], ["p0647", "참여자647", "3264", "", "60", "?", 480, 201, "B", "2"], ["p0648", "참여자648", "5106", "", "60", "?", 3, 1701, "A", "26"], ["p0649", "참여자649", "1406", "", "70", "?", 97, 1, "C", "26"], ["p0650", "참여자650", "7748", "", "70", "?", 4, 60, "A", "26"], ["p0651", "참여자651", "0286", "", "70", "?", 904, 27, "B", "2"], ["p0652", "참여자652", "4744", "", "60", "?", 58, 8, "C", "26"], ["p0653", "참여자653", "7519", "", "80", "?", 58, 6021, "B", "26"], ["p0654", "참여자654", "1252", "", "70", "?", -1, 0, "C", "26"], ["p0655", "참여자655", "8300", "", "?", "?", -1, 0, "C", "2"], ["p0656", "참여자656", "7363", "", "70", "?", 38, 7, "C", "26"], ["p0657", "참여자657", "4401", "", "?", "?", 548, 51, "B", "2"], ["p0658", "참여자658", "6338", "", "80", "?", 718, 15, "C", "2"], ["p0659", "참여자659", "3437", "", "70", "?", 441, 3, "C", "2"], ["p0660", "참여자660", "3452", "", "80", "?", 502, 30, "B", "2"], ["p0661", "참여자661", "1222", "", "70", "?", 13, 64, "A", "26"], ["p0662", "참여자662", "9526", "", "60", "?", 66, 87, "B", "26"], ["p0663", "참여자663", "1479", "", "?", "?", -1, 0, "C", "2"], ["p0664", "참여자664", "2322", "", "70", "?", 124, 13, "C", "26"], ["p0665", "참여자665", "8586", "", "20", "?", 683, 991, "B", "2"], ["p0666", "참여자666", "4289", "", "80", "?", 71, 551, "B", "26"], ["p0667", "참여자667", "5890", "", "60", "?", 371, 184, "B", "2"], ["p0668", "참여자668", "2172", "", "80", "?", 7, 820, "A", "26"], ["p0669", "참여자669", "9885", "", "70", "?", 46, 60, "B", "26"], ["p0670", "참여자670", "8335", "", "?", "?", 840, 6, "C", "?"], ["p0671", "참여자671", "4580", "", "70", "?", 146, 2, "C", "26"], ["p0672", "참여자672", "1846", "", "70", "?", 4, 213, "A", "26"], ["p0673", "참여자673", "5983", "", "70", "?", 317, 8, "C", "2"], ["p0674", "참여자674", "3790", "", "?", "?", 319, 96, "B", "2"], ["p0675", "참여자675", "8157", "", "70", "?", 3, 1019, "A", "2"], ["p0676", "참여자676", "7964", "", "80", "?", -1, 0, "C", "26"], ["p0677", "참여자677", "6456", "", "60", "?", 13, 26, "A", "2"], ["p0678", "참여자678", "0406", "", "60", "?", 7, 565, "A", "26"], ["p0679", "참여자679", "2606", "", "60", "?", 111, 1441, "B", "2"], ["p0680", "참여자680", "0058", "", "70", "?", 6, 919, "A", "26"], ["p0681", "참여자681", "8055", "", "70", "?", 33, 22, "B", "26"], ["p0682", "참여자682", "7385", "", "70", "?", -1, 0, "C", "26"], ["p0683", "참여자683", "6642", "", "70", "?", 556, 24, "B", "2"], ["p0684", "참여자684", "4947", "", "?", "?", 913, 18, "C", "?"], ["p0685", "참여자685", "2305", "", "80", "?", 72, 279, "B", "2"], ["p0686", "참여자686", "6818", "", "70", "?", 3, 1, "A", "26"], ["p0687", "참여자687", "5635", "", "60", "?", 34, 103, "B", "2"], ["p0688", "참여자688", "6162", "", "80", "?", 1, 1221, "A", "26"], ["p0689", "참여자689", "5178", "", "?", "?", -1, 0, "C", "2"], ["p0690", "참여자690", "1980", "", "?", "?", 454, 27, "B", "2"], ["p0691", "참여자691", "5428", "", "80", "?", 144, 8, "C", "26"], ["p0692", "참여자692", "0028", "", "80", "?", 21, 129, "A", "2"], ["p0693", "참여자693", "5317", "", "80", "?", 0, 29858, "A", "26"], ["p0694", "참여자694", "5542", "", "80", "?", 97, 7, "C", "26"], ["p0695", "참여자695", "6525", "", "80", "?", -1, 0, "C", "26"], ["p0696", "참여자696", "1966", "", "70", "?", 0, 3164, "A", "26"], ["p0697", "참여자697", "3207", "", "?", "?", 4, 1617, "A", "26"], ["p0698", "참여자698", "0192", "", "70", "?", 472, 57, "B", "2"], ["p0699", "참여자699", "4748", "", "?", "?", 144, 453, "B", "26"], ["p0700", "참여자700", "4148", "", "?", "?", 499, 421, "B", "2"], ["p0701", "참여자701", "6098", "", "?", "?", -1, 0, "C", "2"], ["p0702", "참여자702", "1064", "", "70", "?", 96, 1, "C", "26"], ["p0703", "참여자703", "6437", "", "?", "?", 921, 2, "C", "?"], ["p0704", "참여자704", "6392", "", "70", "?", 6, 250, "A", "26"], ["p0705", "참여자705", "9653", "", "70", "?", 0, 321, "A", "26"], ["p0706", "참여자706", "1251", "", "70", "?", 390, 2, "C", "2"], ["p0707", "참여자707", "5909", "", "70", "?", -1, 0, "C", "26"], ["p0708", "참여자708", "7013", "", "60", "?", 0, 2857, "A", "26"], ["p0709", "참여자709", "4508", "", "70", "?", 224, 1, "C", "26"], ["p0710", "참여자710", "0790", "", "70", "?", 356, 181, "B", "2"], ["p0711", "참여자711", "4597", "", "70", "?", 56, 2, "C", "26"], ["p0712", "참여자712", "1666", "", "60", "?", 46, 1, "C", "26"], ["p0713", "참여자713", "0845", "", "70", "?", 1, 1077, "A", "26"], ["p0714", "참여자714", "4679", "", "?", "?", 36, 405, "B", "2"], ["p0715", "참여자715", "2439", "", "70", "?", 63, 4, "C", "26"], ["p0716", "참여자716", "4084", "", "40", "?", 81, 4, "C", "26"], ["p0717", "참여자717", "4353", "", "60", "?", 94, 635, "B", "26"], ["p0718", "참여자718", "7147", "", "?", "?", 327, 23, "B", "2"], ["p0719", "참여자719", "8371", "", "70", "?", 88, 135, "B", "2"], ["p0720", "참여자720", "5170", "", "60", "?", 3, 77, "A", "26"], ["p0721", "참여자721", "3110", "", "80", "?", 97, 24, "B", "26"], ["p0722", "참여자722", "6116", "", "70", "?", 6, 3862, "A", "26"], ["p0723", "참여자723", "7008", "", "70", "?", 56, 211, "B", "2"], ["p0724", "참여자724", "0475", "", "70", "?", 80, 11, "C", "26"], ["p0725", "참여자725", "6554", "", "?", "?", 455, 115, "B", "2"], ["p0726", "참여자726", "9079", "", "?", "?", 193, 2, "C", "2"], ["p0727", "참여자727", "8998", "", "80", "?", 2, 2, "A", "26"], ["p0728", "참여자728", "3333", "", "60", "?", 3, 196, "A", "26"], ["p0729", "참여자729", "1320", "", "60", "?", 351, 21, "B", "26"], ["p0730", "참여자730", "0810", "", "70", "?", 136, 2, "C", "26"], ["p0731", "참여자731", "6731", "", "60", "?", 31, 4, "C", "26"], ["p0732", "참여자732", "7386", "", "60", "?", 151, 82, "B", "26"], ["p0733", "참여자733", "2270", "", "70", "?", -1, 0, "C", "26"], ["p0734", "참여자734", "4689", "", "70", "?", 549, 18, "C", "2"], ["p0735", "참여자735", "7955", "", "60", "?", 0, 795, "A", "26"], ["p0736", "참여자736", "0802", "", "80", "?", 318, 198, "B", "2"], ["p0737", "참여자737", "9012", "", "70", "?", 11, 74, "A", "26"], ["p0738", "참여자738", "2085", "", "80", "?", 360, 100, "B", "2"], ["p0739", "참여자739", "2797", "", "?", "?", -1, 0, "C", "2"], ["p0740", "참여자740", "7736", "", "70", "?", 66, 67, "B", "26"], ["p0741", "참여자741", "6797", "", "60", "?", -1, 0, "C", "26"], ["p0742", "참여자742", "5630", "", "60", "?", 125, 29, "B", "26"], ["p0743", "참여자743", "4616", "", "40", "?", 26, 14, "A", "26"], ["p0744", "참여자744", "4878", "", "70", "?", -1, 0, "C", "26"], ["p0745", "참여자745", "4190", "", "80", "?", 144, 1, "C", "26"], ["p0746", "참여자746", "4262", "", "?", "?", 378, 69, "B", "2"], ["p0747", "참여자747", "6655", "", "70", "?", 0, 1394, "A", "26"], ["p0748", "참여자748", "3910", "", "80", "?", 143, 19, "C", "26"], ["p0749", "참여자749", "4928", "", "70", "?", 3, 57, "A", "26"], ["p0750", "참여자750", "7916", "", "70", "?", -1, 0, "C", "26"], ["p0751", "참여자751", "9131", "", "70", "?", -1, 0, "C", "26"], ["p0752", "참여자752", "6461", "", "80", "?", 499, 15, "C", "2"], ["p0753", "참여자753", "1961", "", "70", "?", 116, 112, "B", "26"], ["p0754", "참여자754", "2741", "", "60", "?", 0, 9821, "A", "26"], ["p0755", "참여자755", "2648", "", "?", "?", 51, 216, "B", "2"], ["p0756", "참여자756", "1231", "", "70", "?", 101, 606, "B", "26"], ["p0757", "참여자757", "3405", "", "?", "?", 321, 275, "B", "2"], ["p0758", "참여자758", "8201", "", "?", "?", 37, 48, "B", "2"], ["p0759", "참여자759", "8144", "", "60", "?", 3, 1792, "A", "26"], ["p0760", "참여자760", "9017", "", "70", "?", 769, 25, "B", "?"], ["p0761", "참여자761", "3604", "", "70", "?", 94, 1, "C", "26"], ["p0762", "참여자762", "7421", "", "70", "?", 187, 1, "C", "26"], ["p0763", "참여자763", "5453", "", "80", "?", 366, 50, "B", "2"], ["p0764", "참여자764", "7372", "", "60", "?", 5, 136, "A", "26"], ["p0765", "참여자765", "7002", "", "70", "?", 13, 2320, "A", "26"], ["p0766", "참여자766", "2287", "", "70", "?", 0, 3916, "A", "26"], ["p0767", "참여자767", "8974", "", "80", "?", 119, 3, "C", "26"], ["p0768", "참여자768", "3152", "", "70", "?", -1, 0, "C", "2"], ["p0769", "참여자769", "3999", "", "70", "?", 198, 118, "B", "2"], ["p0770", "참여자770", "1486", "", "80", "?", 503, 13, "C", "2"], ["p0771", "참여자771", "2862", "", "70", "?", 3, 3495, "A", "26"], ["p0772", "참여자772", "5602", "", "70", "?", 77, 46, "B", "2"], ["p0773", "참여자773", "9107", "", "70", "?", -1, 0, "C", "2"], ["p0774", "참여자774", "1492", "", "?", "?", 550, 43, "B", "2"], ["p0775", "참여자775", "5231", "", "?", "?", 361, 1103, "B", "2"], ["p0776", "참여자776", "3917", "", "80", "?", 439, 31, "B", "2"], ["p0777", "참여자777", "6034", "", "70", "?", -1, 0, "C", "26"], ["p0778", "참여자778", "4232", "", "60", "?", 503, 1, "C", "2"], ["p0779", "참여자779", "9332", "", "70", "?", 109, 10, "C", "26"], ["p0780", "참여자780", "3311", "", "80", "?", 53, 537, "B", "2"], ["p0781", "참여자781", "0329", "", "70", "?", 7, 57, "A", "26"], ["p0782", "참여자782", "6763", "", "60", "?", -1, 0, "C", "26"], ["p0783", "참여자783", "6272", "", "60", "?", -1, 0, "C", "26"], ["p0784", "참여자784", "6781", "", "60", "?", 327, 98, "B", "2"], ["p0785", "참여자785", "8587", "", "60", "?", 69, 1, "C", "26"], ["p0786", "참여자786", "3440", "", "60", "?", 371, 25, "B", "2"], ["p0787", "참여자787", "6174", "", "70", "?", 46, 5, "C", "26"], ["p0788", "참여자788", "4427", "", "70", "?", -1, 0, "C", "26"], ["p0789", "참여자789", "5541", "", "80", "?", 433, 4, "C", "2"], ["p0790", "참여자790", "1016", "", "20", "?", 559, 1, "C", "2"], ["p0791", "참여자791", "8161", "", "70", "?", 61, 17, "C", "26"], ["p0792", "참여자792", "4546", "", "70", "?", 74, 20, "C", "26"], ["p0793", "참여자793", "9409", "", "60", "?", 531, 6, "C", "2"], ["p0794", "참여자794", "5900", "", "60", "?", 4, 1927, "A", "2"], ["p0795", "참여자795", "2062", "", "70", "?", 88, 10, "C", "26"], ["p0796", "참여자796", "8247", "", "70", "?", 433, 19, "C", "2"], ["p0797", "참여자797", "8670", "", "70", "?", 1, 2311, "A", "26"], ["p0798", "참여자798", "3538", "", "70", "?", 559, 2, "C", "2"], ["p0799", "참여자799", "1517", "", "80", "?", -1, 0, "C", "26"], ["p0800", "참여자800", "4440", "", "70", "?", 383, 283, "B", "2"], ["p0801", "참여자801", "4070", "", "70", "?", 87, 5, "C", "26"], ["p0802", "참여자802", "6300", "", "70", "?", 45, 2, "C", "26"], ["p0803", "참여자803", "6549", "", "60", "?", 30, 46, "A", "2"], ["p0804", "참여자804", "7304", "", "60", "?", 0, 1551, "A", "26"], ["p0805", "참여자805", "7075", "", "?", "?", 473, 13, "C", "2"], ["p0806", "참여자806", "5112", "", "70", "?", -1, 0, "C", "26"], ["p0807", "참여자807", "0357", "", "80", "?", -1, 0, "C", "26"], ["p0808", "참여자808", "2084", "", "80", "?", 54, 4, "C", "26"], ["p0809", "참여자809", "0528", "", "70", "?", 4, 456, "A", "26"], ["p0810", "참여자810", "6966", "", "70", "?", -1, 0, "C", "26"], ["p0811", "참여자811", "7754", "", "70", "?", 13, 2, "A", "26"], ["p0812", "참여자812", "9620", "", "60", "?", 126, 1, "C", "26"], ["p0813", "참여자813", "8025", "", "70", "?", -1, 0, "C", "26"], ["p0814", "참여자814", "0002", "", "70", "?", 96, 8, "C", "26"], ["p0815", "참여자815", "1198", "", "60", "?", 86, 95, "B", "2"], ["p0816", "참여자816", "6414", "", "80", "?", -1, 0, "C", "2"], ["p0817", "참여자817", "8648", "", "80", "?", 0, 32122, "A", "26"], ["p0818", "참여자818", "7670", "", "70", "?", 10, 40, "A", "26"], ["p0819", "참여자819", "7355", "", "70", "?", -1, 0, "C", "26"], ["p0820", "참여자820", "4070", "", "70", "?", 46, 45, "B", "26"], ["p0821", "참여자821", "1786", "", "70", "?", 94, 4, "C", "26"], ["p0822", "참여자822", "3666", "", "50", "?", 69, 21, "B", "26"], ["p0823", "참여자823", "2529", "", "70", "?", 417, 3, "C", "2"], ["p0824", "참여자824", "2491", "", "70", "?", 2, 4, "A", "26"], ["p0825", "참여자825", "8558", "", "80", "?", 20, 187, "A", "26"], ["p0826", "참여자826", "1784", "", "80", "?", 144, 2, "C", "26"], ["p0827", "참여자827", "7492", "", "?", "?", 899, 4, "C", "?"], ["p0828", "참여자828", "1392", "", "?", "?", 925, 1, "C", "?"], ["p0829", "참여자829", "9035", "", "70", "?", 89, 29, "B", "26"], ["p0830", "참여자830", "0647", "", "70", "?", 4, 109, "A", "26"], ["p0831", "참여자831", "0022", "", "70", "?", 369, 250, "B", "2"], ["p0832", "참여자832", "2058", "", "80", "?", -1, 0, "C", "26"], ["p0833", "참여자833", "3810", "", "80", "?", 313, 2415, "B", "2"], ["p0834", "참여자834", "9328", "", "?", "?", 477, 1, "C", "2"], ["p0835", "참여자835", "0615", "", "70", "?", 1, 117, "A", "2"], ["p0836", "참여자836", "4977", "", "70", "?", 406, 2, "C", "2"], ["p0837", "참여자837", "2096", "", "70", "?", 0, 3743, "A", "26"], ["p0838", "참여자838", "4125", "", "80", "?", 96, 353, "B", "26"], ["p0839", "참여자839", "8654", "", "80", "?", 550, 38, "B", "2"], ["p0840", "참여자840", "7166", "", "60", "?", 530, 5, "C", "2"], ["p0841", "참여자841", "1837", "", "60", "?", 429, 8, "C", "2"], ["p0842", "참여자842", "1629", "", "60", "?", 0, 4521, "A", "26"], ["p0843", "참여자843", "1152", "", "70", "?", 97, 1, "C", "26"], ["p0844", "참여자844", "4920", "", "60", "?", 445, 4, "C", "2"], ["p0845", "참여자845", "8592", "", "70", "?", 417, 1, "C", "2"], ["p0846", "참여자846", "9550", "", "70", "?", 4, 254, "A", "26"], ["p0847", "참여자847", "3140", "", "70", "?", 30, 15, "A", "26"], ["p0848", "참여자848", "6358", "", "70", "?", 49, 4, "C", "26"], ["p0849", "참여자849", "4274", "", "60", "?", 0, 651, "A", "2"], ["p0850", "참여자850", "3663", "", "60", "?", 91, 68, "B", "26"], ["p0851", "참여자851", "9847", "", "80", "?", 87, 72, "B", "2"], ["p0852", "참여자852", "0018", "", "80", "?", -1, 0, "C", "26"], ["p0853", "참여자853", "0171", "", "60", "?", 52, 26, "B", "26"], ["p0854", "참여자854", "8806", "", "80", "?", -1, 0, "C", "26"], ["p0855", "참여자855", "4940", "", "70", "?", 0, 2172, "A", "26"], ["p0856", "참여자856", "7547", "", "70", "?", 300, 17, "C", "2"], ["p0857", "참여자857", "4564", "", "60", "?", -1, 0, "C", "26"], ["p0858", "참여자858", "5183", "", "70", "?", 382, 47, "B", "2"], ["p0859", "참여자859", "3970", "", "70", "?", 473, 59, "B", "2"], ["p0860", "참여자860", "7787", "", "60", "?", 12, 44, "A", "26"], ["p0861", "참여자861", "8622", "", "30", "?", 32, 99, "B", "26"], ["p0862", "참여자862", "3846", "", "70", "?", 6, 144, "A", "26"], ["p0863", "참여자863", "8962", "", "60", "?", 448, 94, "B", "2"], ["p0864", "참여자864", "4047", "", "30", "?", 712, 50, "B", "?"], ["p0865", "참여자865", "0479", "", "?", "?", 327, 423, "B", "2"], ["p0866", "참여자866", "6747", "", "?", "?", 567, 24, "B", "?"], ["p0867", "참여자867", "5036", "", "70", "?", 76, 208, "B", "2"], ["p0868", "참여자868", "0906", "", "?", "?", 346, 36, "B", "2"], ["p0869", "참여자869", "0356", "", "60", "?", 228, 104, "B", "26"], ["p0870", "참여자870", "3180", "", "?", "?", 262, 410, "B", "2"], ["p0871", "참여자871", "8164", "", "60", "?", -1, 0, "C", "26"], ["p0872", "참여자872", "6881", "", "50", "?", 220, 1, "C", "26"], ["p0873", "참여자873", "1328", "", "30", "?", 417, 1, "C", "2"], ["p0874", "참여자874", "4214", "", "80", "?", 557, 36, "B", "2"], ["p0875", "참여자875", "3732", "", "60", "?", 218, 11, "C", "26"], ["p0876", "참여자876", "6952", "", "70", "?", 44, 1, "C", "26"], ["p0877", "참여자877", "6065", "", "60", "?", 185, 24, "B", "26"], ["p0878", "참여자878", "3715", "", "70", "?", 144, 3, "C", "26"], ["p0879", "참여자879", "8076", "", "?", "?", 81, 42, "B", "2"], ["p0880", "참여자880", "0558", "", "60", "?", 5, 30, "A", "26"], ["p0881", "참여자881", "5538", "", "70", "?", -1, 0, "C", "2"], ["p0882", "참여자882", "6890", "", "80", "?", 7, 1007, "A", "26"], ["p0883", "참여자883", "5936", "", "60", "?", -1, 0, "C", "26"], ["p0884", "참여자884", "6493", "", "70", "?", 212, 228, "B", "2"], ["p0885", "참여자885", "3245", "", "60", "?", 47, 4, "C", "26"], ["p0886", "참여자886", "0110", "", "70", "?", 395, 182, "B", "2"], ["p0887", "참여자887", "4785", "", "60", "?", 24, 1, "A", "26"], ["p0888", "참여자888", "8271", "", "60", "?", 127, 2, "C", "26"], ["p0889", "참여자889", "1104", "", "60", "?", 143, 606, "B", "2"], ["p0890", "참여자890", "3362", "", "60", "?", 17, 3, "A", "26"], ["p0891", "참여자891", "8121", "", "?", "?", 7, 1053, "A", "2"], ["p0892", "참여자892", "3283", "", "80", "?", -1, 0, "C", "26"], ["p0893", "참여자893", "5107", "", "80", "?", 223, 6, "C", "26"], ["p0894", "참여자894", "3177", "", "70", "?", 31, 326, "B", "2"], ["p0895", "참여자895", "3781", "", "70", "?", -1, 0, "C", "26"], ["p0896", "참여자896", "7620", "", "80", "?", 119, 1, "C", "26"], ["p0897", "참여자897", "3628", "", "80", "?", 32, 11, "C", "26"], ["p0898", "참여자898", "4342", "", "70", "?", 59, 15, "C", "2"], ["p0899", "참여자899", "4832", "", "80", "?", -1, 0, "C", "26"], ["p0900", "참여자900", "1785", "", "70", "?", 544, 5, "C", "2"], ["p0901", "참여자901", "8122", "", "50", "?", 416, 11, "C", "2"], ["p0902", "참여자902", "9995", "", "70", "?", 1, 342, "A", "26"], ["p0903", "참여자903", "3068", "", "70", "?", 280, 101, "B", "2"], ["p0904", "참여자904", "3658", "", "70", "?", 377, 1268, "B", "2"], ["p0905", "참여자905", "7947", "", "70", "?", 0, 2596, "A", "26"], ["p0906", "참여자906", "6832", "", "70", "?", 543, 251, "B", "2"], ["p0907", "참여자907", "0924", "", "80", "?", -1, 0, "C", "26"], ["p0908", "참여자908", "9745", "", "60", "?", 371, 89, "B", "2"], ["p0909", "참여자909", "2398", "", "70", "?", 1, 43, "A", "26"], ["p0910", "참여자910", "6446", "", "80", "?", 108, 1, "C", "26"], ["p0911", "참여자911", "0890", "", "?", "?", 2, 356, "A", "2"], ["p0912", "참여자912", "3488", "", "70", "?", 124, 4, "C", "26"], ["p0913", "참여자913", "0387", "", "50", "?", 370, 27, "B", "2"], ["p0914", "참여자914", "9766", "", "70", "?", 122, 10, "C", "26"], ["p0915", "참여자915", "2325", "", "?", "?", 0, 8152, "A", "26"], ["p0916", "참여자916", "6805", "", "80", "?", -1, 0, "C", "26"], ["p0917", "참여자917", "0849", "", "70", "?", 1, 43, "A", "26"], ["p0918", "참여자918", "0985", "", "70", "?", 19, 898, "A", "26"], ["p0919", "참여자919", "3016", "", "60", "?", 30, 57, "A", "26"], ["p0920", "참여자920", "6444", "", "70", "?", -1, 0, "C", "26"], ["p0921", "참여자921", "7366", "", "?", "?", 136, 332, "B", "2"], ["p0922", "참여자922", "5147", "", "80", "?", 518, 18, "C", "2"], ["p0923", "참여자923", "1854", "", "80", "?", 130, 1, "C", "26"], ["p0924", "참여자924", "1300", "", "80", "?", 395, 163, "B", "2"], ["p0925", "참여자925", "2713", "", "60", "?", 0, 599, "A", "26"], ["p0926", "참여자926", "5394", "", "80", "?", 0, 9265, "A", "26"], ["p0927", "참여자927", "3124", "", "70", "?", -1, 0, "C", "2"], ["p0928", "참여자928", "3039", "", "70", "?", 445, 711, "B", "2"], ["p0929", "참여자929", "8598", "", "60", "?", 480, 61, "B", "2"], ["p0930", "참여자930", "7661", "", "60", "?", 86, 39, "B", "26"], ["p0931", "참여자931", "0522", "", "70", "?", 124, 1, "C", "26"], ["p0932", "참여자932", "5108", "", "70", "?", 66, 3, "C", "26"], ["p0933", "참여자933", "6203", "", "70", "?", 4, 3463, "A", "26"], ["p0934", "참여자934", "6125", "", "?", "?", 315, 440, "B", "2"], ["p0935", "참여자935", "5434", "", "60", "?", 0, 6631, "A", "26"], ["p0936", "참여자936", "7248", "", "70", "?", 214, 1, "C", "26"], ["p0937", "참여자937", "2773", "", "60", "?", 3, 3087, "A", "26"], ["p0938", "참여자938", "1785", "", "60", "?", 381, 23, "B", "2"], ["p0939", "참여자939", "0047", "", "70", "?", 20, 73, "A", "26"], ["p0940", "참여자940", "1281", "", "80", "?", 502, 9, "C", "2"], ["p0941", "참여자941", "4584", "", "80", "?", 53, 15, "C", "26"], ["p0942", "참여자942", "1323", "", "70", "?", 6, 9486, "A", "26"], ["p0943", "참여자943", "5758", "", "50", "?", 361, 3, "C", "2"], ["p0944", "참여자944", "6884", "", "90", "?", 543, 2, "C", "2"], ["p0945", "참여자945", "2026", "", "70", "?", 20, 1, "A", "26"], ["p0946", "참여자946", "9193", "", "70", "?", 453, 38, "B", "2"], ["p0947", "참여자947", "3398", "", "70", "?", 384, 24, "B", "2"], ["p0948", "참여자948", "6228", "", "60", "?", -1, 0, "C", "26"], ["p0949", "참여자949", "5843", "", "60", "?", 142, 17, "C", "26"], ["p0950", "참여자950", "5057", "", "70", "?", 10, 5, "A", "26"], ["p0951", "참여자951", "7085", "", "70", "?", -1, 0, "C", "26"], ["p0952", "참여자952", "1437", "", "70", "?", 46, 1, "C", "26"], ["p0953", "참여자953", "0807", "", "60", "?", -1, 0, "C", "26"], ["p0954", "참여자954", "7757", "", "60", "?", 189, 49, "B", "26"], ["p0955", "참여자955", "3206", "", "80", "?", 511, 3, "C", "2"], ["p0956", "참여자956", "6106", "", "80", "?", 35, 4426, "B", "26"], ["p0957", "참여자957", "8872", "", "60", "?", 532, 40, "B", "2"], ["p0958", "참여자958", "7312", "", "?", "?", 890, 20, "C", "?"], ["p0959", "참여자959", "3162", "", "70", "?", 6, 53, "A", "26"], ["p0960", "참여자960", "5297", "", "70", "?", -1, 0, "C", "26"], ["p0961", "참여자961", "5967", "", "70", "?", 0, 5739, "A", "26"], ["p0962", "참여자962", "7774", "", "70", "?", 79, 382, "B", "2"], ["p0963", "참여자963", "0496", "", "60", "?", -1, 0, "C", "26"], ["p0964", "참여자964", "6730", "", "60", "?", 61, 2, "C", "26"], ["p0965", "참여자965", "4063", "", "80", "?", 118, 20, "C", "26"], ["p0966", "참여자966", "6631", "", "70", "?", -1, 0, "C", "26"], ["p0967", "참여자967", "0666", "", "50", "?", 145, 9, "C", "2"], ["p0968", "참여자968", "6153", "", "60", "?", 129, 1, "C", "26"], ["p0969", "참여자969", "0571", "", "?", "?", 554, 41, "B", "26"], ["p0970", "참여자970", "7603", "", "70", "?", 73, 24, "B", "26"], ["p0971", "참여자971", "1025", "", "70", "?", -1, 0, "C", "2"], ["p0972", "참여자972", "1015", "", "80", "?", 0, 1005, "A", "26"], ["p0973", "참여자973", "4210", "", "70", "?", 494, 14, "C", "2"], ["p0974", "참여자974", "3193", "", "70", "?", 346, 591, "B", "?"], ["p0975", "참여자975", "1029", "", "60", "?", 7, 78, "A", "26"], ["p0976", "참여자976", "9922", "", "70", "?", 0, 3642, "A", "26"], ["p0977", "참여자977", "5555", "", "80", "?", 142, 3, "C", "2"], ["p0978", "참여자978", "5946", "", "70", "?", 194, 34, "B", "26"], ["p0979", "참여자979", "4461", "", "70", "?", -1, 0, "C", "26"], ["p0980", "참여자980", "5488", "", "?", "?", 551, 20, "C", "2"], ["p0981", "참여자981", "0714", "", "70", "?", 482, 4, "C", "2"], ["p0982", "참여자982", "4295", "", "70", "?", 500, 11, "C", "2"], ["p0983", "참여자983", "5185", "", "70", "?", 452, 2, "C", "2"], ["p0984", "참여자984", "4515", "", "60", "?", 396, 419, "B", "2"], ["p0985", "참여자985", "4872", "", "70", "?", 3, 1483, "A", "26"], ["p0986", "참여자986", "0061", "", "70", "?", 117, 18, "C", "26"], ["p0987", "참여자987", "9757", "", "60", "?", 13, 164, "A", "26"], ["p0988", "참여자988", "1070", "", "60", "?", 91, 167, "B", "26"], ["p0989", "참여자989", "0397", "", "40", "?", 173, 4, "C", "26"], ["p0990", "참여자990", "3831", "", "60", "?", 4, 361, "A", "26"], ["p0991", "참여자991", "1757", "", "80", "?", 908, 1, "C", "2"], ["p0992", "참여자992", "7785", "", "80", "?", 447, 42, "B", "2"], ["p0993", "참여자993", "7630", "", "70", "?", -1, 0, "C", "26"], ["p0994", "참여자994", "6332", "", "80", "?", 269, 94, "B", "2"], ["p0995", "참여자995", "4113", "", "70", "?", 6, 7, "A", "26"], ["p0996", "참여자996", "7044", "", "70", "?", 46, 1, "C", "26"], ["p0997", "참여자997", "8085", "", "70", "?", 178, 11, "C", "26"], ["p0998", "참여자998", "2174", "", "60", "?", 94, 5, "C", "26"], ["p0999", "참여자999", "8135", "", "?", "?", -1, 0, "C", "2"], ["p1000", "참여자1000", "2997", "", "70", "?", -1, 0, "C", "26"], ["p1001", "참여자1001", "0142", "", "60", "?", 545, 13, "C", "2"], ["p1002", "참여자1002", "4969", "", "60", "?", -1, 0, "C", "26"], ["p1003", "참여자1003", "2479", "", "60", "?", 15, 32, "A", "26"], ["p1004", "참여자1004", "9949", "", "70", "?", 194, 4, "C", "26"], ["p1005", "참여자1005", "3868", "", "70", "?", 801, 106, "B", "?"], ["p1006", "참여자1006", "5370", "", "?", "?", 460, 2, "C", "2"], ["p1007", "참여자1007", "5235", "", "70", "?", 4, 9, "A", "26"], ["p1008", "참여자1008", "7549", "", "?", "?", 425, 269, "B", "2"], ["p1009", "참여자1009", "5928", "", "70", "?", -1, 0, "C", "26"], ["p1010", "참여자1010", "9760", "", "70", "?", 62, 198, "B", "2"], ["p1011", "참여자1011", "1294", "", "70", "?", 470, 24, "B", "2"], ["p1012", "참여자1012", "8386", "", "70", "?", 451, 49, "B", "2"], ["p1013", "참여자1013", "3232", "", "60", "?", -1, 0, "C", "26"], ["p1014", "참여자1014", "6417", "", "70", "?", 381, 251, "B", "2"], ["p1015", "참여자1015", "2620", "", "60", "?", 187, 3, "C", "26"], ["p1016", "참여자1016", "4051", "", "60", "?", 124, 8, "C", "26"], ["p1017", "참여자1017", "6680", "", "80", "?", 9, 176, "A", "26"], ["p1018", "참여자1018", "1060", "", "80", "?", 124, 1, "C", "26"], ["p1019", "참여자1019", "0554", "", "80", "?", 40, 30, "B", "26"], ["p1020", "참여자1020", "7892", "", "70", "?", 483, 207, "B", "2"], ["p1021", "참여자1021", "9053", "", "60", "?", 12, 105, "A", "26"], ["p1022", "참여자1022", "8922", "", "80", "?", 558, 1, "C", "2"], ["p1023", "참여자1023", "5337", "", "70", "?", 33, 12, "C", "26"], ["p1024", "참여자1024", "2632", "", "?", "?", 933, 4, "C", "?"], ["p1025", "참여자1025", "6988", "", "80", "?", -1, 0, "C", "2"], ["p1026", "참여자1026", "1723", "", "60", "?", -1, 0, "C", "26"], ["p1027", "참여자1027", "1182", "", "?", "?", 0, 6650, "A", "26"], ["p1028", "참여자1028", "4339", "", "50", "?", 873, 11, "C", "2"], ["p1029", "참여자1029", "1377", "", "70", "?", -1, 0, "C", "26"], ["p1030", "참여자1030", "3413", "", "70", "?", 59, 19, "C", "26"], ["p1031", "참여자1031", "1579", "", "80", "?", 97, 3, "C", "26"], ["p1032", "참여자1032", "6898", "", "80", "?", 144, 6, "C", "26"], ["p1033", "참여자1033", "8167", "", "70", "?", 53, 5, "C", "26"], ["p1034", "참여자1034", "7323", "", "?", "?", 0, 5919, "A", "26"], ["p1035", "참여자1035", "2837", "", "70", "?", 436, 52, "B", "2"], ["p1036", "참여자1036", "3837", "", "70", "?", 25, 16447, "A", "26"], ["p1037", "참여자1037", "2177", "", "60", "?", 2, 290, "A", "26"], ["p1038", "참여자1038", "6829", "", "?", "?", -1, 0, "C", "?"], ["p1039", "참여자1039", "7551", "", "70", "?", 175, 23, "B", "26"], ["p1040", "참여자1040", "3849", "", "?", "?", -1, 0, "C", "2"], ["p1041", "참여자1041", "8823", "", "80", "?", 133, 3, "C", "26"], ["p1042", "참여자1042", "1985", "", "?", "?", 96, 5, "C", "2"], ["p1043", "참여자1043", "4815", "", "70", "?", 500, 2, "C", "2"], ["p1044", "참여자1044", "4813", "", "70", "?", 6, 1261, "A", "26"], ["p1045", "참여자1045", "4577", "", "80", "?", 537, 1, "C", "2"], ["p1046", "참여자1046", "9287", "", "70", "?", 146, 5, "C", "26"], ["p1047", "참여자1047", "4385", "", "?", "?", 6, 900, "A", "2"], ["p1048", "참여자1048", "6110", "", "80", "?", 434, 114, "B", "2"], ["p1049", "참여자1049", "4162", "", "70", "?", 0, 4585, "A", "26"], ["p1050", "참여자1050", "4265", "", "80", "?", 10, 550, "A", "26"], ["p1051", "참여자1051", "3263", "", "80", "?", 4, 73, "A", "2"], ["p1052", "참여자1052", "7199", "", "80", "?", 5, 291, "A", "26"], ["p1053", "참여자1053", "4053", "", "70", "?", 105, 43, "B", "2"], ["p1054", "참여자1054", "3043", "", "70", "?", 7, 7, "A", "26"], ["p1055", "참여자1055", "4019", "", "70", "?", 54, 369, "B", "26"], ["p1056", "참여자1056", "3858", "", "70", "?", 90, 19, "C", "26"], ["p1057", "참여자1057", "2512", "", "70", "?", -1, 0, "C", "26"], ["p1058", "참여자1058", "4609", "", "?", "?", 0, 14578, "A", "26"], ["p1059", "참여자1059", "9474", "", "70", "?", 123, 2, "C", "26"], ["p1060", "참여자1060", "3084", "", "70", "?", 4, 457, "A", "26"], ["p1061", "참여자1061", "5346", "", "70", "?", 0, 110, "A", "26"], ["p1062", "참여자1062", "1061", "", "70", "?", 835, 39, "B", "?"], ["p1063", "참여자1063", "6489", "", "70", "?", 32, 536, "B", "26"], ["p1064", "참여자1064", "4123", "", "70", "?", 76, 54, "B", "26"], ["p1065", "참여자1065", "4029", "", "70", "?", 203, 134, "B", "2"], ["p1066", "참여자1066", "8312", "", "70", "?", 0, 2855, "A", "26"], ["p1067", "참여자1067", "8623", "", "70", "?", -1, 0, "C", "26"], ["p1068", "참여자1068", "3790", "", "?", "?", 90, 14, "C", "?"], ["p1069", "참여자1069", "1647", "", "70", "?", -1, 0, "C", "26"], ["p1070", "참여자1070", "7600", "", "60", "?", 90, 12, "C", "26"], ["p1071", "참여자1071", "0606", "", "80", "?", 365, 60, "B", "2"], ["p1072", "참여자1072", "1676", "", "80", "?", 62, 6, "C", "26"], ["p1073", "참여자1073", "0073", "", "80", "?", -1, 0, "C", "2"], ["p1074", "참여자1074", "7778", "", "70", "?", 353, 606, "B", "2"], ["p1075", "참여자1075", "3786", "", "70", "?", 0, 3998, "A", "26"], ["p1076", "참여자1076", "7344", "", "60", "?", 401, 74, "B", "2"], ["p1077", "참여자1077", "6125", "", "80", "?", 356, 1164, "B", "2"], ["p1078", "참여자1078", "0661", "", "80", "?", 845, 12, "C", "?"], ["p1079", "참여자1079", "4811", "", "?", "?", 402, 702, "B", "2"], ["p1080", "참여자1080", "3815", "", "70", "?", 180, 137, "B", "2"], ["p1081", "참여자1081", "1953", "", "70", "?", -1, 0, "C", "26"], ["p1082", "참여자1082", "0825", "", "?", "?", 531, 1, "C", "2"], ["p1083", "참여자1083", "3105", "", "?", "?", 838, 25, "B", "?"], ["p1084", "참여자1084", "9838", "", "70", "?", 530, 15, "C", "2"], ["p1085", "참여자1085", "9555", "", "70", "?", 112, 218, "B", "26"], ["p1086", "참여자1086", "3181", "", "70", "?", 0, 8094, "A", "26"], ["p1087", "참여자1087", "1230", "", "70", "?", 6, 84, "A", "26"], ["p1088", "참여자1088", "6098", "", "70", "?", 195, 15, "C", "26"], ["p1089", "참여자1089", "8399", "", "70", "?", 142, 38, "B", "26"], ["p1090", "참여자1090", "2912", "", "80", "?", 894, 9, "C", "2"], ["p1091", "참여자1091", "7358", "", "?", "?", 320, 269, "B", "2"], ["p1092", "참여자1092", "9880", "", "70", "?", 807, 80, "B", "?"], ["p1093", "참여자1093", "4258", "", "80", "?", 56, 2, "C", "26"], ["p1094", "참여자1094", "0103", "", "50", "?", 45, 17, "C", "26"], ["p1095", "참여자1095", "1733", "", "70", "?", 94, 12, "C", "26"], ["p1096", "참여자1096", "9767", "", "70", "?", 558, 1, "C", "2"], ["p1097", "참여자1097", "5729", "", "?", "?", 5, 881, "A", "26"], ["p1098", "참여자1098", "3565", "", "70", "?", 1, 2051, "A", "26"], ["p1099", "참여자1099", "0613", "", "60", "?", 66, 152, "B", "26"], ["p1100", "참여자1100", "6040", "", "70", "?", -1, 0, "C", "2"], ["p1101", "참여자1101", "5570", "", "60", "?", 0, 3653, "A", "26"], ["p1102", "참여자1102", "2316", "", "70", "?", 732, 24, "B", "2"], ["p1103", "참여자1103", "0723", "", "60", "?", 502, 22, "B", "2"], ["p1104", "참여자1104", "3341", "", "70", "?", 500, 8, "C", "2"], ["p1105", "참여자1105", "4176", "", "80", "?", 187, 1, "C", "26"], ["p1106", "참여자1106", "0626", "", "?", "?", -1, 0, "C", "2"], ["p1107", "참여자1107", "9820", "", "70", "?", 76, 35, "B", "26"], ["p1108", "참여자1108", "3333", "", "60", "?", 55, 70, "B", "26"], ["p1109", "참여자1109", "0186", "", "70", "?", 73, 32, "B", "26"], ["p1110", "참여자1110", "5361", "", "70", "?", 68, 1, "C", "26"], ["p1111", "참여자1111", "6700", "", "50", "?", 46, 15, "C", "26"], ["p1112", "참여자1112", "6091", "", "70", "?", 92, 9, "C", "26"], ["p1113", "참여자1113", "3033", "", "70", "?", 26, 1455, "A", "2"], ["p1114", "참여자1114", "5115", "", "70", "?", 543, 26, "B", "2"], ["p1115", "참여자1115", "1276", "", "?", "?", 328, 162, "B", "2"], ["p1116", "참여자1116", "3332", "", "70", "?", 316, 290, "B", "2"], ["p1117", "참여자1117", "0515", "", "70", "?", -1, 0, "C", "26"], ["p1118", "참여자1118", "8120", "", "60", "?", 3, 278, "A", "26"], ["p1119", "참여자1119", "8979", "", "60", "?", 42, 14, "C", "26"], ["p1120", "참여자1120", "7921", "", "70", "?", 60, 7, "C", "26"], ["p1121", "참여자1121", "1036", "", "70", "?", 4, 162, "A", "26"], ["p1122", "참여자1122", "6687", "", "60", "?", -1, 0, "C", "26"], ["p1123", "참여자1123", "1661", "", "70", "?", 28, 3204, "A", "2"], ["p1124", "참여자1124", "6476", "", "60", "?", 0, 103, "A", "26"], ["p1125", "참여자1125", "9013", "", "70", "?", 222, 4, "C", "26"], ["p1126", "참여자1126", "2532", "", "70", "?", 87, 218, "B", "2"], ["p1127", "참여자1127", "8749", "", "?", "?", -1, 0, "C", "2"], ["p1128", "참여자1128", "1493", "", "70", "?", 62, 1188, "B", "26"], ["p1129", "참여자1129", "2681", "", "60", "?", 3, 124, "A", "2"], ["p1130", "참여자1130", "6517", "", "70", "?", 129, 2, "C", "26"], ["p1131", "참여자1131", "4442", "", "70", "?", 0, 44, "A", "26"], ["p1132", "참여자1132", "6713", "", "?", "?", 912, 2, "C", "?"], ["p1133", "참여자1133", "4641", "", "70", "?", 64, 3, "C", "26"], ["p1134", "참여자1134", "5039", "", "?", "?", 877, 17, "C", "?"], ["p1135", "참여자1135", "6845", "", "70", "?", 146, 19, "C", "26"], ["p1136", "참여자1136", "0841", "", "70", "?", 497, 583, "B", "2"], ["p1137", "참여자1137", "5117", "", "70", "?", -1, 0, "C", "26"], ["p1138", "참여자1138", "9281", "", "60", "?", 7, 146, "A", "26"], ["p1139", "참여자1139", "5852", "", "70", "?", 7, 144, "A", "26"], ["p1140", "참여자1140", "6784", "", "?", "?", 579, 1, "C", "2"], ["p1141", "참여자1141", "6823", "", "?", "?", -1, 0, "C", "2"], ["p1142", "참여자1142", "0298", "", "70", "?", 43, 4, "C", "26"], ["p1143", "참여자1143", "5960", "", "60", "?", 75, 14, "C", "26"], ["p1144", "참여자1144", "3230", "", "60", "?", 3, 196, "A", "26"], ["p1145", "참여자1145", "6401", "", "80", "?", 3, 3249, "A", "26"], ["p1146", "참여자1146", "6635", "", "?", "?", 112, 2015, "B", "26"], ["p1147", "참여자1147", "3336", "", "60", "?", 5, 45, "A", "26"], ["p1148", "참여자1148", "0096", "", "70", "?", 371, 368, "B", "2"], ["p1149", "참여자1149", "7113", "", "60", "?", 452, 77, "B", "2"], ["p1150", "참여자1150", "2565", "", "70", "?", -1, 0, "C", "26"], ["p1151", "참여자1151", "6942", "", "30", "?", 45, 12, "C", "26"], ["p1152", "참여자1152", "1860", "", "70", "?", -1, 0, "C", "2"], ["p1153", "참여자1153", "1482", "", "60", "?", 531, 29, "B", "2"], ["p1154", "참여자1154", "6655", "", "80", "?", -1, 0, "C", "26"], ["p1155", "참여자1155", "9466", "", "80", "?", -1, 0, "C", "26"], ["p1156", "참여자1156", "5975", "", "?", "?", 253, 1566, "B", "2"], ["p1157", "참여자1157", "7551", "", "60", "?", 0, 3153, "A", "26"], ["p1158", "참여자1158", "2663", "", "70", "?", 490, 67, "B", "2"], ["p1159", "참여자1159", "2129", "", "70", "?", 19, 1178, "A", "26"], ["p1160", "참여자1160", "0243", "", "80", "?", 84, 84, "B", "2"], ["p1161", "참여자1161", "0846", "", "?", "?", 559, 3, "C", "2"], ["p1162", "참여자1162", "9036", "", "80", "?", 537, 18, "C", "2"], ["p1163", "참여자1163", "2334", "", "70", "?", 7, 224, "A", "2"], ["p1164", "참여자1164", "6499", "", "70", "?", 5, 547, "A", "2"], ["p1165", "참여자1165", "1458", "", "?", "?", 690, 98, "B", "?"], ["p1166", "참여자1166", "9385", "", "?", "?", 524, 9, "C", "2"], ["p1167", "참여자1167", "6075", "", "80", "?", 214, 1, "C", "26"], ["p1168", "참여자1168", "8265", "", "60", "?", 43, 3, "C", "26"], ["p1169", "참여자1169", "2812", "", "60", "?", 80, 22, "B", "26"], ["p1170", "참여자1170", "2390", "", "70", "?", 0, 3773, "A", "26"], ["p1171", "참여자1171", "5700", "", "60", "?", -1, 0, "C", "26"], ["p1172", "참여자1172", "4641", "", "80", "?", 3, 8057, "A", "26"], ["p1173", "참여자1173", "2651", "", "?", "?", 192, 159, "B", "2"], ["p1174", "참여자1174", "8538", "", "?", "?", 167, 2300, "B", "26"], ["p1175", "참여자1175", "2814", "", "70", "?", 523, 2, "C", "2"], ["p1176", "참여자1176", "1099", "", "60", "?", 220, 17, "C", "26"], ["p1177", "참여자1177", "1782", "", "70", "?", -1, 0, "C", "26"], ["p1178", "참여자1178", "6287", "", "70", "?", 0, 563, "A", "26"], ["p1179", "참여자1179", "8036", "", "80", "?", -1, 0, "C", "26"], ["p1180", "참여자1180", "3233", "", "70", "?", 129, 1, "C", "26"], ["p1181", "참여자1181", "4941", "", "80", "?", 3, 88, "A", "26"], ["p1182", "참여자1182", "2075", "", "70", "?", 21, 115, "A", "26"], ["p1183", "참여자1183", "0712", "", "?", "?", 301, 214, "B", "2"], ["p1184", "참여자1184", "7909", "", "60", "?", 6, 15, "A", "2"], ["p1185", "참여자1185", "5153", "", "80", "?", 97, 1, "C", "26"], ["p1186", "참여자1186", "0874", "", "70", "?", 0, 3208, "A", "26"], ["p1187", "참여자1187", "9955", "", "60", "?", 192, 4, "C", "26"], ["p1188", "참여자1188", "6355", "", "?", "?", -1, 0, "C", "2"], ["p1189", "참여자1189", "1413", "", "70", "?", 504, 10, "C", "2"], ["p1190", "참여자1190", "2625", "", "70", "?", 522, 17, "C", "2"], ["p1191", "참여자1191", "3638", "", "60", "?", 58, 1, "C", "26"], ["p1192", "참여자1192", "6627", "", "60", "?", 319, 206, "B", "2"], ["p1193", "참여자1193", "3213", "", "80", "?", 528, 15, "C", "2"], ["p1194", "참여자1194", "7748", "", "70", "?", -1, 0, "C", "2"], ["p1195", "참여자1195", "2997", "", "70", "?", 90, 28, "B", "26"], ["p1196", "참여자1196", "9263", "", "70", "?", 3, 163, "A", "26"], ["p1197", "참여자1197", "3573", "", "?", "?", 547, 4, "C", "2"], ["p1198", "참여자1198", "0683", "", "70", "?", 298, 524, "B", "26"], ["p1199", "참여자1199", "6549", "", "60", "?", 352, 15, "C", "2"], ["p1200", "참여자1200", "8485", "", "70", "?", 94, 30, "B", "26"], ["p1201", "참여자1201", "2563", "", "60", "?", 69, 4, "C", "26"], ["p1202", "참여자1202", "6284", "", "60", "?", 177, 182, "B", "?"], ["p1203", "참여자1203", "5885", "", "70", "?", 19, 19, "A", "26"], ["p1204", "참여자1204", "2016", "", "60", "?", 0, 2901, "A", "26"], ["p1205", "참여자1205", "2448", "", "80", "?", -1, 0, "C", "26"], ["p1206", "참여자1206", "4047", "", "70", "?", 10, 250, "A", "26"], ["p1207", "참여자1207", "3155", "", "80", "?", 352, 30, "B", "2"], ["p1208", "참여자1208", "0673", "", "70", "?", -1, 0, "C", "26"], ["p1209", "참여자1209", "9213", "", "?", "?", 891, 10, "C", "2"], ["p1210", "참여자1210", "0624", "", "80", "?", 41, 795, "B", "2"], ["p1211", "참여자1211", "5311", "", "70", "?", 128, 92, "B", "26"], ["p1212", "참여자1212", "1928", "", "60", "?", 277, 4, "C", "2"], ["p1213", "참여자1213", "6387", "", "60", "?", 90, 10, "C", "26"], ["p1214", "참여자1214", "9822", "", "70", "?", -1, 0, "C", "26"], ["p1215", "참여자1215", "7466", "", "60", "?", 554, 21, "B", "2"], ["p1216", "참여자1216", "9012", "", "60", "?", 550, 18, "C", "2"], ["p1217", "참여자1217", "5017", "", "70", "?", 3, 418, "A", "2"], ["p1218", "참여자1218", "6882", "", "60", "?", 187, 9, "C", "26"], ["p1219", "참여자1219", "5049", "", "70", "?", -1, 0, "C", "26"], ["p1220", "참여자1220", "9545", "", "60", "?", 0, 1693, "A", "26"], ["p1221", "참여자1221", "4083", "", "70", "?", 71, 237, "B", "2"], ["p1222", "참여자1222", "6975", "", "90", "?", 558, 1, "C", "2"], ["p1223", "참여자1223", "6376", "", "70", "?", 124, 1, "C", "26"], ["p1224", "참여자1224", "6020", "", "70", "?", 25, 271, "A", "26"], ["p1225", "참여자1225", "7320", "", "80", "?", 176, 16, "C", "26"], ["p1226", "참여자1226", "8250", "", "80", "?", 558, 4, "C", "2"], ["p1227", "참여자1227", "7181", "", "80", "?", 320, 248, "B", "2"], ["p1228", "참여자1228", "2928", "", "70", "?", 94, 1, "C", "26"], ["p1229", "참여자1229", "0382", "", "60", "?", 95, 56, "B", "26"], ["p1230", "참여자1230", "0057", "", "70", "?", -1, 0, "C", "26"], ["p1231", "참여자1231", "8019", "", "70", "?", 513, 104, "B", "2"], ["p1232", "참여자1232", "7623", "", "60", "?", 1, 154, "A", "26"], ["p1233", "참여자1233", "3854", "", "70", "?", 223, 2, "C", "26"], ["p1234", "참여자1234", "7320", "", "80", "?", 70, 178, "B", "2"], ["p1235", "참여자1235", "7508", "", "70", "?", 7, 1063, "A", "26"], ["p1236", "참여자1236", "2942", "", "60", "?", 320, 73, "B", "2"], ["p1237", "참여자1237", "7753", "", "60", "?", 133, 53, "B", "26"], ["p1238", "참여자1238", "6559", "", "60", "?", 46, 5, "C", "26"], ["p1239", "참여자1239", "1754", "", "70", "?", 0, 6035, "A", "26"], ["p1240", "참여자1240", "1099", "", "80", "?", -1, 0, "C", "26"], ["p1241", "참여자1241", "2104", "", "?", "?", 7, 34, "A", "2"], ["p1242", "참여자1242", "5874", "", "70", "?", 0, 1196, "A", "26"], ["p1243", "참여자1243", "7054", "", "?", "?", 427, 288, "B", "2"], ["p1244", "참여자1244", "5985", "", "70", "?", 844, 8, "C", "2"], ["p1245", "참여자1245", "1502", "", "60", "?", 28, 248, "A", "2"], ["p1246", "참여자1246", "7241", "", "70", "?", -1, 0, "C", "26"], ["p1247", "참여자1247", "8263", "", "60", "?", 243, 3041, "B", "2"], ["p1248", "참여자1248", "8358", "", "?", "?", -1, 0, "C", "2"], ["p1249", "참여자1249", "0667", "", "70", "?", 368, 42, "B", "2"], ["p1250", "참여자1250", "0666", "", "60", "?", -1, 0, "C", "26"], ["p1251", "참여자1251", "2134", "", "?", "?", -1, 0, "C", "2"], ["p1252", "참여자1252", "1347", "", "70", "?", -1, 0, "C", "26"], ["p1253", "참여자1253", "5140", "", "70", "?", 453, 1, "C", "2"], ["p1254", "참여자1254", "8380", "", "70", "?", 220, 9, "C", "26"], ["p1255", "참여자1255", "1310", "", "80", "?", 848, 13, "C", "2"], ["p1256", "참여자1256", "0889", "", "70", "?", 82, 325, "B", "2"], ["p1257", "참여자1257", "8256", "", "60", "?", 66, 12, "C", "26"], ["p1258", "참여자1258", "6190", "", "70", "?", 0, 8297, "A", "26"], ["p1259", "참여자1259", "2231", "", "80", "?", 719, 29, "B", "2"], ["p1260", "참여자1260", "0423", "", "70", "?", 48, 12, "C", "26"], ["p1261", "참여자1261", "1087", "", "70", "?", -1, 0, "C", "26"], ["p1262", "참여자1262", "1795", "", "80", "?", 558, 6, "C", "2"], ["p1263", "참여자1263", "3173", "", "80", "?", 187, 2, "C", "26"], ["p1264", "참여자1264", "2156", "", "60", "?", 124, 1, "C", "26"], ["p1265", "참여자1265", "8058", "", "70", "?", 34, 251, "B", "26"], ["p1266", "참여자1266", "4716", "", "70", "?", 3, 2229, "A", "26"], ["p1267", "참여자1267", "2705", "", "80", "?", 516, 19, "C", "2"], ["p1268", "참여자1268", "3622", "", "70", "?", 522, 38, "B", "2"], ["p1269", "참여자1269", "1073", "", "70", "?", -1, 0, "C", "2"], ["p1270", "참여자1270", "5749", "", "?", "?", 530, 16, "C", "2"], ["p1271", "참여자1271", "4132", "", "70", "?", -1, 0, "C", "26"], ["p1272", "참여자1272", "2601", "", "70", "?", 117, 455, "B", "26"], ["p1273", "참여자1273", "5305", "", "80", "?", 461, 20, "C", "2"], ["p1274", "참여자1274", "4505", "", "60", "?", -1, 0, "C", "26"], ["p1275", "참여자1275", "7477", "", "70", "?", 0, 466, "A", "26"], ["p1276", "참여자1276", "2352", "", "30", "?", 264, 542, "B", "?"], ["p1277", "참여자1277", "4164", "", "70", "?", 3, 276, "A", "26"], ["p1278", "참여자1278", "8228", "", "70", "?", 28, 133, "A", "26"], ["p1279", "참여자1279", "7866", "", "60", "?", 125, 7, "C", "26"], ["p1280", "참여자1280", "3413", "", "70", "?", 681, 11, "C", "2"], ["p1281", "참여자1281", "9697", "", "80", "?", 80, 25, "B", "26"], ["p1282", "참여자1282", "4306", "", "?", "?", 598, 3, "C", "2"], ["p1283", "참여자1283", "8290", "", "60", "?", -1, 0, "C", "26"], ["p1284", "참여자1284", "3889", "", "60", "?", 371, 76, "B", "2"], ["p1285", "참여자1285", "5227", "", "70", "?", 36, 31, "B", "26"], ["p1286", "참여자1286", "6099", "", "70", "?", 447, 33, "B", "2"], ["p1287", "참여자1287", "0603", "", "60", "?", 115, 7, "C", "2"], ["p1288", "참여자1288", "3259", "", "70", "?", -1, 0, "C", "26"], ["p1289", "참여자1289", "2983", "", "?", "?", 7, 1368, "A", "2"], ["p1290", "참여자1290", "6610", "", "70", "?", -1, 0, "C", "2"], ["p1291", "참여자1291", "2641", "", "70", "?", 186, 5, "C", "26"], ["p1292", "참여자1292", "4557", "", "70", "?", 3, 464, "A", "26"], ["p1293", "참여자1293", "5371", "", "70", "?", -1, 0, "C", "26"], ["p1294", "참여자1294", "6174", "", "60", "?", 189, 45, "B", "26"], ["p1295", "참여자1295", "2764", "", "?", "?", 828, 39, "B", "?"], ["p1296", "참여자1296", "4330", "", "?", "?", 731, 3, "C", "?"], ["p1297", "참여자1297", "1885", "", "70", "?", 41, 753, "B", "2"], ["p1298", "참여자1298", "8695", "", "60", "?", -1, 0, "C", "26"], ["p1299", "참여자1299", "0795", "", "?", "?", 307, 451, "B", "26"], ["p1300", "참여자1300", "5894", "", "?", "?", -1, 0, "C", "2"], ["p1301", "참여자1301", "7422", "", "70", "?", 87, 11, "C", "26"], ["p1302", "참여자1302", "9096", "", "70", "?", 119, 28, "B", "26"], ["p1303", "참여자1303", "8543", "", "70", "?", 87, 1, "C", "26"], ["p1304", "참여자1304", "9503", "", "60", "?", 73, 860, "B", "26"], ["p1305", "참여자1305", "1713", "", "70", "?", 175, 23, "B", "26"], ["p1306", "참여자1306", "4129", "", "70", "?", 55, 2724, "B", "2"], ["p1307", "참여자1307", "8776", "", "70", "?", 10, 372, "A", "2"], ["p1308", "참여자1308", "6459", "", "70", "?", 125, 274, "B", "2"], ["p1309", "참여자1309", "6086", "", "70", "?", 69, 11, "C", "26"], ["p1310", "참여자1310", "4337", "", "?", "?", 908, 2, "C", "?"], ["p1311", "참여자1311", "6156", "", "70", "?", 4, 1596, "A", "2"], ["p1312", "참여자1312", "6044", "", "70", "?", 23, 580, "A", "26"], ["p1313", "참여자1313", "9459", "", "70", "?", 318, 8368, "B", "26"], ["p1314", "참여자1314", "2395", "", "60", "?", 451, 34, "B", "2"], ["p1315", "참여자1315", "5902", "", "60", "?", 3, 3286, "A", "26"], ["p1316", "참여자1316", "5420", "", "?", "?", -1, 0, "C", "2"], ["p1317", "참여자1317", "1333", "", "?", "?", 131, 18, "C", "2"], ["p1318", "참여자1318", "7246", "", "70", "?", 77, 50, "B", "26"], ["p1319", "참여자1319", "3769", "", "80", "?", -1, 0, "C", "26"], ["p1320", "참여자1320", "2895", "", "60", "?", 228, 133, "B", "2"], ["p1321", "참여자1321", "0791", "", "60", "?", -1, 0, "C", "26"], ["p1322", "참여자1322", "4855", "", "70", "?", 532, 40, "B", "2"], ["p1323", "참여자1323", "8455", "", "80", "?", 161, 16, "C", "26"], ["p1324", "참여자1324", "4155", "", "80", "?", 500, 6, "C", "2"], ["p1325", "참여자1325", "5080", "", "70", "?", 452, 1, "C", "2"], ["p1326", "참여자1326", "9598", "", "?", "?", 864, 26, "B", "?"], ["p1327", "참여자1327", "5122", "", "70", "?", 223, 19, "C", "26"], ["p1328", "참여자1328", "0029", "", "80", "?", 1, 424, "A", "2"], ["p1329", "참여자1329", "0553", "", "?", "?", 473, 5, "C", "2"], ["p1330", "참여자1330", "3631", "", "70", "?", 94, 12, "C", "26"], ["p1331", "참여자1331", "2447", "", "60", "?", 41, 9, "C", "26"], ["p1332", "참여자1332", "4767", "", "70", "?", 87, 82, "B", "2"], ["p1333", "참여자1333", "7081", "", "70", "?", 220, 1, "C", "26"], ["p1334", "참여자1334", "6843", "", "60", "?", -1, 0, "C", "26"], ["p1335", "참여자1335", "8399", "", "90", "?", 558, 2, "C", "2"], ["p1336", "참여자1336", "5965", "", "80", "?", -1, 0, "C", "26"], ["p1337", "참여자1337", "0782", "", "70", "?", -1, 0, "C", "26"], ["p1338", "참여자1338", "2163", "", "70", "?", 5, 44, "A", "26"], ["p1339", "참여자1339", "8001", "", "70", "?", 417, 1, "C", "2"], ["p1340", "참여자1340", "3723", "", "?", "?", 481, 69, "B", "?"], ["p1341", "참여자1341", "0746", "", "?", "?", 907, 15, "C", "?"], ["p1342", "참여자1342", "0365", "", "80", "?", 240, 519, "B", "2"], ["p1343", "참여자1343", "0891", "", "80", "?", 552, 12, "C", "2"], ["p1344", "참여자1344", "0042", "", "80", "?", -1, 0, "C", "26"], ["p1345", "참여자1345", "9291", "", "80", "?", 7, 48, "A", "26"], ["p1346", "참여자1346", "5815", "", "70", "?", 80, 162, "B", "2"], ["p1347", "참여자1347", "4976", "", "70", "?", -1, 0, "C", "26"], ["p1348", "참여자1348", "1742", "", "80", "?", 237, 3, "C", "26"], ["p1349", "참여자1349", "8570", "", "70", "?", -1, 0, "C", "26"], ["p1350", "참여자1350", "5851", "", "80", "?", 187, 15, "C", "2"], ["p1351", "참여자1351", "8750", "", "40", "?", 683, 246, "B", "?"], ["p1352", "참여자1352", "3674", "", "80", "?", 485, 11, "C", "2"], ["p1353", "참여자1353", "6770", "", "80", "?", 483, 69, "B", "2"], ["p1354", "참여자1354", "9561", "", "70", "?", 432, 175, "B", "2"], ["p1355", "참여자1355", "4934", "", "?", "?", 856, 20, "C", "?"], ["p1356", "참여자1356", "9651", "", "60", "?", 68, 30, "B", "26"], ["p1357", "참여자1357", "2190", "", "80", "?", 131, 64, "B", "2"], ["p1358", "참여자1358", "3345", "", "70", "?", 49, 8, "C", "26"], ["p1359", "참여자1359", "6000", "", "70", "?", 94, 4, "C", "26"], ["p1360", "참여자1360", "7780", "", "80", "?", 33, 1, "C", "26"], ["p1361", "참여자1361", "2598", "", "60", "?", 356, 3, "C", "2"], ["p1362", "참여자1362", "2207", "", "60", "?", 88, 14, "C", "26"], ["p1363", "참여자1363", "0231", "", "?", "?", 473, 23, "B", "2"], ["p1364", "참여자1364", "3990", "", "60", "?", 444, 75, "B", "2"], ["p1365", "참여자1365", "2446", "", "80", "?", 320, 407, "B", "2"], ["p1366", "참여자1366", "7386", "", "80", "?", 42, 24, "B", "26"], ["p1367", "참여자1367", "1569", "", "?", "?", -1, 0, "C", "?"], ["p1368", "참여자1368", "1043", "", "70", "?", 424, 9, "C", "2"], ["p1369", "참여자1369", "2370", "", "80", "?", -1, 0, "C", "26"], ["p1370", "참여자1370", "4419", "", "60", "?", 195, 3, "C", "26"], ["p1371", "참여자1371", "6585", "", "50", "?", -1, 0, "C", "26"], ["p1372", "참여자1372", "4329", "", "70", "?", 10, 295, "A", "26"], ["p1373", "참여자1373", "0188", "", "70", "?", 412, 415, "B", "2"], ["p1374", "참여자1374", "0919", "", "80", "?", 129, 8, "C", "26"], ["p1375", "참여자1375", "9213", "", "60", "?", 158, 38, "B", "2"], ["p1376", "참여자1376", "5739", "", "30", "?", 0, 3328, "A", "26"], ["p1377", "참여자1377", "9743", "", "60", "?", 415, 50, "B", "2"], ["p1378", "참여자1378", "9477", "", "60", "?", 418, 129, "B", "2"], ["p1379", "참여자1379", "7270", "", "70", "?", 89, 166, "B", "26"], ["p1380", "참여자1380", "9861", "", "60", "?", -1, 0, "C", "26"], ["p1381", "참여자1381", "8480", "", "80", "?", 3, 442, "A", "26"], ["p1382", "참여자1382", "8074", "", "?", "?", -1, 0, "C", "26"], ["p1383", "참여자1383", "4071", "", "70", "?", 523, 7, "C", "2"], ["p1384", "참여자1384", "2704", "", "60", "?", 2, 257, "A", "26"], ["p1385", "참여자1385", "0006", "", "80", "?", 512, 83, "B", "2"], ["p1386", "참여자1386", "0720", "", "70", "?", 166, 260, "B", "26"], ["p1387", "참여자1387", "1008", "", "70", "?", 59, 6, "C", "2"], ["p1388", "참여자1388", "8708", "", "?", "?", 535, 1, "C", "2"], ["p1389", "참여자1389", "0413", "", "?", "?", 122, 11, "C", "?"], ["p1390", "참여자1390", "6651", "", "?", "?", 24, 142, "A", "2"], ["p1391", "참여자1391", "3041", "", "70", "?", -1, 0, "C", "26"], ["p1392", "참여자1392", "3893", "", "70", "?", 23, 29, "A", "26"], ["p1393", "참여자1393", "2608", "", "?", "?", 851, 10, "C", "?"], ["p1394", "참여자1394", "0956", "", "?", "?", 913, 12, "C", "?"], ["p1395", "참여자1395", "1718", "", "60", "?", 10, 167, "A", "26"], ["p1396", "참여자1396", "0202", "", "60", "?", -1, 0, "C", "26"], ["p1397", "참여자1397", "9026", "", "80", "?", 500, 118, "B", "2"], ["p1398", "참여자1398", "3231", "", "70", "?", 37, 104, "B", "26"], ["p1399", "참여자1399", "2330", "", "60", "?", 2, 1944, "A", "26"], ["p1400", "참여자1400", "6769", "", "80", "?", 36, 13, "C", "26"], ["p1401", "참여자1401", "3268", "", "60", "?", 86, 963, "B", "2"], ["p1402", "참여자1402", "8491", "", "70", "?", -1, 0, "C", "2"], ["p1403", "참여자1403", "9962", "", "70", "?", 122, 5, "C", "26"], ["p1404", "참여자1404", "8305", "", "70", "?", 500, 1, "C", "2"], ["p1405", "참여자1405", "6803", "", "70", "?", 408, 122, "B", "2"], ["p1406", "참여자1406", "2861", "", "60", "?", 492, 30, "B", "2"], ["p1407", "참여자1407", "8332", "", "?", "?", 79, 431, "B", "2"], ["p1408", "참여자1408", "5068", "", "70", "?", 14, 5, "A", "26"], ["p1409", "참여자1409", "1044", "", "70", "?", -1, 0, "C", "26"], ["p1410", "참여자1410", "4919", "", "70", "?", 501, 63, "B", "2"], ["p1411", "참여자1411", "0794", "", "70", "?", 191, 275, "B", "2"], ["p1412", "참여자1412", "7830", "", "80", "?", 33, 763, "B", "2"], ["p1413", "참여자1413", "8821", "", "70", "?", 2, 1, "A", "26"], ["p1414", "참여자1414", "0104", "", "70", "?", 52, 12, "C", "26"], ["p1415", "참여자1415", "6146", "", "80", "?", -1, 0, "C", "26"], ["p1416", "참여자1416", "7154", "", "60", "?", 0, 2, "A", "26"], ["p1417", "참여자1417", "7622", "", "70", "?", 158, 6, "C", "26"], ["p1418", "참여자1418", "1318", "", "80", "?", 521, 33, "B", "2"], ["p1419", "참여자1419", "7413", "", "70", "?", 33, 49, "B", "26"], ["p1420", "참여자1420", "2873", "", "60", "?", 419, 177, "B", "2"], ["p1421", "참여자1421", "3701", "", "60", "?", 419, 862, "B", "2"], ["p1422", "참여자1422", "1724", "", "80", "?", 25, 874, "A", "26"], ["p1423", "참여자1423", "4283", "", "80", "?", 33, 254, "B", "26"], ["p1424", "참여자1424", "3805", "", "80", "?", 56, 1, "C", "26"], ["p1425", "참여자1425", "0635", "", "60", "?", 51, 318, "B", "2"], ["p1426", "참여자1426", "2019", "", "70", "?", 42, 257, "B", "26"], ["p1427", "참여자1427", "5497", "", "70", "?", -1, 0, "C", "2"], ["p1428", "참여자1428", "4313", "", "60", "?", 66, 10, "C", "26"], ["p1429", "참여자1429", "0860", "", "?", "?", -1, 0, "C", "2"], ["p1430", "참여자1430", "4357", "", "60", "?", 880, 20, "C", "?"], ["p1431", "참여자1431", "9073", "", "70", "?", 383, 35, "B", "2"], ["p1432", "참여자1432", "7144", "", "60", "?", 546, 1, "C", "2"], ["p1433", "참여자1433", "8572", "", "80", "?", -1, 0, "C", "26"], ["p1434", "참여자1434", "4346", "", "70", "?", 559, 4, "C", "2"], ["p1435", "참여자1435", "4843", "", "70", "?", 158, 1998, "B", "26"], ["p1436", "참여자1436", "3555", "", "70", "?", 143, 8, "C", "26"], ["p1437", "참여자1437", "1399", "", "60", "?", -1, 0, "C", "2"], ["p1438", "참여자1438", "8313", "", "80", "?", -1, 0, "C", "26"], ["p1439", "참여자1439", "0249", "", "80", "?", 467, 17, "C", "2"], ["p1440", "참여자1440", "2781", "", "50", "?", 209, 11, "C", "26"], ["p1441", "참여자1441", "4265", "", "90", "?", 552, 88, "B", "2"], ["p1442", "참여자1442", "3868", "", "70", "?", 238, 411, "B", "26"], ["p1443", "참여자1443", "3322", "", "70", "?", 376, 27, "B", "2"], ["p1444", "참여자1444", "2608", "", "80", "?", 0, 20841, "A", "26"], ["p1445", "참여자1445", "5355", "", "70", "?", 53, 26, "B", "26"], ["p1446", "참여자1446", "3144", "", "60", "?", 0, 2601, "A", "26"], ["p1447", "참여자1447", "6368", "", "80", "?", 552, 9, "C", "2"], ["p1448", "참여자1448", "5383", "", "70", "?", 406, 22, "B", "2"], ["p1449", "참여자1449", "9850", "", "70", "?", 710, 136, "B", "2"], ["p1450", "참여자1450", "3918", "", "?", "?", 837, 268, "B", "?"], ["p1451", "참여자1451", "6216", "", "60", "?", 23, 273, "A", "26"], ["p1452", "참여자1452", "8787", "", "70", "?", -1, 0, "C", "26"], ["p1453", "참여자1453", "7692", "", "?", "?", 431, 33, "B", "2"], ["p1454", "참여자1454", "7735", "", "70", "?", 28, 351, "A", "26"], ["p1455", "참여자1455", "8693", "", "80", "?", 46, 4, "C", "26"], ["p1456", "참여자1456", "0104", "", "70", "?", 107, 37, "B", "26"], ["p1457", "참여자1457", "0434", "", "60", "?", 2, 159, "A", "26"], ["p1458", "참여자1458", "7163", "", "70", "?", -1, 0, "C", "26"], ["p1459", "참여자1459", "3831", "", "60", "?", 4, 66, "A", "26"], ["p1460", "참여자1460", "9344", "", "60", "?", 40, 46, "B", "26"], ["p1461", "참여자1461", "5042", "", "70", "?", 17, 1004, "A", "2"], ["p1462", "참여자1462", "3472", "", "70", "?", 30, 3, "A", "26"], ["p1463", "참여자1463", "6415", "", "80", "?", 549, 1, "C", "2"], ["p1464", "참여자1464", "9590", "", "80", "?", 460, 1, "C", "2"], ["p1465", "참여자1465", "1274", "", "?", "?", -1, 0, "C", "2"], ["p1466", "참여자1466", "9260", "", "80", "?", -1, 0, "C", "26"], ["p1467", "참여자1467", "2810", "", "70", "?", 198, 1653, "B", "2"], ["p1468", "참여자1468", "2369", "", "70", "?", 101, 65, "B", "2"], ["p1469", "참여자1469", "0539", "", "90", "?", 559, 11, "C", "2"], ["p1470", "참여자1470", "0440", "", "80", "?", 26, 87, "A", "26"], ["p1471", "참여자1471", "1833", "", "70", "?", 110, 13, "C", "26"], ["p1472", "참여자1472", "1747", "", "60", "?", -1, 0, "C", "26"], ["p1473", "참여자1473", "2651", "", "?", "?", 188, 910, "B", "26"], ["p1474", "참여자1474", "5650", "", "?", "?", 577, 7, "C", "2"], ["p1475", "참여자1475", "2323", "", "?", "?", -1, 0, "C", "2"], ["p1476", "참여자1476", "0470", "", "60", "?", -1, 0, "C", "26"], ["p1477", "참여자1477", "0505", "", "80", "?", 87, 170, "B", "26"], ["p1478", "참여자1478", "0682", "", "80", "?", -1, 0, "C", "2"], ["p1479", "참여자1479", "2267", "", "80", "?", 410, 1248, "B", "2"], ["p1480", "참여자1480", "0698", "", "70", "?", 129, 1, "C", "26"], ["p1481", "참여자1481", "1111", "", "70", "?", -1, 0, "C", "26"], ["p1482", "참여자1482", "0764", "", "60", "?", 481, 707, "B", "2"], ["p1483", "참여자1483", "1077", "", "80", "?", 550, 4, "C", "2"], ["p1484", "참여자1484", "9674", "", "?", "?", 822, 119, "B", "?"], ["p1485", "참여자1485", "5954", "", "70", "?", 97, 7, "C", "26"], ["p1486", "참여자1486", "3265", "", "70", "?", 555, 45, "B", "2"], ["p1487", "참여자1487", "8747", "", "70", "?", 124, 1, "C", "26"], ["p1488", "참여자1488", "1080", "", "70", "?", 45, 13, "C", "26"], ["p1489", "참여자1489", "6288", "", "60", "?", 32, 257, "B", "26"], ["p1490", "참여자1490", "1754", "", "60", "?", 3, 1, "A", "26"], ["p1491", "참여자1491", "4039", "", "70", "?", -1, 0, "C", "26"], ["p1492", "참여자1492", "3370", "", "60", "?", 8, 20, "A", "26"], ["p1493", "참여자1493", "3328", "", "60", "?", -1, 0, "C", "26"], ["p1494", "참여자1494", "1834", "", "70", "?", 59, 235, "B", "26"], ["p1495", "참여자1495", "0554", "", "80", "?", 62, 1, "C", "26"], ["p1496", "참여자1496", "0564", "", "80", "?", 179, 3, "C", "26"], ["p1497", "참여자1497", "1433", "", "70", "?", 535, 8, "C", "2"], ["p1498", "참여자1498", "4708", "", "90", "?", 550, 46, "B", "2"], ["p1499", "참여자1499", "7817", "", "50", "?", 53, 22, "B", "26"], ["p1500", "참여자1500", "1636", "", "80", "?", 313, 421, "B", "2"], ["p1501", "참여자1501", "2173", "", "60", "?", 39, 253, "B", "2"], ["p1502", "참여자1502", "1603", "", "70", "?", 11, 61, "A", "26"], ["p1503", "참여자1503", "3358", "", "70", "?", 115, 3, "C", "26"], ["p1504", "참여자1504", "4824", "", "70", "?", 3, 209, "A", "26"], ["p1505", "참여자1505", "5228", "", "60", "?", 321, 191, "B", "2"], ["p1506", "참여자1506", "5513", "", "70", "?", -1, 0, "C", "26"], ["p1507", "참여자1507", "6942", "", "80", "?", 1, 117, "A", "26"], ["p1508", "참여자1508", "4278", "", "?", "?", 504, 95, "B", "2"], ["p1509", "참여자1509", "0342", "", "70", "?", 12, 272, "A", "2"], ["p1510", "참여자1510", "5749", "", "70", "?", 4, 600, "A", "26"], ["p1511", "참여자1511", "4205", "", "70", "?", 6, 298, "A", "26"], ["p1512", "참여자1512", "4630", "", "60", "?", 35, 110, "B", "26"], ["p1513", "참여자1513", "0793", "", "70", "?", -1, 0, "C", "26"], ["p1514", "참여자1514", "6029", "", "80", "?", -1, 0, "C", "2"], ["p1515", "참여자1515", "5256", "", "70", "?", 46, 14, "C", "26"], ["p1516", "참여자1516", "9863", "", "70", "?", 0, 3934, "A", "26"], ["p1517", "참여자1517", "8253", "", "70", "?", 146, 1, "C", "26"], ["p1518", "참여자1518", "7800", "", "60", "?", 136, 61, "B", "2"], ["p1519", "참여자1519", "4712", "", "60", "?", 129, 4, "C", "26"], ["p1520", "참여자1520", "0507", "", "70", "?", 97, 6, "C", "26"], ["p1521", "참여자1521", "6765", "", "80", "?", -1, 0, "C", "26"], ["p1522", "참여자1522", "0511", "", "70", "?", -1, 0, "C", "26"], ["p1523", "참여자1523", "7150", "", "80", "?", 88, 19, "C", "26"]];
+const GAMES = ["기억의 숨바꼭질","오늘의 장바구니","숨은 헬씨 찾기","꿀벌의 숫자놀이","초성 퀴즈","재밌는 숫자 퍼즐 4X4","구슬 옮기기","기찻길 만들기","숨은 헬씨찾기 비밀작전","양말정리 대작전","진짜 색깔 찾기","단어 기억하기","알쏭달쏭 숫자 더하기","재밌는 숫자 퍼즐 9X9","색깔 맞추기","이상한 신호","타일 뒤집기"];
+const P=ROSTER.map(r=>({id:r[0],nm:r[1],l4:r[2],by:r[3],age:r[4],sex:r[5],dsl:r[6],tot:r[7],tr:r[8],co:r[9],risk:(r[6]<0?'실행없음':(r[6]<=30?'활성':(r[6]<90?'단기이탈':'장기이탈')))}));
+const BY={};P.forEach(p=>BY[p.id]=p);
+let EXTRA=[];
+function people(){return P.concat(EXTRA)}
+function rebuildExtra(){
+  EXTRA=[];
+  Object.values(REC).forEach(r=>{
+    if(!r||!r.manual)return;
+    const q={id:r.id,nm:r.real||'(이름없음)',l4:r.l4||'',by:'',age:r.age||'?',sex:r.sex||'?',dsl:-2,tot:-1,risk:r.why||'명단 외',tr:r.tr||'C',co:'?',manual:1};
+    BY[r.id]=q;EXTRA.push(q)});
+}
+const SECS=[['common','접수 (공통)'],['A','트랙 A · 잘 쓰는 분'],['B','트랙 B · 써보다 멈춘 분'],['C','트랙 C · 거의 못 써본 분'],['close','마무리 (공통)']];
+const TYPES=[['one','하나 선택'],['many','여러 개 선택'],['staff','담당자 선택 (명단 공유)'],['text','짧은 글'],['area','긴 글'],['sec','구분선(제목만)']];
+const STAFF0=['직원1','직원2','직원3','직원4','직원5','직원6','직원7','직원8','직원9','직원10','직원11','직원12','직원13'];
+
+function DEFAULT(){return{
+ v:'',by:'',
+ staffList:STAFF0.slice(),
+ guide:{
+  A:'3분 목표. 남은 이유를 말로 받아내는 게 1순위, 4기 신청이 2순위입니다. 만족도 점수는 묻지 마세요. 전원 잘 나오고 쓸 데가 없습니다.',
+  B:'5분 목표. 끊긴 지점과 게임 원인을 받는 자리입니다. "왜 안 쓰셨어요"를 열린 질문으로 먼저 던지지 마세요. 보기를 먼저 보여드리고 고른 뒤에 되물으세요.',
+  C:'8~12분 목표. 묻는 자리가 아니라 켜드리는 자리입니다. 조치를 먼저 하고 설문은 곁들이세요. 앱 용어(온보딩·콘텐츠·채널)는 쓰지 마시고 "게임 한 판", "화면 열기"로 바꿔 말하세요.'},
+ s:{
+ common:[
+  {k:'consent',t:'one',q:'개인정보 수집·이용 동의',req:1,o:['동의','미동의'],hint:'미동의 시 설문은 건너뛰고 앱 조치와 리워드만 진행하세요.'},
+  {k:'helper',t:'staff',q:'설문을 도와준 담당자',hint:'화면 위쪽 입력자와 다른 사람이 응대했다면 골라주세요. 여러 명이 함께 도왔으면 모두 고르시면 됩니다.'}],
+ A:[
+  {k:'a1',t:'one',q:'맬리를 계속하게 되는 이유가 뭘까요? 하나만요.',o:['기억력에 도움 될 것 같아서','점수·순위 보는 재미','하루 일과가 되어서','보건소에서 하라고 해서','게임이 재미있어서','기타']},
+  {k:'a1w',t:'text',q:'그 이유를 조금 더 구체적으로'},
+  {k:'a2',t:'one',q:'보통 하루 중 언제 하세요?',o:['아침','점심 무렵','오후','저녁','정해진 때 없음']},
+  {k:'a3',t:'one',q:'주말에도 하시나요?',o:['주말에도 한다','주말엔 잘 안 한다'],hint:'평일 하루 평균 54.4명, 주말 18.7명입니다. 안 한다고 하시면 이유를 꼭 받으세요.'},
+  {k:'a3w',t:'text',q:'주말에 안 하시는 이유'},
+  {k:'a4',t:'one',q:'혼자 하세요, 누구랑 같이 하세요?',o:['혼자','가족과','보건소 모임에서','친구와']},
+  {k:'a5',t:'one',q:'내일 기록표 나오는 것 안내했나요?',o:['안내 완료','앱 열어서 위치까지 보여드림','안내 못 함']},
+  {k:'a7',t:'one',cond:'lapsed',q:'최근 한 달 조용하셨는데 무슨 일 있으셨어요?',hint:'이탈임박으로 표시된 분은 필수입니다. 100회 넘게 쓰시던 분이 멈춘 거라 이유가 제일 중요합니다.',o:['몸이 안 좋아서','폰을 바꿔서','폰이 고장나서','로그인이 안 돼서','집안일·가족 일','재미가 없어져서','그냥 잊어버려서','기타']},
+  {k:'a7w',t:'area',cond:'lapsed',q:'그때 말씀을 들은 대로'}],
+ B:[
+  {k:'b1',t:'one',q:'마지막으로 하신 게 언제쯤이세요?',o:['한 달쯤','두세 달쯤','그보다 오래','기억 안 남']},
+  {k:'b2',t:'one',q:'그 무렵에 무슨 일이 있으셨어요?',o:['몸이 안 좋아서','폰을 바꾸거나 고장나서','로그인이 안 돼서','집안일·가족 일','재미가 없어져서','어려워서','그냥 잊어버려서','기타']},
+  {k:'b2w',t:'text',q:'조금 더 구체적으로'},
+  {k:'b3',t:'many',q:'어려웠던 게임 (카드 보여주고 짚게 하세요)',hint:'이름을 말로 물으면 기억 못 하십니다. 반드시 카드나 화면을 보여드리세요. 이 보기가 인쇄 카드 목록이 됩니다.',o:GAMES.slice()},
+  {k:'b4',t:'many',q:'지루했던 게임',hint:'위 질문과 꼭 나눠서 받으세요. 난이도 문제인지 재미 문제인지를 가르는 유일한 질문입니다.',o:GAMES.slice()},
+  {k:'b5',t:'one',q:'마음 편해지는 내용은 해보셨어요?',o:['해봤다','안 해봤다','그런 게 있는 줄 몰랐다'],hint:'마음 콘텐츠는 54.1%가 중간에 그만둡니다. 존치 여부 판단에 씁니다.'},
+  {k:'b5w',t:'text',q:'해보셨다면, 왜 안 하게 되셨는지'},
+  {k:'b6',t:'one',q:'뭐가 있으면 다시 해보시겠어요?',o:['더 쉬운 게임','새로운 게임','알림이 오면','같이 할 사람이 있으면','선물이 있으면','다시 할 생각 없음','기타']},
+  {k:'b7',t:'one',q:'현장에서 앱 열어본 결과',o:['바로 됨','로그인 다시 함','재설치함','실패']},
+  {k:'b7w',t:'text',q:'실패했다면 어디서 막혔는지'}],
+ C:[
+  {k:'c0',t:'one',q:'폰 먼저 확인하세요',req:1,hint:'묻지 말고 직접 봅니다. 이 한 줄이 명단을 정리해 줍니다.',o:['앱 있음','앱 없음','폰 안 가져오심','폰이 없으심','본인 폰이 아님']},
+  {k:'c1',t:'one',q:'어디까지 해보셨어요?',o:['깔지도 못했다','깔았는데 못 열었다','열었는데 뭘 할지 몰랐다','한두 번 하고 말았다','기억이 안 난다']},
+  {k:'c2',t:'many',q:'실제로 막힌 지점 (관찰해서 고르세요)',hint:'말보다 관찰이 정확합니다. 여러 개 고를 수 있습니다.',o:['앱스토어에서 못 찾음','계정·비밀번호','전화번호 인증','글씨가 작아서','버튼을 못 찾아서','네트워크','막힌 곳 없었음','기타']},
+  {k:'c3',t:'one',q:'첫 게임 한 판 같이 해보셨나요?',req:1,o:['완료','시도했는데 못 끝냄','시도 못 함'],hint:'387명 중 몇 명을 여기까지 보냈느냐가 이 행사의 성과 지표입니다.'},
+  {k:'c3w',t:'text',q:'어디서 손이 멈추셨는지'},
+  {k:'c4',t:'one',q:'평소 폰 어려우면 누가 도와주세요?',o:['같이 사는 가족','따로 사는 자녀','도와줄 사람 없음','필요 없음']},
+  {k:'c5',t:'one',q:'그동안 안 하셨던 게 앱이 어려워서였을까요?',o:['앱이 어려워서','관심이 없어서','몸이 안 좋아서','폰이 없거나 문제라','그런 게 있는 줄 몰라서','기타']},
+  {k:'c6',t:'one',q:'내일 기록표 나오는 것 안내했나요?',o:['위치까지 보여드림','말로만 안내','안내 못 함']},
+  {k:'c7',t:'one',q:'계속하시기 어려워 보이나요?',hint:'응대자 판단입니다. 명단 정리와 다음 기수 목표치에 씁니다.',o:['혼자 하실 수 있을 듯','도움 있으면 가능','계속은 어려워 보임','판단 어려움']}],
+ close:[
+  {k:'reward',t:'one',q:'리워드 처리',o:['현장 지급','조건 안내 후 배송 예정','미지급','대상 아님']},
+  {k:'gen4',t:'one',q:'4기 사전신청',o:['신청','고민 중','안 함'],hint:'재등록자 활성률이 신규의 2.7배입니다. 이 항목이 가장 값이 큽니다.'},
+  {k:'gen4why',t:'text',q:'고민 중이거나 안 하시는 이유'},
+  {k:'result',t:'one',q:'응대 결과',req:1,o:['설문 완료','일부만 완료','거절','본인 아님·대리','재방문 약속']},
+  {k:'memo',t:'area',q:'메모',hint:'어르신이 하신 말씀은 요약하지 말고 들은 대로 적어주세요. 나중에 이게 제일 쓸모 있습니다.'}]
+}}}
+
+let DB=null,USER=null,canEdit=null,SCHEMA=DEFAULT(),DRAFT=null,aTab='common',
+    REC={},cur=null,staff=localStorage.getItem('mb_staff')||'',
+    fT={A:0,B:0,C:0},fS={'미착수':0,'진행중':0,'완료':0},fC={'26':0,'2':0},q='',dirty={},timer=null,kseq=Date.now()%100000;
+const $=s=>document.querySelector(s),el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const now=()=>new Date().toISOString().slice(0,16).replace('T',' ');
+const clone=o=>JSON.parse(JSON.stringify(o));
+function nrm(s){return (s||'').replace(/\s+/g,'')}
+function isSub(a,b){let i=0;for(const ch of b){if(ch===a[i])i++;if(i>=a.length)return true}return i>=a.length}
+function nameHit(nm,real,q,p){
+  nm=nrm(nm);real=nrm(real);q=nrm(q);
+  if(!q)return true;
+  if(/^[0-9]+$/.test(q)){
+    if(p&&p.l4&&p.l4.indexOf(q)===0)return true;
+    if(p&&p.by&&(p.by===q||p.by.slice(2)===q))return true;
+    return false}
+  if(real&&real.indexOf(q)>=0)return true;
+  if(nm.indexOf(q)>=0)return true;
+  if(nm.length===q.length){let ok=true;
+    for(let i=0;i<nm.length;i++)if(nm[i]!=='*'&&nm[i]!==q[i]){ok=false;break}
+    if(ok)return true}
+  const st=nm.replace(/\*/g,'');
+  if(st&&isSub(st,q))return true;
+  if(nm[0]&&nm[0]===q[0])return true;
+  return false;
+}
+function status(r){if(!r)return '미착수';if(r.result&&r.result!=='재방문 약속')return '완료';return '진행중'}
+function staffList(){return (SCHEMA.staffList&&SCHEMA.staffList.length)?SCHEMA.staffList:STAFF0}
+function allQ(){const a=[];SECS.forEach(([k])=>(SCHEMA.s[k]||[]).forEach(x=>a.push(x)));return a}
+
+function lsGet(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function flash(m){const s=$('#save');s.textContent=m||'저장됨';s.classList.add('on');setTimeout(()=>s.classList.remove('on'),1500)}
+function queueSave(id){dirty[id]=1;clearTimeout(timer);timer=setTimeout(flush,400)}
+async function flush(){
+  const ids=Object.keys(dirty);dirty={};if(!ids.length)return;
+  try{localStorage.setItem('mb_rec',JSON.stringify(REC))}catch(e){}
+  if(!DB){flash('이 기기에 저장됨');return}
+  for(const id of ids){try{await DB.doc('responses/'+id).set(REC[id]||{})}
+    catch(e){flash('저장 실패: '+((e&&e.code)||'오류'));return}}
+  flash('모두에게 저장됨');
+}
+function rec(id){if(!REC[id]){const p=BY[id]||{};REC[id]={id:id,nm:p.nm,tr:p.tr,risk:p.risk}}return REC[id]}
+function put(id,k,v){const r=rec(id);r[k]=v;r.staff=r.staff||staff;r.at=now();queueSave(id);paintProg();paintList()}
+
+/* ---------- staff: list ---------- */
+function paintFilters(){
+  const ft=$('#ftrack');ft.innerHTML='';
+  [['A','A 잘 쓰는 분'],['B','B 멈춘 분'],['C','C 못 써본 분']].forEach(([k,l])=>{
+    const b=el('button','fchip',l);b.type='button';b.setAttribute('aria-pressed',fT[k]?'true':'false');
+    b.onclick=()=>{fT[k]=!fT[k];paintFilters();paintList()};ft.appendChild(b)});
+  const fs=$('#fstat');fs.innerHTML='';
+  Object.keys(fS).forEach(k=>{
+    const b=el('button','fchip',k);b.type='button';b.setAttribute('aria-pressed',fS[k]?'true':'false');
+    b.onclick=()=>{fS[k]=!fS[k];paintFilters();paintList()};fs.appendChild(b)});
+  const fc=$('#fco');fc.innerHTML='';
+  [['26','26년 기수'],['2','2기']].forEach(([k,l])=>{
+    const b=el('button','fchip',l);b.type='button';b.setAttribute('aria-pressed',fC[k]?'true':'false');
+    b.onclick=()=>{fC[k]=!fC[k];paintFilters();paintList()};fc.appendChild(b)});
+}
+function visible(){
+  const anyT=fT.A||fT.B||fT.C,anyS=Object.values(fS).some(v=>v);
+  return people().filter(p=>{
+    if(anyT&&!fT[p.tr])return false;
+    if(anyS&&!fS[status(REC[p.id])])return false;
+    if((fC['26']||fC['2'])&&!p.manual&&!fC[p.co])return false;
+    if(q&&!nameHit(p.nm,(REC[p.id]||{}).real,q,p))return false;
+    return true});
+}
+function paintList(){
+  const v=visible(),box=$('#list');box.innerHTML='';
+  $('#listmeta').textContent=v.length+'명 / 명단 '+P.length+'명'+(EXTRA.length?' + 추가 '+EXTRA.length+'명':'');
+  const frag=document.createDocumentFragment();
+  v.slice(0,400).forEach(p=>{
+    const r=REC[p.id],st=status(r);
+    const b=el('button','row '+p.tr);b.type='button';
+    if(cur===p.id)b.setAttribute('aria-current','true');
+    b.appendChild(el('span','rnm',p.nm));
+    b.appendChild(el('span','rmeta',p.manual
+      ? (p.age==='?'?'':p.age+'대 ')+(p.sex==='F'?'여':p.sex==='M'?'남':'')+' · 명단 외 추가'
+      : '뒷자리 '+(p.l4||'----')+' · '+(p.age==='?'?'':p.age+'대 ')+(p.sex==='F'?'여':p.sex==='M'?'남':'')+' · '+p.tot+'회'+(p.dsl>=0?' · '+p.dsl+'일 전':' · 실행없음')));
+    if(st!=='미착수')b.appendChild(el('span','rst '+(st==='완료'?(r.result==='거절'?'st-no':'st-done'):'st-prog'),
+      st==='완료'?(r.result==='거절'?'거절':'완료'):(r.staff||'진행중')));
+    b.onclick=()=>openRec(p.id);frag.appendChild(b)});
+  box.appendChild(frag);
+  if(!v.length){
+    const n=el('div','emptylist');
+    n.innerHTML='<b>찾는 분이 안 보이나요?</b><br>이름은 가운데 글자가 가려져 있습니다. 성 한 글자만 쳐보거나, <b>전화번호 뒷 4자리</b>를 쳐보세요. 이쪽이 훨씬 정확합니다.<br>기수 필터가 켜져 있으면 꺼보세요.<br>그래도 없으면 아래 버튼으로 추가하고 진행하시면 됩니다.';
+    box.appendChild(n);
+    const ab=el('button','tbtn pri','명단에 없는 분 추가');ab.type='button';
+    ab.style.cssText='margin:0 14px 16px';ab.onclick=openAdd;box.appendChild(ab)}
+  else if(v.length>400){const n=el('div','','400명까지만 표시합니다. 검색으로 좁혀주세요.');
+    n.style.cssText='font-size:12px;color:var(--faint);padding:12px 14px';box.appendChild(n)}
+}
+function paintProg(){
+  const p=$('#prog');p.innerHTML='';const tot={A:0,B:0,C:0};P.forEach(x=>tot[x.tr]++);
+  const all=people();
+  ['A','B','C'].forEach(k=>{
+    const d=all.filter(x=>x.tr===k&&status(REC[x.id])==='완료').length;
+    p.appendChild(el('span','pchip '+k,k+' '+d+'/'+tot[k]))});
+  if(EXTRA.length)p.appendChild(el('span','pchip','명단 외 '+EXTRA.length));
+  const first=all.filter(x=>x.tr==='C'&&REC[x.id]&&REC[x.id].c3==='완료').length;
+  p.appendChild(el('span','pchip','현장 첫 게임 '+first));
+}
+
+/* ---------- staff: form ---------- */
+function openRec(id,keep){
+  const sc=keep?$('#pane').scrollTop:0;
+  cur=id;paintList();const p=BY[id],r=rec(id);
+  if(!staff)$('#who').focus();
+  if(!r.staff){r.staff=staff;r.at=now();queueSave(id)}
+  const pane=$('#pane');pane.innerHTML='';
+  const w=el('div','inner'),h=el('div','shead'),nb=el('div');
+  nb.appendChild(el('div','sname',r.real||p.nm));
+  nb.appendChild(el('p','sfacts',p.manual
+    ? '명단 외 추가'+(p.why?' · '+p.why:'')+(p.age!=='?'?' · '+p.age+'대':'')+' · 트랙은 응대자가 지정'
+    : (p.age==='?'?'':p.age+'대 ')+(p.sex==='F'?'여성':p.sex==='M'?'남성':'')+' · 누적 활동 '+p.tot+'회 · '+
+      (p.dsl>=0?'마지막 활동 '+p.dsl+'일 전':'실행 기록 없음')+' · '+(p.co==='26'?'26년 기수':p.co==='2'?'2기':'기수 미상')));
+  h.appendChild(nb);h.appendChild(el('span','tbadge '+p.tr,'트랙 '+p.tr));w.appendChild(h);
+  if(r.staff&&staff&&r.staff!==staff)
+    w.appendChild(el('div','lock',r.staff+' 님이 응대 중인 분입니다. 중복 응대가 아닌지 확인하세요.'));
+  if(!p.manual&&!r.vf){
+    w.appendChild(verifyCard(id,p,r));pane.appendChild(w);pane.scrollTop=sc;return}
+  if(!p.manual){
+    const ok=el('div','idok');
+    ok.appendChild(el('span','','본인 확인됨'));
+    ok.appendChild(el('span','idokv','뒷자리 '+(p.l4||'-')+(p.by?' · '+p.by+'년생':'')+(r.real?' · '+r.real:'')));
+    const re=el('button','idre','다시 확인');re.type='button';
+    re.onclick=()=>{r.vf=0;queueSave(id);openRec(id)};
+    ok.appendChild(re);w.appendChild(ok)}
+  if(SCHEMA.guide&&SCHEMA.guide[p.tr])w.appendChild(el('div','sguide',SCHEMA.guide[p.tr]));
+  const lapsed=p.manual?(p.tr==='A'):(p.risk==='이탈임박'||p.dsl>=15);
+  [['common','접수'],[p.tr,'트랙 '+p.tr],['close','마무리']].forEach(([sk,label])=>{
+    const list=(SCHEMA.s[sk]||[]).filter(x=>!(x.cond==='lapsed'&&!lapsed));
+    if(!list.length)return;
+    if(sk!=='common'||true)w.appendChild(el('div','sec',label));
+    list.forEach(qq=>w.appendChild(field(id,qq)))});
+  const foot=el('div');foot.style.cssText='margin-top:30px;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap';
+  foot.appendChild(el('p','sfacts','응대자 '+(r.staff||'미지정')+(r.at?' · 최종 '+r.at:'')));
+  const db=el('button','tbtn',p.manual?'이 분을 명단에서 삭제':'입력 내용 전체 지우기');db.type='button';
+  db.style.cssText='margin-left:auto;color:var(--c);border-color:var(--c)';
+  db.onclick=()=>wipe(id,p.manual);foot.appendChild(db);
+  w.appendChild(foot);
+  pane.appendChild(w);pane.scrollTop=sc;
+}
+function verifyCard(id,p,r){
+  const v=el('div','vcard');
+  v.appendChild(el('div','vh','설문을 시작하기 전에 본인이 맞는지 확인하세요'));
+  const ask=el('div','vask','"전화번호 뒷 네 자리가 어떻게 되세요?"');
+  v.appendChild(ask);
+  const g=el('div','vgrid');
+  const cell=(l,x,big)=>{const c=el('div','vcell'+(big?' big':''));
+    c.appendChild(el('span','vl',l));c.appendChild(el('span','vv',x||'정보 없음'));return c};
+  g.appendChild(cell('전화 뒷 4자리',p.l4,1));
+  g.appendChild(cell('생년',p.by?p.by+'년':''));
+  g.appendChild(cell('연령 · 성별',(p.age==='?'?'':p.age+'대 ')+(p.sex==='F'?'여':p.sex==='M'?'남':'')));
+  g.appendChild(cell('명단 이름',p.nm));
+  g.appendChild(cell('기수',p.co==='26'?'26년':p.co==='2'?'2기':'미상'));
+  g.appendChild(cell('트랙',p.tr));
+  v.appendChild(g);
+  const f=el('div','fld');f.appendChild(el('label','','전체 성함 (리워드 지급·배송 확인용, 선택)'));
+  const i=document.createElement('input');i.type='text';i.value=r.real||'';
+  i.oninput=()=>put(id,'real',i.value);i.onblur=()=>flush();f.appendChild(i);v.appendChild(f);
+  const row=el('div','vbtns');
+  const ok=el('button','tbtn pri','본인 확인 완료 · 설문 시작');ok.type='button';
+  ok.onclick=()=>{r.vf=1;r.vfby=staff;r.vfat=now();queueSave(id);paintList();openRec(id)};
+  const no=el('button','tbtn','다른 분입니다 · 목록으로');no.type='button';
+  no.onclick=()=>{cur=null;paintList();$('#pane').innerHTML='<div id="empty">이름이나 전화 뒷 4자리로 다시 찾아보세요.</div>';$('#q').focus()};
+  const sk=el('button','tbtn','확인 못 했지만 진행');sk.type='button';
+  sk.onclick=()=>{r.vf=2;r.vfby=staff;r.vfat=now();queueSave(id);paintList();openRec(id)};
+  row.appendChild(ok);row.appendChild(no);row.appendChild(sk);v.appendChild(row);
+  return v;
+}
+function field(id,qq){
+  if(qq.t==='sec')return el('div','sec',qq.q);
+  const r=rec(id),b=el('div','qb'),l=el('label','ql');
+  l.appendChild(document.createTextNode(qq.q||''));
+  if(qq.req)l.appendChild(el('span','req','*'));
+  if(qq.hint)l.appendChild(el('span','hint',qq.hint));
+  b.appendChild(l);
+  if(qq.t==='text'||qq.t==='area'){
+    const i=document.createElement(qq.t==='area'?'textarea':'input');
+    if(qq.t==='text')i.type='text';
+    i.value=r[qq.k]||'';i.oninput=()=>put(id,qq.k,i.value);i.onblur=()=>flush();b.appendChild(i);return b}
+  const box=el('div','opts');
+  const many=(qq.t==='many'||qq.t==='staff');
+  const opts=qq.t==='staff'?staffList():(qq.o||[]);
+  opts.forEach(o=>{
+    const btn=el('button','opt'+(many?' many':''),o);btn.type='button';
+    const on=many?((r[qq.k]||[]).indexOf(o)>=0):(r[qq.k]===o);
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.onclick=()=>{
+      if(many){const a=(r[qq.k]||[]).slice(),i=a.indexOf(o);i>=0?a.splice(i,1):a.push(o);put(id,qq.k,a)}
+      else put(id,qq.k,r[qq.k]===o?'':o);
+      const r2=rec(id);
+      Array.prototype.forEach.call(box.children,(x,ix)=>{
+        const o2=opts[ix],on2=many?((r2[qq.k]||[]).indexOf(o2)>=0):(r2[qq.k]===o2);
+        x.setAttribute('aria-pressed',on2?'true':'false')})};
+    box.appendChild(btn)});
+  b.appendChild(box);return b;
+}
+
+async function wipe(id,isManual){
+  const p=BY[id]||{};
+  if(!confirm((isManual?'명단에서 완전히 지웁니다.\n\n':'입력한 응답을 모두 지웁니다. 명단에서 사라지지는 않습니다.\n\n')
+    +(p.nm||'')+' · '+(p.l4?'뒷자리 '+p.l4:'')+'\n\n되돌릴 수 없습니다. 지울까요?'))return;
+  delete REC[id];delete dirty[id];
+  try{localStorage.setItem('mb_rec',JSON.stringify(REC))}catch(e){}
+  if(DB){try{await DB.doc('responses/'+id).delete()}catch(e){flash('삭제 실패: '+((e&&e.code)||'오류'))}}
+  rebuildExtra();cur=null;paintProg();paintList();
+  $('#pane').innerHTML='<div id="empty">지웠습니다.<br>왼쪽에서 다른 분을 선택하세요.</div>';
+  flash('지웠습니다');
+}
+
+/* ---------- 명단 외 추가 ---------- */
+function openAdd(){
+  cur=null;paintList();
+  const pane=$('#pane');pane.innerHTML='';
+  const w=el('div','inner');
+  w.appendChild(el('div','sname','명단에 없는 분 추가'));
+  const g=el('div','sguide');
+  g.textContent='이 명단은 인천 남동구 치매안심센터 소속 '+P.length+'명입니다. 탈퇴하셨거나 이름이 없는 계정은 빠져 있습니다. 여기에도 없는 분은 가족이 대신 오셨거나 다른 채널 어르신입니다. 이름과 트랙만 정해서 추가하면 같은 설문지로 진행됩니다.';
+  w.appendChild(g);
+  const st={nm:'',l4:'',age:'70',sex:'F',tr:'',why:''};
+  w.appendChild(fld('성함',''  ,v=>st.nm=v,'text'));
+  w.appendChild(fld('전화번호 뒷 4자리',''  ,v=>st.l4=v.replace(/\D/g,'').slice(0,4),'text'));
+  const r1=el('div','frow2');
+  r1.appendChild(sel('연령대',[['60','60대'],['70','70대'],['80','80대'],['90','90대'],['50','50대 이하'],['?','모름']],'70',v=>st.age=v));
+  r1.appendChild(sel('성별',[['F','여성'],['M','남성'],['?','모름']],'F',v=>st.sex=v));
+  r1.style.marginTop='4px';w.appendChild(r1);
+  w.appendChild(sel('명단에 없는 이유',[['','고르세요'],['재등록(이전 기수부터 계속)','재등록 · 이전 기수부터 계속 쓰시던 분'],['등록 늦어 판정 보류','등록이 늦어 판정에서 빠진 분'],['이전 기수 참여자','1기·2기 등 이전 기수'],['가족·대리 방문','본인이 아니라 가족이 오심'],['모름','모름']],'',v=>st.why=v));
+  const tf=el('div','fld');
+  tf.appendChild(el('label','','트랙 (질문지가 이걸로 정해집니다)'));
+  const tb=el('div','opts');
+  [['A','A · 지금도 쓰고 계심'],['B','B · 써보다 멈추심'],['C','C · 거의 못 써보심']].forEach(([k,l])=>{
+    const b=el('button','opt',l);b.type='button';
+    b.onclick=()=>{st.tr=k;[...tb.children].forEach(x=>x.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed','true')};tb.appendChild(b)});
+  tf.appendChild(tb);
+  tf.appendChild(el('label','','어르신께 "요즘도 하고 계세요?"를 먼저 여쭤보고 고르세요. 애매하면 C로 두고 앱을 같이 열어보시면 됩니다.'));
+  tf.querySelector('label:last-child').style.cssText='margin-top:7px;font-weight:500;color:var(--faint)';
+  w.appendChild(tf);
+  const go=el('button','tbtn pri','추가하고 설문 시작');go.type='button';
+  go.style.cssText='margin-top:22px;padding:10px 20px;font-size:14px';
+  go.onclick=()=>{
+    if(!nrm(st.nm)){alert('성함을 입력하세요.');return}
+    if(!st.tr){alert('트랙을 고르세요.');return}
+    const id='m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    REC[id]={id:id,manual:1,real:st.nm.trim(),nm:st.nm.trim(),l4:st.l4,age:st.age,sex:st.sex,
+      tr:st.tr,why:st.why,risk:'명단 외',staff:staff,at:now()};
+    rebuildExtra();queueSave(id);paintProg();openRec(id)};
+  w.appendChild(go);
+  pane.appendChild(w);pane.scrollTop=0;
+}
+
+/* ---------- admin ---------- */
+function openAdmin(){DRAFT=clone(SCHEMA);aTab='common';$('#admin').classList.add('on');paintAdmin()}
+function closeAdmin(){$('#admin').classList.remove('on');DRAFT=null}
+function paintAdmin(){
+  $('#ameta').textContent=SCHEMA.v?('최종 수정 '+SCHEMA.v+(SCHEMA.by?' · '+SCHEMA.by:'')):'아직 저장된 적 없음 (기본 설문지)';
+  const w=$('#ainner');w.innerHTML='';
+  const n=el('div','note');
+  n.textContent='여기서 고치고 「저장하고 현장에 반영」을 누르면 현장 노트북 화면이 바로 바뀝니다. 이미 입력된 응답은 지워지지 않습니다. 다만 질문을 지우면 그 질문의 답은 내보내기에서 빠집니다.';
+  w.appendChild(n);
+  const tabs=el('div','atabs');
+  SECS.concat([['_staff','담당자 명단']]).forEach(([k,l])=>{const b=el('button','atab',l);b.type='button';
+    b.setAttribute('aria-pressed',aTab===k?'true':'false');
+    b.onclick=()=>{aTab=k;paintAdmin()};tabs.appendChild(b)});
+  w.appendChild(tabs);
+  if(aTab==='_staff'){
+    const f=el('div','fld');
+    f.appendChild(el('label','','임직원 명단 (한 줄에 한 명씩)'));
+    const ta=document.createElement('textarea');ta.style.minHeight='300px';
+    ta.value=(DRAFT.staffList||STAFF0).join('\n');
+    ta.oninput=()=>{DRAFT.staffList=ta.value.split('\n').map(s=>s.trim()).filter(Boolean)};
+    f.appendChild(ta);w.appendChild(f);
+    const n2=el('div','note');n2.style.marginTop='16px';
+    n2.textContent='여기 명단이 화면 위쪽 「입력자」 선택지와 「설문을 도와준 담당자」 보기에 함께 쓰입니다. 이름을 빼도 이미 저장된 응답의 담당자 기록은 그대로 남습니다.';
+    w.appendChild(n2);return}
+  if(aTab==='A'||aTab==='B'||aTab==='C'){
+    const f=el('div','fld');f.appendChild(el('label','','응대자에게 보여줄 안내문 (화면 맨 위 회색 박스)'));
+    const ta=document.createElement('textarea');ta.value=(DRAFT.guide||{})[aTab]||'';
+    ta.oninput=()=>{DRAFT.guide=DRAFT.guide||{};DRAFT.guide[aTab]=ta.value};
+    f.appendChild(ta);f.style.marginBottom='22px';w.appendChild(f)}
+  const list=DRAFT.s[aTab]||(DRAFT.s[aTab]=[]);
+  list.forEach((qq,i)=>w.appendChild(qcard(qq,i,list)));
+  const add=el('div');add.style.cssText='display:flex;gap:8px;margin-top:14px;flex-wrap:wrap';
+  const b1=el('button','tbtn pri','질문 추가');b1.type='button';
+  b1.onclick=()=>{list.push({k:'x'+(++kseq),t:'one',q:'새 질문',o:['보기 1','보기 2'],_open:1});paintAdmin()};
+  const b2=el('button','tbtn','구분선 추가');b2.type='button';
+  b2.onclick=()=>{list.push({k:'s'+(++kseq),t:'sec',q:'새 구분선'});paintAdmin()};
+  add.appendChild(b1);add.appendChild(b2);w.appendChild(add);
+}
+function qcard(qq,i,list){
+  const c=el('div','qcard'+(qq.t==='sec'?' isSec':'')+(qq._open?' open':''));
+  const h=el('div','qhead');
+  h.appendChild(el('span','qtype',(TYPES.find(t=>t[0]===qq.t)||['','?'])[1]));
+  h.appendChild(el('span','qtext',qq.q||'(제목 없음)'));
+  h.appendChild(el('span','qkey',qq.k));
+  const acts=el('div','qacts');
+  const mk=(txt,cls,fn,dis)=>{const b=el('button','mini'+(cls?' '+cls:''),txt);b.type='button';
+    b.disabled=!!dis;b.style.opacity=dis?.3:1;b.onclick=e=>{e.stopPropagation();fn()};return b};
+  acts.appendChild(mk('↑','',()=>{const t=list[i-1];list[i-1]=list[i];list[i]=t;paintAdmin()},i===0));
+  acts.appendChild(mk('↓','',()=>{const t=list[i+1];list[i+1]=list[i];list[i]=t;paintAdmin()},i===list.length-1));
+  acts.appendChild(mk('⧉','',()=>{const n=clone(qq);n.k='x'+(++kseq);delete n._open;list.splice(i+1,0,n);paintAdmin()}));
+  acts.appendChild(mk('✕','del',()=>{if(confirm('이 항목을 지울까요?\n\n'+(qq.q||'')))
+    {list.splice(i,1);paintAdmin()}}));
+  h.appendChild(acts);
+  h.onclick=()=>{qq._open=!qq._open;paintAdmin()};
+  c.appendChild(h);
+  const ed=el('div','qedit');
+  ed.appendChild(fld('질문 문구',qq.q||'',v=>{qq.q=v;h.querySelector('.qtext').textContent=v||'(제목 없음)'},'text'));
+  if(qq.t!=='sec'){
+    const r1=el('div','frow2');
+    r1.appendChild(sel('유형',TYPES,qq.t,v=>{qq.t=v;if((v==='one'||v==='many')&&!(qq.o&&qq.o.length))qq.o=['보기 1'];paintAdmin()}));
+    r1.appendChild(sel('필수 여부',[['0','선택'],['1','필수(빨간 별)']],qq.req?'1':'0',v=>{qq.req=v==='1'?1:0}));
+    r1.appendChild(sel('표시 조건',[['','항상 보임'],['lapsed','최근 15일 이상 조용한 분에게만']],qq.cond||'',v=>{qq.cond=v||undefined}));
+    ed.appendChild(r1);
+    ed.appendChild(fld('응대자용 도움말 (질문 아래 작은 회색 글씨)',qq.hint||'',v=>{qq.hint=v},'area'));
+    if(qq.t==='one'||qq.t==='many')
+      ed.appendChild(fld('보기 (한 줄에 하나씩)',(qq.o||[]).join('\n'),v=>{qq.o=v.split('\n').map(s=>s.trim()).filter(Boolean)},'area',160));
+    if(qq.t==='staff'){const nf=el('div','fld');
+      nf.appendChild(el('label','','보기'));
+      const p2=el('div','','「담당자 명단」 탭의 임직원 이름이 그대로 보기로 뜹니다. 여러 명 고를 수 있습니다.');
+      p2.style.cssText='font-size:13px;color:var(--mut)';nf.appendChild(p2);ed.appendChild(nf)}
+    const kf=el('div','fld');kf.appendChild(el('label','','저장 이름 (내보내기 CSV의 열 이름)'));
+    const ki=document.createElement('input');ki.type='text';ki.value=qq.k;
+    ki.oninput=()=>{qq.k=ki.value.replace(/[^A-Za-z0-9_]/g,'')};
+    kf.appendChild(ki);
+    kf.appendChild(el('label','','이미 응답을 받은 뒤에 바꾸면 그 전 답과 연결이 끊깁니다. 행사 전에만 바꾸세요.'));
+    kf.querySelector('label:last-child').style.cssText='margin-top:5px;font-weight:500;color:var(--faint)';
+    ed.appendChild(kf)}
+  c.appendChild(ed);return c;
+}
+function fld(label,val,fn,type,h){
+  const f=el('div','fld');f.appendChild(el('label','',label));
+  const i=document.createElement(type==='area'?'textarea':'input');
+  if(type!=='area')i.type='text';
+  if(h)i.style.minHeight=h+'px';
+  i.value=val;i.oninput=()=>fn(i.value);f.appendChild(i);return f;
+}
+function sel(label,opts,val,fn){
+  const f=el('div','fld');f.appendChild(el('label','',label));
+  const s=document.createElement('select');
+  opts.forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;s.appendChild(o)});
+  s.value=val;s.onchange=()=>fn(s.value);f.appendChild(s);return f;
+}
+async function saveSchema(){
+  const keys=[];let dup='';
+  SECS.forEach(([k])=>(DRAFT.s[k]||[]).forEach(x=>{if(x.t==='sec')return;
+    if(!x.k){dup='저장 이름이 빈 질문이 있습니다.'}
+    else if(keys.indexOf(x.k)>=0)dup='저장 이름이 겹칩니다: '+x.k;else keys.push(x.k)}));
+  if(dup){alert(dup);return}
+  const out=clone(DRAFT);
+  SECS.forEach(([k])=>(out.s[k]||[]).forEach(x=>delete x._open));
+  out.v=now();out.by=staff||'이름 미지정';
+  if(!DB){alert('공유 저장이 연결되지 않아 이 기기에만 반영됩니다.');SCHEMA=out;
+    try{localStorage.setItem('mb_schema',JSON.stringify(out))}catch(e){}
+    paintWho();closeAdmin();if(cur)openRec(cur);return}
+  try{await DB.doc('config/schema').set(out)}
+  catch(e){alert('저장하지 못했습니다 ('+((e&&e.code)||'오류')+'). 편집 권한이 없는 계정일 수 있습니다.');return}
+  SCHEMA=out;try{localStorage.setItem('mb_schema',JSON.stringify(out))}catch(e){}
+  paintWho();closeAdmin();if(cur)openRec(cur);flash('설문지가 현장에 반영됐습니다');
+}
+
+/* ---------- csv / cards ---------- */
+function csvKeys(){
+  const base=['id','nm','l4','by','co','tr','risk','manual','why','age','sex','vf','vfby','vfat','real','staff','at'],seen={};
+  base.forEach(k=>seen[k]=1);const out=base.slice();
+  allQ().forEach(x=>{if(x.t==='sec'||seen[x.k])return;seen[x.k]=1;out.push(x.k)});
+  return out;
+}
+function csv(){
+  const keys=csvKeys();
+  const esc=v=>{if(v==null)v='';if(Array.isArray(v))v=v.join(' | ');v=String(v);
+    return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+  const rows=[keys.join(',')];
+  people().forEach(p=>{const r=REC[p.id];if(!r||status(r)==='미착수')return;
+    rows.push(keys.map(k=>esc(['nm','l4','by','co'].indexOf(k)>=0?(r[k]!=null&&r.manual?r[k]:p[k]):r[k])).join(','))});
+  return '\ufeff'+rows.join('\n');
+}
+async function exportCsv(){
+  const data=csv();
+  if(data.split('\n').length<2){alert('아직 입력된 응답이 없습니다.');return}
+  let dl=null;try{dl=await claude.use('downloads')}catch(e){}
+  if(dl){try{await dl.save({filename:'맬리브레인_팝업_응답_'+now().slice(0,10)+'.csv',data:data});return}catch(e){}}
+  const w=$('#pane');w.innerHTML='';const i=el('div','inner');
+  i.appendChild(el('div','sec','CSV (전체 선택해서 복사하세요)'));
+  const t=document.createElement('textarea');t.value=data;t.style.minHeight='420px';
+  i.appendChild(t);w.appendChild(i);t.select();
+}
+function paintCards(){
+  const b3=allQ().find(x=>x.k==='b3'&&(x.o||[]).length)||allQ().find(x=>x.t==='many'&&(x.o||[]).length)||{o:GAMES};
+  const cg=$('#cardgrid');cg.innerHTML='';
+  (b3.o||[]).forEach(g=>cg.appendChild(el('div','gcard',g)));
+}
+
+/* ---------- boot ---------- */
+function paintWho(){
+  const s=$('#who');s.innerHTML='';
+  const names=staffList().slice();
+  if(staff&&names.indexOf(staff)<0)names.push(staff);
+  const o0=document.createElement('option');o0.value='';o0.textContent='선택하세요';s.appendChild(o0);
+  names.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;s.appendChild(o)});
+  const ox=document.createElement('option');ox.value='__x';ox.textContent='직접 입력...';s.appendChild(ox);
+  s.value=staff||'';s.classList.toggle('unset',!staff);
+}
+$('#who').onchange=e=>{
+  let v=e.target.value;
+  if(v==='__x'){const t=prompt('이름을 입력하세요.',staff||'');v=(t||'').trim()}
+  staff=v;localStorage.setItem('mb_staff',staff);paintWho();if(cur)openRec(cur);
+};
+$('#q').oninput=e=>{q=e.target.value.trim();$('#qwrap').classList.toggle('has',!!q);paintList()};
+$('#qx').onclick=()=>{$('#q').value='';q='';$('#qwrap').classList.remove('has');$('#q').focus();paintList()};
+$('#csvbtn').onclick=exportCsv;
+$('#cardsbtn').onclick=()=>{paintCards();$('#cards').classList.add('on')};
+$('#admbtn').onclick=openAdmin;
+$('#addbtn').onclick=openAdd;
+$('#acancel').onclick=()=>{if(confirm('편집한 내용을 버릴까요?'))closeAdmin()};
+$('#asave').onclick=saveSchema;
+$('#areset').onclick=()=>{if(confirm('기본 설문지로 되돌릴까요? 저장을 눌러야 현장에 반영됩니다.'))
+  {const g=DEFAULT();DRAFT=clone(g);paintAdmin()}};
+
+SCHEMA=lsGet('mb_schema',null)||DEFAULT();
+if(!SCHEMA.staffList||!SCHEMA.staffList.length)SCHEMA.staffList=STAFF0.slice();
+REC=lsGet('mb_rec',{});
+rebuildExtra();paintWho();paintFilters();paintProg();paintList();
+const ds=$('#dbstate');ds.textContent='이 기기에만 저장 중';
+ds.style.cssText='background:var(--bBg);color:var(--b)';
+
+(async()=>{
+  try{USER=await claude.use('user')}catch(e){}
+  canEdit=USER?USER.canEdit():null;
+  if(canEdit!==false)$('#admbtn').style.display='';
+  let db=null;try{db=await claude.use('db')}catch(e){}
+  if(!db){ds.textContent='공유 저장 불가 · 이 기기에만 저장';return}
+  DB=db;
+  ds.textContent='여러 기기와 공유 중';ds.style.cssText='background:var(--aBg);color:var(--a)';
+  db.doc('config/schema').onSnapshot(s=>{
+    const v=s.data&&s.data();
+    if(v&&v.s){SCHEMA=v;try{localStorage.setItem('mb_schema',JSON.stringify(v))}catch(e){}
+      paintWho();if(cur&&!$('#admin').classList.contains('on'))openRec(cur)}
+  },()=>{});
+  db.collection('responses').onSnapshot(s=>{
+    s.docs.forEach(d=>{const v=d.data();if(v&&v.id&&!dirty[v.id])REC[v.id]=v});
+    try{localStorage.setItem('mb_rec',JSON.stringify(REC))}catch(e){}
+    rebuildExtra();paintProg();paintList();
+    if(cur&&!Object.keys(dirty).length&&!$('#admin').classList.contains('on')&&!/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||''))openRec(cur,1);
+  },e=>{ds.textContent='공유 끊김 ('+e.code+') · 이 기기에만 저장';
+    ds.style.cssText='background:var(--cBg);color:var(--c)';DB=null});
+  for(const r of Object.values(REC)){if(!r||!r.id)continue;
+    try{await db.doc('responses/'+r.id).set(r)}catch(e){break}}
+})();
+</script>
+<div style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#101A2E;color:#fff;font:12px/1.4 sans-serif;padding:6px 10px;border-radius:8px;opacity:.85">공개용 사본 · 이름·전화번호·생년·회원ID는 가짜 값으로 바꿨어요</div></body>
+</html>

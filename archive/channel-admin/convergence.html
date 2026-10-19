@@ -1,0 +1,1060 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>맬리 어드민 수렴 구조</title>
+<style>
+:root{
+  --brand-50:#E7F9F1; --brand-100:#C6F2E0; --brand-200:#6BDCAF;
+  --brand-400:#13BD7E; --brand-700:#077A50; --brand-900:#043528;
+  --g25:#FCFCFD; --g50:#F9FAFB; --g100:#F2F4F7; --g200:#EAECF0; --g300:#D0D5DD;
+  --g400:#98A2B3; --g500:#667085; --g700:#344054; --g900:#101828;
+  --page:#F7F8FA; --card:#FFFFFF;
+  --neu-bg:#F2F4F7; --neu-fg:#475467; --neu-dot:#98A2B3;
+  --ok-bg:#ECFDF3;  --ok-fg:#067647;  --ok-dot:#17B26A;
+  --warn-bg:#FFFAEB;--warn-fg:#B54708;--warn-dot:#F79009;
+  --dan-bg:#FEF3F2; --dan-fg:#B42318; --dan-dot:#F04438;
+  --info-bg:#EFF8FF;--info-fg:#175CD3;--info-dot:#2E90FA;
+  --hair:1px solid #EAECF0;
+  --sh-card:0 1px 2px rgba(16,24,40,.04);
+  --sh-pop:0 4px 16px rgba(16,24,40,.08);
+  --sh-modal:0 24px 48px -12px rgba(16,24,40,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--page); color:var(--g900);
+  font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+  font-size:14px; line-height:1.5; letter-spacing:-.011em;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select{font:inherit;letter-spacing:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none}
+:focus-visible{outline:2px solid var(--brand-400);outline-offset:2px}
+table{border-collapse:collapse;width:100%}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ── 뼈대 ── */
+.app{display:flex;min-height:100vh}
+.side{width:240px;flex:none;background:#fff;border-right:var(--hair);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.side-h{padding:16px 18px 14px;border-bottom:var(--hair)}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.024em}
+.brand-sub{font-size:12.5px;color:var(--g500);margin-top:2px}
+.surface-tag{display:inline-flex;align-items:center;gap:5px;margin-top:9px;height:22px;padding:0 8px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:-.004em}
+.surface-tag[data-s=manager]{background:var(--brand-50);color:var(--brand-700)}
+.surface-tag[data-s=admin]{background:var(--info-bg);color:var(--info-fg)}
+.nav{flex:1;overflow-y:auto;padding:12px 10px 18px}
+.nav-grp{margin-top:14px}
+.nav-grp:first-child{margin-top:2px}
+.nav-grp-t{font-size:11.5px;font-weight:600;color:var(--g400);padding:0 8px 6px}
+.nav-i{display:flex;align-items:center;gap:9px;width:100%;height:34px;padding:0 8px;border-radius:8px;font-size:13.5px;color:var(--g700);text-align:left}
+.nav-i:hover{background:var(--g50)}
+.nav-i[aria-current=page]{background:var(--brand-50);color:var(--brand-700);font-weight:600}
+.nav-i.locked{color:var(--g400);cursor:not-allowed}
+.nav-i.locked:hover{background:none}
+.nav-ico{width:16px;flex:none;color:var(--g400)}
+.nav-i[aria-current=page] .nav-ico{color:var(--brand-700)}
+.nav-lbl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{height:18px;min-width:18px;padding:0 5px;border-radius:6px;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
+.pill.n{background:var(--g100);color:var(--neu-fg)}
+.pill.c{background:var(--dan-bg);color:var(--dan-fg)}
+.pill.ro{background:var(--g100);color:var(--g400);font-size:11px}
+.side-f{padding:10px;border-top:var(--hair)}
+.acct{display:flex;align-items:center;gap:9px;padding:8px;border-radius:8px;width:100%;text-align:left}
+.acct:hover{background:var(--g50)}
+.avatar{width:28px;height:28px;border-radius:999px;background:var(--brand-50);color:var(--brand-700);font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.acct-n{font-size:13px;font-weight:600;line-height:1.3}
+.acct-r{font-size:12px;color:var(--g500);line-height:1.3}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:60px;flex:none;background:#fff;border-bottom:var(--hair);display:flex;align-items:center;gap:12px;padding:0 24px;position:sticky;top:0;z-index:20}
+.top-t{font-size:15px;font-weight:700;letter-spacing:-.024em}
+.top-crumb{font-size:12.5px;color:var(--g500)}
+.spacer{flex:1}
+.seg{display:flex;background:var(--g100);border-radius:8px;padding:3px;gap:2px}
+.seg button{height:28px;padding:0 11px;border-radius:6px;font-size:12.5px;font-weight:600;color:var(--g500)}
+.seg button[aria-pressed=true]{background:#fff;color:var(--g900);box-shadow:var(--sh-card)}
+.body{padding:20px 24px 40px;max-width:1440px;width:100%}
+
+/* ── 표면 ── */
+.card{background:var(--card);border:var(--hair);border-radius:10px;box-shadow:var(--sh-card)}
+.card-h{display:flex;align-items:center;gap:10px;padding:18px 20px;border-bottom:var(--hair)}
+.card-t{font-size:16px;font-weight:700;letter-spacing:-.024em}
+.card-d{font-size:12.5px;color:var(--g500)}
+.card-b{padding:20px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:16px;flex-wrap:wrap}
+.row>*{flex:1;min-width:280px}
+
+h2.sec{font-size:20px;font-weight:700;letter-spacing:-.032em}
+.sec-d{font-size:13px;color:var(--g500);margin-top:4px;max-width:62ch}
+
+/* ── 탭 ── */
+.tabs{display:flex;gap:2px;border-bottom:var(--hair);padding:0 20px;overflow-x:auto}
+.tab{height:40px;padding:0 12px;font-size:13.5px;color:var(--g500);border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.tab[aria-selected=true]{color:var(--brand-700);font-weight:600;border-bottom-color:var(--brand-400)}
+.tab-note{padding:11px 20px;font-size:12.5px;color:var(--g500);background:var(--g25);border-bottom:var(--hair)}
+
+/* ── 필터 ── */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:14px 20px;border-bottom:var(--hair)}
+.fld{height:34px;border:1px solid var(--g300);border-radius:8px;background:#fff;padding:0 10px;font-size:13px;box-shadow:var(--sh-card)}
+.fld::placeholder{color:var(--g400)}
+.chip{height:32px;padding:0 11px;border-radius:8px;border:1px solid var(--g300);background:#fff;font-size:12.5px;color:var(--g700);display:inline-flex;align-items:center;gap:5px}
+.chip[aria-pressed=true]{background:var(--brand-50);border-color:var(--brand-200);color:#065C3D;font-weight:600}
+.chip-x{color:var(--g400);font-size:14px;line-height:1}
+.applied{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:0 20px 14px}
+.applied-l{font-size:12.5px;color:var(--g500)}
+
+/* ── 버튼 ── */
+.btn{height:34px;padding:0 13px;border-radius:8px;border:1px solid var(--g300);background:#fff;font-size:13px;font-weight:500;box-shadow:var(--sh-card);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--g50)}
+.btn.sm{height:28px;padding:0 10px;font-size:12.5px}
+.btn.pri{background:var(--brand-400);border-color:var(--brand-400);color:var(--brand-900);font-weight:600}
+.btn.pri:hover{background:#10a96f}
+.btn.qui{border-color:transparent;box-shadow:none;color:var(--g700)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ── 표 ── */
+.tw{overflow-x:auto}
+thead th{height:38px;background:var(--g25);border-bottom:var(--hair);font-size:12.5px;font-weight:600;color:var(--g500);text-align:left;padding:0 14px;white-space:nowrap}
+thead th.num{text-align:right}
+tbody td{height:44px;border-bottom:1px solid var(--g100);padding:0 14px;font-size:13.5px;white-space:nowrap}
+tbody tr:hover{background:var(--g50)}
+tbody tr.revealed{background:var(--warn-bg)}
+tbody tr.revealed:hover{background:#FFF6DC}
+tbody tr.muted td{color:var(--g400)}
+.sortable{cursor:pointer;user-select:none}
+.sortable .arw{color:var(--g300);margin-left:3px}
+.sortable[data-dir] .arw{color:var(--brand-400)}
+.sub{font-size:12px;color:var(--g500);display:block;line-height:1.3}
+.mono{font-variant-numeric:tabular-nums}
+
+.tag{height:22px;padding:0 8px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:-.004em;display:inline-flex;align-items:center;gap:5px}
+.dot{width:6px;height:6px;border-radius:999px;flex:none}
+.t-neu{background:var(--neu-bg);color:var(--neu-fg)} .t-neu .dot{background:var(--neu-dot)}
+.t-ok{background:var(--ok-bg);color:var(--ok-fg)}    .t-ok .dot{background:var(--ok-dot)}
+.t-warn{background:var(--warn-bg);color:var(--warn-fg)} .t-warn .dot{background:var(--warn-dot)}
+.t-dan{background:var(--dan-bg);color:var(--dan-fg)}  .t-dan .dot{background:var(--dan-dot)}
+.t-info{background:var(--info-bg);color:var(--info-fg)} .t-info .dot{background:var(--info-dot)}
+
+.tfoot{display:flex;align-items:center;gap:10px;padding:14px 20px;border-top:var(--hair);font-size:12.5px;color:var(--g500);flex-wrap:wrap}
+
+/* ── 지표 ── */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px}
+.metric{background:#fff;border:var(--hair);border-radius:10px;padding:16px 18px;box-shadow:var(--sh-card)}
+.metric-l{font-size:13px;font-weight:500;color:var(--g500);display:flex;align-items:center;gap:6px}
+.metric-v{font-size:28px;font-weight:700;letter-spacing:-.04em;margin-top:6px;line-height:1.1}
+.metric-s{font-size:12.5px;color:var(--g500);margin-top:3px}
+.metric-v.warn{color:var(--warn-fg)} .metric-v.dan{color:var(--dan-fg)}
+
+/* ── 변화 표기 (제니코그 패턴, 우리 색규칙 적용) ── */
+.delta{font-size:12.5px;margin-left:6px;color:var(--g500);font-variant-numeric:tabular-nums}
+.delta.down{color:var(--warn-fg);font-weight:600}
+.delta.flat{color:var(--g400)}
+
+/* ── 차트 ── */
+.bars{display:flex;align-items:flex-end;gap:14px;height:150px;padding:0 4px}
+.bargrp{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%}
+.bar-pair{flex:1;display:flex;align-items:flex-end;gap:6px;width:100%;justify-content:center}
+.bar{width:34px;border-radius:6px 6px 0 0;position:relative;display:flex;justify-content:center}
+.bar span{position:absolute;top:-19px;font-size:12px;font-weight:600;color:var(--g700)}
+.bar.pre{background:var(--g200)}
+.bar.post{background:var(--brand-400)}
+.bar.post span{color:var(--brand-700)}
+.bargrp-l{font-size:12.5px;color:var(--g500);text-align:center}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--g500);align-items:center}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px}
+
+/* ── 구조 화면 ── */
+.mapgrid{display:grid;grid-template-columns:1fr auto 1fr;gap:0 18px;align-items:center}
+.mapgrid>div{padding:9px 0;border-bottom:1px solid var(--g100)}
+.mapgrid>div:nth-last-child(-n+3){border-bottom:none}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:var(--g50);border:var(--hair);border-radius:6px;padding:2px 7px;display:inline-block;letter-spacing:0}
+.arrow{color:var(--g300);font-size:15px;text-align:center}
+pre.json{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.65;background:var(--g25);border:var(--hair);border-radius:10px;padding:16px 18px;overflow-x:auto;letter-spacing:0;color:var(--g700)}
+pre.json b{color:var(--brand-700);font-weight:600}
+pre.json i{color:var(--info-fg);font-style:normal}
+.note{border-left:3px solid var(--brand-200);background:var(--brand-50);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13px;color:#065C3D}
+.note.info{border-left-color:var(--info-dot);background:var(--info-bg);color:var(--info-fg)}
+.kv{display:grid;grid-template-columns:132px 1fr;gap:10px 16px;font-size:13.5px}
+.kv dt{color:var(--g500)}
+.decide{display:grid;grid-template-columns:26px 1fr;gap:12px 12px;align-items:start}
+.decide-n{width:24px;height:24px;border-radius:6px;background:var(--g100);color:var(--g700);font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.decide-t{font-size:14px;font-weight:600}
+.decide-d{font-size:13px;color:var(--g500);margin-top:3px}
+
+/* ── 빈 상태 ── */
+.empty{text-align:center;padding:44px 20px;color:var(--g500)}
+.empty-t{font-size:14px;font-weight:600;color:var(--g700)}
+.empty-d{font-size:13px;margin:5px 0 14px}
+
+/* ── 모달 ── */
+.scrim{position:fixed;inset:0;background:rgba(16,24,40,.42);display:none;align-items:center;justify-content:center;padding:24px;z-index:60}
+.scrim.on{display:flex}
+.modal{background:#fff;border-radius:12px;box-shadow:var(--sh-modal);width:100%;max-width:460px;max-height:86vh;overflow-y:auto}
+.modal-h{display:flex;align-items:center;padding:18px 20px 0}
+.modal-t{font-size:16px;font-weight:700;letter-spacing:-.024em;flex:1}
+.modal-b{padding:14px 20px 4px;display:flex;flex-direction:column;gap:13px}
+.modal-f{display:flex;gap:8px;justify-content:flex-end;padding:16px 20px 18px}
+.lbl{font-size:13px;font-weight:500;display:block;margin-bottom:6px}
+.req{color:var(--dan-fg)}
+.modal-b select.fld,.modal-b input.fld,.modal-b textarea.fld{width:100%}
+textarea.fld{height:auto;padding:9px 10px;resize:vertical;min-height:64px;font-size:13px}
+.filters select.fld{max-width:220px}
+.chk{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--g700);cursor:pointer}
+.chk input{margin-top:2px;accent-color:var(--brand-400);width:15px;height:15px}
+.hint{font-size:12.5px;color:var(--g500)}
+.err{font-size:12.5px;color:var(--dan-fg);display:none}
+.err.on{display:block}
+.opt-grp{font-size:12px;color:var(--g400)}
+
+/* ── 토스트 ── */
+.toasts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:80}
+.toast{background:var(--g900);color:#fff;border-radius:8px;padding:11px 15px;font-size:13px;box-shadow:var(--sh-pop);display:flex;align-items:center;gap:12px}
+.toast button{color:var(--brand-200);font-weight:600;font-size:13px}
+@media (prefers-reduced-motion:no-preference){
+  .toast{animation:rise .18s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+@media (max-width:900px){
+  .side{display:none}
+  .body{padding:16px}
+}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="side-h">
+      <div class="brand">맬리 어드민</div>
+      <div class="brand-sub" id="ctxName">인천 남동구 치매안심센터</div>
+      <span class="surface-tag" id="surfaceTag" data-s="manager">채널 · /manager</span>
+    </div>
+    <nav class="nav" id="nav" aria-label="주 메뉴"></nav>
+    <div class="side-f">
+      <button class="acct">
+        <span class="avatar" id="acctIni">김</span>
+        <span style="flex:1;min-width:0">
+          <span class="acct-n" id="acctName">김주무 주무관</span>
+          <span class="acct-r" id="acctRole">채널관리자</span>
+        </span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div>
+        <div class="top-t" id="pageTitle">수렴 설계</div>
+        <div class="top-crumb" id="crumb">구조</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="seg" role="group" aria-label="표면 전환">
+        <button id="sfManager" aria-pressed="true">채널관리자</button>
+        <button id="sfAdmin" aria-pressed="false">슈퍼어드민</button>
+      </div>
+    </header>
+    <main class="body" id="view"></main>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var el=function(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var fmt=function(n){return n.toLocaleString('ko-KR')};
+
+/* ══════════════════════════════════════════════════════════
+   1. 메뉴 — boMenu/tree 스키마 그대로. 하드코딩된 사이드바가
+      아니라 이 객체를 렌더한다. 합칠 때 서버 응답으로 교체.
+   ══════════════════════════════════════════════════════════ */
+var ICON={
+  home:'M3 8 10 2.5 17 8v8.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z',
+  users:'M13.5 17v-1.5a3 3 0 0 0-3-3h-5a3 3 0 0 0-3 3V17M11 6.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0',
+  chart:'M3 17h14M6 14V9M10 14V4M14 14V11',
+  chat:'M17.5 11.5a2 2 0 0 1-2 2H7.5L4 16.5V5a2 2 0 0 1 2-2h9.5a2 2 0 0 1 2 2z',
+  cal:'M3.5 5.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2zM3.5 8h13M7 2v3M13 2v3',
+  target:'M16.5 10a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0M12.3 10a2.3 2.3 0 1 1-4.6 0 2.3 2.3 0 0 1 4.6 0',
+  doc:'M11.5 2.5H6A2 2 0 0 0 4 4.5v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7zM11.5 2.5V7H16',
+  userplus:'M12.5 17v-1.5a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3V17M10.5 6.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M15.5 7v4M17.5 9h-4',
+  list:'M4 5h12M4 10h12M4 15h7',
+  grid:'M3.5 3.5h5v5h-5zM11.5 3.5h5v5h-5zM3.5 11.5h5v5h-5zM11.5 11.5h5v5h-5z',
+  nfc:'M5 7a7 7 0 0 1 0 6M8 5.5a10 10 0 0 1 0 9M11.5 4a13 13 0 0 1 0 12M15 3a16 16 0 0 1 0 14',
+  bell:'M15 7a5 5 0 0 0-10 0c0 5-2 6-2 6h14s-2-1-2-6M11.7 16.5a2 2 0 0 1-3.4 0',
+  book:'M4 4.5A1.5 1.5 0 0 1 5.5 3H16v14H5.5A1.5 1.5 0 0 1 4 15.5zM4 14.5h12',
+  gear:'M16.5 10a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0M12.5 10a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0',
+  layers:'M10 2.5 17.5 7 10 11.5 2.5 7zM2.5 13 10 17.5 17.5 13'
+};
+function ico(k){return '<svg class="nav-ico" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+ICON[k]+'"/></svg>'}
+
+var MENU={
+manager:[
+ {label:'운영',children:[
+  {menuId:'today',   label:'오늘',        icon:'home',  page:'/manager/care/today',        perm:'MELI_MANAGER_CARE_TODAY',   badge:{t:'c',v:'3'}},
+  {menuId:'people',  label:'참여자',      icon:'users', page:'/manager/care/participants', perm:'MELI_MANAGER_CARE_MEMBERS', badge:{t:'n',v:'822'}, view:'people'},
+  {menuId:'stats',   label:'활동 현황',   icon:'chart', page:'/manager/care/stats',        perm:'MELI_MANAGER_CARE_STATS'},
+  {menuId:'consult', label:'상담실',      icon:'chat',  page:'/manager/care/consult',      perm:'MELI_MANAGER_CARE_CONSULT', badge:{t:'c',v:'4'}}
+ ]},
+ {label:'프로그램',children:[
+  {menuId:'sched', label:'프로그램 일정', icon:'cal',    page:'/manager/care/schedule', perm:'MELI_MANAGER_CARE_SCHEDULE', access:'readonly'},
+  {menuId:'quest', label:'챌린지',       icon:'target', page:'/manager/care/quests',   perm:'MELI_MANAGER_CARE_QUESTS',   access:'readonly'}
+ ]},
+ {label:'행정',children:[
+  {menuId:'report', label:'월간 리포트', icon:'doc',      page:'/manager/care/report',  perm:'MELI_MANAGER_CARE_REPORT'},
+  {menuId:'apply',  label:'참여 신청',   icon:'userplus', page:'/manager/care/applies', perm:'MELI_MANAGER_CARE_APPLIES', badge:{t:'c',v:'111'}},
+  {menuId:'audit',  label:'열람 기록',   icon:'list',     page:'/manager/care/audit',   perm:'MELI_MANAGER_PRIVACY_AUDIT', view:'audit'}
+ ]},
+ {label:'설계',children:[
+  {menuId:'arch', label:'수렴 설계', icon:'layers', page:'/manager/care/architecture', perm:'—', view:'arch'}
+ ]}
+],
+admin:[
+ {label:'현황',children:[
+  {menuId:'dashboard', label:'대시보드', icon:'grid', page:'/admin/dashboard', perm:'DASHBOARD'}
+ ]},
+ {label:'회원 · 채널',children:[
+  {menuId:'members',  label:'회원 현황', icon:'users', page:'/admin/meli/members',  perm:'MELI_MEMBERS', badge:{t:'n',v:'48'}},
+  {menuId:'channels', label:'채널 현황', icon:'layers',page:'/admin/meli/channels', perm:'MELI_CHANNELS', badge:{t:'n',v:'4'}, view:'channels'},
+  {menuId:'nfc',      label:'NFC 현황',  icon:'nfc',   page:'/admin/meli/nfc',      perm:'MELI_NFC', badge:{t:'n',v:'6'}}
+ ]},
+ {label:'콘텐츠 · 전시',children:[
+  {menuId:'contents', label:'건강 콘텐츠', icon:'book', page:'/admin/meli/contents', perm:'MELI_CONTENTS', access:'planned'},
+  {menuId:'tags',     label:'콘텐츠 태그', icon:'list', page:'/admin/meli/contents/tags', perm:'MELI_CONTENT_TAGS', access:'planned'},
+  {menuId:'notices',  label:'공지사항/이벤트', icon:'bell', page:'/admin/meli/notices', perm:'MELI_NOTICES'}
+ ]},
+ {label:'CX · 개인정보',children:[
+  {menuId:'faqs',      label:'멜리 서비스 FAQ', icon:'doc',  page:'/admin/meli/faqs',      perm:'MELI_FAQS', badge:{t:'n',v:'100'}},
+  {menuId:'inquiries', label:'멜리 1:1 문의',   icon:'chat', page:'/admin/meli/inquiries', perm:'MELI_INQUIRIES', badge:{t:'c',v:'3'}},
+  {menuId:'audit',     label:'열람 기록',       icon:'list', page:'/admin/privacy/audit',  perm:'MELI_PRIVACY_AUDIT', view:'audit'}
+ ]},
+ {label:'설계',children:[
+  {menuId:'arch', label:'수렴 설계', icon:'layers', page:'/admin/architecture', perm:'—', view:'arch'}
+ ]}
+]};
+
+var ACCT={
+  manager:{ini:'김',name:'김주무 주무관',role:'채널관리자',ctx:'인천 남동구 치매안심센터'},
+  admin:{ini:'S',name:'srkim',role:'masterAdmin',ctx:'원메딕스 · 전체 채널'}
+};
+
+/* ══════════════════════════════════════════════════════════
+   2. 개인정보 사유코드 — 2층 구조.
+      COMMON = 맬리 본서비스에서 이미 확정된 8종 (그대로 사용)
+      CARE   = 케어센터 도메인 전용 (공통 코드 위에 얹음)
+      두 표면의 열람 로그가 한 테이블로 합쳐지는 근거.
+   ══════════════════════════════════════════════════════════ */
+var REASON_COMMON=[
+ {v:'USER_REQUEST',   l:'사용자 요청에 따른 정보 확인'},
+ {v:'CONSULT',        l:'환자 상담/고객 응대'},
+ {v:'DATA_ANOMALY',   l:'이상 데이터 확인 (오류/누락 검증)'},
+ {v:'OPS_ISSUE',      l:'서비스 운영 이슈 대응'},
+ {v:'LEGAL',          l:'법적 요구 대응 (분쟁, 요청 등)'},
+ {v:'INTERNAL_AUDIT', l:'내부 감사 및 점검'},
+ {v:'IDENTITY_CHECK', l:'회원 상담 중 본인 확인'},
+ {v:'ETC',            l:'기타 (직접 입력)'}
+];
+var REASON_CARE=[
+ {v:'CARE_OUTREACH',   l:'미활동자 안부 연락'},
+ {v:'CARE_RISK',       l:'위험군 상담 연계'},
+ {v:'CARE_APPLY',      l:'참여 신청 확인'},
+ {v:'CARE_HEALTH_DOC', l:'보건소 공문 회신'}
+];
+
+/* ── 데이터 (실측값 · 이름은 마스킹) ── */
+var PEOPLE=[
+ {pin:'1555',name:'참여자01',phone:'010-****-1555',by:1935,belong:'남동구노인복지관',mgr:'김주무',status:'참여 중',stt:'neu',days:169,rate:66,last:'오늘',ver:'4.0.7'},
+ {pin:'1333',name:'참여자02',phone:'010-****-1333',by:1948,belong:'남동구노인복지관',mgr:'김주무',status:'활동 중단',stt:'warn',days:92,rate:41,last:'21일 전',ver:'4.0.7'},
+ {pin:'1666',name:'참여자03',phone:'010-****-1666',by:1938,belong:'남동구보건소',mgr:'이운영',status:'활동 중단',stt:'warn',days:146,rate:78,last:'18일 전',ver:'4.0.6'},
+ {pin:'1111',name:'참여자04',phone:'010-****-1111',by:1945,belong:'미배정',mgr:'—',status:'중도포기',stt:'dan',days:14,rate:3,last:'141일 전',ver:'3.4.0'},
+ {pin:'1888',name:'참여자05',phone:'010-****-1888',by:1952,belong:'만월종합사회복지관',mgr:'이운영',status:'활동 중단',stt:'warn',days:61,rate:33,last:'16일 전',ver:'4.0.7'},
+ {pin:'1444',name:'참여자06',phone:'010-****-1444',by:1943,belong:'남동구보건소',mgr:'김주무',status:'참여 중',stt:'neu',days:203,rate:88,last:'어제',ver:'4.0.7'},
+ {pin:'1222',name:'참여자07',phone:'010-****-1222',by:1961,belong:'만수노인문화센터',mgr:'—',status:'활동 중단',stt:'warn',days:27,rate:12,last:'29일 전',ver:'4.0.5'},
+ {pin:'1777',name:'참여자08',phone:'010-****-1777',by:1949,belong:'남동구노인복지관',mgr:'이운영',status:'활동 중단',stt:'warn',days:55,rate:24,last:'33일 전',ver:'4.0.4'}
+];
+var FULL={'1555':['참여자01','010-0000-1555'],'1333':['참여자02','010-0000-1333'],'1666':['참여자03','010-0000-1666'],
+ '1111':['참여자04','010-0000-1111'],'1888':['참여자05','010-0000-1888'],'1444':['참여자06','010-0000-1444'],
+ '1222':['참여자07','010-0000-1222'],'1777':['참여자08','010-0000-1777']};
+
+var CHANNELS=[
+ {key:'C-PRD-CARE-0001',name:'인천 남동구 치매안심센터',corp:'인천광역시 남동구',surface:'care',ops:6,nfc:0,members:822,rooms:625,made:'2026-03-02',end:'2026-12-31',status:'운영중',stt:'neu'},
+ {key:'C-PRD-TEST-0001',name:'대찬병원',corp:'의료법인 대찬의료재단',surface:'meli',ops:3,nfc:6,members:43,rooms:2,made:'2026-07-27',end:'2030-10-31',status:'운영중',stt:'neu'},
+ {key:'C-PRD-CARE-0002',name:'부평구 치매안심센터',corp:'인천광역시 부평구',surface:'care',ops:2,nfc:0,members:0,rooms:0,made:'2026-08-20',end:'2027-02-28',status:'대기',stt:'info'},
+ {key:'C-PRD-TEST-0002',name:'서울재활의원',corp:'서울재활의원',surface:'meli',ops:1,nfc:0,members:5,rooms:1,made:'2026-08-11',end:'2026-09-30',status:'운영중',stt:'warn'}
+];
+
+var AUDIT=[
+ {at:'2026-08-25 14:22',who:'김주무 주무관',surface:'care',target:'참여자09 (5716)',what:'이름·연락처 원문',reason:'CARE_OUTREACH',detail:'14일 무활동 안부 연락'},
+ {at:'2026-08-25 11:07',who:'srkim',surface:'meli',target:'회원 3명',what:'CSV 다운로드',reason:'INTERNAL_AUDIT',detail:'8월 정기 점검'},
+ {at:'2026-08-24 16:45',who:'이운영 (원메딕스)',surface:'care',target:'참여자12 (1180)',what:'이름·연락처 원문',reason:'OPS_ISSUE',detail:'앱 로그인 실패 재현'},
+ {at:'2026-08-24 09:31',who:'srkim',surface:'meli',target:'문의 #A-0031',what:'이름·연락처 원문',reason:'IDENTITY_CHECK',detail:'본인 확인'},
+ {at:'2026-08-22 13:58',who:'김주무 주무관',surface:'care',target:'참여자 184명',what:'명단 엑셀 (가린 상태)',reason:'CARE_HEALTH_DOC',detail:'보건소 8월 제출'}
+];
+
+/* 참여자 상세 — 이전월 대비 (제니코그 패턴). 미수행은 지우지 않고 회색으로 남긴다. */
+var TREND=[
+ {n:'두뇌훈련',      pd:2.1,cd:2.6, pr:74.0,cr:79.2},
+ {n:'상체·유연성 운동',pd:3.0,cd:3.0, pr:68.5,cr:67.4},
+ {n:'전신·지구력 운동',pd:2.4,cd:1.8, pr:71.2,cr:58.0},
+ {n:'마음다루기',     pd:1.5,cd:2.0, pr:65.7,cr:72.1},
+ {n:'걷기 기록',      pd:null,cd:null,pr:null,cr:null},
+ {n:'증상 기록',      pd:null,cd:null,pr:null,cr:null}
+];
+
+/* ══════════════════════════════════════════════════════════
+   3. 상태
+   ══════════════════════════════════════════════════════════ */
+var S={surface:'manager',menuId:'arch',revealed:{},sort:{k:null,dir:null},tab:'all'};
+
+function toast(msg,undo){
+  var t=el('div','toast','<span>'+esc(msg)+'</span>');
+  if(undo){var b=el('button',null,'실행 취소');b.onclick=function(){t.remove();toast('되돌렸어요.')};t.appendChild(b)}
+  $('#toasts').appendChild(t);
+  setTimeout(function(){t.remove()},undo?6000:3200);
+}
+
+function renderNav(){
+  var nav=$('#nav');nav.innerHTML='';
+  MENU[S.surface].forEach(function(g){
+    var w=el('div','nav-grp');w.appendChild(el('div','nav-grp-t',esc(g.label)));
+    g.children.forEach(function(m){
+      var planned=m.access==='planned', ro=m.access==='readonly';
+      var b=el('button','nav-i'+(planned?' locked':''));
+      b.type='button';
+      if(m.menuId===S.menuId)b.setAttribute('aria-current','page');
+      b.title=m.page+'  ·  '+m.perm;
+      var badge='';
+      if(planned)badge='<span class="pill ro">2차</span>';
+      else if(ro)badge='<span class="pill ro">읽기</span>';
+      else if(m.badge)badge='<span class="pill '+m.badge.t+'">'+m.badge.v+'</span>';
+      b.innerHTML=ico(m.icon)+'<span class="nav-lbl">'+esc(m.label)+'</span>'+badge;
+      if(planned){b.disabled=true;b.title=m.page+' · 2차 개발 범위(예정)'}
+      else b.onclick=function(){S.menuId=m.menuId;S.sort={k:null,dir:null};render()};
+      w.appendChild(b);
+    });
+    nav.appendChild(w);
+  });
+}
+
+function findMenu(){
+  var f=null;
+  MENU[S.surface].forEach(function(g){g.children.forEach(function(m){if(m.menuId===S.menuId)f=m})});
+  return f;
+}
+
+function render(){
+  var a=ACCT[S.surface];
+  $('#acctIni').textContent=a.ini; $('#acctName').textContent=a.name;
+  $('#acctRole').textContent=a.role; $('#ctxName').textContent=a.ctx;
+  var st=$('#surfaceTag');
+  st.dataset.s=S.surface==='manager'?'manager':'admin';
+  st.textContent=S.surface==='manager'?'채널 · /manager':'슈퍼 · /admin';
+  $('#sfManager').setAttribute('aria-pressed',S.surface==='manager');
+  $('#sfAdmin').setAttribute('aria-pressed',S.surface==='admin');
+
+  var m=findMenu();
+  if(!m){S.menuId='arch';m=findMenu()}
+  $('#pageTitle').textContent=m.label;
+  $('#crumb').textContent=m.page;
+  renderNav();
+
+  var v=$('#view');v.innerHTML='';
+  var fn={arch:viewArch,people:viewPeople,channels:viewChannels,audit:viewAudit}[m.view];
+  if(fn)fn(v); else viewStub(v,m);
+}
+
+/* ── 미구현 화면 ── */
+function viewStub(v,m){
+  var c=el('div','card');
+  c.innerHTML='<div class="empty">'+
+    '<div class="empty-t">'+esc(m.label)+' — 이 프로토타입의 범위 밖</div>'+
+    '<div class="empty-d">수렴 구조를 보여주는 화면만 실제로 그렸습니다.<br>'+
+    '<span class="code">'+esc(m.page)+'</span> · <span class="code">'+esc(m.perm)+'</span></div>'+
+    '</div>';
+  var b=el('button','btn','수렴 설계로 이동');
+  b.onclick=function(){S.menuId='arch';render()};
+  $('.empty',c).appendChild(b);
+  v.appendChild(c);
+}
+
+/* ══════════════════════════════════════════════════════════
+   화면 A — 수렴 설계
+   ══════════════════════════════════════════════════════════ */
+function viewArch(v){
+  var w=el('div','stack');
+
+  w.appendChild(el('div',null,
+    '<h2 class="sec">언젠가 합칠 것을 전제로 한 설계</h2>'+
+    '<p class="sec-d">케어센터 채널어드민을 맬리 본서비스 어드민과 합치거나 느슨하게 연결하려면, ' +
+    '지금 결정해야 손이 덜 가는 것이 네 가지입니다. 위 <b>표면 전환</b>을 눌러 같은 코드가 두 표면으로 도는 것을 확인하세요.</p>'));
+
+  /* 결정 4가지 */
+  var d=el('div','card');
+  d.innerHTML='<div class="card-h"><span class="card-t">지금 정할 것</span></div>';
+  var db=el('div','card-b');db.style.cssText='display:flex;flex-direction:column;gap:18px';
+  [['1','케어센터를 <code class="code">/manager/*</code> 시민으로 놓는다',
+    '맬리는 이미 <span class="code">MELI_MEMBERS</span> ↔ <span class="code">MELI_MANAGER_MEMBERS</span>처럼 슈퍼/채널이 권한코드 쌍으로 갈려 있습니다. 케어센터를 별도 시스템이 아니라 <span class="code">feature: careCenter</span>를 가진 manager 표면으로 정의하면 합칠 때 라우트를 옮기지 않아도 됩니다.'],
+   ['2','사이드바를 서버가 내려준다',
+    '지금은 메뉴가 화면에 하드코딩돼 있습니다. <span class="code">boMenu/tree</span> 스키마를 그대로 받아 렌더하면 <b>합치는 날 서버 응답만 바꾸면 끝</b>입니다. 이 프로토타입의 왼쪽 메뉴가 실제로 그 방식입니다.'],
+   ['3','응답 봉투와 코드 필드를 맬리 규격으로',
+    '백엔드가 AppSync GraphQL이든 REST든, <b>화면이 먹는 모양</b>만 통일해두면 어댑터 한 겹으로 붙습니다. 목록은 <span class="code">{result, totalCount, currentPage, pageSize, items}</span>, 코드값은 <span class="code">{value, label, refId}</span>.'],
+   ['4','개인정보 사유코드를 2층으로',
+    '맬리에 이미 확정된 조회 사유 8종이 있습니다. 케어센터 전용 사유를 그 위에 얹으면 <b>열람 로그가 한 테이블로 합쳐집니다.</b> 지금 우리 사유는 맬리 코드와 호환되지 않아 나중에 마이그레이션이 필요합니다.']
+  ].forEach(function(r){
+    var g=el('div','decide');
+    g.innerHTML='<div class="decide-n">'+r[0]+'</div><div><div class="decide-t">'+r[1]+'</div><div class="decide-d">'+r[2]+'</div></div>';
+    db.appendChild(g);
+  });
+  d.appendChild(db);w.appendChild(d);
+
+  /* 권한코드 매핑 */
+  var p=el('div','card');
+  p.innerHTML='<div class="card-h"><div><div class="card-t">권한코드 쌍</div>'+
+    '<div class="card-d">왼쪽은 맬리에 이미 있는 코드, 오른쪽은 케어센터에 새로 붙일 코드입니다.</div></div></div>';
+  var pb=el('div','card-b');
+  var mg=el('div','mapgrid');
+  mg.innerHTML='<div style="font-size:12.5px;font-weight:600;color:var(--g500)">슈퍼 · /admin</div>'+
+    '<div class="arrow"></div><div style="font-size:12.5px;font-weight:600;color:var(--g500)">채널 · /manager</div>';
+  [['MELI_MEMBERS','MELI_MANAGER_MEMBERS','기존'],
+   ['MELI_NOTICES','MELI_MANAGER_NOTICES','기존'],
+   ['MELI_NFC','MELI_MANAGER_NFC','기존'],
+   ['MELI_CHANNELS','MELI_MANAGER_INQUIRIES_CHANNELS','기존'],
+   ['MELI_CARE_MEMBERS','MELI_MANAGER_CARE_MEMBERS','신규'],
+   ['MELI_CARE_REPORT','MELI_MANAGER_CARE_REPORT','신규'],
+   ['MELI_PRIVACY_AUDIT','MELI_MANAGER_PRIVACY_AUDIT','신규 · 공유 로그']
+  ].forEach(function(r){
+    var isNew=r[2]!=='기존';
+    mg.appendChild(el('div',null,'<span class="code">'+r[0]+'</span>'));
+    mg.appendChild(el('div','arrow','↔'));
+    mg.appendChild(el('div',null,'<span class="code">'+r[1]+'</span>'+
+      (isNew?' <span class="tag t-info" style="margin-left:4px"><span class="dot"></span>'+esc(r[2])+'</span>':'')));
+  });
+  pb.appendChild(mg);p.appendChild(pb);w.appendChild(p);
+
+  /* 메뉴 스키마 */
+  var j=el('div','card');
+  j.innerHTML='<div class="card-h"><div><div class="card-t">메뉴 한 건의 모양</div>'+
+    '<div class="card-d">왼쪽 사이드바가 이 객체 배열을 렌더한 결과입니다. 플래그 이름은 맬리 <span class="code">boMenu/tree</span>와 동일합니다.</div></div></div>';
+  var jb=el('div','card-b');
+  jb.innerHTML='<pre class="json">{\n'+
+   '  <b>"menuId"</b>: "people",\n'+
+   '  <b>"label"</b>: "참여자",\n'+
+   '  <b>"page"</b>: <i>"/manager/care/participants"</i>,\n'+
+   '  <b>"feature"</b>: <i>"careCenter"</i>,          <span style="color:var(--g400)">// 합칠 때 이 값으로 그룹핑</span>\n'+
+   '  <b>"accessMode"</b>: "always",           <span style="color:var(--g400)">// always | readonly | planned</span>\n'+
+   '  <b>"requiresSeat"</b>: false,\n'+
+   '  <b>"suspendBehavior"</b>: "hide",        <span style="color:var(--g400)">// 계약 종료·기수 종료 시 동작</span>\n'+
+   '  <b>"isAccountPermissionRequired"</b>: true,\n'+
+   '  <b>"permission"</b>: <i>"MELI_MANAGER_CARE_MEMBERS"</i>\n}</pre>';
+  jb.appendChild(el('div','note','<b>suspendBehavior</b>가 케어센터에도 그대로 쓸모 있습니다. 기수가 끝나면 메뉴를 숨길지 읽기전용으로 남길지가 지금은 코드에 흩어져 있는데, 이 플래그 하나로 모입니다.'));
+  $('.note',jb).style.marginTop='16px';
+  j.appendChild(jb);w.appendChild(j);
+
+  /* 사유코드 2층 */
+  var r2=el('div','card');
+  r2.innerHTML='<div class="card-h"><div><div class="card-t">개인정보 조회 사유 — 2층</div>'+
+    '<div class="card-d">공통 8종은 맬리 본서비스에서 이미 확정돼 운영 중입니다. 새로 만들지 않습니다.</div></div></div>';
+  var rb=el('div','card-b');rb.style.cssText='display:flex;flex-direction:column;gap:16px';
+  var mk=function(title,arr,cls){
+    var box=el('div');
+    box.appendChild(el('div',null,'<div style="font-size:13px;font-weight:600;margin-bottom:9px">'+title+'</div>'));
+    var list=el('div');list.style.cssText='display:flex;flex-wrap:wrap;gap:6px';
+    arr.forEach(function(x){
+      list.appendChild(el('span','tag '+cls,'<span class="dot"></span>'+esc(x.l)));
+    });
+    box.appendChild(list);return box;
+  };
+  rb.appendChild(mk('공통 — 맬리 본서비스 확정 (그대로 사용)',REASON_COMMON,'t-neu'));
+  rb.appendChild(mk('케어센터 전용 — 공통 위에 얹음',REASON_CARE,'t-info'));
+  rb.appendChild(el('div','note info','문의 목록 응답에 <span class="code">memberNameMasked</span> / <span class="code">memberPhoneMasked</span> boolean이 실려 옵니다. <b>마스킹 여부가 서버 판단</b>이라는 뜻이고, 케어센터도 같은 구조로 가면 클라이언트가 원문을 들고 있다가 실수로 노출하는 경로가 사라집니다.'));
+  r2.appendChild(rb);w.appendChild(r2);
+
+  v.appendChild(w);
+}
+
+/* ══════════════════════════════════════════════════════════
+   화면 B — 참여자 (채널)
+   ══════════════════════════════════════════════════════════ */
+var TABS=[
+ {k:'all',    l:'참여자 현황', d:'이 기수에 참여 중인 대상자입니다.'},
+ {k:'stalled',l:'활동 중단',   d:'14일 넘게 활동 기록이 없는 참여자입니다.'},
+ {k:'dropped',l:'중도포기',    d:'본인 요청 또는 연락 두절로 중도포기 처리된 참여자입니다.'},
+ {k:'unassigned',l:'미배정',   d:'담당 복지관이 지정되지 않아 아무도 챙기지 않는 참여자입니다.'}
+];
+function tabRows(){
+  if(S.tab==='stalled')return PEOPLE.filter(function(p){return p.status==='활동 중단'});
+  if(S.tab==='dropped')return PEOPLE.filter(function(p){return p.status==='중도포기'});
+  if(S.tab==='unassigned')return PEOPLE.filter(function(p){return p.belong==='미배정'});
+  return PEOPLE.slice();
+}
+function age(by){return 2026-by}
+
+function viewPeople(v){
+  var w=el('div','stack');
+
+  /* 지표 */
+  var mt=el('div','metrics');
+  [['대상자','822','3기 · 진행 171일째',''],
+   ['이번 달 활동','296','대상자의 40.3%',''],
+   ['14일+ 무활동','184','2주 내 이탈률 71%','warn'],
+   ['담당 미배정','119','전체의 14%','dan']
+  ].forEach(function(m){
+    mt.appendChild(el('div','metric',
+      '<div class="metric-l">'+esc(m[0])+'</div>'+
+      '<div class="metric-v '+m[3]+'">'+esc(m[1])+'</div>'+
+      '<div class="metric-s">'+esc(m[2])+'</div>'));
+  });
+  w.appendChild(mt);
+
+  var c=el('div','card');
+
+  /* 탭 + 설명 (맬리 패턴) */
+  var tb=el('div','tabs');tb.setAttribute('role','tablist');
+  TABS.forEach(function(t){
+    var b=el('button','tab',esc(t.l));
+    b.setAttribute('role','tab');b.setAttribute('aria-selected',S.tab===t.k);
+    b.onclick=function(){S.tab=t.k;render()};
+    tb.appendChild(b);
+  });
+  c.appendChild(tb);
+  var cur=TABS.filter(function(t){return t.k===S.tab})[0];
+  c.appendChild(el('div','tab-note',esc(cur.d)));
+
+  /* 필터 */
+  var f=el('div','filters');
+  var q=el('input','fld');q.type='search';q.placeholder='이름 · PIN 뒤 4자리';q.style.width='210px';
+  f.appendChild(q);
+  var sel=el('select','fld');
+  sel.innerHTML='<option>전체 담당 복지관</option><option>남동구노인복지관</option><option>남동구보건소</option><option>만월종합사회복지관</option><option>만수노인문화센터</option><option>미배정</option>';
+  f.appendChild(sel);
+  f.appendChild(el('span',null,'<span style="font-size:12.5px;color:var(--g500);margin:0 2px 0 6px">기수 종료</span>'));
+  ['D-30','D-14','D-Day'].forEach(function(p,i){
+    var b=el('button','chip',p);b.type='button';b.setAttribute('aria-pressed',i===0);
+    b.onclick=function(){toast(p+' 조건을 적용했어요.')};
+    f.appendChild(b);
+  });
+  f.appendChild(el('div',null,'')).style.flex='1';
+  var bMask=el('button','btn','개인정보 마스킹 해제');
+  bMask.onclick=function(){openReveal(tabRows())};
+  f.appendChild(bMask);
+  var bDl=el('button','btn','명단 내려받기');
+  bDl.onclick=openExport;
+  f.appendChild(bDl);
+  c.appendChild(f);
+
+  /* 적용된 조건 */
+  var ap=el('div','applied');
+  ap.innerHTML='<span class="applied-l">적용된 조건</span>';
+  [['기수 종료','D-30']].forEach(function(x){
+    var b=el('button','chip',esc(x[0])+' · '+esc(x[1])+' <span class="chip-x">×</span>');
+    b.type='button';b.setAttribute('aria-pressed','true');
+    b.onclick=function(){toast('조건을 지웠어요.')};
+    ap.appendChild(b);
+  });
+  var rs=el('button','btn qui sm','전체 초기화');
+  rs.onclick=function(){toast('조건을 모두 지웠어요.')};
+  ap.appendChild(rs);
+  c.appendChild(ap);
+
+  /* 표 */
+  var rows=tabRows();
+  var cols=[
+    {k:'name',  l:'이름',        s:true},
+    {k:'phone', l:'연락처',      s:false},
+    {k:'by',    l:'출생연도',    s:true,  num:true},
+    {k:'belong',l:'담당 복지관', s:true},
+    {k:'mgr',   l:'담당자',      s:true},
+    {k:'status',l:'상태',        s:true},
+    {k:'days',  l:'누적 활동일', s:true,  num:true},
+    {k:'rate',  l:'수행률',      s:true,  num:true},
+    {k:'last',  l:'마지막 활동', s:true},
+    {k:'ver',   l:'앱 버전',     s:false}
+  ];
+  if(S.sort.k){
+    var k=S.sort.k,dir=S.sort.dir==='desc'?-1:1;
+    rows.sort(function(a,b){var x=a[k],y=b[k];return (x>y?1:x<y?-1:0)*dir});
+  }
+  var tw=el('div','tw'),t=el('table');
+  var thr=el('tr');
+  cols.forEach(function(col){
+    var th=el('th',(col.num?'num ':'')+(col.s?'sortable':''),esc(col.l)+(col.s?' <span class="arw">↕</span>':''));
+    if(col.s){
+      if(S.sort.k===col.k)th.dataset.dir=S.sort.dir;
+      th.onclick=function(){
+        S.sort={k:col.k,dir:(S.sort.k===col.k&&S.sort.dir==='asc')?'desc':'asc'};render();
+      };
+    }
+    thr.appendChild(th);
+  });
+  t.appendChild(el('thead')).appendChild(thr);
+  var tb2=el('tbody');
+  if(!rows.length){
+    var tr=el('tr'),td=el('td');td.colSpan=cols.length;
+    td.innerHTML='<div class="empty"><div class="empty-t">조건에 맞는 참여자가 없어요</div>'+
+      '<div class="empty-d">담당 복지관과 기수 종료 조건을 함께 걸면 결과가 비어요.</div></div>';
+    tr.appendChild(td);tb2.appendChild(tr);
+  }
+  rows.forEach(function(p){
+    var open=!!S.revealed[p.pin];
+    var tr=el('tr',open?'revealed':'');
+    var nm=open?FULL[p.pin][0]:p.name, ph=open?FULL[p.pin][1]:p.phone;
+    tr.innerHTML=
+      '<td><b style="font-weight:600">'+esc(nm)+'</b><span class="sub">PIN '+esc(p.pin)+'</span></td>'+
+      '<td class="mono">'+esc(ph)+'</td>'+
+      '<td class="num">'+p.by+'<span class="sub">만 '+age(p.by)+'세</span></td>'+
+      '<td>'+(p.belong==='미배정'?'<span class="tag t-warn"><span class="dot"></span>미배정</span>':esc(p.belong))+'</td>'+
+      '<td>'+(p.mgr==='—'?'<span style="color:var(--g400)">—</span>':esc(p.mgr))+'</td>'+
+      '<td><span class="tag t-'+p.stt+'"><span class="dot"></span>'+esc(p.status)+'</span></td>'+
+      '<td class="num">'+p.days+'</td>'+
+      '<td class="num">'+p.rate+'%</td>'+
+      '<td>'+esc(p.last)+'</td>'+
+      '<td style="color:var(--g500)">'+esc(p.ver)+'</td>';
+    tr.style.cursor='pointer';
+    tr.onclick=function(){openDetail(p)};
+    tb2.appendChild(tr);
+  });
+  t.appendChild(tb2);tw.appendChild(t);c.appendChild(tw);
+
+  var tf=el('div','tfoot');
+  tf.innerHTML='<span>총 <b style="color:var(--g900)">'+rows.length+'</b>명 중 1–'+rows.length+'</span>';
+  var sp=el('div');sp.style.flex='1';tf.appendChild(sp);
+  ['20개씩','50개씩','100개씩'].forEach(function(x,i){
+    var b=el('button','chip',x);b.type='button';b.setAttribute('aria-pressed',i===0);
+    tf.appendChild(b);
+  });
+  c.appendChild(tf);
+  w.appendChild(c);
+  v.appendChild(w);
+}
+
+/* ── 참여자 상세 (제니코그 패턴) ── */
+function openDetail(p){
+  var open=!!S.revealed[p.pin];
+  var nm=open?FULL[p.pin][0]:p.name;
+  var body=el('div','stack');
+
+  body.appendChild(el('div','kv',
+    '<dt>생년 · 나이</dt><dd>'+p.by+'년생 · <b>만 '+age(p.by)+'세</b></dd>'+
+    '<dt>담당 복지관</dt><dd>'+(p.belong==='미배정'?'<span class="tag t-warn"><span class="dot"></span>미배정</span>':esc(p.belong))+'</dd>'+
+    '<dt>담당자</dt><dd>'+(p.mgr==='—'?'<span style="color:var(--g400)">지정 안 됨</span>':esc(p.mgr))+'</dd>'+
+    '<dt>누적 활동일</dt><dd>'+p.days+'일 · 수행률 '+p.rate+'%</dd>'));
+
+  /* 이전 대비 변화표 */
+  var t=el('table');
+  t.innerHTML='<thead>'+
+    '<tr><th rowspan="2" style="vertical-align:bottom">활동 유형</th>'+
+    '<th colspan="2" class="num" style="border-left:var(--hair)">평균 난이도</th>'+
+    '<th colspan="2" class="num" style="border-left:var(--hair)">수행률 (%)</th></tr>'+
+    '<tr><th class="num" style="border-left:var(--hair);font-weight:400">지난달</th><th class="num">이번달</th>'+
+    '<th class="num" style="border-left:var(--hair);font-weight:400">지난달</th><th class="num">이번달</th></tr></thead>';
+  var tb=el('tbody');
+  TREND.forEach(function(r){
+    var none=r.cd===null;
+    var tr=el('tr',none?'muted':'');
+    if(none){
+      tr.innerHTML='<td>'+esc(r.n)+'</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td>';
+    }else{
+      tr.innerHTML='<td>'+esc(r.n)+'</td>'+
+        '<td class="num" style="border-left:var(--hair);color:var(--g500)">'+r.pd.toFixed(1)+'</td>'+
+        '<td class="num">'+r.cd.toFixed(1)+dl(r.cd-r.pd,1)+'</td>'+
+        '<td class="num" style="border-left:var(--hair);color:var(--g500)">'+r.pr.toFixed(1)+'</td>'+
+        '<td class="num">'+r.cr.toFixed(1)+dl(r.cr-r.pr,1)+'</td>';
+    }
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  var tw=el('div','tw');tw.appendChild(t);
+
+  var card=el('div','card');
+  card.innerHTML='<div class="card-h"><div><div class="card-t">지난달 대비 변화</div>'+
+    '<div class="card-d">한 번도 안 한 활동은 목록에서 지우지 않고 회색으로 남깁니다 — 안 하고 있다는 것이 정보입니다.</div></div></div>';
+  card.appendChild(tw);
+
+  /* Pre/Post 관찰 */
+  var pp=el('div','card');
+  pp.innerHTML='<div class="card-h"><div><div class="card-t">인지 기능 점수 변화 관찰</div>'+
+    '<div class="card-d">사전·사후 검사 결과입니다. 프로그램이 원인이라는 뜻은 아닙니다.</div></div></div>';
+  var ppb=el('div','card-b');
+  var bars=el('div','bars');
+  [['CIST 총점',22,24,30],['기억력',7.4,8.6,10],['주의력',5.1,5.4,8],['언어',6.2,7.1,9]].forEach(function(g){
+    var mx=g[3];
+    bars.appendChild(el('div','bargrp',
+      '<div class="bar-pair">'+
+      '<div class="bar pre" style="height:'+(g[1]/mx*100)+'%"><span>'+g[1]+'</span></div>'+
+      '<div class="bar post" style="height:'+(g[2]/mx*100)+'%"><span>'+g[2]+'</span></div></div>'+
+      '<div class="bargrp-l">'+esc(g[0])+'</div>'));
+  });
+  ppb.appendChild(bars);
+  ppb.appendChild(el('div','legend','<span><i style="background:var(--g200)"></i>사전</span><span><i style="background:var(--brand-400)"></i>사후</span>'));
+  $('.legend',ppb).style.marginTop='16px';
+  pp.appendChild(ppb);
+
+  body.appendChild(card);body.appendChild(pp);
+  modal(esc(nm)+' · 활동 요약',body,[{l:'닫기',cls:'btn',close:true}],720);
+}
+function dl(d,dp){
+  if(Math.abs(d)<0.05)return '<span class="delta flat">—</span>';
+  var down=d<0;
+  return '<span class="delta'+(down?' down':'')+'">'+(down?'▼':'▲')+Math.abs(d).toFixed(dp)+'</span>';
+}
+
+/* ══════════════════════════════════════════════════════════
+   화면 C — 채널 현황 (슈퍼)
+   ══════════════════════════════════════════════════════════ */
+function viewChannels(v){
+  var w=el('div','stack');
+  w.appendChild(el('div','note info',
+    '<b>합쳐진 상태를 가정한 목록입니다.</b> 케어센터 채널과 맬리 제휴 채널이 한 표에 있습니다. ' +
+    '구분은 <span class="code">feature</span> 값 하나 — 슈퍼어드민은 둘 다 보고, 채널관리자는 자기 채널만 봅니다.'));
+
+  var c=el('div','card');
+  c.innerHTML='<div class="card-h"><div><div class="card-t">채널 현황</div>'+
+    '<div class="card-d">계약 종료가 가까운 채널부터 확인하세요.</div></div></div>';
+
+  var f=el('div','filters');
+  var q=el('input','fld');q.type='search';q.placeholder='채널명 · 법인명';q.style.width='200px';
+  f.appendChild(q);
+  var sel=el('select','fld');
+  sel.innerHTML='<option>전체 상태</option><option>대기</option><option>운영중</option><option>운영중지</option><option>계약종료</option>';
+  f.appendChild(sel);
+  var sel2=el('select','fld');
+  sel2.innerHTML='<option>전체 서비스</option><option>케어센터 (careCenter)</option><option>맬리 재활 (meli)</option>';
+  f.appendChild(sel2);
+  f.appendChild(el('span',null,'<span style="font-size:12.5px;color:var(--g500);margin:0 2px 0 6px">계약 종료</span>'));
+  ['D-30','D-14','D-Day'].forEach(function(p,i){
+    var b=el('button','chip',p);b.type='button';b.setAttribute('aria-pressed',i===1);
+    b.onclick=function(){toast(p+' 조건을 적용했어요.')};
+    f.appendChild(b);
+  });
+  c.appendChild(f);
+
+  var tw=el('div','tw'),t=el('table');
+  t.innerHTML='<thead><tr>'+
+   '<th>채널명(법인명)</th><th>서비스</th><th class="num">소속 운영자</th><th class="num">소속 회원</th>'+
+   '<th class="num">NFC</th><th class="num">상담방</th><th>계약 종료</th><th>상태</th></tr></thead>';
+  var tb=el('tbody');
+  CHANNELS.forEach(function(ch){
+    var end=new Date(ch.end+'T00:00:00'), today=new Date('2026-08-25T00:00:00');
+    var dd=Math.round((end-today)/86400000);
+    var warn=dd<=60;
+    var tr=el('tr');
+    tr.innerHTML=
+      '<td><b style="font-weight:600">'+esc(ch.name)+'</b><span class="sub">'+esc(ch.corp)+' · '+esc(ch.key)+'</span></td>'+
+      '<td>'+(ch.surface==='care'
+        ?'<span class="tag t-info"><span class="dot"></span>케어센터</span>'
+        :'<span class="tag t-neu"><span class="dot"></span>맬리 재활</span>')+'</td>'+
+      '<td class="num">'+ch.ops+'</td>'+
+      '<td class="num">'+fmt(ch.members)+'</td>'+
+      '<td class="num">'+(ch.nfc||'<span style="color:var(--g400)">—</span>')+'</td>'+
+      '<td class="num">'+(ch.rooms?fmt(ch.rooms):'<span style="color:var(--g400)">—</span>')+'</td>'+
+      '<td>'+esc(ch.end)+(warn?'<span class="sub" style="color:var(--warn-fg);font-weight:600">D-'+dd+'</span>':'<span class="sub">D-'+fmt(dd)+'</span>')+'</td>'+
+      '<td><span class="tag t-'+ch.stt+'"><span class="dot"></span>'+esc(ch.status)+'</span></td>';
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);tw.appendChild(t);c.appendChild(tw);
+  c.appendChild(el('div','tfoot','<span>총 <b style="color:var(--g900)">4</b>건</span>'));
+  w.appendChild(c);
+  v.appendChild(w);
+}
+
+/* ══════════════════════════════════════════════════════════
+   화면 D — 열람 기록 (양쪽 공유)
+   ══════════════════════════════════════════════════════════ */
+function reasonLabel(v){
+  var all=REASON_COMMON.concat(REASON_CARE);
+  for(var i=0;i<all.length;i++)if(all[i].v===v)return all[i].l;
+  return v;
+}
+function viewAudit(v){
+  var w=el('div','stack');
+  w.appendChild(el('div','note',
+    '사유코드를 2층으로 맞추면 <b>두 표면의 열람 기록이 이 한 표로 합쳐집니다.</b> ' +
+    '건강정보 열람 기록은 2년 보관 대상이고 매달 보건소 점검표에 들어갑니다 — 나중에 합치기 어려운 항목입니다.'));
+
+  var c=el('div','card');
+  c.innerHTML='<div class="card-h"><div><div class="card-t">열람 기록</div>'+
+    '<div class="card-d">최근 30일 · 5건</div></div></div>';
+
+  var f=el('div','filters');
+  var sel=el('select','fld');
+  sel.innerHTML='<option>전체 사유</option><optgroup label="공통"></optgroup><optgroup label="케어센터 전용"></optgroup>';
+  REASON_COMMON.forEach(function(r){var o=el('option',null,esc(r.l));sel.children[1].appendChild(o)});
+  REASON_CARE.forEach(function(r){var o=el('option',null,esc(r.l));sel.children[2].appendChild(o)});
+  f.appendChild(sel);
+  var sel2=el('select','fld');
+  sel2.innerHTML='<option>전체 표면</option><option>케어센터 (/manager)</option><option>맬리 (/admin)</option>';
+  f.appendChild(sel2);
+  ['오늘','최근 7일','이번 달','지난 달'].forEach(function(p,i){
+    var b=el('button','chip',p);b.type='button';b.setAttribute('aria-pressed',i===2);
+    f.appendChild(b);
+  });
+  c.appendChild(f);
+
+  var tw=el('div','tw'),t=el('table');
+  t.innerHTML='<thead><tr><th>시각</th><th>열람자</th><th>표면</th><th>대상</th><th>열람 항목</th><th>사유</th></tr></thead>';
+  var tb=el('tbody');
+  AUDIT.forEach(function(a){
+    var tr=el('tr');
+    tr.innerHTML=
+      '<td class="mono">'+esc(a.at)+'</td>'+
+      '<td>'+esc(a.who)+'</td>'+
+      '<td>'+(a.surface==='care'
+        ?'<span class="tag t-info"><span class="dot"></span>케어센터</span>'
+        :'<span class="tag t-neu"><span class="dot"></span>맬리</span>')+'</td>'+
+      '<td>'+esc(a.target)+'</td>'+
+      '<td>'+esc(a.what)+'</td>'+
+      '<td>'+esc(reasonLabel(a.reason))+'<span class="sub">'+esc(a.detail)+'</span></td>';
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);tw.appendChild(t);c.appendChild(tw);
+  var tf=el('div','tfoot');
+  tf.innerHTML='<span>총 <b style="color:var(--g900)">5</b>건</span>';
+  var sp=el('div');sp.style.flex='1';tf.appendChild(sp);
+  var b=el('button','btn sm','기록 내려받기');
+  b.onclick=openExport;tf.appendChild(b);
+  c.appendChild(tf);
+  w.appendChild(c);
+  v.appendChild(w);
+}
+
+/* ══════════════════════════════════════════════════════════
+   모달
+   ══════════════════════════════════════════════════════════ */
+var lastFocus=null;
+function modal(title,bodyEl,btns,maxw){
+  var sc=$('#scrim');sc.innerHTML='';
+  lastFocus=document.activeElement;
+  var m=el('div','modal');
+  if(maxw)m.style.maxWidth=maxw+'px';
+  m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');m.setAttribute('aria-label',title.replace(/<[^>]+>/g,''));
+  var h=el('div','modal-h','<div class="modal-t">'+title+'</div>');
+  var x=el('button','btn qui sm','✕');x.setAttribute('aria-label','닫기');x.onclick=closeModal;
+  h.appendChild(x);m.appendChild(h);
+  var b=el('div','modal-b');b.appendChild(bodyEl);m.appendChild(b);
+  var f=el('div','modal-f');
+  (btns||[]).forEach(function(bt){
+    var e=el('button',bt.cls||'btn',bt.l);
+    e.onclick=function(){ if(bt.close){closeModal();return} if(bt.on)bt.on(e) };
+    if(bt.id)e.id=bt.id;
+    f.appendChild(e);
+  });
+  m.appendChild(f);sc.appendChild(m);sc.classList.add('on');
+  var first=m.querySelector('select,input,textarea,button');if(first)first.focus();
+}
+function closeModal(){
+  $('#scrim').classList.remove('on');$('#scrim').innerHTML='';
+  if(lastFocus&&lastFocus.focus)lastFocus.focus();
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('#scrim').classList.contains('on'))closeModal()});
+$('#scrim').addEventListener('mousedown',function(e){if(e.target===e.currentTarget)closeModal()});
+
+/* ── 마스킹 해제 (공통 사유코드) ── */
+function openReveal(rows){
+  var b=el('div');b.style.cssText='display:flex;flex-direction:column;gap:13px';
+  b.appendChild(el('p','hint','대상 <b style="color:var(--g900)">'+rows.length+'명</b> · 사유는 열람 기록에 남고 보건소 점검 때 증빙으로 제출됩니다. 열람 후 30초가 지나면 자동으로 다시 가려집니다.'));
+
+  var wrap=el('div');
+  wrap.innerHTML='<label class="lbl" for="rv-r">조회 사유 <span class="req">*</span></label>';
+  var sel=el('select','fld');sel.id='rv-r';
+  sel.innerHTML='<option value="">사유를 선택하세요</option>';
+  var g1=el('optgroup');g1.label='공통';
+  REASON_COMMON.forEach(function(r){var o=el('option',null,esc(r.l));o.value=r.v;g1.appendChild(o)});
+  var g2=el('optgroup');g2.label='케어센터 전용';
+  REASON_CARE.forEach(function(r){var o=el('option',null,esc(r.l));o.value=r.v;g2.appendChild(o)});
+  sel.appendChild(g1);sel.appendChild(g2);
+  wrap.appendChild(sel);
+  b.appendChild(wrap);
+
+  var etcWrap=el('div');etcWrap.style.display='none';
+  etcWrap.innerHTML='<label class="lbl" for="rv-e">상세 사유 <span class="req">*</span></label>';
+  var ta=el('textarea','fld');ta.id='rv-e';ta.placeholder='어떤 업무로 원문이 필요한지 적어주세요.';
+  etcWrap.appendChild(ta);
+  etcWrap.appendChild(el('div','hint','직접 입력 사유는 5자 이상 적어야 합니다.'));
+  b.appendChild(etcWrap);
+
+  var chkL=el('label','chk');
+  var chk=el('input');chk.type='checkbox';chk.id='rv-ok';
+  chkL.appendChild(chk);
+  chkL.appendChild(el('span',null,'<b>[필수]</b> 업무 목적 외 조회하지 않겠습니다.'));
+  b.appendChild(chkL);
+
+  var err=el('div','err','사유를 고르고 동의에 체크해야 열람할 수 있습니다.');
+  b.appendChild(err);
+
+  sel.onchange=function(){etcWrap.style.display=sel.value==='ETC'?'block':'none'};
+
+  modal('개인정보 마스킹 해제',b,[
+    {l:'취소',cls:'btn',close:true},
+    {l:'조회',cls:'btn pri',on:function(){
+      var bad=!sel.value||!chk.checked||(sel.value==='ETC'&&ta.value.trim().length<5);
+      if(bad){err.classList.add('on');return}
+      rows.forEach(function(p){S.revealed[p.pin]=true});
+      closeModal();render();
+      toast(rows.length+'명의 원문을 열었어요. 30초 뒤 자동으로 가려집니다.',true);
+      setTimeout(function(){S.revealed={};render()},30000);
+    }}
+  ]);
+}
+
+/* ── 다운로드 사유 ── */
+function openExport(){
+  var b=el('div');b.style.cssText='display:flex;flex-direction:column;gap:13px';
+  var w1=el('div');
+  w1.innerHTML='<label class="lbl">개인정보 범위</label>';
+  var seg=el('div','seg');seg.style.width='100%';
+  var masked=true;
+  var b1=el('button',null,'가린 상태 (권장)'),b2=el('button',null,'원문 포함');
+  b1.style.flex='1';b2.style.flex='1';
+  b1.setAttribute('aria-pressed','true');b2.setAttribute('aria-pressed','false');
+  seg.appendChild(b1);seg.appendChild(b2);
+  w1.appendChild(seg);
+  b.appendChild(w1);
+  var note=el('div','hint','이름은 가운데 글자, 전화번호는 뒷 4자리만 나옵니다.');
+  b.appendChild(note);
+
+  var w2=el('div');
+  w2.innerHTML='<label class="lbl" for="ex-r">다운로드 사유 <span class="req">*</span></label>';
+  var sel=el('select','fld');sel.id='ex-r';
+  sel.innerHTML='<option value="">사유를 선택하세요</option>';
+  REASON_COMMON.concat(REASON_CARE).forEach(function(r){var o=el('option',null,esc(r.l));o.value=r.v;sel.appendChild(o)});
+  w2.appendChild(sel);
+  b.appendChild(w2);
+
+  var chkL=el('label','chk');
+  var chk=el('input');chk.type='checkbox';
+  chkL.appendChild(chk);
+  chkL.appendChild(el('span',null,'<b>[필수]</b> 업무 목적 외 다운로드하지 않겠습니다.'));
+  b.appendChild(chkL);
+  var err=el('div','err','사유를 고르고 동의에 체크해야 내려받을 수 있습니다.');
+  b.appendChild(err);
+
+  b1.onclick=function(){masked=true;b1.setAttribute('aria-pressed','true');b2.setAttribute('aria-pressed','false');
+    note.textContent='이름은 가운데 글자, 전화번호는 뒷 4자리만 나옵니다.'};
+  b2.onclick=function(){masked=false;b1.setAttribute('aria-pressed','false');b2.setAttribute('aria-pressed','true');
+    note.innerHTML='<b style="color:var(--warn-fg)">원문이 파일로 나갑니다.</b> 파일 자체가 열람 기록에 남습니다.'};
+
+  modal('명단 내려받기',b,[
+    {l:'취소',cls:'btn',close:true},
+    {l:'엑셀로 받기',cls:'btn pri',on:function(){
+      if(!sel.value||!chk.checked){err.classList.add('on');return}
+      closeModal();
+      toast((masked?'가린 상태로':'원문 포함으로')+' 내려받았어요. 열람 기록에 남았습니다.');
+    }}
+  ]);
+}
+
+/* ── 표면 전환 ── */
+$('#sfManager').onclick=function(){
+  if(S.surface==='manager')return;
+  S.surface='manager';S.menuId='arch';S.revealed={};render();
+  toast('채널관리자 표면 — 메뉴를 /manager 트리로 다시 그렸어요.');
+};
+$('#sfAdmin').onclick=function(){
+  if(S.surface==='admin')return;
+  S.surface='admin';S.menuId='arch';S.revealed={};render();
+  toast('슈퍼어드민 표면 — 같은 코드, 다른 메뉴 트리입니다.');
+};
+
+render();
+</script>
+
+<div style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#101A2E;color:#fff;font:12px/1.4 sans-serif;padding:6px 10px;border-radius:8px;opacity:.85">공개용 사본 · 이름·전화번호·생년·회원ID는 가짜 값으로 바꿨어요</div></body></html>
