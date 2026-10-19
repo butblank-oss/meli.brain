@@ -1,0 +1,694 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>맬리 채널 어드민 디자인 인수인계서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ink:#12191b; --ink-2:#3d4a4d; --ink-3:#6b7a7d;
+  --ground:#f2f5f4; --surface:#ffffff; --surface-2:#e9efed; --surface-3:#dde5e3;
+  --line:#d4dcda; --line-soft:#e6ecea;
+  --accent:#0f6e63; --accent-soft:#d9ebe7; --accent-ink:#0a4d45;
+  --good:#1f7a4d; --good-soft:#dcefe4;
+  --warn:#9a5c0f; --warn-soft:#f7e9d4;
+  --crit:#a8342c; --crit-soft:#f7dedb;
+  --info:#2b5c8a; --info-soft:#dce8f3;
+  --shadow:0 1px 2px rgba(18,25,27,.06),0 8px 24px -16px rgba(18,25,27,.3);
+  --r:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#e6eceb; --ink-2:#a8b6b4; --ink-3:#7b8a88;
+  --ground:#0c1113; --surface:#141c1e; --surface-2:#1c2628; --surface-3:#253133;
+  --line:#2b393b; --line-soft:#212c2e;
+  --accent:#4fbfae; --accent-soft:#12332f; --accent-ink:#8fdccf;
+  --good:#57bd88; --good-soft:#122c1f;
+  --warn:#d99a4a; --warn-soft:#32250f;
+  --crit:#e07a70; --crit-soft:#331815;
+  --info:#7fb0dc; --info-soft:#132534;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.85);
+}}
+:root[data-theme="dark"]{
+  --ink:#e6eceb; --ink-2:#a8b6b4; --ink-3:#7b8a88;
+  --ground:#0c1113; --surface:#141c1e; --surface-2:#1c2628; --surface-3:#253133;
+  --line:#2b393b; --line-soft:#212c2e;
+  --accent:#4fbfae; --accent-soft:#12332f; --accent-ink:#8fdccf;
+  --good:#57bd88; --good-soft:#122c1f;
+  --warn:#d99a4a; --warn-soft:#32250f;
+  --crit:#e07a70; --crit-soft:#331815;
+  --info:#7fb0dc; --info-soft:#132534;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.85);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;
+  padding:0 20px 80px}
+.mono,code{font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:920px;margin:0 auto}
+h1,h2,h3,h4{text-wrap:balance;letter-spacing:-.015em;line-height:1.3}
+
+/* masthead */
+header.mast{padding:56px 0 30px;border-bottom:2px solid var(--ink);margin-bottom:34px}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+h1{font-size:34px;font-weight:600;margin-bottom:12px}
+.lede{font-size:16px;color:var(--ink-2);max-width:64ch;line-height:1.65}
+.meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-size:12px;color:var(--ink-3)}
+.meta b{color:var(--ink-2);font-weight:500}
+
+/* toc */
+nav.toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin-bottom:40px;box-shadow:var(--shadow)}
+nav.toc h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:11px;font-weight:600}
+nav.toc ol{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px 20px;counter-reset:s}
+nav.toc li{counter-increment:s}
+nav.toc a{display:flex;gap:9px;padding:3px 0;font-size:13.5px;color:var(--ink-2);text-decoration:none;align-items:baseline}
+nav.toc a:before{content:counter(s,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--accent);flex:none}
+nav.toc a:hover{color:var(--accent-ink)}
+
+/* sections */
+section{margin-bottom:52px;scroll-margin-top:20px}
+section>h2{font-size:22px;font-weight:600;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:20px;display:flex;align-items:baseline;gap:11px}
+section>h2 .n{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--accent);font-weight:500;flex:none}
+h3{font-size:16px;font-weight:600;margin:28px 0 10px;color:var(--ink)}
+h3:first-of-type{margin-top:0}
+h4{font-size:13.5px;font-weight:600;margin:18px 0 7px;color:var(--ink-2)}
+p{margin-bottom:12px;max-width:70ch}
+p.tight{margin-bottom:6px}
+ul,ol.list{margin:0 0 14px 20px}
+li{margin-bottom:5px}
+strong,b{font-weight:600}
+code{background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:.87em;color:var(--accent-ink)}
+a{color:var(--accent);text-underline-offset:2px}
+
+/* tables */
+.scroll{overflow-x:auto;margin-bottom:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);
+  padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface-2)}
+td{padding:9px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+td.nw{white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+.num{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+
+/* callouts */
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--accent-ink);
+  padding:12px 16px;border-radius:0 var(--r) var(--r) 0;margin-bottom:16px;font-size:13.5px;line-height:1.65}
+.note.wa{border-left-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
+.note.cr{border-left-color:var(--crit);background:var(--crit-soft);color:var(--crit)}
+.note.nu{border-left-color:var(--line);background:var(--surface-2);color:var(--ink-2)}
+.note b{font-weight:600}
+
+/* swatches */
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px;margin-bottom:18px}
+.sw div{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.sw .chip{height:46px}
+.sw .lb{padding:7px 9px;font-size:10.5px;line-height:1.45}
+.sw .lb b{display:block;font-weight:600;font-size:11.5px;margin-bottom:1px}
+.sw .lb span{font-family:"IBM Plex Mono",monospace;color:var(--ink-3);font-size:10px}
+
+/* type scale demo */
+.ts{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden;margin-bottom:16px}
+.ts div{padding:10px 16px;border-bottom:1px solid var(--line-soft);display:flex;align-items:baseline;gap:16px}
+.ts div:last-child{border-bottom:none}
+.ts .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);width:150px;flex:none}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:1.5px 8px;border-radius:20px;white-space:nowrap}
+.pill.ok{background:var(--good-soft);color:var(--good)}
+.pill.wa{background:var(--warn-soft);color:var(--warn)}
+.pill.cr{background:var(--crit-soft);color:var(--crit)}
+.pill.nu{background:var(--surface-2);color:var(--ink-3)}
+.pill.ac{background:var(--accent-soft);color:var(--accent-ink)}
+.pill.in{background:var(--info-soft);color:var(--info)}
+
+/* prompt block */
+.prompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.72;white-space:pre-wrap;
+  color:var(--ink-2);box-shadow:var(--shadow);overflow-x:auto}
+.prompt strong{color:var(--ink);font-weight:600}
+
+/* checklist */
+.chk{list-style:none;margin-left:0}
+.chk li{padding-left:26px;position:relative;margin-bottom:7px;font-size:14px}
+.chk li:before{content:"☐";position:absolute;left:0;top:0;color:var(--accent);font-size:15px}
+.chk li.done:before{content:"☑"}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 17px;box-shadow:var(--shadow)}
+.card h4{margin-top:0}
+.card p:last-child{margin-bottom:0}
+footer{border-top:1px solid var(--line);padding-top:22px;margin-top:50px;font-size:12.5px;color:var(--ink-3)}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Design Handoff</div>
+  <h1>맬리 케어센터 채널 어드민<br>디자인 인수인계서</h1>
+  <p class="lede">동작하는 HTML 프로토타입을 시각 디자인으로 옮기기 위한 명세서입니다. 화면 11개, 모달 10개, 디자인 토큰, 컴포넌트 목록, 예외 상태, 그리고 실제 운영 데이터가 들어 있습니다. 마지막 절에 그대로 붙여 넣을 수 있는 요청문이 있습니다.</p>
+  <div class="meta">
+    <span>작성 <b>2026-08-21</b></span>
+    <span>대상 <b>인천 남동구 치매안심센터</b></span>
+    <span>제품 <b>㈜원메딕스인더스트리 · 맬리브레인</b></span>
+    <span>범위 <b>채널관리자 어드민 v1</b></span>
+  </div>
+</header>
+
+<nav class="toc">
+  <h4>목차</h4>
+  <ol>
+    <li><a href="#s1">무엇을 만드는가</a></li>
+    <li><a href="#s2">사용자와 사용 맥락</a></li>
+    <li><a href="#s3">화면 목록</a></li>
+    <li><a href="#s4">화면별 명세</a></li>
+    <li><a href="#s5">디자인 토큰</a></li>
+    <li><a href="#s6">컴포넌트 목록</a></li>
+    <li><a href="#s7">상태와 예외</a></li>
+    <li><a href="#s8">실제 데이터</a></li>
+    <li><a href="#s9">지켜야 할 제약</a></li>
+    <li><a href="#s10">요청문 (복사용)</a></li>
+  </ol>
+</nav>
+
+<!-- ══════════ 1 ══════════ -->
+<section id="s1">
+  <h2><span class="n">01</span> 무엇을 만드는가</h2>
+
+  <p>맬리브레인은 지자체 치매안심센터가 주민에게 제공하는 인지건강 앱입니다. 참여자는 매일 앱에서 <b>두뇌훈련·재활운동·마음다루기</b> 활동을 수행하고, 담당 주무관이 그 현황을 관리합니다.</p>
+
+  <p>지금은 하나의 어드민에 권한만 나뉘어 있습니다. 이것을 <b>채널관리자용</b>(지자체 담당 주무관)과 <b>슈퍼관리자용</b>(원메딕스 운영팀)으로 분리하는 것이 사업 확장의 전제이며, 이 문서는 그중 <b>채널관리자 어드민</b>을 다룹니다.</p>
+
+  <div class="note">
+    <b>이 어드민의 존재 이유는 월간 리포트입니다.</b> 현재 원메딕스가 매달 손으로 만들어 보건소에 보내는 자료를, 주무관이 화면에서 직접 내려받게 만드는 것. 나머지 화면은 그 리포트에 들어갈 숫자를 확인하고 참여자를 관리하는 수단입니다. 디자인 우선순위도 이 순서를 따릅니다.
+  </div>
+
+  <h3>B2B 제품이라는 점</h3>
+  <p>이 어드민은 향후 다른 지자체에 판매됩니다. 따라서 디자인은 다음을 만족해야 합니다.</p>
+  <ul>
+    <li><b>기관 색상 교체가 쉬울 것</b> — 강조색 토큰 하나를 바꾸면 전체가 따라오는 구조</li>
+    <li><b>기관명·기수가 데이터</b> — "인천 남동구 치매안심센터", "3기"는 하드코딩된 문구가 아니라 채널마다 바뀌는 값</li>
+    <li><b>공공기관에서 쓰인다</b> — 화려함보다 신뢰감, 밀도 높은 표, 명확한 상태 표시</li>
+  </ul>
+</section>
+
+<!-- ══════════ 2 ══════════ -->
+<section id="s2">
+  <h2><span class="n">02</span> 사용자와 사용 맥락</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>주 사용자 — 담당 주무관</h4>
+      <p class="tight">인천 남동구 치매안심센터 소속 공무원. 이 앱 사업은 담당 업무의 <b>일부</b>이며, 하루 종일 이 화면을 보지 않습니다.</p>
+      <p class="tight">아침에 잠깐 열어 "오늘 처리할 게 있나" 확인하고, 월초에 보건소 제출 자료를 만듭니다.</p>
+      <p>업무용 노트북, <b>1440×900 안팎</b>. 모바일 사용 없음.</p>
+    </div>
+    <div class="card">
+      <h4>부 사용자 — 원메딕스 운영팀</h4>
+      <p class="tight">같은 화면을 볼 수 있지만 권한이 다릅니다. 상담 이관을 받거나, 채널관리자가 못 하는 작업(일정 변경, 챌린지 생성)을 대신합니다.</p>
+      <p>화면상 소속이 <span class="pill in">원메딕스 (운영팀)</span> 로 구분 표시됩니다.</p>
+    </div>
+  </div>
+
+  <h3>사용 빈도로 본 메뉴 구조</h3>
+  <p>사이드바가 <b>사용 빈도순 3그룹</b>으로 묶여 있습니다. 이 위계는 디자인에서 유지되어야 합니다.</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th>그룹</th><th>메뉴</th><th>빈도</th><th>성격</th></tr></thead>
+    <tbody>
+      <tr><td class="nw"><b>운영</b></td><td class="nw">오늘 · 참여자 · 활동 현황 · 상담실</td><td class="nw">매일</td><td>확인하고 처리</td></tr>
+      <tr><td class="nw"><b>프로그램</b></td><td class="nw">프로그램 일정 · 챌린지</td><td class="nw">가끔</td><td><b>읽기 전용</b> — 변경은 운영팀에 요청</td></tr>
+      <tr><td class="nw"><b>행정</b></td><td class="nw">월간 리포트 · 참여 신청 · 열람 기록</td><td class="nw">월 1회 / 기수 시작 시</td><td>문서를 만들고 증빙을 남김</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note wa">
+    <b>읽기 전용 메뉴는 "막힘"으로 끝나면 안 됩니다.</b> 프로그램 일정과 챌린지는 채널관리자가 수정할 수 없지만, 각 화면에 <b>변경 요청 경로</b>가 반드시 함께 있어야 합니다. B2B에서 "안 됩니다"만 있는 화면은 클레임이 됩니다.
+  </div>
+</section>
+
+<!-- ══════════ 3 ══════════ -->
+<section id="s3">
+  <h2><span class="n">03</span> 화면 목록</h2>
+
+  <p>전체 <b>화면 11개 + 모달 10개</b>. 우선순위 A는 반드시 디자인이 필요하고, B는 A의 패턴을 따라가면 됩니다.</p>
+
+  <h3>화면</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>화면</th><th>우선</th><th>구조</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="nw"><b>오늘</b></td><td class="nw"><span class="pill cr">A</span></td><td>지표 타일 5 + 처리할 일 리스트 3 + 14일 추이 + 관심 참여자 표</td></tr>
+      <tr><td class="num">2</td><td class="nw"><b>참여자</b></td><td class="nw"><span class="pill cr">A</span></td><td>4단 필터 + 결과바 + 일괄작업바 + 12열 표 + 페이저</td></tr>
+      <tr><td class="num">3</td><td class="nw"><b>참여자 상세</b></td><td class="nw"><span class="pill cr">A</span></td><td>헤더 + 정보 2열 + <b>3탭</b>(활동 내역 / 검사 이력 / 챌린지 참여)</td></tr>
+      <tr><td class="num">4</td><td class="nw"><b>활동 현황</b></td><td class="nw"><span class="pill cr">A</span></td><td><b>6탭</b> — 종합 / 참여 지속 / 활동 패턴 / 콘텐츠 / 개인별 / 판정 기준</td></tr>
+      <tr><td class="num">5</td><td class="nw"><b>월간 리포트</b></td><td class="nw"><span class="pill cr">A</span></td><td>좌 320px 항목 선택 + 우 공문 미리보기 (2단)</td></tr>
+      <tr><td class="num">6</td><td class="nw"><b>상담실</b></td><td class="nw"><span class="pill wa">B</span></td><td>지표 4 + 범위/상태 필터 + <b>3분할</b>(방목록 262 / 대화 / 정보 320)</td></tr>
+      <tr><td class="num">7</td><td class="nw"><b>프로그램 일정</b></td><td class="nw"><span class="pill wa">B</span></td><td>월 달력 (일~토), 하루 3~4개 활동 칩</td></tr>
+      <tr><td class="num">8</td><td class="nw"><b>챌린지</b></td><td class="nw"><span class="pill wa">B</span></td><td>상태 필터 + 8열 표</td></tr>
+      <tr><td class="num">9</td><td class="nw"><b>챌린지 상세</b></td><td class="nw"><span class="pill wa">B</span></td><td>조건 요약 2열 + 일별 달성 그래프 + 참여자별 표</td></tr>
+      <tr><td class="num">10</td><td class="nw"><b>참여 신청</b></td><td class="nw"><span class="pill wa">B</span></td><td>지표 5 + 4단 필터 + 9열 표(행별 처리 버튼) + 페이저</td></tr>
+      <tr><td class="num">11</td><td class="nw"><b>열람 기록</b></td><td class="nw"><span class="pill nu">C</span></td><td>지표 4 + 필터 + 7열 표 + 페이저</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>모달</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>모달</th><th>폭</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td class="nw"><b>원문 열람</b></td><td class="nw">440</td><td>경고 + 대상 + <b>사유 선택(필수)</b> + 메모 → 확인해야 버튼 활성</td></tr>
+      <tr><td class="nw"><b>탈퇴 처리</b></td><td class="nw">480</td><td><b>파괴적 작업</b>. 대상 명단 + 영향 고지 + 사유 + 동의 체크 → 빨간 버튼</td></tr>
+      <tr><td class="nw"><b>세부 운동 목록</b></td><td class="nw">520</td><td>부위·난이도·구성 타일 3 + 동작별 리스트(썸네일·세트) + 운동 방법</td></tr>
+      <tr><td class="nw"><b>챌린지 달성 상세</b></td><td class="nw">560</td><td>지표 3 + <b>일별 달성 캘린더</b> + 범례</td></tr>
+      <tr><td class="nw"><b>단체 메시지</b></td><td class="nw">520</td><td>받는 사람 + 내용 + 발송 시점 + 발송 시간대 안내</td></tr>
+      <tr><td class="nw"><b>명단 내려받기</b></td><td class="nw">460</td><td>범위 + <b>마스킹 여부</b>(원문 선택 시 경고문이 빨갛게 바뀜)</td></tr>
+      <tr><td class="nw"><b>정보 수정</b></td><td class="nw">460</td><td>이름·생년·담당 복지관·담당상담사</td></tr>
+      <tr><td class="nw"><b>엑셀 일괄 등록</b></td><td class="nw">520</td><td>드롭존 + 양식 다운로드 + 미리보기 안내</td></tr>
+      <tr><td class="nw"><b>일정 변경 요청</b></td><td class="nw">480</td><td>대상일 + 유형 + 사유</td></tr>
+      <tr><td class="nw"><b>채널 전환</b></td><td class="nw">460</td><td>배정된 채널 목록 (지금은 1개 + 빈 상태)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ══════════ 4 ══════════ -->
+<section id="s4">
+  <h2><span class="n">04</span> 화면별 명세</h2>
+
+  <h3>공통 뼈대</h3>
+  <p>모든 화면이 같은 껍데기를 씁니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>영역</th><th>크기</th><th>구성</th></tr></thead>
+    <tbody>
+      <tr><td class="nw"><b>사이드바</b></td><td class="nw mono">238px 고정</td><td>제품명 → <b>채널 스위처</b>(기관명·기수·D+일수) → 3그룹 메뉴 → 하단 사용자 정보</td></tr>
+      <tr><td class="nw"><b>상단바</b></td><td class="nw mono">sticky</td><td>화면명 + 하단에 작은 경로(기관 · 기수) / 우측에 월 선택(해당 화면만) + 사용자 배지</td></tr>
+      <tr><td class="nw"><b>본문</b></td><td class="nw mono">padding 18/24</td><td>카드 세로 배치, 카드 간격 18px</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note nu"><b>월 선택은 활동 현황·월간 리포트에만 나타납니다.</b> "오늘" 대시보드에 월 선택이 있으면 안 됩니다 — 대시보드는 언제나 현재 시점입니다.</div>
+
+  <h3>1. 오늘</h3>
+  <p>주무관이 아침에 여는 화면. "할 일이 있나 없나"에 3초 안에 답해야 합니다.</p>
+  <ul>
+    <li><b>지표 타일 5개</b> — 3기 대상자 / 이번 주 활동자 / 어제 활동 / 14일+ 무활동 <span class="pill wa">주의</span> / 미처리 신청 <span class="pill cr">위험</span>. 각 타일에 전기 대비 증감</li>
+    <li><b>처리할 일</b> — 원형 아이콘 + 제목 + 설명 + 우측 액션 버튼. 3행. 마지막 행만 강조 버튼</li>
+    <li><b>최근 14일 추이</b> — 막대 스파크라인, 주말은 회색</li>
+    <li><b>관심이 필요한 참여자</b> — 이름(링크) / 사유 태그 + 근거 / 경과 / 연락 버튼</li>
+  </ul>
+
+  <h3>2. 참여자</h3>
+  <p>필터가 이 화면의 핵심입니다. 4단으로 쌓입니다.</p>
+  <ol class="list">
+    <li><b>검색줄</b> — 검색 입력 + 검색 항목 선택 + 연령대 + 성별</li>
+    <li><b>상태</b> — 참여 중 / 중도포기 / 만료 / 회원탈퇴 (칩, <b>복수 선택</b>, 각 칩에 건수)</li>
+    <li><b>기관</b> — 복지관 5종 (칩, 복수 선택)</li>
+    <li><b>활동</b> — 오늘 수행 / 최근 활동 / 7일 무활동 / 14일+ 무활동 / 무활동 (칩, 복수 선택)</li>
+  </ol>
+  <p>필터 아래 <b>결과바</b>(조건에 맞는 N명 + 초기화 + 단체 메시지 + 내려받기), 1명이라도 체크하면 그 아래 <b>일괄작업바</b>가 강조색으로 나타납니다.</p>
+  <p>표 12열: 체크박스 · 이름 · PIN · N · 연락처 · 생년 · 기관 · 상태 · 활동일 · 수행률 · 최근 이용 · 앱.</p>
+  <div class="note nu"><b>PIN</b>은 전화 응대 시 본인 확인용 조회번호, <b>N</b>은 오늘 수행한 활동 수입니다(0이면 빈칸, 있으면 강조색 배지). 둘 다 실제 어드민에 있는 컬럼이라 유지해야 합니다.</div>
+
+  <h3>3. 참여자 상세</h3>
+  <p>모달이 아니라 <b>독립 화면</b>입니다. 좌상단 "← 목록"은 들어온 곳(참여자 / 활동 현황 / 챌린지 상세)으로 되돌아갑니다.</p>
+  <h4>헤더</h4>
+  <p>이름 · 생년 · 성별 · PIN · 상태 배지 / 우측에 <b>정보 수정 · 상담 열기 · 탈퇴 처리</b>(빨간 외곽선). 그 아래 정보 2열 — 참여자 ID, 연락처, 담당 복지관, 담당상담사, 로그인방식, 앱 버전 / 가입일, 최근 이용, 누적 활동일, 수행률, 연속 출석, 랭킹 점수.</p>
+  <h4>탭 ① 활동 내역 — 가장 중요한 화면</h4>
+  <p>2단 구성입니다. <b>왼쪽은 패턴, 오른쪽은 그날 상세.</b></p>
+  <ul>
+    <li><b>왼쪽 (312px) — 활동 밀도 달력</b>: 월 달력의 각 날짜가 활동량에 따라 강조색 농도로 칠해짐 (0회 회색 / 1–2 / 3–4 / 5회+). 월 이동 화살표, "최근 활동일" 버튼, 하단에 이번 달 활동 일수·총 횟수. 기수 기간 밖은 비활성</li>
+    <li><b>오른쪽 — 선택한 날</b>: <code>◀ 8월 19일 (수) ▶</code> 헤더 → 요약 타일 4개(활동/걸음 수/마음 상태 기록/증상 기록) → 시각순 기록 리스트</li>
+  </ul>
+  <p>기록 리스트의 한 행: <code>오전 8시 28분</code> / 활동명 + 점수 + 출처("두뇌운동 치매예방교실-26년") / 우측 달성률 %. <b>운동 활동은 그 아래로 동작별 하위 기록이 들여쓰기로 펼쳐집니다</b> — 좌측 세로선, 분 단위 시각, 동작명(좌/우 구분 포함), 개별 달성률. 중단된 동작은 빨간 0.</p>
+  <div class="note"><b>재활운동 동작별 기록이 이 제품의 차별점입니다.</b> 다른 인지건강 앱은 "운동 완료 100%"로 끝나지만 맬리브레인은 "고양이 자세로 어깨 늘리기, 왼쪽 100%"까지 남습니다. 디자인에서 이 계층이 잘 읽히도록 해주세요.</div>
+
+  <h4>탭 ② 검사 이력</h4>
+  <p>표: 검사일시 · 검사명 · 점수 · 판정 배지 · 직전 점수 · 변화(▼3 호전 / ▲6). 최신순. <b>검사 날짜가 반드시 보여야 합니다.</b></p>
+  <h4>탭 ③ 챌린지 참여</h4>
+  <p>참여 중인 챌린지마다 카드 — 이름 + 성공/진행 중 배지 + 달성일 N/기준일 + <b>일별 달성 미니 캘린더</b> + 달성 상세 버튼.</p>
+
+  <h3>4. 활동 현황 (6탭)</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>탭</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td class="nw"><b>종합</b></td><td>지표 타일 8 + 기관별 참여 표(막대) + 참여 강도 분포(가로 막대 5구간)</td></tr>
+      <tr><td class="nw"><b>참여 지속</b></td><td>핵심 지표 4 + <b>코호트 잔존율 히트맵</b>(3색) + 이탈 직전 콘텐츠 + 이탈 전조 신호 표</td></tr>
+      <tr><td class="nw"><b>활동 패턴</b></td><td>요일별 막대 + 시간대별 막대(06–09시 강조) + <b>요일×시간대 히트맵</b></td></tr>
+      <tr><td class="nw"><b>콘텐츠</b></td><td>유형별 완료율 표 + 두뇌훈련 인기 순위(순위 막대) + 완료도 구성 3타일</td></tr>
+      <tr><td class="nw"><b>개인별</b></td><td>기간·검색·정렬 + 11열 랭킹 표 + 페이저. 이름 클릭 → 참여자 상세</td></tr>
+      <tr><td class="nw"><b>판정 기준</b></td><td>지표 정의 표 + <b>확인 필요 항목</b> 빨간 박스</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note wa"><b>"판정 기준" 탭을 장식으로 보지 마세요.</b> 보건소에 제출한 숫자와 화면 숫자가 다를 때 주무관이 여는 화면입니다. 표가 읽기 쉬워야 하고, 계산식은 고정폭 글꼴로 보여야 합니다.</div>
+
+  <h3>5. 월간 리포트</h3>
+  <p>2단. <b>왼쪽 320px</b> — 포함 항목 체크리스트(6개, 각 항목에 설명 + 데이터 출처 태그. 자동 생성 불가 항목은 빨간 태그) / 서식 선택 / 내려받기 버튼 3종. <b>오른쪽</b> — 실제 공문 미리보기. 체크를 끄면 해당 절이 즉시 사라집니다.</p>
+  <p>공문 미리보기는 <b>종이 문서처럼</b> 보여야 합니다 — 가운데 정렬 제목, 수신·발신 한 줄, 굵은 가로선, 좌측 강조색 세로선이 붙은 절 제목, 촘촘한 격자 표.</p>
+
+  <h3>6. 상담실</h3>
+  <p>3분할 · 높이 560px. <b>방 목록(262px)</b> / <b>대화</b> / <b>참여자·담당 정보(320px)</b>.</p>
+  <div class="note cr"><b>답변 입력창은 조건부입니다.</b> 그 방의 담당자로 지정된 사람에게만 나타나고, 아니면 입력창 자리에 "이 상담실은 원메딕스 운영팀이 담당하고 있어 답변할 수 없습니다 + 담당 가져오기" 안내가 들어갑니다. 이건 현재 시스템의 실제 제약이라 디자인으로 숨기면 안 됩니다.</div>
+
+  <h3>7. 프로그램 일정</h3>
+  <p>월 달력, <b>일요일 시작 (일월화수목금토)</b>. 일요일 헤더는 빨강, 토요일은 파랑. 평일 칸마다 활동 3~4개가 색상 칩으로: 두뇌훈련(강조색) / 운동(초록) / 마음다루기(주황) / 검사측정(파랑). <b>운동 칩만 클릭 가능</b>하며 세부 운동 목록 모달이 열립니다. 하단에 범례 + 이번 달 편성 건수.</p>
+
+  <h3>8–9. 챌린지 / 챌린지 상세</h3>
+  <p>목록은 표(챌린지 · 종류 · 기간 · 달성 조건 · 참여 · 성공 · 성공률 · 상태). <b>달성 조건 칸은 사람 말로</b> 씁니다 — "수업일 중 15일 이상 출석 / 하루 추천 활동 2개 이상 = 그날 출석".</p>
+  <p>상세는 조건 요약 2열 + 달성/진행/미참여 막대 3개 + 일별 달성 스파크라인(주말 회색) + 참여자별 달성 표(진행 막대 포함) + 페이저. 행 클릭 → 달성 상세 모달.</p>
+
+  <h3>10. 참여 신청</h3>
+  <p>지표 5 + 경고 박스 + 4단 필터(검색·항목·신청일 기간 / 상태 / 앱 가입 / 경과) + 표.</p>
+  <p>표 마지막 열에 <b>행별 처리 버튼</b>이 상태에 따라 달라집니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>현재 상태</th><th>보이는 버튼</th></tr></thead>
+    <tbody>
+      <tr><td class="nw"><span class="pill cr">대기</span></td><td>승인(강조) · 보류 · 거절(빨강)</td></tr>
+      <tr><td class="nw"><span class="pill wa">보류</span></td><td>승인(강조) · 거절(빨강)</td></tr>
+      <tr><td class="nw"><span class="pill ok">승인</span> <span class="pill nu">거절</span></td><td>대기로 되돌리기</td></tr>
+    </tbody>
+  </table></div>
+  <p>체크박스 일괄 처리(승인/보류/거절)와 <b>공존</b>합니다. 선택 건수가 버튼 라벨에 표시됩니다 — <code>승인 (12)</code>.</p>
+
+  <h3>11. 열람 기록</h3>
+  <p>개인정보를 열람·내려받은 이력. 표: 일시 · 담당자 · 소속(외부는 배지) · 행위 · 대상 건수 · 사유 · 접속 위치(IP 부분 마스킹). 상단에 "점검표 증빙용 내려받기" 버튼.</p>
+</section>
+
+<!-- ══════════ 5 ══════════ -->
+<section id="s5">
+  <h2><span class="n">05</span> 디자인 토큰</h2>
+
+  <p>현재 프로토타입이 쓰는 실제 값입니다. <b>이 색을 그대로 쓸 필요는 없지만</b>, 역할 구조(중립 3단계 · 표면 3단계 · 강조 3단계 · 의미색 4종)는 유지해주세요. 이 문서 자체가 이 팔레트로 그려져 있습니다.</p>
+
+  <h3>중립 · 표면 (라이트)</h3>
+  <div class="sw">
+    <div><div class="chip" style="background:#12191b"></div><div class="lb"><b>ink</b><span>#12191b</span></div></div>
+    <div><div class="chip" style="background:#3d4a4d"></div><div class="lb"><b>ink-2</b><span>#3d4a4d</span></div></div>
+    <div><div class="chip" style="background:#6b7a7d"></div><div class="lb"><b>ink-3</b><span>#6b7a7d</span></div></div>
+    <div><div class="chip" style="background:#f2f5f4;border-bottom:1px solid #d4dcda"></div><div class="lb"><b>ground</b><span>#f2f5f4</span></div></div>
+    <div><div class="chip" style="background:#ffffff;border-bottom:1px solid #d4dcda"></div><div class="lb"><b>surface</b><span>#ffffff</span></div></div>
+    <div><div class="chip" style="background:#e9efed"></div><div class="lb"><b>surface-2</b><span>#e9efed</span></div></div>
+    <div><div class="chip" style="background:#dde5e3"></div><div class="lb"><b>surface-3</b><span>#dde5e3</span></div></div>
+    <div><div class="chip" style="background:#d4dcda"></div><div class="lb"><b>line</b><span>#d4dcda</span></div></div>
+  </div>
+  <p class="tight"><b>중립은 순회색이 아니라 강조색 쪽으로 살짝 기운 청록빛 회색입니다.</b> 순회색으로 바꾸면 화면이 차갑고 일반적으로 보입니다.</p>
+
+  <h3>강조 · 의미색</h3>
+  <div class="sw">
+    <div><div class="chip" style="background:#0f6e63"></div><div class="lb"><b>accent</b><span>#0f6e63</span></div></div>
+    <div><div class="chip" style="background:#d9ebe7"></div><div class="lb"><b>accent-soft</b><span>#d9ebe7</span></div></div>
+    <div><div class="chip" style="background:#0a4d45"></div><div class="lb"><b>accent-ink</b><span>#0a4d45</span></div></div>
+    <div><div class="chip" style="background:#1f7a4d"></div><div class="lb"><b>good</b> 정상·성공<span>#1f7a4d / #dcefe4</span></div></div>
+    <div><div class="chip" style="background:#9a5c0f"></div><div class="lb"><b>warn</b> 주의<span>#9a5c0f / #f7e9d4</span></div></div>
+    <div><div class="chip" style="background:#a8342c"></div><div class="lb"><b>crit</b> 위험·파괴<span>#a8342c / #f7dedb</span></div></div>
+    <div><div class="chip" style="background:#2b5c8a"></div><div class="lb"><b>info</b> 외부·중립정보<span>#2b5c8a / #dce8f3</span></div></div>
+  </div>
+
+  <div class="note wa"><b>강조색과 의미색은 서로 다른 역할입니다.</b> 강조색(청록)은 "선택됨·활성·주요 액션", 의미색은 "상태의 좋고 나쁨". 강조색이 초록 계열이라 <code>good</code>과 헷갈리기 쉬운데, 반드시 구분되어야 합니다.</div>
+
+  <h3>다크 모드</h3>
+  <p>필수입니다. 반전이 아니라 별도 팔레트입니다. 강조색이 <code>#0f6e63</code> → <code>#4fbfae</code>로 밝아지고, 강조 버튼의 글자색은 흰색이 아니라 <b>어두운 청록</b>(<code>#062019</code>)이 됩니다.</p>
+  <div class="sw">
+    <div><div class="chip" style="background:#0c1113"></div><div class="lb"><b>ground</b><span>#0c1113</span></div></div>
+    <div><div class="chip" style="background:#141c1e"></div><div class="lb"><b>surface</b><span>#141c1e</span></div></div>
+    <div><div class="chip" style="background:#1c2628"></div><div class="lb"><b>surface-2</b><span>#1c2628</span></div></div>
+    <div><div class="chip" style="background:#4fbfae"></div><div class="lb"><b>accent</b><span>#4fbfae</span></div></div>
+    <div><div class="chip" style="background:#e6eceb"></div><div class="lb"><b>ink</b><span>#e6eceb</span></div></div>
+  </div>
+
+  <h3>타이포그래피</h3>
+  <p>본문 <b>IBM Plex Sans KR</b>, 숫자·코드 <b>IBM Plex Mono</b>. 한글 지원 + 공공 데이터 화면다운 성격이라 선택했습니다. 바꿀 경우 <b>숫자가 표에서 세로로 정렬되는 고정폭 글꼴을 반드시 함께</b> 지정해주세요.</p>
+  <div class="ts">
+    <div><span class="k">화면 제목 17/600</span><span style="font-size:17px;font-weight:600">참여자 상세</span></div>
+    <div><span class="k">카드 제목 13.5/600</span><span style="font-size:13.5px;font-weight:600">관심이 필요한 참여자</span></div>
+    <div><span class="k">본문 14/400</span><span style="font-size:14px">인천 남동구 치매안심센터 · 3기</span></div>
+    <div><span class="k">지표 숫자 23/600 mono</span><span class="mono" style="font-size:23px;font-weight:600;letter-spacing:-.02em">40,512</span></div>
+    <div><span class="k">표 본문 12.5/400</span><span style="font-size:12.5px">두뇌운동 치매예방교실-26년</span></div>
+    <div><span class="k">표 헤더 10.5/600 대문자</span><span style="font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)">최근 이용</span></div>
+    <div><span class="k">보조 설명 11.5/400</span><span style="font-size:11.5px;color:var(--ink-3)">사유는 기록에 남으며 2년간 보관됩니다</span></div>
+    <div><span class="k">배지 11/500</span><span class="pill ok">참여 중</span> <span class="pill wa">활동 중단</span> <span class="pill cr">미답변</span></div>
+  </div>
+
+  <h3>형태 · 간격</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>항목</th><th>값</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td class="nw">모서리 반경</td><td class="nw mono">6px</td><td>카드·버튼·입력. 배지만 20px, 모달만 10px</td></tr>
+      <tr><td class="nw">카드 그림자</td><td class="nw mono">2단</td><td><code>0 1px 2px rgba(18,25,27,.06)</code> + <code>0 8px 24px -16px rgba(18,25,27,.3)</code></td></tr>
+      <tr><td class="nw">카드 내부 여백</td><td class="nw mono">15px</td><td>카드 제목줄은 11px 15px</td></tr>
+      <tr><td class="nw">카드 간격</td><td class="nw mono">18px</td><td>격자 안에서는 12px</td></tr>
+      <tr><td class="nw">표 행 높이</td><td class="nw mono">7.5px 11px</td><td>밀도 높게. 늘리지 말 것</td></tr>
+      <tr><td class="nw">사이드바</td><td class="nw mono">238px</td><td>고정, 스크롤 독립</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note nu"><b>이 화면은 촘촘해야 합니다.</b> 822명 명단과 12열 표가 기본이라, 여백을 넉넉하게 늘리면 한 화면에 들어오는 정보가 줄어 오히려 나빠집니다. "숨 쉴 공간"은 카드 사이에서 확보하고, 표 안에서는 확보하지 않습니다.</div>
+</section>
+
+<!-- ══════════ 6 ══════════ -->
+<section id="s6">
+  <h2><span class="n">06</span> 컴포넌트 목록</h2>
+
+  <p>화면 11개가 이 <b>20개 부품</b>의 조합입니다. 부품 단위로 디자인하면 화면은 조립됩니다.</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th>부품</th><th>상태</th><th>쓰이는 곳</th></tr></thead>
+    <tbody>
+      <tr><td class="nw"><b>메뉴 항목</b></td><td>기본 / 호버 / 선택 / 알림 배지 / 읽기전용 배지</td><td>사이드바</td></tr>
+      <tr><td class="nw"><b>채널 스위처</b></td><td>기본 / 호버</td><td>사이드바 상단</td></tr>
+      <tr><td class="nw"><b>지표 타일</b></td><td>기본 / 위험 / 주의 / 강조 · 증감 3종(▲▼—)</td><td>거의 모든 화면</td></tr>
+      <tr><td class="nw"><b>상태 배지</b></td><td>정상 / 주의 / 위험 / 중립 / 강조 / 외부</td><td>표 전반</td></tr>
+      <tr><td class="nw"><b>필터 칩</b></td><td>꺼짐 / 켜짐 / 건수 표시</td><td>참여자·신청·상담·챌린지·기록</td></tr>
+      <tr><td class="nw"><b>결과바</b></td><td>단일</td><td>필터 아래</td></tr>
+      <tr><td class="nw"><b>일괄작업바</b></td><td>숨김 / 표시(강조색 배경)</td><td>참여자</td></tr>
+      <tr><td class="nw"><b>표</b></td><td>헤더 고정 / 행 호버 / 행 선택됨 / 클릭 가능</td><td>전 화면</td></tr>
+      <tr><td class="nw"><b>페이저</b></td><td>20·50·100 선택 + 페이지 버튼 + 생략(…)</td><td>5개 리스트</td></tr>
+      <tr><td class="nw"><b>탭</b></td><td>기본 / 선택</td><td>활동 현황(6) · 참여자 상세(3)</td></tr>
+      <tr><td class="nw"><b>가로 막대</b></td><td>강조 / 정상 / 주의 / 위험</td><td>분포·비율 표시</td></tr>
+      <tr><td class="nw"><b>스파크라인</b></td><td>평일 / 주말(회색)</td><td>오늘 · 챌린지 상세</td></tr>
+      <tr><td class="nw"><b>히트맵 칸</b></td><td>농도 5단계</td><td>코호트 · 요일×시간</td></tr>
+      <tr><td class="nw"><b>활동 밀도 달력</b></td><td>0회 / 1–2 / 3–4 / 5+ / 선택됨 / 기간 밖</td><td>참여자 상세</td></tr>
+      <tr><td class="nw"><b>달성 캘린더</b></td><td>달성 / 미달 / 활동없음 / 해당없음</td><td>챌린지</td></tr>
+      <tr><td class="nw"><b>일정 달력 칸</b></td><td>평일 / 주말 / 오늘 · 활동 칩 4색</td><td>프로그램 일정</td></tr>
+      <tr><td class="nw"><b>대화 말풍선</b></td><td>보낸 것 / 받은 것 / 날짜 구분선</td><td>상담실</td></tr>
+      <tr><td class="nw"><b>안내 박스</b></td><td>정보 / 주의 / 위험 / 중립</td><td>전 화면</td></tr>
+      <tr><td class="nw"><b>빈 상태</b></td><td>제목 + 설명 + (선택) 다음 행동 버튼</td><td>전 화면</td></tr>
+      <tr><td class="nw"><b>모달</b></td><td>일반 / 넓게 / 파괴적(빨간 제목)</td><td>10종</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>버튼</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>종류</th><th>모양</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><td class="nw">기본</td><td>흰 배경 + 회색 테두리, 호버 시 강조색 테두리</td><td>대부분</td></tr>
+      <tr><td class="nw">주요</td><td>강조색 채움 + 굵게</td><td>화면당 <b>1개만</b></td></tr>
+      <tr><td class="nw">파괴</td><td>빨간 테두리 + 빨간 글씨</td><td>탈퇴 처리, 거절</td></tr>
+      <tr><td class="nw">파괴(확정)</td><td>빨간 채움</td><td>모달 최종 확인 버튼만</td></tr>
+      <tr><td class="nw">작게</td><td>위 4종의 축소형</td><td>표 안</td></tr>
+      <tr><td class="nw">비활성</td><td>투명도 45%</td><td>선택 0건일 때 일괄 버튼 등</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ══════════ 7 ══════════ -->
+<section id="s7">
+  <h2><span class="n">07</span> 상태와 예외</h2>
+
+  <p>이 어드민에서 예외는 드문 경우가 아니라 <b>일상</b>입니다. 822명 중 198명은 활동이 0이고, 상담방 625개 중 222개는 대화가 없습니다. 예외 화면을 안 그리면 실제 사용 시 절반이 빈 화면입니다.</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th>상황</th><th>실제 빈도</th><th>화면이 해야 할 일</th></tr></thead>
+    <tbody>
+      <tr><td class="nw">필터 결과 0건</td><td class="nw">자주</td><td>"조건에 맞는 참여자가 없습니다" + <b>조건 초기화 버튼</b></td></tr>
+      <tr><td class="nw">활동 기록 0일인 참여자</td><td class="nw">198명 (24%)</td><td>"가입 후 한 번도 활동하지 않았습니다" + <b>안내 메시지 보내기</b></td></tr>
+      <tr><td class="nw">최근 30일 무활동</td><td class="nw">184명</td><td>달력을 <b>마지막 활동일 기준</b>으로 자동 전환 + 안내 배너</td></tr>
+      <tr><td class="nw">선택한 날 활동 없음</td><td class="nw">매우 자주</td><td>"이 날은 활동이 없습니다" + <b>가장 가까운 활동일로 이동</b> 버튼</td></tr>
+      <tr><td class="nw">대화 없는 상담방</td><td class="nw">222개 (36%)</td><td>"아직 대화가 없습니다 / 가입 시 자동 생성된 방입니다"</td></tr>
+      <tr><td class="nw">답변 권한 없음</td><td class="nw">4개</td><td>입력창 대신 사유 안내 + <b>담당 가져오기</b></td></tr>
+      <tr><td class="nw">시작 전 챌린지</td><td class="nw">1개</td><td>"아직 시작하지 않았습니다 / N월 N일부터 기록이 쌓입니다"</td></tr>
+      <tr><td class="nw">배정 채널 1개뿐</td><td class="nw">현재</td><td>스위처 안에 "배정된 다른 채널이 없습니다"</td></tr>
+      <tr><td class="nw">기관 미배정 참여자</td><td class="nw">119명</td><td>기관 칸에 "미배정" — 빈칸으로 두지 말 것</td></tr>
+      <tr><td class="nw">자동 생성 불가 리포트 항목</td><td class="nw">2개 / 6개</td><td>빨간 출처 태그 + 수기 입력 영역(점선 테두리)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>개인정보 마스킹 — 두 가지 상태</h3>
+  <p>이름과 연락처는 기본이 <b>가려진 상태</b>(홍*동 / 010-****-1234)입니다. "보기"를 누르면 사유 입력 모달 → 원문 표시 → <b>30초 뒤 자동 복귀</b>.</p>
+  <p>원문이 보이는 동안 <b>그 행 전체가 주의색 배경</b>으로 바뀝니다. "지금 민감한 정보가 노출 중"이라는 신호이며, 어깨너머로 보이는 상황을 줄이기 위한 장치입니다.</p>
+  <div class="note cr"><b>이건 미관 문제가 아니라 법적 요구입니다.</b> 건강정보는 민감정보라 열람 기록을 2년 보관해야 하고, 매달 보건소에 제출하는 관리·감독 점검표에 "접속기록 보관" 항목이 있습니다. 마스킹·사유 입력·기록을 디자인 단계에서 빼면 안 됩니다.</div>
+</section>
+
+<!-- ══════════ 8 ══════════ -->
+<section id="s8">
+  <h2><span class="n">08</span> 실제 데이터</h2>
+
+  <p>디자인에 <b>가짜 숫자를 쓰지 마세요.</b> 아래는 2026년 7~8월 실측값입니다. 이 숫자로 그려야 자릿수·글자 길이·표 너비가 실제와 맞습니다.</p>
+
+  <h3>규모</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>항목</th><th class="num">값</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>3기 대상자</td><td class="num">822명</td><td>1기 230 · 2기 714 (매년 증가)</td></tr>
+      <tr><td>월 활동자</td><td class="num">296명</td><td>대상자의 40.3%</td></tr>
+      <tr><td>월 총 활동</td><td class="num">40,512회</td><td>일평균 1,350 · 인당 일평균 4.56</td></tr>
+      <tr><td>상담방</td><td class="num">625개</td><td>참여자당 1개 자동 생성 · 222개는 대화 없음</td></tr>
+      <tr><td>참여 신청</td><td class="num">1,371건</td><td>승인 1,227 · 대기 111 · 거절 27 · 보류 6</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>콘텐츠 구성 (7월)</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>유형</th><th class="num">수행</th><th class="num">완료</th><th class="num">완료율</th></tr></thead>
+    <tbody>
+      <tr><td>두뇌훈련</td><td class="num">20,326</td><td class="num">15,650</td><td class="num">77.0%</td></tr>
+      <tr><td>운동</td><td class="num">16,200</td><td class="num">10,940</td><td class="num">67.5%</td></tr>
+      <tr><td>마음다루기</td><td class="num">3,986</td><td class="num">2,620</td><td class="num">65.7%</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>참여 지속 (코호트)</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>시작 시점</th><th class="num">인원</th><th class="num">W+1</th><th class="num">W+2</th><th class="num">W+4</th><th class="num">W+8</th><th class="num">W+12</th></tr></thead>
+    <tbody>
+      <tr><td class="nw">개강 첫 주</td><td class="num">140명</td><td class="num">76.4%</td><td class="num">78.6%</td><td class="num">75.7%</td><td class="num">67.1%</td><td class="num">67.1%</td></tr>
+      <tr><td class="nw">2주차</td><td class="num">58명</td><td class="num">48.3%</td><td class="num">41.4%</td><td class="num">27.6%</td><td class="num">24.1%</td><td class="num">22.4%</td></tr>
+      <tr><td class="nw">8주차</td><td class="num">30명</td><td class="num">33.3%</td><td class="num">30.0%</td><td class="num">26.7%</td><td class="num">26.7%</td><td class="num">13.3%</td></tr>
+      <tr><td class="nw">9주차</td><td class="num">22명</td><td class="num">63.6%</td><td class="num">45.5%</td><td class="num">59.1%</td><td class="num">45.5%</td><td class="num">22.7%</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>패턴</h3>
+  <ul>
+    <li><b>요일</b> — 월 29,236 · 화 31,459 · 수 31,034 · 목 29,428 · 금 31,926 · <b>토 9,111 · 일 7,533</b></li>
+    <li><b>시간대 정점은 오전 6시</b> (17,261회). 06–09시에 전체의 42%</li>
+    <li><b>참여 강도</b> — 0일 198명 / 1–4일 275명 / 5–19일 112명 / 20–59일 58명 / 60일+ 92명</li>
+    <li><b>연령</b> — 70대 361 · 60대 192 · 80대 이상 132 · 기타 50 &nbsp;|&nbsp; <b>성별</b> — 여 581 · 남 105 · 미상 49</li>
+  </ul>
+
+  <h3>화면에 들어갈 실제 문구</h3>
+  <ul>
+    <li>활동명 — <b>꿀벌의 숫자놀이 · 기찻길 만들기 · 기억의 숨바꼭질 · 재밌는 숫자 퍼즐 4X4 · 숨은 헬씨 찾기 · 양말정리 대작전 · 초성 퀴즈 · 진짜 색깔 찾기</b></li>
+    <li>운동 루틴 — <b>상체·유연성 운동 · 전신·지구력 운동 · 하체·균형 운동 · 가볍게 걷기 10분</b></li>
+    <li>동작명 — <b>서서 깍지 낀 팔 당기며 상체 숙이기 / 앉아서 머리 사선으로 당기기, 왼쪽 / 고양이 자세로 어깨 늘리기, 오른쪽 / 밴드 걸고 무릎 굽혀 옆으로 걷기</b> ← 가장 긴 글자수 기준</li>
+    <li>기관명 — <b>남동구보건소 · 만수노인문화센터 · 남동구노인복지관 · 만월종합사회복지관 · 미배정</b></li>
+    <li>출처 표기 — <b>두뇌운동 치매예방교실-26년</b></li>
+    <li>검사명 — <b>노인우울 (GDS-SF) · 불면증 (ISI-K) · 스트레스 (PSS) · 기억감퇴 (SMCQ)</b></li>
+  </ul>
+</section>
+
+<!-- ══════════ 9 ══════════ -->
+<section id="s9">
+  <h2><span class="n">09</span> 지켜야 할 제약</h2>
+
+  <h3>바꾸면 안 되는 것</h3>
+  <ul>
+    <li><b>일요일 시작 달력</b> — 실제 어드민이 "일월화수목금토"입니다. 월요일 시작으로 바꾸면 기존 사용자가 혼동합니다</li>
+    <li><b>PIN · N 컬럼</b> — 현행 어드민에 있는 실제 컬럼(조회번호 / 오늘 수행 수)</li>
+    <li><b>상태 4종</b> — 참여 중 / 중도포기 / 만료 / 회원탈퇴. 서버가 쓰는 값 그대로</li>
+    <li><b>마스킹 기본 + 사유 입력</b> — 법적 요구</li>
+    <li><b>읽기 전용 배지와 요청 경로</b> — 권한 구조가 화면에 드러나야 함</li>
+  </ul>
+
+  <h3>접근성</h3>
+  <ul>
+    <li>공공기관에서 쓰이므로 <b>명도 대비 4.5:1</b> 이상 (본문·배지 글자 모두)</li>
+    <li><b>색만으로 정보를 전달하지 말 것</b> — 상태 배지는 색 + 텍스트를 함께. 히트맵은 숫자를 함께 표기</li>
+    <li>키보드 포커스 표시 필수 (강조색 2px 외곽선)</li>
+    <li>표 헤더 고정 — 긴 목록에서 스크롤 시 열 이름이 사라지면 안 됨</li>
+  </ul>
+
+  <h3>화면 크기</h3>
+  <ul>
+    <li>기준 <b>1440×900</b>. 1280에서도 깨지지 않아야 함</li>
+    <li>980px 미만에서 사이드바가 상단으로, 2단 레이아웃이 1단으로 접힘</li>
+    <li><b>모바일은 대상 아님</b> — 태블릿까지만 고려</li>
+    <li>넓은 표는 <b>표 자체가 가로 스크롤</b>. 페이지 전체가 가로로 밀리면 안 됨</li>
+  </ul>
+
+  <h3>피해야 할 표현</h3>
+  <div class="note nu">
+    이모지를 상태 표시로 쓰지 말 것 · 그라데이션 배경 · 과도한 라운드(pill 외) · 애니메이션 전환 · 카드마다 다른 강조색 띠 · 가운데 정렬된 본문 · 큼직한 히어로 영역. <b>이 화면은 업무 도구이지 랜딩 페이지가 아닙니다.</b>
+  </div>
+</section>
+
+<!-- ══════════ 10 ══════════ -->
+<section id="s10">
+  <h2><span class="n">10</span> 요청문 (복사용)</h2>
+
+  <p>아래를 그대로 복사해서 붙여 넣으세요. 이 문서의 링크와 프로토타입 링크를 함께 전달하면 됩니다.</p>
+
+  <div class="prompt"><strong>[요청]</strong>
+지자체 치매안심센터 담당 주무관이 사용하는 B2B 어드민의 시각 디자인을 만들어주세요.
+동작하는 HTML 프로토타입과 상세 명세서가 이미 있고, 그것을 디자인으로 옮기는 작업입니다.
+
+<strong>[제품]</strong>
+맬리브레인 케어센터 — 지자체가 주민에게 제공하는 인지건강 앱의 관리자 화면.
+참여자 822명이 매일 두뇌훈련·재활운동·마음다루기 활동을 하고, 주무관이 이를 관리하고
+매월 보건소에 제출할 운영 보고서를 만듭니다. 향후 다른 지자체에 판매할 B2B 제품입니다.
+
+<strong>[사용자]</strong>
+공공기관 담당 공무원. 이 업무는 담당 업무의 일부라 하루 종일 보지 않습니다.
+업무용 노트북 1440×900. 모바일 사용 없음.
+
+<strong>[만들어야 할 화면] — 우선순위 순</strong>
+A급 (반드시)
+  1. 오늘 — 지표 타일 5 + 처리할 일 3행 + 14일 추이 + 관심 참여자 표
+  2. 참여자 — 4단 필터(칩 복수선택) + 일괄작업바 + 12열 표 + 페이지네이션
+  3. 참여자 상세 — 헤더 + 3탭 (활동 밀도 달력+그날 상세 / 검사 이력 / 챌린지 달성)
+  4. 활동 현황 — 6탭 (코호트 히트맵, 요일×시간 히트맵, 랭킹 표 등)
+  5. 월간 리포트 — 좌 항목 선택 + 우 공문 미리보기 2단
+B급 (A의 패턴을 따라)
+  6. 상담실 (3분할)  7. 프로그램 일정 (달력)  8~9. 챌린지 목록/상세
+  10. 참여 신청  11. 열람 기록
+모달 10종 — 원문 열람(사유 필수) · 탈퇴 확인(파괴적) · 세부 운동 목록 · 챌린지 달성 ·
+단체 메시지 · 명단 내려받기 · 정보 수정 · 엑셀 일괄 등록 · 일정 변경 요청 · 채널 전환
+
+<strong>[디자인 방향]</strong>
+· 공공기관 업무 도구. 신뢰감 있고 밀도 높게. 랜딩 페이지처럼 만들지 마세요.
+· 강조색은 깊은 청록 #0f6e63 (파랑 일색인 정부 사이트 클리셰를 피하되 의료·공공의 신뢰감 유지).
+  중립색은 순회색이 아니라 청록 쪽으로 살짝 기운 회색.
+· 의미색 4종(정상/주의/위험/외부)을 강조색과 명확히 구분.
+· 글꼴 IBM Plex Sans KR + IBM Plex Mono. 숫자는 반드시 고정폭으로 표에서 세로 정렬.
+· 라이트/다크 모드 모두. 다크는 반전이 아니라 별도 팔레트.
+· 모서리 반경 6px 통일(배지 20px, 모달 10px). 그림자는 은은하게 2단.
+
+<strong>[반드시 지킬 것]</strong>
+· 달력은 일요일 시작 (일월화수목금토)
+· 이름·연락처는 기본 마스킹, 원문 열람 시 해당 행 전체가 주의색 배경으로 바뀜
+· 상태 배지는 색 + 텍스트 함께 (색만으로 정보 전달 금지)
+· 명도 대비 4.5:1 이상, 키보드 포커스 표시
+· 표 행 높이를 늘리지 말 것 — 822명 12열 표가 기본이라 밀도가 중요
+· 넓은 표는 표 자체가 가로 스크롤 (페이지가 밀리면 안 됨)
+· 읽기 전용 화면에는 반드시 "변경 요청" 경로를 함께 배치
+
+<strong>[예외 상태도 함께 그려주세요]</strong>
+실제 데이터에서 예외는 일상입니다 — 활동 0일 참여자 198명(24%),
+대화 없는 상담방 222개(36%), 필터 결과 0건, 답변 권한 없음, 시작 전 챌린지.
+각 빈 상태에는 "다음에 할 행동" 버튼이 있어야 합니다.
+
+<strong>[데이터]</strong>
+가짜 숫자를 쓰지 마세요. 명세서 8절의 실측값을 그대로 사용해주세요.
+대상자 822명 / 월 활동 40,512회 / 코호트 잔존율 67.1% vs 22.4% 등.
+가장 긴 문자열 기준: "앉아서 머리 사선으로 당기기, 왼쪽", "만월종합사회복지관",
+"두뇌운동 치매예방교실-26년"
+
+<strong>[산출물]</strong>
+화면별 아트보드. A급 5개 화면은 완성도 높게, B급은 패턴 적용 수준으로.
+컴포넌트 20종의 상태 변형을 함께 정리해주세요.</div>
+
+  <h3>함께 전달할 것</h3>
+  <ul class="chk">
+    <li class="done">이 명세서 링크</li>
+    <li class="done">동작하는 프로토타입 링크 — 실제로 눌러보면 상태 변화가 다 들어 있습니다</li>
+    <li>기관 로고 (있다면) — 화이트라벨 적용 위치 확인용</li>
+    <li>보건소 제출 공문 실물 — 리포트 미리보기의 실제 양식 (아직 미확보)</li>
+  </ul>
+
+  <div class="note wa"><b>디자인 시작 전에 확정하면 좋은 것 하나.</b> 보건소에 실제 제출하는 공문 서식을 아직 못 받았습니다. 월간 리포트 화면의 오른쪽 미리보기는 그 서식을 그대로 재현해야 하므로, 실물을 받은 뒤 이 화면만 다시 그리게 될 수 있습니다. 나머지 10개 화면은 지금 진행해도 무방합니다.</div>
+</section>
+
+<footer>
+  맬리 케어센터 채널 어드민 · 디자인 인수인계서 · 2026-08-21 작성<br>
+  이 문서는 동작하는 프로토타입 v5 기준으로 작성되었습니다. 프로토타입이 갱신되면 5·6·8절을 함께 갱신해야 합니다.
+</footer>
+
+</div>
+
+</body></html>

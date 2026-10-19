@@ -1,0 +1,572 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>맬리브레인 약관 편집실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Nanum+Myeongjo:wght@700;800&display=swap">
+<style>
+:root{
+  --paper:#F1F2F1; --surface:#FFFFFF; --sunk:#E8EAE8;
+  --ink:#16181B; --ink2:#565C58; --ink3:#8A908B;
+  --line:#D9DCD9; --line2:#C3C8C4;
+  --seal:#2E5E4E; --seal-d:#234A3D; --seal-l:#E7EFEB;
+  --amber:#8A6516; --amber-bg:#FBF3E2; --amber-line:#E5D3A9;
+  --red:#A32C22; --red-bg:#FBEEEC; --red-line:#E8C6C1;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'IBM Plex Sans KR',-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+  --serif:'Nanum Myeongjo','Apple SD Gothic Neo',serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#15181A; --surface:#1C2023; --sunk:#232528;
+  --ink:#E8EAE8; --ink2:#A8AFAA; --ink3:#767D78;
+  --line:#2E3336; --line2:#3D4347;
+  --seal:#6FB79A; --seal-d:#8FCDB3; --seal-l:#1B2C26;
+  --amber:#D9B66B; --amber-bg:#2A2416; --amber-line:#4A3F22;
+  --red:#E08A80; --red-bg:#2C1B19; --red-line:#4E2C27;
+}}
+:root[data-theme="dark"]{
+  --paper:#15181A; --surface:#1C2023; --sunk:#232528;
+  --ink:#E8EAE8; --ink2:#A8AFAA; --ink3:#767D78;
+  --line:#2E3336; --line2:#3D4347;
+  --seal:#6FB79A; --seal-d:#8FCDB3; --seal-l:#1B2C26;
+  --amber:#D9B66B; --amber-bg:#2A2416; --amber-line:#4A3F22;
+  --red:#E08A80; --red-bg:#2C1B19; --red-line:#4E2C27;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:14px;line-height:1.7;display:flex;flex-direction:column;overflow:hidden}
+button,select,textarea,input{font-family:inherit}
+:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+
+/* ── 헤더 ── */
+.top{flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--line);
+  padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:1px;min-width:0}
+.brand h1{margin:0;font-family:var(--serif);font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.brand .sub{font-size:11.5px;color:var(--ink3);letter-spacing:.01em}
+.top .spring{flex:1 1 auto}
+.chipline{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.stat{display:inline-flex;align-items:center;gap:6px;background:var(--sunk);border:1px solid var(--line);
+  border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--ink2);white-space:nowrap}
+.stat b{color:var(--ink);font-variant-numeric:tabular-nums}
+.stat.warn{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)}
+.stat.warn b{color:var(--amber)}
+.btn{background:var(--surface);border:1px solid var(--line2);border-radius:8px;padding:7px 13px;
+  font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--seal);color:var(--seal)}
+.btn.pri{background:var(--seal);border-color:var(--seal);color:#fff}
+.btn.pri:hover{background:var(--seal-d);border-color:var(--seal-d);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ── 문서 탭 ── */
+.docs{flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--line);
+  display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto;scrollbar-width:thin}
+.doctab{flex-shrink:0;background:var(--sunk);border:1px solid var(--line);border-radius:9px;
+  padding:8px 13px;cursor:pointer;display:flex;align-items:center;gap:8px;
+  font-size:12.5px;font-weight:600;color:var(--ink2);white-space:nowrap}
+.doctab:hover{border-color:var(--line2)}
+.doctab[aria-selected="true"]{background:var(--seal);border-color:var(--seal);color:#fff}
+.doctab .dot{width:7px;height:7px;border-radius:50%;background:var(--ink3);flex-shrink:0}
+.doctab .dot.draft{background:var(--amber)}
+.doctab .dot.review{background:#5B8FB9}
+.doctab .dot.final{background:var(--seal)}
+.doctab[aria-selected="true"] .dot.final{background:#fff}
+.doctab .kind{font-size:10.5px;font-weight:700;letter-spacing:.04em;opacity:.7}
+
+/* ── 본문 ── */
+main{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:1px;background:var(--line);min-height:0}
+.pane{background:var(--paper);display:flex;flex-direction:column;min-height:0;min-width:0}
+.bar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:9px 14px;
+  background:var(--surface);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.bar .name{font-family:var(--serif);font-weight:700;font-size:14.5px;letter-spacing:-.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bar .spring{flex:1 1 auto}
+.bar select{background:var(--sunk);border:1px solid var(--line);border-radius:7px;
+  padding:5px 8px;font-size:12px;font-weight:600;color:var(--ink)}
+.save{font-size:11.5px;color:var(--ink3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.save.on{color:var(--seal);font-weight:600}
+
+textarea{flex:1 1 auto;width:100%;min-height:0;resize:none;border:0;outline:0;
+  background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:13px;
+  line-height:1.85;padding:18px 16px;tab-size:2}
+textarea::placeholder{color:var(--ink3)}
+
+.segs{display:flex;gap:0;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:2px}
+.segs button{background:none;border:0;border-radius:6px;padding:5px 11px;font-size:12px;
+  font-weight:600;color:var(--ink2);cursor:pointer;white-space:nowrap}
+.segs button[aria-selected="true"]{background:var(--surface);color:var(--ink);
+  box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+.scroll{flex:1 1 auto;overflow-y:auto;min-height:0;padding:22px 20px 80px}
+
+/* ── 미리보기 ── */
+.doc{max-width:66ch;margin:0 auto}
+.doc h1{font-family:var(--serif);font-size:25px;font-weight:800;letter-spacing:-.025em;
+  line-height:1.3;margin:0 0 14px;text-wrap:balance}
+.doc h2{font-family:var(--serif);font-size:18px;font-weight:700;letter-spacing:-.02em;
+  margin:32px 0 8px;padding-top:14px;border-top:1px solid var(--line);line-height:1.4}
+.doc h3{font-size:15px;font-weight:700;margin:22px 0 6px;letter-spacing:-.01em}
+.doc h4{font-size:13.5px;font-weight:700;margin:18px 0 4px;color:var(--ink2)}
+.doc p{margin:9px 0;color:var(--ink2)}
+.doc ul,.doc ol{margin:9px 0 9px 20px;padding:0;color:var(--ink2)}
+.doc li{margin:4px 0}
+.doc b,.doc strong{color:var(--ink);font-weight:700}
+.doc code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;
+  padding:1px 5px;font-family:var(--mono);font-size:12px;color:var(--seal)}
+.doc pre{background:var(--sunk);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;overflow-x:auto;margin:12px 0}
+.doc pre code{background:none;border:0;padding:0;color:var(--ink2);font-size:12px}
+.doc blockquote{margin:14px 0;padding:11px 15px;background:var(--seal-l);
+  border-left:3px solid var(--seal);border-radius:0 8px 8px 0}
+.doc blockquote p{margin:4px 0;color:var(--ink)}
+.doc hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.doc .tw{overflow-x:auto;margin:13px 0}
+.doc table{border-collapse:collapse;width:100%;font-size:12.5px;background:var(--surface)}
+.doc th,.doc td{border:1px solid var(--line);padding:8px 10px;text-align:left;
+  vertical-align:top;line-height:1.6}
+.doc th{background:var(--sunk);font-weight:700;white-space:nowrap}
+.doc a{color:var(--seal)}
+.hole{background:var(--amber-bg);border-bottom:2px solid var(--amber);
+  color:var(--amber);font-weight:700;padding:0 2px;border-radius:2px}
+
+/* ── 개정 제안 ── */
+.sug{border:1px solid var(--line);border-radius:12px;background:var(--surface);
+  margin-bottom:12px;overflow:hidden}
+.sug > summary{list-style:none;cursor:pointer;padding:13px 15px;display:flex;
+  align-items:flex-start;gap:10px}
+.sug > summary::-webkit-details-marker{display:none}
+.sug .no{flex-shrink:0;font-family:var(--mono);font-size:11px;font-weight:500;
+  color:#fff;background:var(--ink2);border-radius:5px;padding:2px 6px;margin-top:2px}
+.sug.must .no{background:var(--red)}
+.sug.ask .no{background:var(--amber)}
+.sug .hd{min-width:0;flex:1}
+.sug .hd .t{font-weight:700;font-size:13.5px;letter-spacing:-.01em;line-height:1.5}
+.sug .hd .w{font-size:12.5px;color:var(--ink2);margin-top:3px;line-height:1.6}
+.sug .own{flex-shrink:0;font-size:10.5px;font-weight:700;border-radius:5px;padding:3px 7px;
+  background:var(--sunk);color:var(--ink3);white-space:nowrap;margin-top:1px}
+.sug .own.dev{background:var(--seal-l);color:var(--seal)}
+.sug .own.law{background:var(--red-bg);color:var(--red)}
+.sug .body{border-top:1px solid var(--line);padding:13px 15px;background:var(--sunk)}
+.sug .body p{margin:0 0 9px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.sug pre{margin:0 0 10px;background:var(--surface);border:1px solid var(--line);
+  border-radius:8px;padding:12px 13px;overflow-x:auto;font-family:var(--mono);
+  font-size:12px;line-height:1.75;white-space:pre-wrap;color:var(--ink)}
+.sug .acts{display:flex;gap:7px;flex-wrap:wrap}
+
+.empty{max-width:52ch;margin:40px auto;text-align:center;color:var(--ink2);font-size:13.5px;line-height:1.8}
+.empty h2{font-family:var(--serif);font-size:19px;color:var(--ink);margin:0 0 10px}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:50;
+  background:var(--ink);color:var(--paper);border-radius:10px;padding:11px 18px;
+  font-size:13px;font-weight:600;box-shadow:0 8px 28px rgba(0,0,0,.28);max-width:88vw;text-align:center}
+.toast[hidden]{display:none}
+
+.mobonly{display:none}
+@media(max-width:860px){
+  main{grid-template-columns:1fr}
+  .pane.right{display:none}
+  body.show-side .pane.left{display:none}
+  body.show-side .pane.right{display:flex}
+  .mobonly{display:flex}
+  .top{padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .brand h1{font-size:17px}
+  .docs{padding:0 14px 9px}
+  .scroll{padding:18px 16px 70px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="brand">
+    <h1>약관 편집실</h1>
+    <div class="sub">맬리브레인 · 인천 남동구 보건소 치매예방교실</div>
+  </div>
+  <div class="spring"></div>
+  <div class="chipline">
+    <span class="stat" id="stHole">남은 빈칸 <b id="nHole">–</b></span>
+    <span class="stat" id="stSug">개정 제안 <b id="nSug">–</b></span>
+    <button class="btn" id="btnAll">전체 내려받기</button>
+  </div>
+</header>
+
+<nav class="docs" id="docs" role="tablist" aria-label="문서"></nav>
+
+<main>
+  <section class="pane left">
+    <div class="bar">
+      <span class="name" id="curName">—</span>
+      <div class="spring"></div>
+      <span class="save" id="saveState"></span>
+      <select id="status" aria-label="문서 상태">
+        <option value="draft">초안</option>
+        <option value="review">검토 중</option>
+        <option value="final">확정</option>
+      </select>
+      <button class="btn mobonly" id="btnSide">미리보기 →</button>
+    </div>
+    <textarea id="ed" spellcheck="false" placeholder="문서를 불러오는 중입니다."></textarea>
+  </section>
+
+  <aside class="pane right">
+    <div class="bar">
+      <div class="segs" role="tablist" aria-label="오른쪽 패널">
+        <button id="tabPrev" role="tab" aria-selected="true">미리보기</button>
+        <button id="tabSug" role="tab" aria-selected="false">개정 제안</button>
+      </div>
+      <div class="spring"></div>
+      <button class="btn mobonly" id="btnEdit">← 편집</button>
+      <button class="btn" id="btnOne">이 문서 내려받기</button>
+    </div>
+    <div class="scroll" id="prevWrap"><div class="doc" id="prev"></div></div>
+    <div class="scroll" id="sugWrap" hidden></div>
+  </aside>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   약관 편집실 — 문서는 db 에 저장되고 열어보는 사람 모두에게 같은 내용이 보입니다.
+   ══════════════════════════════════════════════════════════════ */
+
+const ORDER = ["svc2","priv","c1","c2","c3","svc"];
+const LABEL = {
+  svc2:{n:"서비스 이용약관", k:"확정"},
+  priv:{n:"개인정보 처리방침", k:"확정"},
+  c1:{n:"이용약관 동의", k:"필수1"},
+  c2:{n:"개인정보 수집·이용", k:"필수2"},
+  c3:{n:"제3자 제공", k:"필수3"},
+  svc:{n:"구판 이용약관 2024-09-24", k:"구판"}
+};
+
+/* 2차 검토 결과. must = 반드시 고칠 것 / ask = 값·판단을 받아야 할 것 */
+const SUG = {
+svc2:[
+ {id:"N-1",lv:"must",own:"법무",t:"시행일 2026-09-18이 제3조 3항을 스스로 위반합니다",
+  w:"제3조 3항이 \"적용일 7일 전부터 공지, 회원에게 불리한 변경이면 30일 전부터 공지\"를 정해 두었습니다. 부칙의 시행일은 오늘입니다. 아직 공지를 안 했다면 7일 전 공지조차 불가능합니다. 제9조 2항 5호(미로그인 계정 정리)는 기존 회원에게 없던 해지 사유가 새로 생기는 것이라 불리한 변경으로 보는 편이 안전하고, 그러면 공지일 + 30일이 시행일입니다. 오늘 공지해도 10월 18일입니다. 4기 모집(10월 첫째~둘째 주)과 부딪힐 수 있으니 공지를 서두르는 편이 좋습니다.",
+  ins:"1. 이 약관은 {공지일로부터 30일 뒤}부터 시행합니다."},
+ {id:"A-6",lv:"ask",own:"기획",t:"제2조 서비스 정의에 상담(채팅)이 없습니다",
+  w:"처리방침 선택항목에는 \"상담 메시지 내용\"이 있습니다. 상담 기능이 있으면 정의에도 넣어야 두 문서가 맞습니다.",
+  ins:"1. \"서비스\"란 회사가 제공하는 인지건강 게임, 걷기 기록, 상담, 기관 프로그램 참여 관리, 참여 결과 리포트 등 맬리브레인의 제반 기능을 말합니다."},
+ {id:"A-5",lv:"ask",own:"개발",t:"제10조 통지 수단에 전자우편이 있습니다",
+  w:"신청폼은 이메일을 받지 않습니다. 앱 직접 가입에서 받습니까? 안 받으면 빼는 것이 맞습니다."},
+ {id:"A-7",lv:"ask",own:"기획",t:"제9조 2항 5호 — 미로그인 기간을 정해야 합니다",
+  w:"\"회사가 정하여 사전에 공지한 기간\"으로 열어 두었습니다. 개발팀의 계정 정리 정책과 숫자를 맞춰 주세요. 30일을 권합니다. 이 조항이 N-1의 불리한 변경 판단을 좌우합니다."},
+ {id:"T-5",lv:"ask",own:"기획",t:"제6조에 무료라는 말이 없습니다",
+  w:"결제 조항을 통째로 뺐으니 무료임을 한 줄 적어두면 분쟁 여지가 줄어듭니다. 선택 사항입니다.",
+  ins:"1. 회사가 제공하는 서비스는 다음과 같으며, 모두 무료로 제공됩니다."},
+ {id:"OK-1",lv:"",own:"완료",t:"사업자 정보가 모두 채워졌습니다",
+  w:"대표자·사업자등록번호·주소·고객센터가 들어가면서 제3조 1항의 게시 의무가 닫혔습니다. 유료 결제 흔적도 남아 있지 않습니다."}
+],
+priv:[
+ {id:"N-2",lv:"must",own:"법무",t:"기존 회원을 보건소에 제공할 근거가 없습니다",
+  w:"제4조에 제공처 표를 넣은 것은 고지입니다. 고지만으로는 제공할 수 없고 개인정보보호법 §17은 동의를 요구합니다. 4기 신규 신청자와 신청폼을 다시 타는 3기 회원은 동의를 받지만, 이미 보건소에 넘어가 있는 3기 참여자와 앱에서 직접 가입해 교실에 참여 중인 회원은 근거가 불명확합니다. 구판 처리방침 제4조에는 제공처가 아예 없었으므로 고지 없이 제공해 온 상태였을 수 있습니다. 3기 참여자에게 어떤 동의를 받았는지 확인하고, 부족하면 앱 안에서 재동의를 받아야 합니다. 재동의 화면은 신청폼과 별개라 기획 범위에 들어가 있지 않습니다."},
+ {id:"M-5",lv:"must",own:"기획",t:"마케팅 목적이 그대로 남아 있습니다",
+  w:"제1조 5항 \"마케팅 및 광고에의 활용\", 제2조 2항의 같은 표현, 제3조 기본 수집항목의 \"광고식별자(GAID, IDFA)\" 세 곳입니다. 신청폼에서 선택 동의를 뺐으므로 앱에서 받는지 정해야 합니다. 받지 않는다면 세 곳 모두 빼야 하고, 동의 없이 광고성 정보를 보내면 정보통신망법 §50 위반입니다."},
+ {id:"A-1",lv:"must",own:"개발",t:"제5조 위탁 표에 서버 운영 사업자가 없습니다",
+  w:"NHN Cloud(문자 발송)만 있습니다. 서버·DB를 어딘가에서 돌리고 있을 텐데 고지되지 않았습니다. 개인정보보호법 §26 위반 소지입니다. 리전이 국외면 §28-8 국외이전 고지가 별도로 붙습니다.",
+  ins:"| {클라우드 사업자명} | 서비스 운영을 위한 서버 및 데이터베이스 관리 |"},
+ {id:"R-1",lv:"ask",own:"개발",t:"성별을 뺐는데 앱에서 받고 있다면 반대 문제가 됩니다",
+  w:"필수항목에서 성별을 삭제하셨습니다. 신청폼은 성별을 안 받으니 맞는 방향인데, 앱 직접 가입에서 성별을 받고 있다면 이번에는 미고지 수집이 됩니다. 앱이 실제로 무엇을 받는지 확인해야 방향이 정해집니다.",
+  ins:"| 구분 | 항목 |\n| --- | --- |\n| **앱 직접 가입** | 이름, 성별, 휴대전화번호 |\n| **기관 전용 신청폼** | 이름, 휴대전화번호, 거주 행정동 |"},
+ {id:"T-1",lv:"ask",own:"기획",t:"보유기간 문장이 제3조에 있습니다",
+  w:"\"다만 기관 전용 신청폼을 통해 수집하여…\" 문장은 보유기간 이야기인데 제3조(수집 항목) 2항에 붙어 있습니다. 제2조로 옮기고 제4조의 \"사업 종료 후 3년\"과 숫자를 맞춰 주세요. 지금 제2조에는 제3자 제공분 기준이 없습니다.",
+  ins:"4. 기관 전용 신청폼을 통해 수집하여 협약기관에 제공한 정보는, 회사 보유분은 회원 탈퇴 시까지, 협약기관 보유분은 해당 기관의 기록물 보존 기준(인천광역시 남동구 보건소의 경우 사업 종료 후 3년)에 따릅니다."},
+ {id:"T-2",lv:"ask",own:"기획",t:"대리 입력이 제1조 6항에 있습니다",
+  w:"제1조는 \"처리 목적 및 수집항목\" 조인데 대리 입력은 목적이 아닙니다. 별도 조로 빼면 읽기 좋습니다. 효력 문제는 아닙니다."},
+ {id:"T-3",lv:"ask",own:"기획",t:"이전 판 목록이 엉켜 있습니다",
+  w:"\"2026년 8월 18일 이전 / 2024년 6월 20일 이전 / 2024년 9월 24일 이전 / 2025년 2월 26일 이전\" — 2026-08-18이 맨 앞에 있고 구판에 있던 2024-01-29가 사라졌습니다. 시간 역순으로 정리하고, 이번 시행으로 2025-02-26판도 구판이 됩니다.",
+  ins:"**이전 판** — 2025년 2월 26일 / 2024년 9월 24일 / 2024년 6월 20일 / 2024년 1월 29일 시행 개인정보처리방침"},
+ {id:"T-4",lv:"ask",own:"법무",t:"접근권한 고지 조항이 없습니다",
+  w:"선택항목에 \"이동거리 측정 및 모션 보조 프로세서(걸음 수 측정 목적)\"가 있습니다. 앱이 기기 권한을 쓰면 정보통신망법 §22-2에 따라 접근권한을 필수·선택으로 구분해 고지하고, 선택 권한은 거부해도 서비스를 쓸 수 있게 해야 합니다.",
+  ins:"## 제N조 (접근권한 안내)\n\n회사는 서비스 제공을 위해 아래와 같이 기기의 접근권한을 요청합니다. 선택 권한은 허용하지 않으셔도 서비스를 이용하실 수 있습니다.\n\n| 구분 | 권한 | 이용 목적 |\n| --- | --- | --- |\n| 선택 | 신체활동·모션 | 걸음 수 측정 |\n| 선택 | 알림 | 프로그램 일정 안내 |\n\n권한은 기기의 설정에서 언제든지 바꾸실 수 있습니다."},
+ {id:"A-8",lv:"ask",own:"법무",t:"전기통신일시 1년 보존이 해당하는지",
+  w:"제2조 표의 \"가입자의 전기통신일시… 1년\"은 통신비밀보호법 조항인데 이 법은 전기통신사업자를 대상으로 합니다. 부가통신사업자인 맬리브레인에 해당하는지 확인이 필요합니다."},
+ {id:"T-5",lv:"ask",own:"개발",t:"제8조 3항의 비밀번호 표현",
+  w:"\"개인정보, 비밀번호는 암호화\"라고 되어 있는데 전화번호 로그인 경로에는 비밀번호가 없습니다. \"비밀번호(설정한 경우)\" 정도로 다듬으면 정확해집니다."},
+ {id:"OK-2",lv:"",own:"완료",t:"시행일과 필수항목이 정리됐습니다",
+  w:"제13조 시행일이 2026-09-18로 맞춰졌고, 필수항목에서 성별이 빠지고 선택항목의 중복도 사라졌습니다. 결제 흔적도 남아 있지 않습니다."}
+],
+c1:[
+ {id:"C1-1",lv:"ask",own:"법무",t:"전문과의 관계를 밝힐지",
+  w:"이 문안은 신청폼 화면에 띄우는 요약본입니다. 전문이 우선한다는 점을 적어두면 분쟁 소지가 줄어듭니다.",
+  ins:"이 문안은 맬리브레인 서비스 이용약관 중 이 신청폼에 해당하는 부분을 간추린 것입니다. 전체 내용은 앱 [내 정보] > [약관]에서 확인하실 수 있으며, 간추린 내용과 전문이 다를 경우 전문을 따릅니다."}
+],
+c2:[
+ {id:"C2-1",lv:"must",own:"개발",t:"처리 위탁의 서버 운영 사업자가 비어 있습니다",
+  w:"문자 발송은 NHN Cloud로 확정됐습니다. 서버 운영 사업자와 리전(국내/국외)만 받으면 이 표가 닫힙니다."},
+ {id:"C2-2",lv:"ask",own:"법무",t:"민감정보 별도 동의가 필요한지",
+  w:"치매예방교실 참여 사실과 인지검사 결과를 건강정보(민감정보, §23)로 볼 것인지에 따라 필수 동의가 하나 더 늘어납니다."}
+],
+c3:[
+ {id:"N-2",lv:"must",own:"법무",t:"기존 회원은 이 동의를 받지 못합니다",
+  w:"이 동의는 신청폼을 타는 사람에게만 받습니다. 이미 보건소에 정보가 넘어가 있는 3기 참여자와 앱에서 직접 가입한 회원은 이 화면을 보지 않습니다. 그 사람들의 제공 근거를 따로 확인해야 합니다. 처리방침 탭의 N-2와 같은 문제입니다."},
+ {id:"A-3",lv:"ask",own:"보건소",t:"보유기간 3년의 근거",
+  w:"\"지자체 기록물 보존 기준에 따름\"이라고 적혀 있습니다. 보건소에서 그 기준을 확인받았습니까? 처리방침 제4조도 3년으로 맞춰져 있습니다."},
+ {id:"A-4",lv:"ask",own:"보건소",t:"제공받는 곳에 담당 부서명을 넣을지",
+  w:"지금은 \"인천광역시 남동구 보건소\"까지만 적혀 있습니다."},
+ {id:"C3-1",lv:"must",own:"법무",t:"이 동의가 필요한지 자체가 아직 미정입니다",
+  w:"개인정보 처리자가 원메딕스면 제3자 제공 동의가 필요하고, 남동구 보건소면 원메딕스는 수탁자라 이 문서가 통째로 필요 없어집니다. 판단 근거는 보건소와 맺은 계약 형태입니다."}
+],
+svc:[
+ {id:"X-1",lv:"",own:"참고",t:"이 탭은 2024-09-24 구판입니다",
+  w:"확정본은 [확정 · 서비스 이용약관] 탭에 있습니다. 신구대조용으로만 두었습니다."}
+]};
+
+/* ── 미확정 값 ── */
+const HOLE = [/\{[^}\n]{1,24}\}/g, /○{2,}[가-힣A-Za-z]*/g, /032-000-0000/g, /\(미확정\)/g, /\(미확인\)/g];
+
+/* ── 마크다운 ── */
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function inline(s){
+  return esc(s)
+    .replace(/`([^`]+)`/g,(m,a)=>"<code>"+a+"</code>")
+    .replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>")
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/  $/,"<br>");
+}
+function md(src){
+  const L = String(src||"").replace(/\r\n?/g,"\n").split("\n");
+  let o="", i=0, inCode=false, code=[];
+  const rowCells = r => r.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim());
+  while(i<L.length){
+    const l=L[i];
+    if(/^```/.test(l)){
+      if(inCode){o+="<pre><code>"+esc(code.join("\n"))+"</code></pre>";code=[];inCode=false}
+      else inCode=true;
+      i++;continue;
+    }
+    if(inCode){code.push(l);i++;continue}
+    if(/^\s*$/.test(l)){i++;continue}
+    if(/^(-{3,}|\*{3,}|_{3,})\s*$/.test(l)){o+="<hr>";i++;continue}
+    let h=l.match(/^(#{1,6})\s+(.*)$/);
+    if(h){const n=Math.min(h[1].length,4);o+="<h"+n+">"+inline(h[2])+"</h"+n+">";i++;continue}
+    if(/^\|/.test(l) && i+1<L.length && /^\|[\s:|-]+\|?\s*$/.test(L[i+1])){
+      const head=rowCells(l); i+=2; const rows=[];
+      while(i<L.length && /^\|/.test(L[i])){rows.push(rowCells(L[i]));i++}
+      o+='<div class="tw"><table><thead><tr>'+head.map(c=>"<th>"+inline(c)+"</th>").join("")+"</tr></thead><tbody>";
+      rows.forEach(r=>{o+="<tr>"+r.map(c=>"<td>"+inline(c.replace(/<br>/g,"\n")).replace(/\n/g,"<br>")+"</td>").join("")+"</tr>"});
+      o+="</tbody></table></div>"; continue;
+    }
+    if(/^>\s?/.test(l)){
+      const b=[];while(i<L.length&&/^>\s?/.test(L[i])){b.push(L[i].replace(/^>\s?/,""));i++}
+      o+="<blockquote>"+md(b.join("\n"))+"</blockquote>";continue;
+    }
+    if(/^\s*([-*+])\s+/.test(l)){
+      const b=[];while(i<L.length&&/^\s*([-*+])\s+/.test(L[i])){b.push(L[i].replace(/^\s*[-*+]\s+/,""));i++}
+      o+="<ul>"+b.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ul>";continue;
+    }
+    if(/^\s*\d+[.)]\s+/.test(l)){
+      const b=[];while(i<L.length&&/^\s*\d+[.)]\s+/.test(L[i])){b.push(L[i].replace(/^\s*\d+[.)]\s+/,""));i++}
+      o+="<ol>"+b.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ol>";continue;
+    }
+    const p=[];while(i<L.length&&!/^\s*$/.test(L[i])&&!/^(#{1,6}\s|>\s?|\||```|\s*[-*+]\s|\s*\d+[.)]\s)/.test(L[i])&&!/^(-{3,}|\*{3,}|_{3,})\s*$/.test(L[i])){p.push(L[i]);i++}
+    if(p.length) o+="<p>"+p.map(inline).join("<br>")+"</p>";
+  }
+  if(inCode&&code.length) o+="<pre><code>"+esc(code.join("\n"))+"</code></pre>";
+  return o;
+}
+function markHoles(root){
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  const hits=[];let n;
+  while((n=w.nextNode())){
+    if(n.parentElement.closest("code,pre")) continue;
+    if(HOLE.some(r=>{r.lastIndex=0;return r.test(n.nodeValue)})) hits.push(n);
+  }
+  hits.forEach(n=>{
+    let html=esc(n.nodeValue);
+    HOLE.forEach(r=>{html=html.replace(new RegExp(r.source,"g"),m=>'<span class="hole">'+m+"</span>")});
+    const s=document.createElement("span"); s.innerHTML=html; n.parentNode.replaceChild(s,n);
+  });
+}
+const countHoles = t => HOLE.reduce((a,r)=>{r.lastIndex=0;return a+(String(t).match(new RegExp(r.source,"g"))||[]).length},0);
+
+/* ── 상태 ── */
+const $ = id => document.getElementById(id);
+let DB=null, DOCS={}, cur=ORDER[0], saveTimer=null, dirty=false, writable=true, loaded=false;
+
+function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;
+  clearTimeout(toast._t);toast._t=setTimeout(()=>{e.hidden=true},2600)}
+
+function fmtTime(iso){
+  if(!iso) return "";
+  const d=new Date(iso); if(isNaN(d)) return "";
+  const p=n=>String(n).padStart(2,"0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+function renderTabs(){
+  $("docs").innerHTML = ORDER.map(id=>{
+    const d=DOCS[id]||{}, st=d.status||"draft";
+    return `<button class="doctab" role="tab" data-id="${id}" aria-selected="${id===cur}">
+      <span class="dot ${st}"></span><span class="kind">${LABEL[id].k}</span> ${LABEL[id].n}</button>`;
+  }).join("");
+  $("docs").querySelectorAll(".doctab").forEach(b=>b.onclick=()=>select(b.dataset.id));
+}
+
+function renderSug(){
+  const list=SUG[cur]||[];
+  $("sugWrap").innerHTML = list.length ? list.map(s=>`
+    <details class="sug ${s.lv}">
+      <summary>
+        <span class="no">${s.id}</span>
+        <span class="hd"><span class="t">${esc(s.t)}</span><span class="w">${esc(s.w)}</span></span>
+        <span class="own ${s.own==="개발"?"dev":s.own==="법무"?"law":""}">${s.own}</span>
+      </summary>
+      <div class="body">
+        ${s.ins?`<p>아래 문구를 편집기의 커서 위치에 넣을 수 있습니다. 조문 번호와 앞뒤 문맥은 확인해 주세요.</p>
+        <pre>${esc(s.ins)}</pre>
+        <div class="acts">
+          <button class="btn pri" data-ins="${s.id}">커서 위치에 넣기</button>
+          <button class="btn" data-copy="${s.id}">복사</button>
+        </div>`:`<p>넣을 문구가 정해지지 않았습니다. 담당(${esc(s.own)})의 회신을 받아야 문안을 쓸 수 있습니다.</p>`}
+      </div>
+    </details>`).join("")
+  : `<div class="empty"><h2>이 문서는 제안이 없습니다</h2><p>현행 내용과 신청폼 개편 사이에 걸리는 지점을 찾지 못했습니다. 자유롭게 고치시면 됩니다.</p></div>`;
+
+  $("sugWrap").querySelectorAll("[data-ins]").forEach(b=>b.onclick=()=>{
+    const s=list.find(x=>x.id===b.dataset.ins); if(!s) return;
+    const ta=$("ed"), a=ta.selectionStart, z=ta.selectionEnd;
+    const txt="\n"+s.ins+"\n";
+    ta.value=ta.value.slice(0,a)+txt+ta.value.slice(z);
+    ta.selectionStart=ta.selectionEnd=a+txt.length;
+    onEdit(); ta.focus();
+    toast(s.id+" 문구를 넣었습니다");
+  });
+  $("sugWrap").querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{
+    const s=list.find(x=>x.id===b.dataset.copy); if(!s) return;
+    try{ await navigator.clipboard.writeText(s.ins); toast("복사했습니다"); }
+    catch(e){ toast("복사가 막혀 있습니다. 위 문구를 직접 선택해 주세요"); }
+  });
+  $("nSug").textContent=list.length;
+}
+
+function renderPreview(){
+  const body=$("ed").value;
+  $("prev").innerHTML = body.trim() ? md(body)
+    : '<div class="empty"><h2>내용이 없습니다</h2><p>왼쪽 편집기에 내용을 적으면 여기에 보입니다.</p></div>';
+  markHoles($("prev"));
+  const n=countHoles(body);
+  $("nHole").textContent=n;
+  $("stHole").classList.toggle("warn", n>0);
+}
+
+function select(id){
+  if(dirty) flush();
+  cur=id;
+  const d=DOCS[id]||{};
+  $("curName").textContent = d.title || LABEL[id].n;
+  $("ed").value = d.body||"";
+  $("status").value = d.status||"draft";
+  $("saveState").textContent = d.updatedAt ? "마지막 수정 "+fmtTime(d.updatedAt) : "";
+  $("saveState").classList.remove("on");
+  renderTabs(); renderSug(); renderPreview();
+  $("prevWrap").scrollTop=0; $("sugWrap").scrollTop=0;
+}
+
+function onEdit(){
+  renderPreview();
+  if(!loaded) return;
+  dirty=true;
+  $("saveState").textContent="저장 중…"; $("saveState").classList.add("on");
+  clearTimeout(saveTimer); saveTimer=setTimeout(flush,900);
+}
+
+async function flush(){
+  clearTimeout(saveTimer);
+  if(!dirty || !DB || !writable || !loaded) return;
+  dirty=false;
+  const id=cur, body=$("ed").value, status=$("status").value;
+  const d=DOCS[id]||{};
+  const now=new Date().toISOString();
+  DOCS[id]=Object.assign({},d,{title:d.title||LABEL[id].n,body,status,updatedAt:now});
+  try{
+    await DB.doc("terms/"+id).set(DOCS[id]);
+    if(cur===id){$("saveState").textContent="저장됨 "+fmtTime(now);$("saveState").classList.remove("on")}
+  }catch(e){
+    if(e && e.code==="invalid_argument"){
+      writable=false; $("ed").readOnly=true; $("status").disabled=true;
+      $("saveState").textContent="읽기 전용";
+      toast("이 문서를 고칠 권한이 없습니다. 보기만 가능합니다");
+    }else{
+      dirty=true;
+      $("saveState").textContent="저장 실패 — 다시 시도합니다";
+      setTimeout(flush,4000);
+    }
+  }
+}
+
+/* ── 내려받기 ── */
+async function save(filename, text){
+  const dl = await claude.use("downloads");
+  if(!dl){ toast("이 화면에서는 내려받기를 쓸 수 없습니다"); return }
+  try{ await dl.save({filename, data:text}); }
+  catch(e){ if(e&&e.code!=="declined") toast("내려받지 못했습니다 ("+((e&&e.code)||"오류")+")"); }
+}
+const FILE = {svc:"서비스이용약관", priv:"개인정보처리방침",
+  c1:"신청폼_01_서비스이용약관", c2:"신청폼_02_개인정보_수집이용_동의",
+  c3:"신청폼_03_제3자제공_동의", c4:"신청폼_04_마케팅수신_동의"};
+
+/* ── 부팅 ── */
+$("ed").addEventListener("input",onEdit);
+$("status").addEventListener("change",()=>{if(!loaded)return;dirty=true;flush().then(renderTabs)});
+$("tabPrev").onclick=()=>{$("tabPrev").ariaSelected="true";$("tabSug").ariaSelected="false";
+  $("prevWrap").hidden=false;$("sugWrap").hidden=true};
+$("tabSug").onclick=()=>{$("tabPrev").ariaSelected="false";$("tabSug").ariaSelected="true";
+  $("prevWrap").hidden=true;$("sugWrap").hidden=false};
+$("btnSide").onclick=()=>document.body.classList.add("show-side");
+$("btnEdit").onclick=()=>document.body.classList.remove("show-side");
+$("btnOne").onclick=async()=>{await flush();await save(FILE[cur]+".md",$("ed").value||"")};
+$("btnAll").onclick=async()=>{
+  await flush();
+  const parts=ORDER.map(id=>{
+    const d=DOCS[id]||{};
+    const st={draft:"초안",review:"검토 중",final:"확정"}[d.status||"draft"];
+    return `<!-- ${LABEL[id].k} · ${LABEL[id].n} · ${st} · ${fmtTime(d.updatedAt)||"미수정"} -->\n\n`+(d.body||"");
+  });
+  await save("맬리브레인_약관_전체.md",
+    "# 맬리브레인 약관 · 동의 전체\n\n인천 남동구 보건소 치매예방교실 · 내려받은 시각 "
+    + fmtTime(new Date().toISOString()) + "\n\n---\n\n" + parts.join("\n\n---\n\n"));
+};
+addEventListener("beforeunload",e=>{if(dirty){flush();e.preventDefault();e.returnValue=""}});
+
+renderTabs(); renderSug(); renderPreview();
+
+(async ()=>{
+  DB = await claude.use("db");
+  if(!DB){
+    $("ed").readOnly=true; writable=false;
+    $("prev").innerHTML='<div class="empty"><h2>문서를 불러올 수 없습니다</h2>'
+      +'<p>이 화면에서는 저장소를 쓸 수 없습니다. claude.ai에 로그인한 상태로 다시 열어보세요.</p></div>';
+    $("saveState").textContent="연결 안 됨";
+    return;
+  }
+  DB.collection("terms").onSnapshot(snap=>{
+    snap.docs.forEach(s=>{ if(s.exists) DOCS[s.id]=s.data(); });
+    const first = !loaded; loaded = true;
+    if(first){ select(cur); return; }
+    const d=DOCS[cur];
+    if(d && !dirty && $("ed").value!==d.body){
+      const ta=$("ed"), pos=ta.selectionStart;
+      ta.value=d.body||""; ta.selectionStart=ta.selectionEnd=Math.min(pos,ta.value.length);
+      $("curName").textContent=d.title||LABEL[cur].n;
+      $("status").value=d.status||"draft";
+      $("saveState").textContent=d.updatedAt?"마지막 수정 "+fmtTime(d.updatedAt):"";
+      renderPreview();
+    }
+    renderTabs();
+    if(!Object.keys(DOCS).length){
+      $("prev").innerHTML='<div class="empty"><h2>아직 문서가 없습니다</h2>'
+        +'<p>왼쪽에 내용을 적으면 저장됩니다.</p></div>';
+    }
+  }, err=>{
+    $("saveState").textContent="연결 끊김";
+    toast("저장소 연결이 끊겼습니다. 새로고침해 주세요");
+  });
+})();
+</script>
+
+</body></html>

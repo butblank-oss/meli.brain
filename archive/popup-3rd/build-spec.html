@@ -1,0 +1,420 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+</head><body>
+<h1>맬리브레인 보건소 팝업 현장 설문 도구 — 구축 지시서</h1>
+<p>아래 내용 전체를 Claude Code에 붙여넣으세요.</p>
+<hr>
+<h2>0. 너가 만들 것</h2>
+<p>인천 남동구 치매안심센터에서 2026년 10월 30일(금) 하루 진행하는 오프라인 팝업 행사에서, 원메딕스 임직원이 노트북으로 어르신을 응대하며 설문을 입력하는 웹 앱이다. 어르신이 쓰는 앱이 아니라 <strong>직원이 쓰는 입력 도구</strong>다.</p>
+<ul>
+<li>대상자 명단 1,523명 (인천 남동구 치매안심센터 소속 중 유효 계정)</li>
+<li>동시 사용 직원 3~6명, 각자 노트북</li>
+<li>행사 당일 하루, 1인당 응대 3~12분</li>
+<li>현재 프로토타입이 단일 HTML 파일로 존재하나, 아래 결함 때문에 새로 만든다</li>
+</ul>
+<h3>기존 프로토타입에서 반드시 고쳐야 할 결함</h3>
+<ol>
+<li>완료 판정이 암묵적이라 미완성 레코드가 대량 발생한다. 명시적 완료 버튼이 없었다.</li>
+<li>필수값 표시만 있고 검증이 없었다.</li>
+<li>온라인 필수라 와이파이가 끊기면 응대가 멈춘다.</li>
+<li>한 화면에 문항 10~14개가 세로로 쌓여 응대자가 스크롤로 문항을 찾았다.</li>
+<li>입력 중 다른 기기의 동기화가 들어오면 저장 안 된 입력값을 덮어썼다.</li>
+<li>개인정보 열람 기록이 전혀 없었다.</li>
+<li>행사 중에도 관리자가 설문 구조를 바꿀 수 있어 데이터가 깨질 위험이 있었다.</li>
+</ol>
+<hr>
+<h2>1. 절대 제약</h2>
+<p><strong>1-1. 코드와 저장소에 개인정보를 넣지 마라.</strong>
+GitHub Pages는 정적 호스팅이며, 저장소가 private이어도 Pages로 배포된 파일은 공개된다. 참여자 명단은 반드시 DB에만 존재해야 한다. <code>roster.json</code> 같은 명단 파일을 저장소에 커밋하는 구현은 금지한다. 원본 CSV는 <code>.gitignore</code>에 넣어라.</p>
+<p><strong>1-2. 로그인 없이는 아무 데이터도 보이지 않아야 한다.</strong>
+Supabase Auth로 인증하고, 모든 테이블에 RLS를 걸어 <code>authenticated</code> 역할만 접근 가능하게 한다. 익명 키는 번들에 노출되지만 RLS가 막는다.</p>
+<p><strong>1-3. 오프라인에서도 응대가 끊기지 않아야 한다.</strong>
+로컬(IndexedDB)에 먼저 쓰고 온라인일 때 동기화하는 구조다. 네트워크 상태는 화면에 항상 표시한다.</p>
+<p><strong>1-4. 저장 안 된 입력을 덮어쓰지 마라.</strong>
+서버에서 온 데이터가 로컬의 미동기화 변경을 덮어쓰면 안 된다. 필드 단위로 <code>updated_at</code>을 비교하거나, 동기화 대기 중인 레코드는 서버 데이터를 무시한다.</p>
+<hr>
+<h2>2. 기술 스택</h2>
+<ul>
+<li>Vite + React + TypeScript</li>
+<li>Tailwind CSS</li>
+<li>Supabase (Postgres + Auth + Realtime)</li>
+<li>IndexedDB는 Dexie 사용</li>
+<li>배포: GitHub Actions로 빌드해서 GitHub Pages</li>
+<li>Supabase URL과 anon key는 GitHub Actions의 Repository Variables로 주입 (<code>VITE_SUPABASE_URL</code>, <code>VITE_SUPABASE_ANON_KEY</code>)</li>
+<li>테스트: Vitest + React Testing Library, 6절의 수용 기준을 테스트로 작성</li>
+</ul>
+<p>Vite <code>base</code> 설정을 저장소 이름에 맞춰라. SPA 라우팅은 GitHub Pages에서 404가 나므로 HashRouter를 쓰거나 <code>404.html</code> 리다이렉트를 넣어라.</p>
+<hr>
+<h2>3. 데이터 모델</h2>
+<h3>3-1. <code>participants</code> (명단, 읽기 전용)</h3>
+<table>
+<thead>
+<tr>
+<th>컬럼</th>
+<th>타입</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>uuid PK</td>
+<td>계정 ID</td>
+</tr>
+<tr>
+<td><code>name_masked</code></td>
+<td>text</td>
+<td>마스킹 이름 (<code>김*자</code>)</td>
+</tr>
+<tr>
+<td><code>phone_last4</code></td>
+<td>text</td>
+<td>휴대폰 뒷 4자리</td>
+</tr>
+<tr>
+<td><code>birth_year</code></td>
+<td>text</td>
+<td>생년 4자리, 없을 수 있음</td>
+</tr>
+<tr>
+<td><code>age_group</code></td>
+<td>text</td>
+<td><code>60</code> <code>70</code> <code>80</code> <code>90</code> <code>?</code></td>
+</tr>
+<tr>
+<td><code>sex</code></td>
+<td>text</td>
+<td><code>F</code> <code>M</code> <code>?</code></td>
+</tr>
+<tr>
+<td><code>days_since_last_activity</code></td>
+<td>int</td>
+<td>미사용자는 null</td>
+</tr>
+<tr>
+<td><code>total_activity_cnt</code></td>
+<td>int</td>
+<td>누적 활동 횟수</td>
+</tr>
+<tr>
+<td><code>cohort</code></td>
+<td>text</td>
+<td><code>26</code> <code>2</code> <code>?</code></td>
+</tr>
+<tr>
+<td><code>track</code></td>
+<td>text</td>
+<td><code>A</code> <code>B</code> <code>C</code> (임포트 시 계산)</td>
+</tr>
+<tr>
+<td><code>snapshot_date</code></td>
+<td>date</td>
+<td>데이터 추출 기준일</td>
+</tr>
+</tbody>
+</table>
+<p><strong>실명, 생년월일 전체, 이메일, 전체 전화번호는 저장하지 마라.</strong> 실명은 응답 테이블에 직원이 입력한 값만 들어간다.</p>
+<h3>3-2. <code>responses</code> (응답)</h3>
+<table>
+<thead>
+<tr>
+<th>컬럼</th>
+<th>타입</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>uuid PK</td>
+<td></td>
+</tr>
+<tr>
+<td><code>participant_id</code></td>
+<td>uuid</td>
+<td>명단 외 추가면 null</td>
+</tr>
+<tr>
+<td><code>manual_info</code></td>
+<td>jsonb</td>
+<td>명단 외일 때 이름·뒷4자리·연령대·성별·사유</td>
+</tr>
+<tr>
+<td><code>track</code></td>
+<td>text</td>
+<td>확정된 트랙</td>
+</tr>
+<tr>
+<td><code>verified</code></td>
+<td>text</td>
+<td><code>ok</code> <code>failed</code> <code>skipped</code></td>
+</tr>
+<tr>
+<td><code>verified_by</code> / <code>verified_at</code></td>
+<td>text / timestamptz</td>
+<td></td>
+</tr>
+<tr>
+<td><code>real_name</code></td>
+<td>text</td>
+<td>리워드 배송 확인용, 선택 입력</td>
+</tr>
+<tr>
+<td><code>consent</code></td>
+<td>text</td>
+<td><code>동의</code> <code>미동의</code></td>
+</tr>
+<tr>
+<td><code>helpers</code></td>
+<td>text[]</td>
+<td>도와준 담당자 (복수)</td>
+</tr>
+<tr>
+<td><code>answers</code></td>
+<td>jsonb</td>
+<td>질문 key → 값 (문자열 또는 문자열 배열)</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>text</td>
+<td><code>in_progress</code> <code>done</code> <code>refused</code> <code>revisit</code></td>
+</tr>
+<tr>
+<td><code>result</code></td>
+<td>text</td>
+<td>응대 결과</td>
+</tr>
+<tr>
+<td><code>entered_by</code></td>
+<td>text</td>
+<td>입력자</td>
+</tr>
+<tr>
+<td><code>started_at</code> / <code>completed_at</code></td>
+<td>timestamptz</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td>timestamptz</td>
+<td></td>
+</tr>
+<tr>
+<td><code>client_rev</code></td>
+<td>int</td>
+<td>충돌 해소용 증가 카운터</td>
+</tr>
+</tbody>
+</table>
+<p><code>participant_id</code>에 부분 유니크 인덱스를 걸어 중복 응답을 막아라 (명단 외는 예외).</p>
+<h3>3-3. <code>survey_schema</code> (설문 정의)</h3>
+<p><code>id</code>, <code>version</code> int, <code>payload</code> jsonb, <code>locked</code> bool, <code>updated_by</code>, <code>updated_at</code>.</p>
+<p><code>locked=true</code>면 어떤 계정도 수정 불가. 행사 당일 아침에 잠근다.</p>
+<h3>3-4. <code>staff</code> (담당자 명단)</h3>
+<p><code>id</code>, <code>name</code>, <code>active</code> bool, <code>role</code> (<code>admin</code> | <code>operator</code>), <code>auth_user_id</code>.</p>
+<p>초기값: 강하연, 김다희, 김도영, 김성정, 김소리, 김철순, 노준성, 박유라, 안성호, 윤종훈, 이승민, 이용혁, 홍지혜</p>
+<h3>3-5. <code>access_log</code> (열람 기록)</h3>
+<p><code>id</code>, <code>participant_id</code>, <code>staff_name</code>, <code>action</code> (<code>view</code> | <code>verify</code> | <code>export</code> | <code>delete</code>), <code>at</code>.</p>
+<p>보건소 케어센터 어드민은 개인정보 원문 열람 시 사유 입력과 2년 보관을 요구한다. 현장 속도 때문에 사유 입력은 받지 않되, <strong>모든 열람을 자동 기록</strong>한다. 기록 보관 기간과 사유 입력 필요 여부는 보건소 협의 사항이므로 <code>reason</code> 컬럼을 nullable로 미리 만들어 두어라.</p>
+<h3>3-6. RLS</h3>
+<ul>
+<li>모든 테이블: <code>authenticated</code>만 <code>select</code></li>
+<li><code>participants</code>: 클라이언트에서 <code>insert</code>/<code>update</code>/<code>delete</code> 불가. 임포트는 service role 스크립트로만.</li>
+<li><code>responses</code>: <code>authenticated</code>가 <code>insert</code>/<code>update</code> 가능, <code>delete</code>는 소프트 삭제(<code>deleted_at</code>)로 처리하고 하드 삭제는 막아라.</li>
+<li><code>survey_schema</code>: <code>update</code>는 <code>staff.role='admin'</code>인 사용자만. <code>locked=true</code>면 전부 거부.</li>
+<li><code>access_log</code>: <code>insert</code>만 허용, <code>update</code>/<code>delete</code> 불가.</li>
+</ul>
+<hr>
+<h2>4. 화면 명세</h2>
+<p>전체 흐름은 <strong>한 번에 한 단계</strong>다. 이전 프로토타입처럼 모든 문항을 한 화면에 쌓지 마라.</p>
+<h3>4-0. 로그인</h3>
+<p>Supabase Auth 매직링크 또는 이메일+비밀번호. 로그인 후 <code>staff</code> 테이블에서 본인 이름을 고른다(최초 1회, 로컬 저장).</p>
+<h3>4-1. 상단 바 (항상 노출)</h3>
+<ul>
+<li>입력자 이름 (드롭다운, <code>staff</code> 명단)</li>
+<li>네트워크 상태: <code>동기화됨</code> / <code>대기 N건</code> / <code>오프라인</code>. 대기 건수는 반드시 숫자로 보여라.</li>
+<li>진행 현황: 트랙별 <code>완료 / 전체</code>, 현장 첫 게임 실행 건수</li>
+<li>버튼: 게임 카드 인쇄, 응답 내보내기, 설문지 편집(admin만)</li>
+</ul>
+<h3>4-2. 찾기</h3>
+<ul>
+<li>검색창 하나. 입력값이 숫자면 <strong>전화 뒷 4자리</strong>로, 문자면 이름으로 검색한다.</li>
+<li>이름 검색은 마스킹을 감안해야 한다. <code>간경자</code>를 입력하면 <code>간*자</code>가 나와야 한다. 규칙: (a) 입력값이 이름에 그대로 포함, (b) 길이가 같고 <code>*</code> 자리를 무시한 문자가 전부 일치, (c) <code>*</code>를 뺀 글자들이 입력값 안에 순서대로 등장, (d) 첫 글자 일치. 넷 중 하나라도 맞으면 후보로 띄운다.</li>
+<li>결과 행에 <strong>뒷 4자리를 반드시 표시</strong>한다. 마스킹 이름만으로는 절반 이상이 동명이인이다.</li>
+<li>필터: 트랙 A/B/C, 상태(미착수·진행중·완료), 기수(26년·2기)</li>
+<li>검색창에 ✕ 버튼</li>
+<li>결과 0건일 때: &quot;전화 뒷 4자리로 찾아보세요. 이쪽이 훨씬 정확합니다&quot; 안내 + <code>명단에 없는 분 추가</code> 버튼</li>
+</ul>
+<h3>4-3. 본인 확인 (설문 전 필수 관문)</h3>
+<p>선택한 어르신의 카드를 띄운다. 화면 중앙에 큰 글씨로:</p>
+<blockquote>
+<p><strong>&quot;전화번호 뒷 네 자리가 어떻게 되세요?&quot;</strong></p>
+</blockquote>
+<p>아래에 뒷 4자리(가장 크게), 생년, 연령·성별, 마스킹 이름, 기수, 트랙을 표시한다. 전체 성함 입력칸(선택)을 둔다.</p>
+<p>버튼 세 개:</p>
+<ul>
+<li><code>본인 확인 완료</code> → 다음 단계</li>
+<li><code>다른 분입니다</code> → 검색으로 복귀</li>
+<li><code>확인 못 했지만 진행</code> → <code>verified='skipped'</code>로 기록하고 진행</li>
+</ul>
+<p>이 단계를 통과하지 않으면 설문 문항이 보이지 않아야 한다. 통과 시 <code>access_log</code>에 <code>verify</code> 기록.</p>
+<p><strong>중복 응대 방지</strong>: 다른 직원이 이미 이 어르신을 진행 중이면 경고를 띄우고, 이어받을지 취소할지 묻는다. Realtime 구독으로 감지한다.</p>
+<h3>4-4. 단계형 설문</h3>
+<p>스텝 인디케이터(<code>2 / 5</code>)를 상단에 고정한다. 한 스텝에 질문 3~4개까지만 둔다.</p>
+<ul>
+<li>스텝 1: 개인정보 동의, 도와준 담당자</li>
+<li>스텝 2~4: 트랙별 문항 (A는 2스텝, B는 3스텝, C는 3스텝 권장)</li>
+<li>마지막 스텝: 리워드 처리, 4기 사전신청, 응대 결과, 메모</li>
+</ul>
+<p>규칙:</p>
+<ul>
+<li><code>이전</code> / <code>다음</code> 버튼. 필수값이 비면 <code>다음</code>을 막고 해당 문항을 붉게 표시한다.</li>
+<li>트랙 C는 조치 스텝에 <strong>체크리스트</strong>를 둔다. 설치, 로그인, 첫 게임 실행을 체크하고 막힌 지점을 기록한다.</li>
+<li>마지막 스텝의 버튼은 <code>응대 완료</code>다. 누르면 <code>status='done'</code>, <code>completed_at</code> 기록, 완료 화면으로 넘어간다. 완료 화면에 &quot;다음 분 찾기&quot; 버튼을 크게 둔다.</li>
+<li>중간에 목록으로 나가면 <code>status='in_progress'</code>로 남고, 목록에 진행중 배지와 입력자 이름이 뜬다.</li>
+</ul>
+<h3>4-5. 명단 외 추가</h3>
+<p>성함, 전화 뒷 4자리, 연령대, 성별, 명단에 없는 이유(재등록 / 등록 지연 / 이전 기수 / 가족 대리 / 모름), 트랙을 받고 같은 설문 흐름으로 진입한다.</p>
+<h3>4-6. 어드민 (role=admin)</h3>
+<ul>
+<li>설문 문항 편집: 섹션(접수·A·B·C·마무리)별 목록, 순서 변경, 추가·복제·삭제, 유형(하나 선택·여러 선택·담당자 선택·짧은 글·긴 글·구분선), 문구, 도움말, 필수 여부, 표시 조건, 보기 목록</li>
+<li>담당자 명단 편집</li>
+<li>트랙별 안내문 편집</li>
+<li><strong>행사 잠금 토글</strong>: 잠그면 <code>survey_schema.locked=true</code>가 되어 아무도 수정할 수 없다. 잠금 해제는 확인 절차를 두 번 거치게 하라.</li>
+<li>저장 시 <code>version</code>을 올리고, 접속 중인 모든 클라이언트에 Realtime으로 전파한다.</li>
+<li>이미 응답이 존재하는 질문의 key를 바꾸려 하면 경고하고 막아라.</li>
+</ul>
+<h3>4-7. 게임 카드 인쇄</h3>
+<p>게임 목록을 큰 글씨 카드로 인쇄하는 화면. A4 가로, 한 장에 2~4장. 트랙 B에서 어르신에게 짚게 하는 용도다. 목록은 어드민에서 편집한 보기와 동기화된다.</p>
+<p>기본 게임 17종: 기억의 숨바꼭질, 오늘의 장바구니, 숨은 헬씨 찾기, 꿀벌의 숫자놀이, 초성 퀴즈, 재밌는 숫자 퍼즐 4X4, 구슬 옮기기, 기찻길 만들기, 숨은 헬씨찾기 비밀작전, 양말정리 대작전, 진짜 색깔 찾기, 단어 기억하기, 알쏭달쏭 숫자 더하기, 재밌는 숫자 퍼즐 9X9, 색깔 맞추기, 이상한 신호, 타일 뒤집기</p>
+<p>운영 중인 게임이 13종이라는 자료가 있으므로, 임포트 후 실제 목록을 확인해 조정할 수 있게 어드민에서 편집 가능해야 한다.</p>
+<hr>
+<h2>5. 임포트 스크립트</h2>
+<p><code>scripts/import-participants.ts</code>를 만들어라. service role 키로 실행하는 Node 스크립트이며 저장소에 키를 커밋하지 않는다.</p>
+<p>입력은 운영 DB 추출본 <code>S3_user_info.csv</code>다. 실제 컬럼명은 다음과 같다.</p>
+<pre><code>user_id, name_masked, nickname, birthdate, birthyear, mobile_masked,
+email_masked, sex, user_type, status, created_date, last_login_date,
+age_group, sex_label, provider_names, challenge_names, challenge_cnt,
+total_activity_cnt, completed_activity_cnt, last_activity_date_kst,
+days_since_last_activity, last_activity_material_type,
+registration_path, user_group, recent_signup_flag, user_status
+</code></pre>
+<p>처리 규칙:</p>
+<ol>
+<li>
+<p><code>provider_names</code>에 <code>인천 남동구 치매안심센터</code>가 포함된 행만 가져온다 (약 1,561행).</p>
+</li>
+<li>
+<p>아래에 해당하는 행은 <strong>명단에서 제외한다.</strong> 현장에 나타나면 명단 외 추가로 처리한다.</p>
+<ul>
+<li><code>name_masked</code>가 비어 있는 행 (8건). 이름이 없으면 현장에서 본인 확인 자체가 불가능하다.</li>
+<li><code>name_masked</code>에 <code>PRD</code> <code>TEST</code> <code>테스트</code> <code>개발</code> <code>샘플</code>이 들어간 행 (3건)</li>
+<li><code>user_status='withdrawn'</code>인 행 (27건). 탈퇴 계정은 응대 대상이 아니다.</li>
+</ul>
+<p>총 38건이 빠져 1,523명이 남는다.</p>
+</li>
+<li>
+<p><code>mobile_masked</code>는 <code>+8210****8800</code> 형식이다. 숫자만 남겨 마지막 4자리를 <code>phone_last4</code>로 쓴다.</p>
+</li>
+<li>
+<p><code>birthyear</code>를 <code>birth_year</code>로 쓴다. 비어 있으면 null (약 167건).</p>
+</li>
+<li>
+<p><code>age_group</code>에서 <code>대</code>를 떼고, <code>미상</code>과 <code>0대</code>는 <code>?</code>로 바꾼다.</p>
+</li>
+<li>
+<p><code>sex_label</code>이 <code>female</code>이면 <code>F</code>, <code>male</code>이면 <code>M</code>, 나머지는 <code>?</code>.</p>
+</li>
+<li>
+<p><code>challenge_names</code>에 <code>26년</code>이 있으면 <code>cohort='26'</code>, <code>2기</code>가 있으면 <code>'2'</code>, 아니면 <code>'?'</code>.</p>
+</li>
+<li>
+<p><strong>트랙 판정</strong>: <code>days_since_last_activity</code>(이하 dsl), <code>total_activity_cnt</code>(이하 tot)</p>
+<ul>
+<li>dsl이 비어 있으면 <code>C</code></li>
+<li>dsl ≤ 30 이면 <code>A</code></li>
+<li>dsl &gt; 30 이고 tot &gt; 20 이면 <code>B</code></li>
+<li>그 외 <code>C</code></li>
+</ul>
+</li>
+<li>
+<p><code>nickname</code>, <code>birthdate</code>, <code>email_masked</code>, <code>mobile_masked</code> 전체는 <strong>저장하지 마라.</strong></p>
+</li>
+<li>
+<p><code>user_id</code> 기준 upsert. 재실행해도 응답 데이터가 깨지지 않아야 한다.</p>
+</li>
+</ol>
+<p>2026-09-14 기준 추출본으로 돌리면 총 1,523명에 A 351명, B 454명, C 718명이 나온다 (기수별로는 26년 891명, 2기 582명, 미상 50명). 이 숫자가 크게 다르면 임포트 로직을 의심하라.</p>
+<p>행사 전 2026년 10월 25일경 데이터를 재추출할 예정이다. 재임포트 시 트랙이 바뀌는 인원이 생기므로, 또 그 사이에 탈퇴한 사람이 명단에서 빠지므로, 이미 <code>status='done'</code>인 응답의 <code>track</code>은 덮어쓰지 말고 <code>participants.track</code>만 갱신하라.</p>
+<hr>
+<h2>6. 수용 기준</h2>
+<p>아래를 테스트로 작성하고 전부 통과시켜라.</p>
+<p><strong>데이터 보호</strong></p>
+<ol>
+<li>빌드 산출물(<code>dist/</code>) 어디에도 참여자 이름·전화번호·명단이 포함되지 않는다.</li>
+<li>로그아웃 상태에서 API를 직접 호출하면 모든 테이블이 빈 결과 또는 403을 반환한다.</li>
+<li><code>participants</code>에 대한 클라이언트 insert/update/delete가 실패한다.</li>
+</ol>
+<p><strong>식별</strong>
+4. <code>간경자</code>로 검색하면 <code>간*자</code>가 결과에 나온다.
+5. <code>8800</code>으로 검색하면 뒷 4자리가 8800인 사람만 나온다.
+6. 검색 결과 행에 뒷 4자리가 표시된다.
+7. 본인 확인을 통과하지 않으면 설문 문항이 렌더링되지 않는다.</p>
+<p><strong>입력 안정성</strong>
+8. 실명 입력칸에 타이핑한 뒤 다른 문항의 보기를 클릭해도 입력값이 유지된다.
+9. 보기를 클릭해도 화면 스크롤 위치가 유지된다.
+10. 입력 중 서버에서 같은 레코드의 이전 버전이 도착해도 로컬 입력값이 덮어써지지 않는다.</p>
+<p><strong>완료 판정</strong>
+11. 필수 문항이 비어 있으면 <code>다음</code>이 막히고 해당 문항이 강조된다.
+12. <code>응대 완료</code>를 누르기 전에는 <code>status</code>가 <code>done</code>이 되지 않는다.
+13. 완료 후 진행 현황 숫자가 즉시 증가한다.</p>
+<p><strong>오프라인</strong>
+14. 네트워크를 끊은 상태에서 설문을 끝까지 입력하고 완료할 수 있다.
+15. 오프라인 중 상단에 <code>오프라인 · 대기 N건</code>이 표시된다.
+16. 네트워크 복구 후 자동으로 동기화되고 대기 건수가 0이 된다.
+17. 탭을 새로고침해도 오프라인 입력 내용이 남아 있다.</p>
+<p><strong>동시 작업</strong>
+18. 두 브라우저에서 같은 어르신을 열면 나중에 연 쪽에 경고가 뜬다.
+19. 한쪽에서 완료하면 다른 쪽 목록에 즉시 반영된다.</p>
+<p><strong>어드민</strong>
+20. <code>operator</code> 역할로는 설문지 편집 화면에 진입할 수 없다.
+21. <code>locked=true</code>일 때 admin도 저장이 거부된다.
+22. 응답이 존재하는 질문의 key 변경 시도가 차단된다.</p>
+<p><strong>내보내기</strong>
+23. CSV에 트랙·본인확인 상태·확인자·입력자·응답 전체가 포함된다.
+24. 여러 선택 항목이 구분자로 합쳐져 한 칸에 들어간다.
+25. Excel에서 한글이 깨지지 않는다 (BOM 포함).</p>
+<hr>
+<h2>7. 비기능 요구</h2>
+<ul>
+<li>노트북 1440×900 기준. 본문 16px 이상, 버튼 높이 44px 이상.</li>
+<li>전체 흐름을 키보드만으로 완료할 수 있어야 한다. 검색창에서 Enter로 첫 결과 선택, 스텝 이동 단축키.</li>
+<li>1,523명 목록 렌더링이 버벅이지 않게 가상 스크롤 또는 결과 제한을 적용한다.</li>
+<li>5분마다 로컬에 전체 스냅샷을 백업하고, 상단에서 언제든 수동 내보내기가 가능하다.</li>
+<li>다크모드 대응은 하지 않아도 된다. 대신 밝은 조명 아래 대비를 충분히 확보하라.</li>
+</ul>
+<hr>
+<h2>8. 작업 순서</h2>
+<ol>
+<li>Vite + React + TS + Tailwind 초기화, GitHub Actions로 Pages 배포 파이프라인 구성. 빈 화면이라도 먼저 배포까지 성공시켜라.</li>
+<li>Supabase 프로젝트 스키마와 RLS 마이그레이션 작성.</li>
+<li>임포트 스크립트 작성 후 실제 CSV로 실행, 건수 검증.</li>
+<li>로그인과 상단 바.</li>
+<li>찾기 화면 + 검색 매칭 규칙 (수용 기준 4~6을 먼저 테스트로 작성).</li>
+<li>본인 확인 관문.</li>
+<li>단계형 설문 + 검증 + 완료 처리.</li>
+<li>오프라인 큐와 동기화.</li>
+<li>어드민과 잠금.</li>
+<li>내보내기, 게임 카드 인쇄.</li>
+<li>수용 기준 전체 통과 확인.</li>
+</ol>
+<hr>
+<h2>9. 내가 확인해야 할 것</h2>
+<p>구현 중 아래를 발견하면 임의로 정하지 말고 나에게 물어라.</p>
+<ul>
+<li>기수 미상 50명 처리 방침</li>
+<li>개인정보 열람 사유 입력을 필수로 할지 (보건소 협의 사항)</li>
+<li>리워드 지급 조건. 행사일 10월 30일이 3기 마지막 날이라 &quot;이번 주 3일 이상&quot; 조건이 성립하지 않는다. 4기 기준으로 재정의가 필요하다.</li>
+<li>실명 입력을 필수로 할지 선택으로 둘지</li>
+</ul>
+
+</body></html>

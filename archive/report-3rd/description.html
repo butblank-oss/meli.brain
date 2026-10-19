@@ -1,0 +1,760 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>맬리브레인 3기 종료 리포트 — 화면 디스크립션</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard','Apple SD Gothic Neo',-apple-system,sans-serif;font-size:13px;background:#f1f5f9;color:#212429;padding:28px 16px 60px}
+  .doc{max-width:1220px;margin:0 auto 34px;background:#fff;border:1px solid #ccd4db;border-radius:8px;overflow:hidden}
+
+  .screen-header{background:#3182F6;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+  .screen-header .sid{font-size:11px;color:rgba(255,255,255,.72);margin-bottom:3px}
+  .screen-header .stitle{font-size:17px;font-weight:700;color:#fff}
+  .screen-header .sright{font-size:12px;color:rgba(255,255,255,.72)}
+
+  .sub-header{background:#fff;border-bottom:1px solid #e5e8eb;padding:10px 24px;display:flex;gap:8px;flex-wrap:wrap}
+  .badge{display:inline-flex;gap:5px;background:#f2f4f6;border-radius:6px;padding:4px 10px;font-size:12px;color:#6b7684}
+  .badge b{color:#191f28;font-weight:600}
+  .badge.hl{background:#e6f9f0}.badge.hl b{color:#00875a}
+
+  table{width:100%;border-collapse:collapse}
+  thead tr{background:#334155}
+  thead th{color:#fff;font-weight:700;font-size:13px;text-align:left;padding:11px 12px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.1)}
+  thead th:last-child{border-right:none}
+  tbody tr:nth-child(odd){background:#f8fafc}
+  tbody td{padding:13px 12px;vertical-align:top;border-bottom:1px solid #e5e8eb;border-right:1px solid #e5e8eb;line-height:1.6}
+  tbody td:last-child{border-right:none}
+  .c-no{width:34px;font-weight:700;color:#2563eb;font-size:14px}
+  .c-type{width:52px;color:#6b7684;font-size:12px}
+  .c-name{width:126px;font-weight:600;color:#191f28}
+  .c-nav{width:86px;font-size:12px}
+  .c-note{width:132px;color:#6b7684;font-size:12px}
+
+  .tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600;margin-right:4px;margin-bottom:3px;white-space:nowrap}
+  .t-ok{background:#e6f9f0;color:#00875a}
+  .t-warn{background:#fff8e6;color:#e67700}
+  .t-gray{background:#f2f4f6;color:#6b7684}
+  .t-blue{background:#e7f0ff;color:#2563eb}
+  .t-fail{background:#fff0f0;color:#e03131}
+
+  .db{margin-bottom:7px}.db:last-child{margin-bottom:0}
+  .ds{color:#6b7684;font-size:12px;margin-top:2px;display:block}
+  .di{padding-left:13px;color:#6b7684;font-size:12px;margin-top:3px}
+  .pr{font-size:11px;color:#2563eb;background:#e7f0ff;padding:1px 5px;border-radius:3px;margin-left:3px}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;background:#eef2f7;color:#334155;padding:1px 5px;border-radius:3px}
+
+  .dsbox{background:#f0f6ff;border-left:4px solid #3182F6;padding:15px 20px;font-size:12px;line-height:1.75}
+  .dsbox .t{font-size:12px;font-weight:700;color:#1d4ed8;margin-bottom:9px}
+  .dsbox .row{display:flex;gap:6px;margin-bottom:4px}
+  .dsbox .lab{font-weight:700;color:#1d4ed8;white-space:nowrap;min-width:104px}
+  .dsbox .val{color:#334155}
+  .dsbox code{background:#dbeafe;color:#1e3a8a}
+  .fx{font-family:ui-monospace,Menlo,monospace;background:#dbeafe;color:#1e3a8a;padding:4px 11px;border-radius:4px;display:inline-block;margin:3px 0 5px;font-size:12px}
+  .note{color:#6b7684;font-size:11px;margin-top:7px;padding-top:7px;border-top:1px dashed #bfdbfe}
+
+  .mt{width:100%;border-collapse:collapse;margin-top:7px;background:#fff;font-size:12px}
+  .mt th{background:#dbeafe;color:#1e3a8a;font-weight:700;text-align:left;padding:6px 9px;border:1px solid #bfdbfe;white-space:nowrap}
+  .mt td{padding:6px 9px;border:1px solid #dbeafe;color:#334155}
+  .mt td.k{font-weight:700;color:#1d4ed8;white-space:nowrap}
+  .mt td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .mt tr.hl td{background:#e7f0ff}
+
+  .sec{background:#f2f4f6;padding:7px 12px;font-size:11px;font-weight:700;color:#6b7684;letter-spacing:.05em;border-bottom:1px solid #e5e8eb}
+  .intro{max-width:1220px;margin:0 auto 26px;background:#fff;border:1px solid #ccd4db;border-radius:8px;padding:22px 26px}
+  .intro h1{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .intro p{color:#4e5968;margin-top:7px;font-size:13px;line-height:1.7}
+  .intro table{margin-top:14px;font-size:12.5px}
+  .intro th{background:#f2f4f6;color:#4e5968;padding:7px 10px;border:1px solid #e5e8eb;text-align:left}
+  .intro td{padding:7px 10px;border:1px solid #e5e8eb;color:#4e5968}
+  .intro td b{color:#191f28}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>맬리브레인 3기 종료 리포트 — 화면 디스크립션</h1>
+  <p>7개 섹션 · 세로 스크롤 1개 페이지 · 375px 폭 모바일 웹<br>
+  대상 823명 전원 · 기수 2026-03-03 ~ 10-30 (242일) · 발급일 10월 30일</p>
+  <table>
+    <tr><th style="width:120px">공통 규칙</th><td>
+      <b>P01</b> 데이터 유무와 무관하게 모든 화면 항상 노출 ·
+      <b>P02</b> 값 0이면 "0" 표기 ·
+      <b>P03</b> 산출 불가 시 "-" ·
+      <b>P05</b> 동률 시 최근 날짜 우선 ·
+      <b>P13</b> 부정 표현 금지 ·
+      <b>PA10</b> 이미지 로딩 실패 시 placeholder
+    </td></tr>
+    <tr><th>상단 고정</th><td>우측 상단 <b>X 버튼</b> 44×44 · 스크롤 내내 고정 · 탭 시 앱 홈 복귀</td></tr>
+    <tr><th>인터랙션</th><td>전 섹션 뷰포트 진입 시 1회 애니메이션 · <b>prefers-reduced-motion 시 전부 생략</b></td></tr>
+  </table>
+</div>
+
+
+<!-- ══════════════ 01 커버 ══════════════ -->
+<div class="doc">
+  <div class="screen-header">
+    <div><div class="sid">SC-RP-01</div><div class="stitle">커버</div></div>
+    <div class="sright">Depth 1 · 단일 뷰포트 · 스크롤 없음</div>
+  </div>
+  <div class="sub-header">
+    <div class="badge">화면ID <b>SC-RP-01</b></div>
+    <div class="badge">화면명 <b>커버</b></div>
+    <div class="badge">Depth <b>1</b></div>
+    <div class="badge">데이터소스 <b>S3 · 참여일</b></div>
+    <div class="badge">버전 <b>v2.0</b></div>
+  </div>
+
+  <table>
+    <thead><tr><th class="c-no">No</th><th class="c-type">구분</th><th class="c-name">명칭</th><th>설명 / 상태 처리</th><th class="c-nav">화면전환</th><th class="c-note">비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c-no">1</td><td class="c-type">배지</td><td class="c-name">기수 배지</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 고정 문구 <b>"2026 맬리브레인 3기"</b></div>
+          <div class="di">연도·기수 서버 설정값. 하드코딩 금지</div></td>
+        <td class="c-nav">—</td><td class="c-note">서버 설정값</td></tr>
+
+      <tr><td class="c-no">2</td><td class="c-type">텍스트</td><td class="c-name">메인 헤딩</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"{이름}님,<br>지난 8개월을 돌아볼게요"</b> — Bold 대형 2줄</div>
+          <div class="db"><span class="tag t-warn">이름 미설정</span> 우선순위 <b>닉네임 → 실명 → "참여자님"</b></div>
+          <div class="di">커버 인사는 <b>4글자까지</b> 표기. 초과 시 말줄임</div></td>
+        <td class="c-nav">—</td><td class="c-note">이름 4글자 제한</td></tr>
+
+      <tr><td class="c-no">3</td><td class="c-type">텍스트</td><td class="c-name">기간 · 참여일</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"3월 3일 – 10월 30일"</b><br>
+          <b>"242일 중 {참여일}일의 기록이 담겨 있어요"</b>
+          <span class="ds">참여일만 Bold 강조. 242는 기수 전체 일수(서버 설정값)</span></div>
+          <div class="db"><span class="tag t-warn">참여일 0일</span> <b>"0일"</b> 표기 <span class="pr">P02</span> · 섹션 유지</div></td>
+        <td class="c-nav">—</td><td class="c-note">242일 서버 설정값</td></tr>
+
+      <tr><td class="c-no">4</td><td class="c-type">이미지</td><td class="c-name">히어로 일러스트</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 168×168 · 라운드 34 · 부유 애니메이션 + 배경 글로우</div>
+          <div class="db"><span class="tag t-fail">로딩 실패</span> 그레이 placeholder <span class="pr">PA10</span></div>
+          <div class="di">에셋 미확정. 현재 placeholder</div></td>
+        <td class="c-nav">—</td><td class="c-note">에셋 대기</td></tr>
+
+      <tr><td class="c-no">5</td><td class="c-type">텍스트<br>+아이콘</td><td class="c-name">스크롤 유도 힌트</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"화면을 아래로 더 내려보세요"</b> + ∨ 원형 아이콘
+          <span class="ds">상하 반복 애니메이션. 전 섹션 공통 컴포넌트</span></div></td>
+        <td class="c-nav">↓ 다음 섹션</td><td class="c-note">공통 컴포넌트</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════ 02 숫자요약 ══════════════ -->
+<div class="doc">
+  <div class="screen-header">
+    <div><div class="sid">SC-RP-02</div><div class="stitle">숫자로 먼저 · 이만큼 함께했어요</div></div>
+    <div class="sright">Depth 1 · 단일 뷰포트 · 스크롤 없음</div>
+  </div>
+  <div class="sub-header">
+    <div class="badge">화면ID <b>SC-RP-02</b></div>
+    <div class="badge">Depth <b>1</b></div>
+    <div class="badge">데이터소스 <b>S6(smcq) · S1 · S7 · S8</b></div>
+    <div class="badge">버전 <b>v2.0</b></div>
+  </div>
+
+  <div class="dsbox">
+    <div class="t">📐 지표별 데이터 소스 정의</div>
+    <div class="row"><span class="lab">참여일</span><span class="val">완료 활동 ∪ 로그인 ∪ 걸음(&gt;0보) 중 <b>하나라도 기록이 있는 날</b>의 합집합 (KST)</span></div>
+    <div class="fx">참여일 = COUNT(DISTINCT 활동일 ∪ 로그인일 ∪ 걸음기록일)</div>
+    <div class="row"><span class="lab">참여율</span><span class="val">분모는 기수 전체 <b>242일</b>. <b>반올림</b> 정수</span></div>
+    <div class="fx">참여율 = ROUND(참여일 ÷ 242 × 100)</div>
+    <div class="row"><span class="lab">뇌 점수</span><span class="val">S6 <code>smcq</code>(0~13점) 역전 정규화. <b>높을수록 좋음</b></span></div>
+    <div class="fx">뇌 점수 = ROUND((13 − SMCQ) ÷ 13 × 100)</div>
+    <div class="row"><span class="lab">시작 / 종료</span><span class="val">시작 = 기수 초 측정값 · 종료 = <b>10월 30일 재검사</b> 측정값</span></div>
+    <div class="row"><span class="lab">게임 횟수</span><span class="val">S1 <code>material_type='training'</code> AND <code>progress_label='completed'</code> 건수</span></div>
+    <div class="row"><span class="lab">마음 기록</span><span class="val">S1 <code>content_group='mind'</code> 완료 건수</span></div>
+    <div class="note">⚠ 코드값은 <b>소문자</b>입니다 — <code>smcq</code>, <code>gds-sf</code>, <code>pss</code>. 대문자로 조회하면 0건이 나옵니다</div>
+  </div>
+
+  <table>
+    <thead><tr><th class="c-no">No</th><th class="c-type">구분</th><th class="c-name">명칭</th><th>설명 / 상태 처리</th><th class="c-nav">화면전환</th><th class="c-note">비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c-no">1</td><td class="c-type">배지</td><td class="c-name">섹션 배지</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 고정 문구 <b>"숫자로 먼저"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">하드코딩 허용</td></tr>
+
+      <tr><td class="c-no">2</td><td class="c-type">텍스트</td><td class="c-name">메인 헤딩</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 고정 문구 <b>"이만큼 함께했어요"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">하드코딩 허용</td></tr>
+
+      <tr><td class="c-no">3</td><td class="c-type">카드<br>+차트</td><td class="c-name">뇌 점수 변화<br>(다크 카드)</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상 (시작·종료 모두 있음)</span>
+            레이블 <b>"뇌 점수 종합 변화"</b><br>
+            <b>"{시작}점 → {종료}점"</b> — 시작은 흐린 흰색, 종료는 Bold 대형<br>
+            하단 라인차트 · X축 3월 / 7월 / <b>10월(Bold)</b> · 종료 지점 원형 마커
+            <span class="ds">Y축 눈금 미노출. 좌→우 그리기 애니메이션</span></div>
+          <div class="db"><span class="tag t-warn">재검사 미참여</span>
+            시작 점수만 표시하고 <b>변화 구간은 점선</b> 처리. 종료 지점 <b>"-점"</b></div>
+          <div class="db"><span class="tag t-gray">검사 기록 없음 <span class="pr">P03</span></span>
+            양쪽 모두 <b>"-점"</b> · 차트는 점선 가이드만</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">10/30 재검사 반영</td></tr>
+
+      <tr><td class="c-no">4</td><td class="c-type">카드</td><td class="c-name">함께한 날</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 레이블 <b>"함께한 날"</b> + <b>"{N}"</b> 대형 + <b>"일"</b> 소형
+          <span class="ds">값과 단위 분리. 천 단위 콤마. 카운트업 애니메이션</span></div>
+          <div class="db"><span class="tag t-warn">0일</span> <b>"0일"</b> 표기 <span class="pr">P02</span></div></td>
+        <td class="c-nav">—</td><td class="c-note">2×2 그리드 ①</td></tr>
+
+      <tr><td class="c-no">5</td><td class="c-type">카드</td><td class="c-name">참여율</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 레이블 <b>"참여율"</b> + <b>"{N}"</b> + <b>"%"</b>
+          <span class="ds">242일 기준 <b>반올림</b>. 예) 142일 → 58.68% → <b>59%</b></span></div>
+          <div class="db"><span class="tag t-gray">산출 불가 <span class="pr">P03</span></span> <b>"-%"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">2×2 그리드 ② · 반올림</td></tr>
+
+      <tr><td class="c-no">6</td><td class="c-type">카드</td><td class="c-name">게임 횟수</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"게임 횟수"</b> + <b>"{N}회"</b>
+          <span class="ds">완료 건수만 집계. 진입만·중단은 제외</span></div>
+          <div class="db"><span class="tag t-warn">0회</span> <b>"0회"</b> <span class="pr">P02</span></div></td>
+        <td class="c-nav">—</td><td class="c-note">2×2 그리드 ③</td></tr>
+
+      <tr><td class="c-no">7</td><td class="c-type">카드</td><td class="c-name">마음 기록</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"마음 기록"</b> + <b>"{N}회"</b></div>
+          <div class="db"><span class="tag t-warn">0회</span> <b>"0회"</b> <span class="pr">P02</span></div></td>
+        <td class="c-nav">—</td><td class="c-note">2×2 그리드 ④</td></tr>
+
+      <tr><td class="c-no">8</td><td class="c-type">텍스트<br>+아이콘</td><td class="c-name">스크롤 유도 힌트</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 공통 컴포넌트</div></td>
+        <td class="c-nav">↓ 다음 섹션</td><td class="c-note">공통 컴포넌트</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════ 03 집중리듬 ══════════════ -->
+<div class="doc">
+  <div class="screen-header">
+    <div><div class="sid">SC-RP-03</div><div class="stitle">집중의 리듬 · 언제 가장 집중했을까요</div></div>
+    <div class="sright">Depth 1 · 단일 뷰포트 · 스크롤 없음</div>
+  </div>
+  <div class="sub-header">
+    <div class="badge">화면ID <b>SC-RP-03</b></div>
+    <div class="badge">Depth <b>1</b></div>
+    <div class="badge">데이터소스 <b>S8 login_history</b></div>
+    <div class="badge hl">막대 <b>월~금 5개</b></div>
+    <div class="badge">버전 <b>v2.0</b></div>
+  </div>
+
+  <div class="dsbox">
+    <div class="t">📐 지표별 데이터 소스 정의</div>
+    <div class="row"><span class="lab">접속일</span><span class="val">S8 <code>login_date_kst</code> WHERE <code>is_success='Y'</code> · 기수 기간 내</span></div>
+    <div class="row"><span class="lab">요일별 참여율</span><span class="val">해당 요일 접속일 수 ÷ 기간 내 해당 요일 발생 횟수 × 100</span></div>
+    <div class="fx">요일별 참여율 = COUNT(해당 요일 접속일) ÷ COUNT(해당 요일 발생) × 100</div>
+    <div class="row"><span class="lab">접속 시간</span><span class="val">S8 <code>login_hour_kst</code> 최빈값 → <b>12시간제 변환</b> (0시 = 오전 12시 / 13시 = 오후 1시)</span></div>
+    <div class="row"><span class="lab">동률 처리</span><span class="val"><b>최근 날짜가 있는 쪽</b> 채택 <span class="pr">P05</span></span></div>
+    <div class="note">⚠ <b>주말은 표시하지 않습니다</b> <span class="pr">P06</span>. 프로그램이 평일 편성이라 월~금 5개만 렌더하며, 토·일 접속 기록은 요일 차트에 반영되지 않습니다</div>
+  </div>
+
+  <table>
+    <thead><tr><th class="c-no">No</th><th class="c-type">구분</th><th class="c-name">명칭</th><th>설명 / 상태 처리</th><th class="c-nav">화면전환</th><th class="c-note">비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c-no">1</td><td class="c-type">배지<br>+텍스트</td><td class="c-name">섹션 배지<br>+ 메인 헤딩</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 배지 <b>"집중의 리듬"</b> + 헤딩 <b>"언제 가장 집중했을까요"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">하드코딩 허용</td></tr>
+
+      <tr><td class="c-no">2</td><td class="c-type">카드</td><td class="c-name">가장 많이 한 요일</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"가장 많이 한 요일"</b> + <b>"{요일}"</b> 대형
+          <span class="ds">월~금 중 접속일 수 최다 요일</span></div>
+          <div class="db"><span class="tag t-warn">동률</span> 최근 날짜가 있는 요일 <span class="pr">P05</span></div>
+          <div class="db"><span class="tag t-gray">평일 접속 없음 <span class="pr">P03</span></span> <b>"-"</b> 표기</div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 좌측</td></tr>
+
+      <tr><td class="c-no">3</td><td class="c-type">카드</td><td class="c-name">즐겨 접속한 시간</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"즐겨 접속한 시간"</b> + <b>"{오전/오후} {N}시"</b>
+          <span class="ds">최빈 시각. 24시간 → 12시간제 변환 필수</span></div>
+          <div class="db"><span class="tag t-warn">동률</span> 최근 날짜 우선 <span class="pr">P05</span></div>
+          <div class="db"><span class="tag t-gray">접속 없음 <span class="pr">P03</span></span> <b>"-"</b> 표기</div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 우측 · 12시간제</td></tr>
+
+      <tr><td class="c-no">4</td><td class="c-type">차트</td><td class="c-name">요일별 참여율<br>막대그래프</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상</span>
+            카드 제목 <b>"요일별 참여율"</b> · <b>월~금 5개 행</b> 항상 렌더<br>
+            각 행: 요일 레이블 + 트랙 + 우측 % 값<br>
+            <b>최댓값 요일만 브랜드 그린 + Bold</b>, 나머지 회색
+            <span class="ds">0%에서 목표값까지 채워지는 애니메이션 · 90ms 간격 순차</span></div>
+          <div class="db"><span class="tag t-warn">미참여 요일</span>
+            <b>0% 빈 트랙 유지</b> · 행 숨기지 않음 <span class="pr">P06</span></div>
+          <div class="db"><span class="tag t-warn">5개 전부 0%</span>
+            주말에만 접속한 경우 발생. <b>그대로 0% 5개 노출</b>
+            <span class="ds">3기 실측 해당 19명(2.8%)</span></div>
+          <div class="db"><span class="tag t-blue">하단 안내</span>
+            <b>"프로그램 운영일은 평일(월–금)입니다"</b> — 항상 노출
+            <span class="ds">주말이 빠진 이유를 설명하는 필수 문구</span></div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note"><b>월~금 5개 고정</b></td></tr>
+
+      <tr><td class="c-no">5</td><td class="c-type">카드</td><td class="c-name">AI 개인화 멘트</td>
+        <td>
+          <div class="db"><span class="tag t-ok">요일·시간 산출됨</span>
+            좌측 원형 캐릭터 + 헤드라인 <b>"{요일} {시간}가 좋았어요"</b><br>
+            본문 <b>"점심 먹고 가볍게 뇌를 깨우는 루틴이 자리 잡았네요."</b>
+            <span class="ds">본문은 시간대에 따라 분기 — 문구 기획팀 확정 필요</span></div>
+          <div class="db"><span class="tag t-warn">요일·시간 없음</span>
+            <b>"아직 치매예방 루틴을 만들지 못하셨네요.<br>우리 4기 땐 더 열심히 해봐요."</b> <span class="pr">P13</span></div>
+          <div class="db"><span class="tag t-fail">아이콘 로딩 실패</span> placeholder <span class="pr">PA10</span></div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">시간대별 본문 확정 필요</td></tr>
+
+      <tr><td class="c-no">6</td><td class="c-type">텍스트<br>+아이콘</td><td class="c-name">스크롤 유도 힌트</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 공통 컴포넌트</div></td>
+        <td class="c-nav">↓ 다음 섹션</td><td class="c-note">공통 컴포넌트</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════ 04 게임하이라이트 ══════════════ -->
+<div class="doc">
+  <div class="screen-header">
+    <div><div class="sid">SC-RP-04</div><div class="stitle">게임 하이라이트 · 가장 빛났던 순간들</div></div>
+    <div class="sright">Depth 1 · 단일 뷰포트 · 스크롤 없음</div>
+  </div>
+  <div class="sub-header">
+    <div class="badge">화면ID <b>SC-RP-04</b></div>
+    <div class="badge">Depth <b>1</b></div>
+    <div class="badge">데이터소스 <b>S1 · S5 활동점수</b></div>
+    <div class="badge hl">기준 <b>완료 횟수</b></div>
+    <div class="badge">버전 <b>v2.0</b></div>
+  </div>
+
+  <div class="dsbox">
+    <div class="t">📐 지표별 데이터 소스 정의</div>
+    <div class="row"><span class="lab">완료 횟수</span><span class="val">S1 <code>material_type='training'</code> AND <code>progress_label='completed'</code> · 게임별 집계</span></div>
+    <div class="fx">가장 많이 한 게임 = MAX(COUNT(*)) GROUP BY material_code</div>
+    <div class="row"><span class="lab">활동 점수 랭킹</span><span class="val">S5 <code>total_score</code> 기수 기간 <b>누적 합</b> 기준 순위. 앱 성과 탭과 동일</span></div>
+    <div class="row"><span class="lab">해본 게임</span><span class="val">완료 기록이 있는 <code>material_code</code> distinct 수 / <b>전체 16종</b></span></div>
+    <div class="row"><span class="lab">동률 처리</span><span class="val"><b>가장 최근에 한 게임</b> <span class="pr">P05</span></span></div>
+    <div class="note">⚠ <b>게임 점수는 사용하지 않습니다.</b> 앱 오류로 8/18 이전 점수가 서버에 저장되지 않아 기수의 약 70% 구간이 결손입니다. 완료 <b>횟수</b>는 전 기간 정상 기록돼 있어 이를 기준으로 산출합니다</div>
+    <div class="note">📌 게임 코드 <b>16종</b> 등록 · 3기 플레이 기록 <b>15종</b>. <code>defeatTheVirus</code>(바이러스 퇴치)는 최근 추가로 3기 기록 없음</div>
+  </div>
+
+  <table>
+    <thead><tr><th class="c-no">No</th><th class="c-type">구분</th><th class="c-name">명칭</th><th>설명 / 상태 처리</th><th class="c-nav">화면전환</th><th class="c-note">비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c-no">1</td><td class="c-type">배지<br>+텍스트</td><td class="c-name">섹션 배지<br>+ 메인 헤딩</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 배지 <b>"게임 하이라이트"</b> + 헤딩 <b>"가장 빛났던 순간들"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">하드코딩 허용</td></tr>
+
+      <tr><td class="c-no">2</td><td class="c-type">카드</td><td class="c-name">가장 많이 한 게임<br>(다크 카드)</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상</span>
+            좌측 게임 아이콘 52×52 + 우측 텍스트<br>
+            레이블 <b>"가장 많이 한 게임"</b><br>
+            게임명 <b>"{material_name}"</b><br>
+            수치 <b>"{N}"</b> + 단위 <b>"회"</b><br>
+            하단 <b>"전 기간 완료 횟수 기준"</b>
+            <span class="ds">단위는 <b>"회"</b>입니다. "점" 아님</span></div>
+          <div class="db"><span class="tag t-warn">동률</span> 가장 최근에 한 게임 <span class="pr">P05</span></div>
+          <div class="db"><span class="tag t-gray">게임 기록 없음 <span class="pr">P03</span></span> 카드 미노출</div>
+          <div class="db"><span class="tag t-fail">아이콘 로딩 실패</span> placeholder <span class="pr">PA10</span></div>
+          <div class="di">게임 아이콘 <b>16종</b> 에셋 필요. 현재 placeholder</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">아이콘 16종 대기</td></tr>
+
+      <tr><td class="c-no">3</td><td class="c-type">카드</td><td class="c-name">활동 점수 랭킹</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"활동 점수 랭킹"</b> + <b>"{N}위"</b> + 하단 <b>"{모수}명 중"</b>
+          <span class="ds">모수는 생성일 실제 인원 자동 계산 <span class="pr">P12</span></span></div>
+          <div class="db"><span class="tag t-warn">동점 다수</span> RANK() 표준 경쟁 순위 — 동점은 같은 등수</div>
+          <div class="db"><span class="tag t-gray">산출 불가 <span class="pr">P03</span></span> <b>"-위"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 좌측 · S5 기준</td></tr>
+
+      <tr><td class="c-no">4</td><td class="c-type">카드</td><td class="c-name">해본 게임</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"해본 게임"</b> + <b>"{N}종"</b> + 하단 <b>"전체 16종 중"</b></div>
+          <div class="db"><span class="tag t-warn">0종</span> <b>"0종"</b> <span class="pr">P02</span></div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 우측</td></tr>
+
+      <tr><td class="c-no">5</td><td class="c-type">리스트</td><td class="c-name">많이 한 게임<br>TOP 3</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상</span>
+            카드 제목 <b>"많이 한 게임 TOP 3"</b> · 3행<br>
+            각 행: 순번 + 게임 아이콘 32×32 + 게임명 + 우측 <b>"{N}회"</b>
+            <span class="ds">1위 순번만 브랜드 그린. 행 사이 구분선</span></div>
+          <div class="db"><span class="tag t-warn">3개 미만</span>
+            <b>있는 만큼만 표시</b>. 빈 행을 "-"로 채우지 않음 <span class="pr">P13</span></div>
+          <div class="db"><span class="tag t-gray">게임 기록 없음 <span class="pr">P03</span></span> 카드 미노출</div>
+          <div class="di">게임명이 길면(예: "재밌는 숫자 퍼즐 9X9") 2줄 허용 또는 말줄임</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">횟수 기준</td></tr>
+
+      <tr><td class="c-no">6</td><td class="c-type">카드<br>+리스트</td><td class="c-name">전체 참여자 랭킹</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상</span>
+            제목 <b>"전체 참여자 랭킹"</b> + 우측 <b>"상위 {P}%"</b> pill<br>
+            <b>상위권 3명</b> — 이름 마스킹 + <b>블러 처리</b> · 순위·점수 표시<br>
+            구분선 <b>"{a}위 – {b}위"</b><br>
+            <b>내 순위 행</b> — 다크 배경 강조 · 마스킹·블러 없음 · <b>"{이름} (나)"</b><br>
+            하단 아바타 3개 + <b>"아래로 {N}명이 더 함께했어요"</b>
+            <span class="ds">내 뒤 참여자는 개별 표시하지 않음</span></div>
+          <div class="db"><span class="tag t-blue">이름 마스킹 <span class="pr">P08</span></span>
+            가운데 글자 <b>*</b> 처리 (박<b>*</b>현 / 두 글자는 박<b>*</b>)
+            <span class="ds"><b>서버에서 마스킹된 값</b>을 내려야 함. 클라이언트 블러는 개발자 도구로 뚫림</span></div>
+          <div class="db"><span class="tag t-warn">본인이 1~3위</span> 상위권 블러 영역에 본인이 포함되지 않도록 처리 필요</div>
+          <div class="db"><span class="tag t-gray">랭킹 산출 불가 <span class="pr">P03</span></span> 카드 미노출</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">서버 마스킹 필수</td></tr>
+
+      <tr><td class="c-no">7</td><td class="c-type">텍스트<br>+아이콘</td><td class="c-name">스크롤 유도 힌트</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 공통 컴포넌트</div></td>
+        <td class="c-nav">↓ 다음 섹션</td><td class="c-note">공통 컴포넌트</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════ 05 마음기록 ══════════════ -->
+<div class="doc">
+  <div class="screen-header">
+    <div><div class="sid">SC-RP-05</div><div class="stitle">마음의 기록 · 마음은 어떻게 지나갔을까요</div></div>
+    <div class="sright">Depth 1 · 단일 뷰포트 · 스크롤 없음</div>
+  </div>
+  <div class="sub-header">
+    <div class="badge">화면ID <b>SC-RP-05</b></div>
+    <div class="badge">Depth <b>1</b></div>
+    <div class="badge">데이터소스 <b>S1(mind) · S6(gds-sf)</b></div>
+    <div class="badge hl">검사 <b>GDS-SF 단독</b></div>
+    <div class="badge">버전 <b>v2.0</b></div>
+  </div>
+
+  <div class="dsbox">
+    <div class="t">📐 지표별 데이터 소스 정의</div>
+    <div class="row"><span class="lab">기록한 날</span><span class="val">S1 <code>content_group='mind'</code> · <code>activity_date_kst</code> distinct 날짜 수</span></div>
+    <div class="row"><span class="lab">해본 마음 활동</span><span class="val">완료 기록이 있는 마음 활동 <code>material_code</code> distinct 수</span></div>
+    <div class="row"><span class="lab">우울 검사</span><span class="val">S6 <code>gds-sf</code> <b>단독</b> (0~15점, 높을수록 우울 심함)</span></div>
+    <div class="row"><span class="lab">게이지 구간</span><span class="val"><b>양호 0~4 / 주의 5~9 / 위험 10~15</b> (임상 기준)</span></div>
+    <div class="row"><span class="lab">시작 / 종료</span><span class="val">시작 = 기수 초 측정값 · 종료 = <b>10월 30일 재검사</b> 측정값</span></div>
+    <div class="note">⚠ 우울(gds-sf)과 스트레스(pss)를 <b>합산·평균하지 않습니다.</b> 근거가 없어 우울 단독으로 표시합니다</div>
+  </div>
+
+  <table>
+    <thead><tr><th class="c-no">No</th><th class="c-type">구분</th><th class="c-name">명칭</th><th>설명 / 상태 처리</th><th class="c-nav">화면전환</th><th class="c-note">비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c-no">1</td><td class="c-type">배지<br>+텍스트</td><td class="c-name">섹션 배지<br>+ 메인 헤딩</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 배지 <b>"마음의 기록"</b> + 헤딩 <b>"마음은 어떻게 지나갔을까요"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">하드코딩 허용</td></tr>
+
+      <tr><td class="c-no">2</td><td class="c-type">카드</td><td class="c-name">기록한 날</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"기록한 날"</b> + <b>"{N}일"</b>
+          <span class="ds">마음 활동 참여 <b>일수</b>. 횟수 아님</span></div>
+          <div class="db"><span class="tag t-warn">0일</span> <b>"0일"</b> <span class="pr">P02</span></div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 좌측</td></tr>
+
+      <tr><td class="c-no">3</td><td class="c-type">카드</td><td class="c-name">해본 마음 활동</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"해본 마음 활동"</b> + <b>"{N}종"</b>
+          <span class="ds">전체 종수 표기는 <b>하지 않습니다</b>. 종류 수만 표시</span></div>
+          <div class="db"><span class="tag t-warn">0종</span> <b>"0종"</b> <span class="pr">P02</span></div>
+          <div class="di">감정 데이터가 없어 감정 표시는 불가. 활동 종류 수로 대체</div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 우측 · 전체 종수 미표기</td></tr>
+
+      <tr><td class="c-no">4</td><td class="c-type">카드<br>+차트</td><td class="c-name">우울·스트레스 검사<br>(반원 게이지)</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상 (시작·종료 모두 있음)</span>
+            제목 <b>"우울·스트레스 검사"</b><br>
+            <b>"{시작}점 → {종료}점"</b> — 종료값 브랜드 컬러 강조<br>
+            반원 게이지 3구간 <b>양호(좌) / 주의(상단) / 위험(우)</b><br>
+            <b>실선 바늘</b> = 종료 시점 · <b>점선 마커 + "3월"</b> = 시작 시점<br>
+            하단 상태 <b>"{양호/주의/위험}"</b> 대형 + 설명 문구
+            <span class="ds">바늘은 시작점에서 현재값으로 회전하는 애니메이션</span></div>
+          <div class="db"><span class="tag t-warn">재검사 미참여</span>
+            <b>점선 마커만</b> 표시 · 실선 바늘·상태 레이블 미노출<br>
+            점수는 <b>"{시작}점 → -점"</b></div>
+          <div class="db"><span class="tag t-gray">검사 기록 없음 <span class="pr">P03</span></span>
+            게이지 배경 아크만 · <b>"-점 → -점"</b> · 상태 미노출</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">GDS-SF 단독</td></tr>
+
+      <tr><td class="c-no">5</td><td class="c-type">카드</td><td class="c-name">알려드려요<br>(안내 문구)</td>
+        <td>
+          <div class="db" style="font-weight:700;color:#1d4ed8;font-size:12px">우울 점수 시작 → 종료 비교로 <b>4종 분기</b> <span class="pr">P13</span></div>
+          <div class="db"><span class="tag t-ok">좋아진 경우</span>
+            <b>"마음이 한결 가벼워졌어요"</b><br>
+            "기록을 남기는 것만으로도 마음은 정리됩니다. 4기에도 하루 한 줄씩 함께해요."</div>
+          <div class="db"><span class="tag t-ok">유지된 경우</span>
+            <b>"마음의 균형을 잘 지키셨어요"</b><br>
+            "흔들리지 않고 지내는 것도 큰 힘입니다. 4기에도 이 리듬을 이어가요."</div>
+          <div class="db"><span class="tag t-warn">관리가 필요한 경우</span>
+            <b>"요즘 마음이 조금 무거우셨나 봐요"</b><br>
+            "혼자 견디지 않으셔도 됩니다. 가까운 분과 이야기를 나눠보세요. 4기에도 곁에서 함께할게요."
+            <span class="ds">P13 핵심 구간 — <b>"나빠졌다" "악화" 표현 절대 금지</b></span></div>
+          <div class="db"><span class="tag t-gray">검사 기록 없음</span>
+            <b>"다음엔 마음도 함께 살펴봐요"</b><br>
+            "검사 한 번이면 지금 마음이 어떤지 알 수 있어요. 4기에는 꼭 함께 확인해봐요."</div>
+          <div class="di">상단 소형 레이블 <b>"알려드려요"</b> 13px · 브랜드 컬러 배경 카드</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">4종 분기</td></tr>
+
+      <tr><td class="c-no">6</td><td class="c-type">카드</td><td class="c-name">마음 사진 모아보기<br>(빈 상태)</td>
+        <td>
+          <div class="db"><span class="tag t-ok">3기 전원 동일</span>
+            <b>점선 테두리</b> 박스 + 아이콘 44×44 + 중앙 정렬 문구<br>
+            <b>"마음 사진 모아보기"</b><br>
+            <b>"4기에는 그날의 사진도 함께 담아드릴게요"</b>
+            <span class="ds">3기에는 사진 저장·조회 기능이 없어 <b>전원 동일한 고정 문구</b>. 하드코딩 허용</span></div>
+          <div class="di">점선 테두리는 "아직 비어 있음"을 나타내는 시각 장치. <b>탭 동작 없음</b>(비활성)</div>
+          <div class="di" style="margin-top:3px">4기부터 이 자리가 실제 사진 그리드로 대체됩니다. <b>빈 상태 / 사진 있음</b> 두 상태로 설계해두면 재작업이 줄어듭니다</div>
+        </td>
+        <td class="c-nav">없음 (비활성)</td><td class="c-note">데이터 소스 없음</td></tr>
+
+      <tr><td class="c-no">7</td><td class="c-type">텍스트<br>+아이콘</td><td class="c-name">스크롤 유도 힌트</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 공통 컴포넌트</div></td>
+        <td class="c-nav">↓ 다음 섹션</td><td class="c-note">공통 컴포넌트</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════ 06 걸음수운동 ══════════════ -->
+<div class="doc">
+  <div class="screen-header">
+    <div><div class="sid">SC-RP-06</div><div class="stitle">한 걸음 더 · 얼마나 걸었을까요</div></div>
+    <div class="sright">Depth 1 · 단일 뷰포트 · 스크롤 없음</div>
+  </div>
+  <div class="sub-header">
+    <div class="badge">화면ID <b>SC-RP-06</b></div>
+    <div class="badge">Depth <b>1</b></div>
+    <div class="badge">데이터소스 <b>S7 step_count</b></div>
+    <div class="badge hl">커버리지 <b>96%</b></div>
+    <div class="badge">버전 <b>v2.0</b></div>
+  </div>
+
+  <div class="dsbox">
+    <div class="t">📐 지표별 데이터 소스 정의</div>
+    <div class="row"><span class="lab">총 걸음 수</span><span class="val">S7 <code>SUM(step_count)</code> · 기수 기간 내</span></div>
+    <div class="row"><span class="lab">걸은 날</span><span class="val"><code>COUNT(DISTINCT stat_date)</code>
+      <span style="color:#6b7684">— <code>step_count=0</code>인 행은 존재하지 않으므로 행 수 = 걸은 날</span></span></div>
+    <div class="row"><span class="lab">하루 평균</span><span class="val">총 걸음 ÷ <b>걸은 날</b> (기간 전체 일수 아님)</span></div>
+    <div class="fx">하루 평균 = SUM(step_count) ÷ COUNT(DISTINCT stat_date)</div>
+    <div class="row"><span class="lab">목표 달성률</span><span class="val">하루 평균 ÷ <b>10,000보</b> × 100</span></div>
+    <div class="row"><span class="lab">거리</span><span class="val">총 걸음 × <b>0.7m</b> ÷ 1000 (km) <span class="pr">P11</span></span></div>
+    <div class="row"><span class="lab">칼로리</span><span class="val"><b>하루 평균</b> 걸음 × <b>0.04kcal</b> <span class="pr">P11</span></span></div>
+    <div class="note">⚠ 칼로리는 <b>총 걸음이 아니라 하루 평균</b> 기준입니다. 음식 개수는 <b>정수(내림)</b>로만 표기합니다 <span class="pr">P16</span></div>
+  </div>
+
+  <table>
+    <thead><tr><th class="c-no">No</th><th class="c-type">구분</th><th class="c-name">명칭</th><th>설명 / 상태 처리</th><th class="c-nav">화면전환</th><th class="c-note">비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c-no">1</td><td class="c-type">배지<br>+텍스트</td><td class="c-name">섹션 배지<br>+ 메인 헤딩</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 배지 <b>"한 걸음 더"</b> + 헤딩 <b>"얼마나 걸었을까요"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">하드코딩 허용</td></tr>
+
+      <tr><td class="c-no">2</td><td class="c-type">카드</td><td class="c-name">총 걸음 수</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"총 걸음 수"</b> + <b>"{N}보"</b>
+          <span class="ds">천 단위 콤마 필수. 카운트업 애니메이션</span></div>
+          <div class="db"><span class="tag t-warn">0보</span> <b>"0보"</b> <span class="pr">P02</span></div>
+          <div class="db"><span class="tag t-gray">걸음 미연동 <span class="pr">P03</span></span> <b>"-보"</b> · 카드 <b>점선 처리</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">미연동 시 점선</td></tr>
+
+      <tr><td class="c-no">3</td><td class="c-type">차트<br>+텍스트</td><td class="c-name">하루 평균<br>(다크 카드 · 도넛)</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상</span>
+            좌측 도넛 게이지 96×96 · 중앙 <b>"{P}%"</b><br>
+            우측 <b>"하루 평균"</b> + <b>"{N}보"</b> + <b>"하루 목표 10,000보 기준"</b>
+            <span class="ds">0에서 목표값까지 채워지는 애니메이션</span></div>
+          <div class="db"><span class="tag t-warn">목표 100% 초과 <span class="pr">P07</span></span>
+            링은 <b>100% 꽉 채움</b> + <b>실제 % 텍스트</b>(예 145%) + <b>"목표 초과"</b> 문구 병기
+            <span class="ds">아크가 한 바퀴를 넘어 그려지지 않도록 클램프 필수</span></div>
+          <div class="db"><span class="tag t-gray">걸음 미연동 <span class="pr">P03</span></span> 도넛 트랙만 · 중앙 <b>"-"</b></div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">100% 클램프 + 실제% 병기</td></tr>
+
+      <tr><td class="c-no">4</td><td class="c-type">카드</td><td class="c-name">거리 환산 ·<br>랜드마크</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상</span>
+            레이블 <b>"걸어온 거리로 보면"</b><br>
+            대형 <b>"{랜드마크 문구}"</b> — 지명은 브랜드 컬러 강조<br>
+            소형 <b>"{총걸음}보 ≈ {거리}km · 편도 450km 기준"</b><br>
+            하단 진행 바 + 좌우 지명 레이블
+            <span class="ds">진행 바는 좌→우 채우기 애니메이션. 장식 요소</span></div>
+          <div class="db"><span class="tag t-blue">표기 규칙 <span class="pr">P15</span></span>
+            <b>450km 이상</b> → "서울에서 <b>부산까지 N회</b> 걸었어요" · N은 <b>내림 정수</b><br>
+            <b>450km 미만</b> → km + 지명 병기</div>
+          <div class="db"><span class="tag t-gray">걸음 미연동 <span class="pr">P03</span></span> 카드 점선 처리 · 수치 "-"</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">450km 기준 · 내림</td></tr>
+
+      <tr><td class="c-no">5</td><td class="c-type">카드</td><td class="c-name">가장 많이 걸은 날</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"가장 많이 걸은 날"</b> + <b>"{N}보"</b>
+          <span class="ds"><code>MAX(step_count)</code> · 천 단위 콤마</span></div>
+          <div class="db"><span class="tag t-warn">동점 다수</span> 가장 최근 날짜 우선 <span class="pr">P05</span></div>
+          <div class="db"><span class="tag t-gray">미연동 <span class="pr">P03</span></span> <b>"-보"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 좌측</td></tr>
+
+      <tr><td class="c-no">6</td><td class="c-type">카드</td><td class="c-name">걸은 날</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"걸은 날"</b> + <b>"{N}일"</b>
+          <span class="ds">단위는 <b>"일"</b>. "회" 아님 — 데이터가 날짜 단위</span></div>
+          <div class="db"><span class="tag t-warn">0일</span> <b>"0일"</b> <span class="pr">P02</span></div></td>
+        <td class="c-nav">—</td><td class="c-note">2열 우측 · "일" 단위</td></tr>
+
+      <tr><td class="c-no">7</td><td class="c-type">카드</td><td class="c-name">칼로리 · 음식 환산</td>
+        <td>
+          <div class="db"><span class="tag t-ok">정상</span>
+            좌측 음식 아이콘 46×46 + 우측 텍스트<br>
+            헤드라인 <b>"{음식} {N}개만큼 태웠어요"</b><br>
+            본문 <b>"하루 평균 {걸음}보를 걸으며 약 {칼로리}kcal를 소모했어요.<br>4기에도 이 리듬을 이어가면 좋겠어요!"</b></div>
+          <div class="db"><span class="tag t-blue">음식 구간 매핑 <span class="pr">P16</span></span>
+            하루 평균 칼로리 구간에 따라 <b>단위가 바뀝니다</b>. 개수는 <b>정수(내림)</b></div>
+          <table class="mt">
+            <thead><tr><th>칼로리 구간</th><th>음식</th><th class="n">1개 기준</th><th class="n">3기 인원</th></tr></thead>
+            <tbody>
+              <tr><td class="k">~150 kcal</td><td>귤</td><td class="n">40 kcal</td><td class="n">176명 (25.5%)</td></tr>
+              <tr class="hl"><td class="k">150~280</td><td>사과</td><td class="n">80 kcal</td><td class="n">293명 (42.4%)</td></tr>
+              <tr><td class="k">280~620</td><td>우유</td><td class="n">130 kcal</td><td class="n">220명 (31.8%)</td></tr>
+              <tr><td class="k">620~1,000</td><td>공깃밥</td><td class="n">300 kcal</td><td class="n">1명</td></tr>
+              <tr><td class="k">1,000~</td><td>라면</td><td class="n">500 kcal</td><td class="n">1명</td></tr>
+            </tbody>
+          </table>
+          <div class="db" style="margin-top:7px"><span class="tag t-fail">아이콘 로딩 실패</span> placeholder <span class="pr">PA10</span></div>
+          <div class="db"><span class="tag t-gray">걸음 미연동 <span class="pr">P03</span></span> 카드 미노출</div>
+          <div class="di">음식 아이콘 <b>5종</b> 에셋 필요. 현재 placeholder</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">하루 평균 기준 · 아이콘 5종</td></tr>
+
+      <tr><td class="c-no">8</td><td class="c-type">텍스트<br>+아이콘</td><td class="c-name">스크롤 유도 힌트</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 공통 컴포넌트</div></td>
+        <td class="c-nav">↓ 다음 섹션</td><td class="c-note">공통 컴포넌트</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════ 07 수료증 ══════════════ -->
+<div class="doc">
+  <div class="screen-header">
+    <div><div class="sid">SC-RP-07</div><div class="stitle">수료증 · 3분기</div></div>
+    <div class="sright">Depth 1 · 리포트 최종 화면 · CTA 포함</div>
+  </div>
+  <div class="sub-header">
+    <div class="badge">화면ID <b>SC-RP-07</b></div>
+    <div class="badge">Depth <b>1</b></div>
+    <div class="badge hl">분기 <b>A 수료 / B 부분참여 / C 기록없음</b></div>
+    <div class="badge">발급일 <b>2026-10-30</b></div>
+    <div class="badge">버전 <b>v2.0</b></div>
+  </div>
+
+  <div class="dsbox">
+    <div class="t">📐 수료 판정 및 분기</div>
+    <div class="fx">수료 = 참여일 ≥ 30일 &nbsp;(단독 기준 · 활동 건수 조건 없음)</div>
+    <table class="mt">
+      <thead><tr><th>분기</th><th>조건</th><th class="n">인원</th><th class="n">비율</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td class="k">A. 수료</td><td>참여일 30일 이상</td><td class="n">641명</td><td class="n">77.9%</td></tr>
+        <tr><td class="k">B. 부분 참여</td><td>참여일 1~29일</td><td class="n">154명</td><td class="n">18.7%</td></tr>
+        <tr><td class="k">C. 기록 없음</td><td>참여일 0일</td><td class="n">28명</td><td class="n">3.4%</td></tr>
+      </tbody>
+    </table>
+    <div class="note">📌 8/21 기준 · 기수 종료까지 증가 예정. 판정은 <b>참여일 원값</b>으로 하며 참여율 반올림값을 쓰지 않습니다</div>
+    <div class="note">⚠ <b>수료 여부를 화면에 직접 알리지 않습니다</b> <span class="pr">P10 P13</span>. "미수료" "미달" 등의 표현 금지. 시안 자체를 분기해 전달합니다</div>
+  </div>
+
+  <table>
+    <thead><tr><th class="c-no">No</th><th class="c-type">구분</th><th class="c-name">명칭</th><th>설명 / 상태 처리</th><th class="c-nav">화면전환</th><th class="c-note">비고</th></tr></thead>
+    <tbody>
+      <tr><td class="c-no">1</td><td class="c-type">배지</td><td class="c-name">상단 문구</td>
+        <td><div class="db"><span class="tag t-ok">A. 수료</span> <b>"수료를 축하드려요"</b></div>
+          <div class="db"><span class="tag t-warn">B. 부분 참여</span> <b>"함께해주셔서 고맙습니다"</b></div>
+          <div class="db"><span class="tag t-gray">C. 기록 없음</span> <b>"4기에도 함께해요!"</b></div>
+          <div class="di">중앙 정렬 pill. 3분기 모두 노출</div></td>
+        <td class="c-nav">—</td><td class="c-note">3분기</td></tr>
+
+      <tr><td class="c-no">2</td><td class="c-type">텍스트</td><td class="c-name">메인 헤딩</td>
+        <td><div class="db"><span class="tag t-ok">A</span> <b>"끝까지 함께해주셨어요"</b></div>
+          <div class="db"><span class="tag t-warn">B</span> <b>"이만큼 함께했어요"</b></div>
+          <div class="db"><span class="tag t-gray">C</span> <b>"다음 기수에서 만나요"</b></div></td>
+        <td class="c-nav">—</td><td class="c-note">3분기 · 중앙 정렬</td></tr>
+
+      <tr><td class="c-no">3</td><td class="c-type">카드</td><td class="c-name">증서 카드</td>
+        <td>
+          <div class="db"><span class="tag t-ok">공통 구조</span>
+            상단 <b>봉(rod) 장식 바</b> + 정사각 흰 카드<br>
+            위에서 내려오며 등장하는 애니메이션 + <b>컨페티</b>
+            <span class="ds">이 카드 영역이 <b>"저장하기"의 캡처 대상</b>. 독립 컨테이너로 구성</span></div>
+          <div class="db"><span class="tag t-blue">카드 내부 순서</span>
+            kicker(영문) → <b>제목</b> → 구분선 → <b>{이름} 님</b> → 본문 → 실적 → 구분선 → 기관명·발급일</div>
+          <div class="di">세로 비율 <b>1:1 고정</b>. 저장 이미지가 기기마다 달라지면 안 됨</div>
+        </td>
+        <td class="c-nav">—</td><td class="c-note">저장 캡처 대상</td></tr>
+
+      <tr><td class="c-no">4</td><td class="c-type">텍스트</td><td class="c-name">카드 제목</td>
+        <td><div class="db"><span class="tag t-ok">A</span> <b>"수 료 증"</b> · kicker <code>CERTIFICATE OF COMPLETION</code></div>
+          <div class="db"><span class="tag t-warn">B</span> <b>"참 여 기 록"</b> · kicker <code>RECORD OF PARTICIPATION</code></div>
+          <div class="db"><span class="tag t-gray">C</span> <b>제목 없음</b> · kicker <code>2026 MALLI BRAIN</code>만 노출
+            <span class="ds">C는 증서가 아니라 인사 카드이므로 제목을 붙이지 않습니다</span></div>
+          <div class="di">자간 넓힘(letter-spacing .24em) · serif 계열</div></td>
+        <td class="c-nav">—</td><td class="c-note">C는 제목 미노출</td></tr>
+
+      <tr><td class="c-no">5</td><td class="c-type">텍스트</td><td class="c-name">수료자 이름</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> <b>"{이름} 님"</b> — serif Bold 중앙 정렬</div>
+          <div class="db"><span class="tag t-warn">이름 미설정</span> <b>닉네임 → 실명 → "참여자님"</b></div>
+          <div class="di">수료증은 <b>전체 표기</b>. 커버(4글자 제한)와 다름</div></td>
+        <td class="c-nav">—</td><td class="c-note">전체 표기</td></tr>
+
+      <tr><td class="c-no">6</td><td class="c-type">텍스트</td><td class="c-name">본문</td>
+        <td><div class="db"><span class="tag t-ok">A</span> "2026년 맬리브레인 3기 치매예방 인지훈련 프로그램을<br><b>성실히 수료하였음을 증명합니다.</b>"</div>
+          <div class="db"><span class="tag t-warn">B</span> "2026년 맬리브레인 3기 치매예방 인지훈련 프로그램에<br><b>함께해 주셔서 고맙습니다.</b>"</div>
+          <div class="db"><span class="tag t-gray">C</span> "2026년 맬리브레인 3기에 등록해 주셔서 고맙습니다.<br><b>다음 기수에서는 꼭 함께해요!</b>"</div>
+          <div class="di">연도·기수만 동적. 나머지 고정</div></td>
+        <td class="c-nav">—</td><td class="c-note">3분기</td></tr>
+
+      <tr><td class="c-no">7</td><td class="c-type">텍스트</td><td class="c-name">참여 실적</td>
+        <td><div class="db"><span class="tag t-ok">A</span> <b>"함께한 날 {N}일"</b> — <b>분모 없음</b></div>
+          <div class="db"><span class="tag t-warn">B</span> <b>"함께한 날 {N}일 / 242일"</b> — <b>분모 표기</b>
+            <span class="ds">분모로 참여 정도를 전달. "미달" 같은 표현 없이 사실만 <span class="pr">P13</span></span></div>
+          <div class="db"><span class="tag t-gray">C</span> <b>실적 영역 전체 미노출</b>
+            <span class="ds">"0일"은 어떤 문구로 감싸도 상처가 됩니다 <span class="pr">P13</span></span></div>
+          <div class="di"><b>참여율(%)은 표기하지 않습니다.</b> 분모만으로 충분</div></td>
+        <td class="c-nav">—</td><td class="c-note">참여율 미표기</td></tr>
+
+      <tr><td class="c-no">8</td><td class="c-type">텍스트</td><td class="c-name">기관명 · 발급일</td>
+        <td><div class="db"><span class="tag t-ok">정상 · 3분기 공통</span>
+          <b>"인천 남동구 치매안심센터"</b><br>
+          <b>"발급일 2026년 10월 30일"</b>
+          <span class="ds">기관명은 <b>서버 설정값</b>. 기획팀이 배포 없이 수정 가능해야 함</span></div>
+          <div class="di">기관 정식 명칭 확정 대기 · 로고·직인 삽입 여부 미정</div></td>
+        <td class="c-nav">—</td><td class="c-note">기관명 확정 대기</td></tr>
+
+      <tr><td class="c-no">9</td><td class="c-type">버튼</td><td class="c-name">저장하기</td>
+        <td><div class="db"><span class="tag t-ok">A</span> <b>"수료증 저장하기"</b> — 아웃라인 버튼</div>
+          <div class="db"><span class="tag t-warn">B</span> <b>"참여기록 저장하기"</b>
+            <span class="ds">라벨 문구 기획팀 확정 대기</span></div>
+          <div class="db"><span class="tag t-gray">C</span> <b>버튼 미노출</b> — 저장할 기록이 없음</div>
+          <div class="db"><span class="tag t-blue">구현 방식</span>
+            증서 카드(No.3)를 이미지로 저장. <b>서버 생성 권장</b>
+            <span class="ds">클라이언트 캡처는 기기·폰트에 따라 결과가 달라지고 웹폰트 미로드 시 깨짐</span></div>
+          <div class="db"><span class="tag t-fail">생성 실패</span> 토스트 <b>"저장에 실패했어요. 잠시 후 다시 시도해주세요."</b></div>
+          <div class="db"><span class="tag t-gray">처리 중</span> 버튼 비활성 + 로딩 · <b>중복 탭 방지</b></div></td>
+        <td class="c-nav">이미지 저장</td><td class="c-note">C는 미노출</td></tr>
+
+      <tr><td class="c-no">10</td><td class="c-type">버튼</td><td class="c-name">4기도 참여하기</td>
+        <td><div class="db"><span class="tag t-ok">정상 (모집 중)</span> Primary 버튼 · <b>"4기도 참여하기 →"</b> · 3분기 공통</div>
+          <div class="db"><span class="tag t-warn">모집 미시작</span> 비활성 + 문구 대체 또는 미노출 — 기획팀 확정</div>
+          <div class="db"><span class="tag t-warn">이미 신청 완료</span> <b>"4기 신청 완료"</b> + 비활성</div>
+          <div class="di">리포트 발행 시점에 4기 모집이 확정되지 않았을 수 있어 <b>사전 정의 필수</b></div></td>
+        <td class="c-nav">차기 기수<br>신청 페이지</td><td class="c-note">링크 확정 대기</td></tr>
+
+      <tr><td class="c-no">11</td><td class="c-type">버튼</td><td class="c-name">홈으로 돌아가기</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> Secondary 버튼 · 3분기 공통 · 탭 시 앱 홈 이동</div>
+          <div class="di">리포트 재진입 경로가 홈에 있는지 확인 필요</div></td>
+        <td class="c-nav">앱 홈</td><td class="c-note">재진입 경로 확인</td></tr>
+
+      <tr><td class="c-no">12</td><td class="c-type">효과</td><td class="c-name">컨페티</td>
+        <td><div class="db"><span class="tag t-ok">정상</span> 섹션 진입 시 1회 낙하 · 34조각 · 브랜드 컬러 계열
+          <span class="ds">pointer-events 없음 · <b>reduced-motion 시 미실행</b></span></div>
+          <div class="db"><span class="tag t-blue">3분기 공통</span> C(기록 없음)에도 노출할지 <b>기획팀 확정 필요</b>
+            <span class="ds">축하 성격이라 C에는 빼는 것도 검토 가능</span></div></td>
+        <td class="c-nav">—</td><td class="c-note">C 노출 여부 확정 필요</td></tr>
+
+      <tr><td class="c-no">13</td><td class="c-type">—</td><td class="c-name">스크롤 유도 힌트</td>
+        <td><div class="db"><span class="tag t-gray">미노출</span> 리포트 <b>최종 화면</b>이므로 스크롤 힌트를 넣지 않습니다</div></td>
+        <td class="c-nav">—</td><td class="c-note">최종 화면</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
+
+</body></html>

@@ -1,0 +1,290 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>어드민 두 갈래 비교</title>
+<style>
+:root{
+  --brand:#13BD7E; --brand-50:#E7F9F1; --brand-200:#6BDCAF; --brand-700:#077A50;
+  --pur-50:#F4F3FF; --pur-fg:#5925DC; --pur-dot:#7A5AF8;
+  --g25:#FCFCFD; --g50:#F9FAFB; --g100:#F2F4F7; --g200:#EAECF0; --g300:#D0D5DD;
+  --g400:#98A2B3; --g500:#667085; --g700:#344054; --g900:#101828;
+  --page:#F7F8FA; --card:#fff;
+  --ok-bg:#ECFDF3; --ok-fg:#067647; --ok-dot:#17B26A;
+  --wa-bg:#FFFAEB; --wa-fg:#B54708; --wa-dot:#F79009;
+  --cr-bg:#FEF3F2; --cr-fg:#B42318; --cr-dot:#F04438;
+  --in-bg:#EFF8FF; --in-fg:#175CD3; --in-dot:#2E90FA;
+  --nu-bg:#F2F4F7; --nu-fg:#475467; --nu-dot:#98A2B3;
+  --hair:1px solid #EAECF0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--page);color:var(--g900);
+  font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+  font-size:14px;line-height:1.6;letter-spacing:-.011em;font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;padding:36px 20px 80px}
+.wrap{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+
+header .eyebrow{font-size:12.5px;font-weight:600;color:var(--brand-700);letter-spacing:.02em}
+header h1{font-size:28px;font-weight:700;letter-spacing:-.04em;margin-top:6px;text-wrap:balance}
+header p{font-size:14px;color:var(--g500);margin-top:8px;max-width:70ch}
+
+.card{background:var(--card);border:var(--hair);border-radius:10px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card-h{padding:18px 22px 14px;border-bottom:var(--hair)}
+.card-t{font-size:16px;font-weight:700;letter-spacing:-.024em}
+.card-d{font-size:13px;color:var(--g500);margin-top:4px}
+.card-b{padding:20px 22px}
+h2{font-size:20px;font-weight:700;letter-spacing:-.032em;margin-top:10px}
+h2 .sub{font-size:13px;font-weight:400;color:var(--g500);margin-left:8px;letter-spacing:-.011em}
+
+.tag{height:22px;padding:0 8px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:-.004em;
+  display:inline-flex;align-items:center;gap:5px;white-space:nowrap;vertical-align:1px}
+.dot{width:6px;height:6px;border-radius:999px;flex:none}
+.t-ok{background:var(--ok-bg);color:var(--ok-fg)} .t-ok .dot{background:var(--ok-dot)}
+.t-wa{background:var(--wa-bg);color:var(--wa-fg)} .t-wa .dot{background:var(--wa-dot)}
+.t-cr{background:var(--cr-bg);color:var(--cr-fg)} .t-cr .dot{background:var(--cr-dot)}
+.t-in{background:var(--in-bg);color:var(--in-fg)} .t-in .dot{background:var(--in-dot)}
+.t-nu{background:var(--nu-bg);color:var(--nu-fg)} .t-nu .dot{background:var(--nu-dot)}
+.t-pu{background:var(--pur-50);color:var(--pur-fg)} .t-pu .dot{background:var(--pur-dot)}
+
+code,.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;letter-spacing:0;
+  background:var(--g50);border:var(--hair);border-radius:5px;padding:1px 6px}
+
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:600px}
+th{height:38px;background:var(--g25);border-bottom:var(--hair);font-size:12.5px;font-weight:600;
+  color:var(--g500);text-align:left;padding:0 14px;white-space:nowrap}
+td{border-bottom:1px solid var(--g100);padding:11px 14px;font-size:13.5px;vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.c{text-align:center}
+.yes{color:var(--ok-fg);font-weight:700}
+.no{color:var(--g300)}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+.side{border:var(--hair);border-radius:10px;overflow:hidden;background:var(--card)}
+.side-h{padding:14px 18px;font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:8px}
+.side-h.r{background:var(--pur-50);color:var(--pur-fg)}
+.side-h.l{background:var(--brand-50);color:var(--brand-700)}
+.side-b{padding:14px 18px;font-size:13.5px;color:var(--g700);display:flex;flex-direction:column;gap:8px}
+.side-b .k{font-size:12.5px;color:var(--g500)}
+
+ol.cf{list-style:none;display:flex;flex-direction:column}
+ol.cf>li{padding:18px 0;border-bottom:1px solid var(--g100)}
+ol.cf>li:last-child{border-bottom:none}
+ol.cf>li:first-child{padding-top:2px}
+.cf-t{font-size:15px;font-weight:700;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+@media (max-width:640px){.vs{grid-template-columns:1fr}}
+.vs>div{border-radius:8px;padding:12px 14px;font-size:13px}
+.vs .a{background:var(--pur-50);color:#42307D}
+.vs .b{background:var(--brand-50);color:#065C3D}
+.vs .lbl{font-size:11.5px;font-weight:700;letter-spacing:.02em;opacity:.75;display:block;margin-bottom:4px}
+.why{font-size:13.5px;color:var(--g700);margin-top:11px}
+.why b{color:var(--g900)}
+
+.note{border-left:3px solid var(--brand-200);background:var(--brand-50);border-radius:0 8px 8px 0;
+  padding:13px 16px;font-size:13.5px;color:#065C3D}
+.note.cr{border-left-color:var(--cr-dot);background:var(--cr-bg);color:var(--cr-fg)}
+.note.in{border-left-color:var(--in-dot);background:var(--in-bg);color:var(--in-fg)}
+.note.wa{border-left-color:var(--wa-dot);background:var(--wa-bg);color:var(--wa-fg)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.stat{background:var(--card);border:var(--hair);border-radius:10px;padding:16px 18px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.stat .l{font-size:13px;color:var(--g500);font-weight:500}
+.stat .v{font-size:28px;font-weight:700;letter-spacing:-.04em;margin-top:5px;line-height:1.1}
+.stat .s{font-size:12.5px;color:var(--g500);margin-top:3px}
+footer{font-size:12.5px;color:var(--g500);border-top:var(--hair);padding-top:16px;line-height:1.7}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">admin_meli.health</div>
+  <h1>어드민 두 갈래 비교</h1>
+  <p>같은 프로토타입에서 갈라진 두 버전이 저장소 안에 따로 있습니다. 무엇이 어디에 있고 어디가 부딪히는지 정리했습니다.
+     <b>충돌 3건</b>이 핵심이고, 나머지는 합치면 그냥 더해집니다.</p>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="l">원격에만 있는 것</div><div class="v">11</div><div class="s">슈퍼 화면 · 문서 · 배포</div></div>
+  <div class="stat"><div class="l">로컬에만 있는 것</div><div class="v">14</div><div class="s">민감정보 · 그룹 · 권한</div></div>
+  <div class="stat"><div class="l">정면 충돌</div><div class="v" style="color:var(--cr-fg)">3</div><div class="s">같은 걸 다르게 결정</div></div>
+  <div class="stat"><div class="l">공통 조상</div><div class="v" style="color:var(--g400)">없음</div><div class="s">히스토리만 끊김</div></div>
+</div>
+
+<!-- 계보 -->
+<section class="card">
+  <div class="card-h"><div class="card-t">왜 갈라졌나</div></div>
+  <div class="card-b" style="display:flex;flex-direction:column;gap:13px">
+    <p><b>내용은 같은 뿌리입니다.</b> 원격 <span class="code">index.html</span>에 제 프로토타입과 똑같은 모달과 문구가 그대로 있습니다 —
+      탈퇴 처리, 세부 운동, 채널 전환, 명단 내려받기. 원격은 그 프로토타입을 <b>모듈로 쪼개고 발전시킨 버전</b>입니다.</p>
+    <div class="note cr"><b>히스토리가 끊긴 건 제 실수입니다.</b> 이번 세션 첫 턴에 이 폴더가 git 저장소가 아니어서
+      <span class="code">git init</span>을 새로 했습니다. 그때 원격을 먼저 확인했어야 했는데 안 했습니다.
+      그래서 <span class="code">merge-base</span>가 비어 있습니다 — 파일은 친척인데 족보만 없는 상태예요.</p>
+    <div class="split">
+      <div class="side"><div class="side-h r">원격 <span class="tag t-pu"><span class="dot"></span>main · 13커밋</span></div>
+        <div class="side-b">
+          <div><span class="k">기간</span> 2026-08-24 ~ 08-25</div>
+          <div><span class="k">구조</span> 모듈 분리 28파일 · <span class="code">assets/js/views-*.js</span></div>
+          <div><span class="k">배포</span> GitHub Pages + Actions 운영 중</div>
+          <div><span class="k">문서</span> 5종 (정책 정의서·권고안·QA·시연)</div>
+        </div></div>
+      <div class="side"><div class="side-h l">로컬 <span class="tag t-ok"><span class="dot"></span>이번 세션 · 6커밋</span></div>
+        <div class="side-b">
+          <div><span class="k">기간</span> 2026-10-16 (오늘)</div>
+          <div><span class="k">구조</span> 단일 HTML</div>
+          <div><span class="k">배포</span> 없음</div>
+          <div><span class="k">문서</span> 민감정보 법령 대조표 1종</div>
+        </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 충돌 -->
+<h2>정면 충돌 3건 <span class="sub">합치기 전에 어느 쪽을 택할지 정해야 합니다</span></h2>
+<section class="card"><div class="card-b">
+  <ol class="cf">
+    <li>
+      <div class="cf-t">① 원문 열람에 사유를 받을 것인가 <span class="tag t-cr"><span class="dot"></span>정반대</span></div>
+      <div class="vs">
+        <div class="a"><span class="lbl">원격 · P-4 개정 (2026-08-24)</span>
+          <b>사유 입력 폐지.</b> 클릭하면 즉시 원문이 보이고 기록만 자동으로 남습니다.
+          통제를 <b>사후 감사</b>로 옮겼습니다 — 슈퍼어드민의 <b>이상 열람 탐지</b>(단시간 과다·심야·대량)가 오남용을 잡습니다.</div>
+        <div class="b"><span class="lbl">로컬 · 오늘 작업</span>
+          <b>사유 필수.</b> 행을 누르면 사유를 고르고 바로 상세가 열립니다.
+          사유 코드는 맬리 본서비스 확정 8종 + 케어센터 4종.</div>
+      </div>
+      <div class="why"><b>원격 문서가 이미 단서를 달아놨습니다</b> — “보건소 점검에서 열람별 사유 증빙을 요구하면 이 결정은 재검토가 필요하다”.
+        법으로만 보면 <b>원격이 위반은 아닙니다.</b> 고시가 접속기록에 요구하는 건 계정·일시·접속지·정보주체·수행업무이고 <b>사유는 명시 항목이 아닙니다.</b>
+        다만 두 가지가 걸립니다 — 위·수탁 감독 점검표에서 요구할 수 있고, <b>맬리 본서비스가 이미 사유를 받고 있습니다.</b>
+        “맬리와 컨셉을 맞춘다”는 목표와 정면으로 부딪히는 지점입니다.</div>
+    </li>
+
+    <li>
+      <div class="cf-t">② 판정 기준을 바꾸면 과거 숫자도 바뀌는가 <span class="tag t-cr"><span class="dot"></span>제 구현이 권고 위반</span></div>
+      <div class="vs">
+        <div class="a"><span class="lbl">원격 · SP-4 권고 “★ 가장 위험”</span>
+          <b>소급하지 않는다.</b> 기준에 적용 시작일(버전)을 두고, 그 이전 검사는 당시 등급을 보존.
+          화면에 “이 등급은 ○○ 기준으로 판정됨” 표시. <b>단, 오류 정정은 소급.</b></div>
+        <div class="b"><span class="lbl">로컬 · 오늘 작업</span>
+          채널 설정에서 경고/위험 일수를 바꾸면 <b>오늘·참여자·활동 현황·판정 기준 탭이 즉시 전부</b> 바뀝니다.
+          버전 개념 없음.</div>
+      </div>
+      <div class="why"><b>제가 만든 게 원격이 경고한 사고를 그대로 일으킵니다.</b>
+        원격 문서의 표현을 그대로 옮기면 — “저번에 주신 자료엔 위험군이 34명이었는데 지금 41명입니다”에 답할 방법이 없습니다.
+        위험군 등급은 임상 판단 근거로 쓰이고, 과거 판단 근거를 사후에 바꾸는 건 기록 조작에 가깝습니다.
+        <b>제 쪽이 틀렸습니다.</b> 지표 일원화는 유지하되 <b>기준 버전</b>을 얹어야 합니다.</div>
+    </li>
+
+    <li>
+      <div class="cf-t">③ 슈퍼어드민을 어떻게 분리할 것인가 <span class="tag t-wa"><span class="dot"></span>접근이 다름</span></div>
+      <div class="vs">
+        <div class="a"><span class="lbl">원격</span>
+          <b>별도 앱.</b> <span class="code">/super/</span> 경로에 자체 HTML·CSS·JS.
+          <b>보라 + 다크 크롬</b>으로 통째로 다르게 보이게 했습니다.
+          이유가 취향이 아니라 <b>안전장치</b> — 헷갈리면 전 채널 오발송이 납니다.</div>
+        <div class="b"><span class="lbl">로컬</span>
+          <b>같은 앱의 표면 전환.</b> 상단 토글로 메뉴 트리만 바꿉니다.
+          맬리 본서비스의 <span class="code">/admin</span> ↔ <span class="code">/manager</span> 권한코드 쌍 구조를 따라간 것입니다.</div>
+      </div>
+      <div class="why">둘 다 근거가 있습니다. 원격은 <b>오조작 방지</b>, 로컬은 <b>맬리 규격 정합</b>.
+        <b>양립 가능합니다</b> — 코드는 한 벌로 두되 슈퍼 표면일 때 크롬을 다크·보라로 바꾸면 둘 다 얻습니다.</div>
+    </li>
+  </ol>
+</div></section>
+
+<!-- 화면 비교 -->
+<h2>화면 <span class="sub">겹치는 건 같은 화면, 한쪽만 있는 건 합치면 더해집니다</span></h2>
+
+<section class="card">
+  <div class="card-h"><div class="card-t">채널 어드민</div>
+    <div class="card-d">원격 10개 · 로컬 14개. 로컬이 이번 세션에서 4개 늘었습니다.</div></div>
+  <div class="card-b" style="padding-top:0">
+    <div class="tw"><table>
+      <thead><tr><th>화면</th><th class="c" style="width:90px">원격</th><th class="c" style="width:90px">로컬</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>오늘 · 참여자 · 활동 현황 · 상담실</td><td class="c yes">●</td><td class="c yes">●</td><td class="code" style="border:none;background:none;color:var(--g500)">공통</td></tr>
+        <tr><td>프로그램 일정 · 챌린지 · 푸시 · 월간 리포트</td><td class="c yes">●</td><td class="c yes">●</td><td class="code" style="border:none;background:none;color:var(--g500)">공통</td></tr>
+        <tr><td>참여 신청 · 열람 기록</td><td class="c yes">●</td><td class="c yes">●</td><td class="code" style="border:none;background:none;color:var(--g500)">공통</td></tr>
+        <tr><td><b>프로그램 그룹</b></td><td class="c no">—</td><td class="c yes">●</td><td>기수·상시반·코호트 통합 + 계층</td></tr>
+        <tr><td><b>채널 설정</b></td><td class="c no">—</td><td class="c yes">●</td><td>보고 서식·판정 기준·보존기간</td></tr>
+        <tr><td><b>운영자</b></td><td class="c no">—</td><td class="c yes">●</td><td>자기 채널만 · 부관리자 초대</td></tr>
+        <tr><td><b>수렴 설계</b></td><td class="c no">—</td><td class="c yes">●</td><td>맬리 통합 구조 문서 화면</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-h"><div class="card-t">슈퍼어드민</div>
+    <div class="card-d">원격이 훨씬 넓습니다. 로컬은 필요한 것만 최소로 그렸습니다.</div></div>
+  <div class="card-b" style="padding-top:0">
+    <div class="tw"><table>
+      <thead><tr><th>화면</th><th class="c" style="width:90px">원격</th><th class="c" style="width:90px">로컬</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>채널 관리 / 채널 현황</td><td class="c yes">●</td><td class="c yes">●</td><td>이름만 다름</td></tr>
+        <tr><td>기수 관리 / 프로그램 그룹</td><td class="c yes">●</td><td class="c yes">●</td><td><b>로컬이 계층·상시형까지</b></td></tr>
+        <tr><td>계정·권한 / 운영자 관리</td><td class="c yes">●</td><td class="c yes">●</td><td><b>로컬이 자리별 주/부</b></td></tr>
+        <tr><td><b>운영 현황</b> (슈퍼 대시보드)</td><td class="c yes">●</td><td class="c no">—</td><td>로컬엔 없음</td></tr>
+        <tr><td><b>프로그램 편성 · 콘텐츠 · 챌린지</b></td><td class="c yes">●</td><td class="c no">—</td><td>로컬엔 없음</td></tr>
+        <tr><td><b>CS 접수 · 전 채널 발송</b></td><td class="c yes">●</td><td class="c no">—</td><td>로컬엔 없음</td></tr>
+        <tr><td><b>이상 열람 탐지</b></td><td class="c yes">●</td><td class="c no">—</td><td>단시간 과다·심야·대량</td></tr>
+        <tr><td><b>미그룹 회원</b></td><td class="c no">—</td><td class="c yes">●</td><td>B2C 경계</td></tr>
+        <tr><td><b>코호트 분석</b></td><td class="c no">—</td><td class="c yes">●</td><td>그룹별 잔존율</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 한쪽만 -->
+<h2>한쪽에만 있는 것 <span class="sub">충돌 없이 그대로 더해집니다</span></h2>
+<div class="split">
+  <div class="side"><div class="side-h r">원격에만</div>
+    <div class="side-b">
+      <div><b>배포 파이프라인</b><span class="k">GitHub Pages + Actions · 에셋 버전 쿼리로 캐시 혼합 차단</span></div>
+      <div><b>모듈 구조</b><span class="k">core / views-people / views-program / views-report 분리</span></div>
+      <div><b>정책 정의서</b><span class="k">권한·개인정보·참여자 상태·참여 신청 확정 규칙</span></div>
+      <div><b>미결 정책 권고안</b><span class="k">슈퍼 SP-1~8 + 채널 OP-1~11, 결정 요약표 포함</span></div>
+      <div><b>QA 리포트</b><span class="k">WCAG 2.1 AA 검사 · 발견 6건 조치 내역</span></div>
+      <div><b>시연 시나리오</b><span class="k">기관 시연 10분 대본 + 예상 질문</span></div>
+      <div><b>이상 열람 탐지</b><span class="k">사유 폐지의 대안</span></div>
+    </div></div>
+  <div class="side"><div class="side-h l">로컬에만</div>
+    <div class="side-b">
+      <div><b>민감정보 대응 10건</b><span class="k">세션 자동 차단 · 접속기록 5항목 · 월 1회 점검 · 위변조 · 별도 동의·철회</span></div>
+      <div><b>프로그램 그룹 모델</b><span class="k">기수형/상시형 × 계층 · 시설 가로지르기</span></div>
+      <div><b>자리별 권한</b><span class="k">역할이 계정이 아니라 (사람×자리)에 붙음 · 이전은 부관리자에게만</span></div>
+      <div><b>지표 단일 계산 지점</b><span class="k">판정 기준 탭이 계산의 출력 · 화면 간 불일치 구조적 차단</span></div>
+      <div><b>미그룹 경계</b><span class="k">합류 이전 기록을 데이터 소스에서 차단</span></div>
+      <div><b>4기 자동이월</b><span class="k">리포트 → 신청 적재 → 건별 승인</span></div>
+      <div><b>전역 검색 · 내 담당만 · 재발송 루프</b></div>
+      <div><b>법령 대조표</b><span class="k">민감정보 조항 기준 22항목</span></div>
+    </div></div>
+</div>
+
+<!-- 권고 -->
+<section class="card">
+  <div class="card-h"><div class="card-t">제 권고</div>
+    <div class="card-d">결정은 하지 않았습니다. 판단 재료만 드립니다.</div></div>
+  <div class="card-b" style="display:flex;flex-direction:column;gap:13px">
+    <div class="note"><b>원격을 기준으로 삼고 로컬 기능을 이식하는 쪽이 낫다고 봅니다.</b>
+      배포가 돌아가고 있고, 문서 5종이 개발 착수 기준 문서 역할을 합니다. 그건 다시 만들기 비쌉니다.
+      반대로 로컬 기능은 <b>옮기면 되는 성질</b>입니다 — 화면 단위로 떨어져 있어서요.</div>
+    <div class="note wa"><b>다만 충돌 ②는 제 쪽을 버려야 합니다.</b>
+      판정 기준 즉시 반영은 보건소 제출 숫자를 흔듭니다. 지표 일원화는 살리고 <b>기준 버전</b>을 얹는 게 맞습니다.</div>
+    <div class="note in"><b>충돌 ①은 사용자 결정 사항입니다.</b> 법적으로는 양쪽 다 가능하고,
+      <b>“맬리와 컨셉을 맞춘다”</b>는 목표를 어느 정도 무게로 볼지에 달렸습니다.
+      맬리 본서비스는 사유를 받습니다 — 거기에 맞추려면 로컬 쪽, 실사용 흐름을 우선하면 원격 쪽입니다.</div>
+    <div class="note"><b>충돌 ③은 둘 다 가집니다.</b> 코드 한 벌 + 슈퍼 표면일 때 크롬을 다크·보라로.</div>
+    <div class="note cr"><b>UI 리디자인은 병합 뒤에 하는 게 맞습니다.</b>
+      지금 로컬을 꾸미면 이식할 때 또 손봐야 합니다. 스마트스토어 레퍼런스 분석은 끝내뒀으니
+      대상만 정해지면 바로 들어갑니다.</div>
+  </div>
+</section>
+
+<footer>
+  <b>지금 상태</b> · 이번 세션 작업은 <span class="code">claude/prototype-2026-10</span> 브랜치에 올라가 있습니다.
+  원격 <span class="code">main</span>은 손대지 않았습니다. 아무것도 사라지지 않았고 되돌릴 수 있습니다.<br>
+  <b>확인 방법</b> · <span class="code">git log --oneline origin/main</span> · <span class="code">git diff origin/main origin/claude/prototype-2026-10 --stat</span>
+</footer>
+
+</div>
+
+</body></html>

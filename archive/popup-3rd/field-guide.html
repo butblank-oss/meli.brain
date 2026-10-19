@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>맬리브레인 보건소 팝업 · 현장 실행 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101A2E; --ink2:#3C4761; --mut:#6E7890; --faint:#98A0B4;
+  --paper:#F2F3F6; --card:#FFFFFF; --line:#DCDFE7; --line2:#EDEFF4;
+  --a:#15654A; --aBg:#E4F0EA; --aInk:#0E4633;
+  --b:#A85A0C; --bBg:#F8EEE0; --bInk:#7A420A;
+  --c:#9C2B2B; --cBg:#F7E6E6; --cInk:#722020;
+  --blue:#2244C4; --blueBg:#E3E9FB;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#EDEFF4; --ink2:#C3C9D6; --mut:#98A0B4; --faint:#6E7890;
+    --paper:#10141E; --card:#191F2C; --line:#2C3445; --line2:#232A38;
+    --a:#5FC79E; --aBg:#16302A; --aInk:#9EDCC2;
+    --b:#E0A050; --bBg:#332616; --bInk:#F0C68C;
+    --c:#E08080; --cBg:#331C1C; --cInk:#F0AFAF;
+    --blue:#7D9BF5; --blueBg:#1A2340;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#EDEFF4; --ink2:#C3C9D6; --mut:#98A0B4; --faint:#6E7890;
+  --paper:#10141E; --card:#191F2C; --line:#2C3445; --line2:#232A38;
+  --a:#5FC79E; --aBg:#16302A; --aInk:#9EDCC2;
+  --b:#E0A050; --bBg:#332616; --bInk:#F0C68C;
+  --c:#E08080; --cBg:#331C1C; --cInk:#F0AFAF;
+  --blue:#7D9BF5; --blueBg:#1A2340;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 62px)}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Gothic A1',-apple-system,BlinkMacSystemFont,'Malgun Gothic',system-ui,sans-serif;
+  font-weight:400; line-height:1.68; font-size:16px;
+  word-break:keep-all; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px 90px}
+
+/* nav */
+nav{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:50;
+  background:var(--paper); border-bottom:1px solid var(--line);
+  margin:0 -20px 0; padding:0 20px;
+}
+.navin{max-width:780px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:11px 0;scrollbar-width:none}
+.navin::-webkit-scrollbar{display:none}
+.navin a{
+  flex:0 0 auto;font-size:13.5px;font-weight:700;text-decoration:none;color:var(--ink2);
+  padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);
+}
+.navin a:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
+.navin a.ta{color:var(--aInk);background:var(--aBg);border-color:transparent}
+.navin a.tb{color:var(--bInk);background:var(--bBg);border-color:transparent}
+.navin a.tc{color:var(--cInk);background:var(--cBg);border-color:transparent}
+
+/* hero */
+header{padding:44px 0 8px}
+h1{font-size:13px;font-weight:700;color:var(--mut);margin:0 0 18px;letter-spacing:.01em}
+.lede{font-size:clamp(25px,5.6vw,36px);font-weight:800;line-height:1.36;letter-spacing:-.025em;margin:0 0 16px}
+.sub{font-size:16.5px;color:var(--ink2);margin:0 0 30px;max-width:56ch}
+.stamp{font-size:13px;color:var(--faint);border-top:1px solid var(--line);padding-top:12px;margin-bottom:38px}
+
+/* split bar */
+.split{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 20px;margin:0 0 14px}
+.splitlab{font-size:13px;font-weight:700;color:var(--mut);margin:0 0 12px}
+.bar{display:flex;height:46px;border-radius:7px;overflow:hidden;margin-bottom:10px}
+.seg{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;min-width:0;padding:0 2px;text-align:center;line-height:1.2}
+.leg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--ink2)}
+.leg span{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+.pivot{display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:0 4px}
+.pivot .ln{flex:1;height:1px;background:var(--line)}
+.pivot b{font-size:13.5px;font-weight:700;color:var(--blue)}
+
+h2{font-size:23px;font-weight:800;letter-spacing:-.02em;margin:52px 0 6px;line-height:1.35}
+h2 .n{color:var(--faint);font-weight:700;margin-right:9px}
+.h2sub{font-size:15px;color:var(--mut);margin:0 0 22px}
+h3{font-size:17.5px;font-weight:700;margin:30px 0 9px;letter-spacing:-.01em}
+p{margin:0 0 15px;max-width:66ch}
+ul{margin:0 0 16px;padding-left:19px;max-width:66ch}
+li{margin-bottom:7px}
+li::marker{color:var(--faint)}
+strong{font-weight:700}
+em{font-style:normal;background:var(--blueBg);color:var(--blue);padding:1px 5px;border-radius:4px;font-weight:700}
+
+.tblwrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:430px;font-size:14.5px}
+th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--line2)}
+th{font-weight:700;color:var(--mut);font-size:13px;background:var(--line2)}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+.note{border-left:3px solid var(--blue);background:var(--card);padding:16px 18px;border-radius:0 10px 10px 0;margin:0 0 20px}
+.note p:last-child{margin-bottom:0}
+.warn{border-left-color:var(--c)}
+.warn b{color:var(--cInk)}
+
+/* track blocks */
+.track{background:var(--card);border-radius:14px;padding:26px 22px 22px;margin:0 0 18px;border:1px solid var(--line);border-left:7px solid var(--tc)}
+.track.A{--tc:var(--a)} .track.B{--tc:var(--b)} .track.C{--tc:var(--c)}
+.thead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:4px}
+.tname{font-size:21px;font-weight:800;letter-spacing:-.02em;color:var(--tc)}
+.tcount{font-size:14px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums}
+.twho{font-size:14.5px;color:var(--ink2);margin:0 0 20px}
+.goal{display:flex;gap:13px;margin-bottom:15px}
+.grank{flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:var(--tc);color:var(--card);font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.gbody{min-width:0}
+.gbody b{display:block;font-size:16px;margin-bottom:2px}
+.gbody span{font-size:14.5px;color:var(--ink2)}
+.must{background:var(--paper);border-radius:10px;padding:15px 17px;margin-top:18px}
+.must h4{margin:0 0 8px;font-size:13.5px;font-weight:700;color:var(--mut)}
+.must ul{margin:0;padding-left:18px;font-size:14.5px}
+.must ul li{margin-bottom:5px}
+.dont{color:var(--cInk);font-size:14.5px;margin-top:14px;padding-top:13px;border-top:1px dashed var(--line)}
+.dont b{font-weight:700}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:0 0 11px;overflow:hidden}
+summary{padding:15px 18px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';color:var(--faint);font-weight:700;font-size:19px;flex:0 0 auto}
+details[open] summary::after{content:'−'}
+summary:focus-visible{outline:2.5px solid var(--blue);outline-offset:-3px}
+.dbody{padding:2px 18px 19px;border-top:1px solid var(--line2)}
+.dbody p:first-child{margin-top:14px}
+.q{margin:0 0 4px;font-weight:700;font-size:15.5px}
+.opts{font-size:14.5px;color:var(--ink2);margin:0 0 15px;padding-left:2px}
+
+.check{list-style:none;padding:0;margin:0 0 18px}
+.check li{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line2);margin:0;font-size:15.5px}
+.check li:last-child{border-bottom:none}
+.check .bx{flex:0 0 auto;width:19px;height:19px;border:2px solid var(--faint);border-radius:4px;margin-top:3px}
+
+footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:13.5px;color:var(--faint)}
+@media print{
+  nav{display:none} body{background:#fff;font-size:11.5pt}
+  .track,details,.split,.tblwrap{break-inside:avoid;box-shadow:none}
+  details{border:1px solid #ccc} details .dbody{display:block!important}
+}
+</style>
+</head>
+<body>
+<nav><div class="navin">
+  <a href="#why">왜 다시 나누나</a>
+  <a href="#a" class="ta">A 잘 쓰는 분</a>
+  <a href="#b" class="tb">B 멈춘 분</a>
+  <a href="#c" class="tc">C 못 써본 분</a>
+  <a href="#sheet">설문지</a>
+  <a href="#kpi">측정</a>
+  <a href="#open">확정할 것</a>
+</div></nav>
+
+<div class="wrap">
+
+<header>
+  <h1>맬리브레인 · 인천 남동구 보건소 오프라인 팝업</h1>
+  <p class="lede">이탈자 대부분은 그만둔 게 아니라, 시작을 못 했습니다.</p>
+  <p class="sub">기존 5개 세그먼트는 마지막 활동일 하나로만 나뉘어 있습니다. 누적 활동량을 같이 보면 이탈자 안에 성격이 전혀 다른 두 집단이 섞여 있고, 두 집단에 같은 질문을 하면 어느 쪽 원인도 분리되지 않습니다.</p>
+  <p class="stamp">기준 데이터 2026-09-14 재추출 · 3기 신규 대상자 657명(전체 734명 중 판정 가능분) · 현장 1일 운영 기준</p>
+</header>
+
+<div class="split">
+  <p class="splitlab">지금 쓰는 분류 (마지막 활동일 기준)</p>
+  <div class="bar">
+    <div class="seg" style="background:#15654A;flex:131">유지 131</div>
+    <div class="seg" style="background:#3E8F72;flex:26;font-size:10px">26</div>
+    <div class="seg" style="background:#A85A0C;flex:157">단기 157</div>
+    <div class="seg" style="background:#C8862F;flex:208">장기 208</div>
+    <div class="seg" style="background:#9C2B2B;flex:135">온보딩 135</div>
+  </div>
+  <div class="leg">
+    <span><i class="dot" style="background:#15654A"></i>유지 0~19일</span>
+    <span><i class="dot" style="background:#3E8F72"></i>이탈임박 20~30일</span>
+    <span><i class="dot" style="background:#A85A0C"></i>단기이탈 31~89일</span>
+    <span><i class="dot" style="background:#C8862F"></i>장기이탈 90일~</span>
+    <span><i class="dot" style="background:#9C2B2B"></i>온보딩실패 0건</span>
+  </div>
+</div>
+
+<div class="pivot"><div class="ln"></div><b>누적 활동량 20회를 기준으로 다시 자르면</b><div class="ln"></div></div>
+
+<div class="split">
+  <p class="splitlab">현장에서 쓸 분류 (얼마나 써봤나 기준)</p>
+  <div class="bar">
+    <div class="seg" style="background:#15654A;flex:157">A 157명</div>
+    <div class="seg" style="background:#A85A0C;flex:113">B 113명</div>
+    <div class="seg" style="background:#9C2B2B;flex:387">C 387명 (58.9%)</div>
+  </div>
+  <div class="leg">
+    <span><i class="dot" style="background:#15654A"></i>A 잘 쓰는 분</span>
+    <span><i class="dot" style="background:#A85A0C"></i>B 써보다 멈춘 분</span>
+    <span><i class="dot" style="background:#9C2B2B"></i>C 거의 못 써본 분</span>
+  </div>
+</div>
+
+<section id="why">
+<h2><span class="n">01</span>왜 다시 나누나</h2>
+<p class="h2sub">세그먼트별 누적 활동량 중앙값이 근거입니다.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th>세그먼트</th><th class="num">인원</th><th class="num">누적 활동 중앙값</th><th class="num">20회 이하</th><th class="num">100회 이상</th></tr></thead>
+<tbody>
+<tr><td>유지</td><td class="num">131</td><td class="num">193회</td><td class="num">-</td><td class="num">-</td></tr>
+<tr><td>이탈임박</td><td class="num">26</td><td class="num">112.5회</td><td class="num">5명</td><td class="num">14명</td></tr>
+<tr><td>단기이탈</td><td class="num">157</td><td class="num">13회</td><td class="num">93명</td><td class="num">19명</td></tr>
+<tr><td>장기이탈</td><td class="num">208</td><td class="num">6회</td><td class="num">159명</td><td class="num">11명</td></tr>
+<tr><td>온보딩실패</td><td class="num">135</td><td class="num">0회</td><td class="num">135명</td><td class="num">0명</td></tr>
+</tbody></table></div>
+
+<p>장기이탈 208명의 중앙값은 <em>6회</em>입니다. 76%가 총 20회 이하로, 하루 2~3개씩 잡아도 일주일치를 못 채운 양입니다. 이 사람들에게 "왜 그만두셨어요"라고 물으면 대답이 안 나옵니다. 그만둔 적이 없기 때문입니다.</p>
+
+<p>반대로 이탈임박 26명은 중앙값 112.5회, 26명 중 14명이 100회 이상입니다. 습관이 확실히 잡혔던 사람이 20~30일 멈춰 있는 상태로, 다섯 세그먼트 중 유일하게 진짜 이탈 중인 집단입니다. 인원은 가장 적지만 이탈 원인을 알아낼 수 있는 유일한 창구입니다.</p>
+
+<p>멈춘 시점 데이터도 같은 방향입니다. 이탈자 365명 중 <em>200명(54.8%)</em>이 사용 시작 후 7일을 못 채우고 멈췄습니다. 승부는 첫 주에 끝나 있습니다.</p>
+
+<h3>20회로 자르는 이유</h3>
+<p>맬리브레인은 하루에 게임과 마음과 운동을 묶어 2~3개 내보냅니다. 20회는 대략 일주일치입니다. 위의 7일 분포와 맞물려서, 20회 초과는 "일주일은 해본 사람", 20회 이하는 "일주일도 못 해본 사람"으로 갈립니다. 현장에서는 어드민 누적 활동량 숫자 하나만 보고 판정하면 됩니다.</p>
+
+<div class="note warn">
+<p><b>가장 먼저 정해야 할 것</b> 현재 설문지에 적힌 리워드 조건 "이번 주 내 접속 + 주 3일 이상 게임"은 이 일정에서 성립하지 않습니다. 행사일 10월 30일(금)이 3기 운영 마지막 날이고, 10월 31일에 수료증과 리포트가 나갑니다. 조건 기간이 기수 종료 이후에 걸립니다. 리워드는 4기 사전신청과 4기 초기 활동으로 다시 걸어야 합니다.</p>
+</div>
+
+<div class="note">
+<p><b>대신 생긴 무기</b> 행사 다음 날 수료증과 개인 리포트가 공개됩니다. 세 트랙 전부에게 "내일 어르신 기록이 나옵니다"가 리워드보다 강한 재접속 후크입니다. 특히 트랙 C는 리포트를 보려면 앱을 열어야 하므로, 현장에서 앱만 열어드리면 다음 날 자연 재방문이 생깁니다.</p>
+</div>
+</section>
+
+<section id="targets">
+<h2><span class="n">02</span>트랙별로 무엇을 얻어낼 것인가</h2>
+<p class="h2sub">트랙마다 알아내야 할 것이 다릅니다. 순위대로 물어보시고, 시간이 모자라면 아래쪽을 버리세요.</p>
+
+<div class="track A" id="a">
+  <div class="thead"><span class="tname">트랙 A · 잘 쓰는 분</span><span class="tcount">157명 (23.9%)</span></div>
+  <p class="twho">최근 30일 안에 쓴 분. 유지 131명 + 이탈임박 26명. 누적 활동 중앙값 193회.</p>
+
+  <div class="goal"><div class="grank">1</div><div class="gbody"><b>남은 이유를 말로 받아냅니다</b><span>회사는 "리텐션이 이례적으로 높다"는 사실만 알고 이유를 모릅니다. 76%를 움직이려면 남은 24%가 왜 남았는지가 먼저 필요합니다. 이 트랙에서 못 받으면 나머지 전부가 추측이 됩니다.</span></div></div>
+
+  <div class="goal"><div class="grank">2</div><div class="gbody"><b>4기 재등록을 그 자리에서 확정합니다</b><span>재등록자 158명의 활성률은 65.8%, 신규는 23.9%로 2.7배 차이입니다. 재등록 1명이 신규 2.7명 값을 합니다. 지금까지 확인된 리텐션 수단 중 가장 싸고 확실한 수단입니다.</span></div></div>
+
+  <div class="goal"><div class="grank">3</div><div class="gbody"><b>이탈임박 26명에게 무슨 일이 있었는지 봅니다</b><span>100회 넘게 쓰던 분이 20~30일 멈췄습니다. 병원, 여행, 폰 교체, 가족 일 같은 구체적 사건이 나올 확률이 높고, 이게 나중에 조기경보 알림을 설계할 때 유일한 원본 근거가 됩니다. 26명 전원 기록 필수입니다.</span></div></div>
+
+  <div class="must">
+    <h4>이 트랙에서 반드시 받아올 것</h4>
+    <ul>
+      <li>계속 쓰게 만든 이유 1개 (보기에서 고르게)</li>
+      <li>하루 중 언제 하는지, 혼자 하는지 같이 하는지</li>
+      <li>주말에도 하는지 (평일 대비 주말 사용이 3분의 1로 떨어지는 이유 확인)</li>
+      <li>4기 사전신청 의향과 서명</li>
+      <li>이탈임박 대상자는 최근 안 하신 이유를 반드시 추가로</li>
+    </ul>
+  </div>
+  <p class="dont"><b>하지 마세요</b> 만족도 5점 척도. 잘 쓰는 분에게 물으면 전원 4~5점이 나오고 쓸 데가 없습니다. 점수 대신 행동을 물으세요.</p>
+</div>
+
+<div class="track B" id="b">
+  <div class="thead"><span class="tname">트랙 B · 써보다 멈춘 분</span><span class="tcount">113명 (17.2%)</span></div>
+  <p class="twho">누적 20회를 넘겨 써봤지만 31일 이상 조용한 분. 단기이탈 중 64명 + 장기이탈 중 49명.</p>
+
+  <div class="goal"><div class="grank">1</div><div class="gbody"><b>끊긴 지점을 특정합니다</b><span>습관이 붙었다가 끊긴 유일한 집단입니다. 언제쯤 마지막으로 썼는지, 그 무렵 무슨 일이 있었는지가 이 이벤트 전체에서 가장 값진 정성 데이터입니다.</span></div></div>
+
+  <div class="goal"><div class="grank">2</div><div class="gbody"><b>게임별 이탈 원인을 갈라냅니다</b><span>데이터로는 이미 어느 게임에서 떨어지는지 보이는데, 어려워서인지 지루해서인지는 숫자로 구분이 안 됩니다. 중도포기가 높은 쪽(숫자 퍼즐 9X9 59.1%, 단어 기억하기 40.6%, 초성 퀴즈 39.4%)은 난이도 가설, 진입만 하고 안 하는 쪽(오늘의 장바구니 76.0%, 꿀벌의 숫자놀이 72.8%, 진짜 색깔 찾기 72.5%)은 방법을 모른다는 가설입니다. 사람에게 물어야만 갈립니다.</span></div></div>
+
+  <div class="goal"><div class="grank">3</div><div class="gbody"><b>마음 콘텐츠를 살릴지 접을지 판단합니다</b><span>마음은 중도포기 54.1%에 실행량이 게임의 8분의 1입니다. 운동은 완료율 84.8%로 멀쩡합니다. 마음만 유독 나쁜 이유를 들어야 개편인지 철수인지 정할 수 있습니다.</span></div></div>
+
+  <div class="must">
+    <h4>이 트랙에서 반드시 받아올 것</h4>
+    <ul>
+      <li>마지막으로 쓴 시기 (대략이면 충분)</li>
+      <li>그 무렵 있었던 일 (보기 제시: 몸이 안 좋아서 / 폰 바꿔서 / 집안일 / 재미가 없어져서 / 어려워서 / 그냥 잊어버려서 / 기타)</li>
+      <li>게임 카드를 보여주고 어려웠던 것 1개, 지루했던 것 1개</li>
+      <li>마음 콘텐츠를 왜 안 하게 되는지</li>
+      <li>무엇이 있으면 다시 할지</li>
+    </ul>
+  </div>
+  <p class="dont"><b>하지 마세요</b> "왜 안 쓰셨어요?" 를 열린 질문으로 단독 사용. 대면에서 이 질문은 "그냥요"로 끝납니다. 보기 카드를 먼저 보여드리고 고르게 한 다음에 이유를 되묻는 순서로 가세요.</p>
+</div>
+
+<div class="track C" id="c">
+  <div class="thead"><span class="tname">트랙 C · 거의 못 써본 분</span><span class="tcount">387명 (58.9%)</span></div>
+  <p class="twho">누적 20회 이하 이탈자 252명 + 실행 0건 135명. 이 이벤트의 실제 모수입니다.</p>
+
+  <div class="goal"><div class="grank">1</div><div class="gbody"><b>어디서 막혔는지 단계를 특정합니다</b><span>지금은 "안 썼다"는 것만 알고 설치인지 로그인인지 첫 화면인지 전혀 모릅니다. 앱을 직접 확인하면 1분 안에 답이 나옵니다. 전화로는 절대 못 얻는 정보이고, 오프라인으로 가는 이유가 여기에 있습니다.</span></div></div>
+
+  <div class="goal"><div class="grank">2</div><div class="gbody"><b>설문보다 조치가 먼저입니다</b><span>이 트랙은 묻는 게 아니라 켜드리는 자리입니다. 387명 중 몇 명을 그 자리에서 첫 게임까지 보냈느냐가 이 행사의 성과 지표입니다. 설문은 조치를 하면서 곁들이세요.</span></div></div>
+
+  <div class="goal"><div class="grank">3</div><div class="gbody"><b>명단을 정리합니다</b><span>폰이 없거나 바뀌었거나 본인이 조작을 못 하는 경우를 걸러내야 모수가 정확해집니다. 온보딩실패 135명 중 35명(25.9%)이 80대 이상입니다. 연령이 올라갈수록 진입 실패가 늘어나는 흐름이 뚜렷해서, 일부는 애초에 앱 대상이 아닐 수 있습니다. 이걸 확인해야 남은 인원에 대한 목표치가 현실적으로 잡힙니다.</span></div></div>
+
+  <div class="must">
+    <h4>이 트랙에서 반드시 받아올 것</h4>
+    <ul>
+      <li>폰에 앱이 있는지 (말이 아니라 직접 확인)</li>
+      <li>막힌 단계: 설치 / 로그인 / 첫 화면 / 아예 모름 / 폰 문제</li>
+      <li>현장 조치 결과와 첫 게임 실행 여부</li>
+      <li>평소 폰을 도와주는 가족이 있는지, 있다면 누구인지</li>
+      <li>본인이 계속하기 어려운 상태로 보이면 그 메모 (수치보다 중요)</li>
+    </ul>
+  </div>
+  <p class="dont"><b>하지 마세요</b> 앱 용어를 그대로 쓰는 질문. "온보딩", "콘텐츠", "채널", "활동 완료" 같은 말은 전부 빼고 "게임 한 판", "화면 열기", "글자 눌러보기"로 바꿔 말하세요.</p>
+</div>
+</section>
+
+<section id="hyp">
+<h2><span class="n">03</span>현장에서 확인할 가설</h2>
+<p class="h2sub">데이터가 여기까지는 말해주는데, 이유는 사람에게 물어야 합니다. 응대 중에 자연스럽게 끼워넣으세요.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th>데이터가 보여주는 것</th><th>확인할 것</th></tr></thead>
+<tbody>
+<tr><td>주말 사용이 무너집니다. 평일 하루 평균 54.4명, 주말 18.7명.</td><td>혼자서는 안 하게 되는지, 보건소 일정이 있는 날에만 하는지. A와 B에서.</td></tr>
+<tr><td>화면만 열고 아무것도 안 하는 게임이 있습니다. 오늘의 장바구니는 76%가 진입만 하고 끝납니다.</td><td>현장에서 그 게임을 직접 실행시켜 보세요. 방법을 모르는 건지 하기 싫은 건지 보면 바로 압니다.</td></tr>
+<tr><td>검사를 시작한 2,831건 중 완료는 720건, 25.4%입니다.</td><td>검사 화면에서 그만둔 기억이 있는지. 검사가 이탈 지점일 가능성.</td></tr>
+<tr><td>남성 96명 중 계속 쓰는 사람은 9명(9.4%), 여성은 561명 중 122명(21.7%)입니다.</td><td>남성 응답자는 별도 메모를 남기세요. 표본이 적어 한 명이 귀합니다.</td></tr>
+<tr><td>걸음 수는 무활동 5,158보, 이탈 5,758보, 활성 6,049보로 거의 차이가 없습니다.</td><td>"원래 활동적인 분이라 앱도 쓴다"는 설명은 힘을 잃습니다. 앱 쪽 요인이라는 뜻이니 앱 사용 경험을 파고드세요.</td></tr>
+<tr><td>추천된 활동 대비 실제 실행률은 활성층도 29.4%에 그칩니다.</td><td>하루에 뜨는 개수가 많다고 느끼는지, 뭘 해야 할지 헷갈리는지.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="sheet">
+<h2><span class="n">04</span>현장 설문지</h2>
+<p class="h2sub">공통 접수 후 트랙으로 분기합니다. 목표 소요시간은 A 3분, B 5분, C 8~12분입니다.</p>
+
+<details open><summary>S0. 접수와 트랙 판정 (전원 공통)</summary><div class="dbody">
+<p class="q">1. 성함과 생년 확인 후 어드민에서 조회</p>
+<p class="opts">조회 화면에서 볼 것: 마지막 활동일, 누적 활동 횟수. 이 두 숫자로 트랙이 정해집니다.</p>
+<p class="q">2. 트랙 판정</p>
+<p class="opts">최근 30일 안에 활동 → <b>A</b> / 누적 20회 초과 + 31일 이상 조용 → <b>B</b> / 누적 20회 이하 또는 0건 → <b>C</b></p>
+<p class="q">3. 개인정보 수집·이용 동의</p>
+<p class="opts">설문 응답 기록, 리워드 지급 및 배송 목적. 보건소 협의 양식 사용. 미동의 시 설문은 생략하고 앱 조치와 리워드만 진행.</p>
+<p class="q">4. 오늘 방문 경로</p>
+<p class="opts">문자 보고 옴 / 보건소 일정으로 왔다가 / 지인이 알려줌 / 지나가다 / 기타</p>
+</div></details>
+
+<details><summary>트랙 A · 잘 쓰는 분 (6문항, 3분)</summary><div class="dbody">
+<p class="q">A1. 맬리를 계속하게 되는 이유가 뭘까요? 하나만 골라주세요.</p>
+<p class="opts">기억력에 도움이 될 것 같아서 / 점수와 순위 보는 재미 / 하루 일과가 되어서 / 보건소에서 하라고 해서 / 게임 자체가 재미있어서 / 기타</p>
+<p class="q">A2. 보통 하루 중 언제 하세요?</p>
+<p class="opts">아침 / 점심 무렵 / 오후 / 저녁 / 정해진 때 없음</p>
+<p class="q">A3. 주말에도 하시나요?</p>
+<p class="opts">주말에도 한다 / 주말엔 잘 안 한다 → 안 하는 이유 한마디</p>
+<p class="q">A4. 혼자 하세요, 누구랑 같이 하세요?</p>
+<p class="opts">혼자 / 가족과 / 보건소 모임에서 / 친구와</p>
+<p class="q">A5. 내일 어르신 기록표가 나옵니다. 보실 수 있게 앱 열어드릴까요?</p>
+<p class="opts">현장에서 리포트 배너 위치까지 안내. 안내 완료 여부 체크.</p>
+<p class="q">A6. 다음 기수도 신청하시겠어요?</p>
+<p class="opts">신청 / 고민 중 → 이유 / 안 함 → 이유</p>
+<p class="q">A7. (이탈임박 대상자만, 필수) 최근 한 달쯤 안 하신 것 같은데 무슨 일 있으셨어요?</p>
+<p class="opts">몸이 안 좋아서 / 폰을 바꿔서 / 집안일이나 가족 일 / 폰이 고장나서 / 로그인이 안 돼서 / 재미가 없어져서 / 그냥 잊어버려서 / 기타. 고른 뒤 구체적으로 한 번 더 물어보고 원문 기록.</p>
+</div></details>
+
+<details><summary>트랙 B · 써보다 멈춘 분 (7문항, 5분)</summary><div class="dbody">
+<p class="q">B1. 마지막으로 하신 게 언제쯤이세요?</p>
+<p class="opts">한 달쯤 / 두세 달쯤 / 그보다 오래 / 기억 안 남</p>
+<p class="q">B2. 그 무렵에 무슨 일이 있으셨어요?</p>
+<p class="opts">몸이 안 좋아서 / 폰을 바꾸거나 고장나서 / 로그인이 안 돼서 / 집안일이나 가족 일 / 재미가 없어져서 / 어려워서 / 그냥 잊어버려서 / 기타</p>
+<p class="q">B3. (게임 카드 제시) 이 중에 어려웠던 게 있으세요?</p>
+<p class="opts">카드 13종을 펼쳐놓고 짚게 합니다. 이름을 말로 물으면 기억 못 하십니다. 복수 선택 가능.</p>
+<p class="q">B4. 반대로 지루했던 건요?</p>
+<p class="opts">같은 카드로 진행. B3과 B4를 꼭 나눠서 받으세요. 이게 난이도 문제인지 재미 문제인지를 가르는 유일한 질문입니다.</p>
+<p class="q">B5. 게임 말고 마음 편해지는 내용이랑 운동 영상도 있었는데 해보셨어요?</p>
+<p class="opts">마음: 해봤다 / 안 해봤다 / 뭔지 모른다 → 해봤는데 안 하게 된 이유 한마디</p>
+<p class="q">B6. 뭐가 있으면 다시 해보시겠어요?</p>
+<p class="opts">더 쉬운 게임 / 새로운 게임 / 알림이 오면 / 같이 할 사람이 있으면 / 선물이 있으면 / 다시 할 생각 없음 / 기타</p>
+<p class="q">B7. 지금 앱 한번 열어볼까요? 내일 기록표가 나오거든요.</p>
+<p class="opts">현장에서 실행까지 시도. 결과 체크: 바로 됨 / 로그인 다시 함 / 재설치함 / 실패(사유)</p>
+</div></details>
+
+<details><summary>트랙 C · 거의 못 써본 분 (조치 우선, 8~12분)</summary><div class="dbody">
+<p class="q">C0. 먼저 폰을 같이 봅니다</p>
+<p class="opts">묻기 전에 확인합니다. 앱 있음 / 앱 없음 / 폰이 없거나 안 가져옴 / 본인 폰이 아님</p>
+<p class="q">C1. 어디까지 해보셨어요?</p>
+<p class="opts">깔지도 못했다 / 깔긴 깔았는데 못 열었다 / 열었는데 뭘 할지 몰랐다 / 한두 번 하고 말았다 / 기억이 안 난다</p>
+<p class="q">C2. (현장 조치) 설치와 로그인을 함께 진행합니다</p>
+<p class="opts">막힌 지점을 실제로 관찰해서 기록: 앱스토어 검색 / 계정 문제 / 전화번호 인증 / 글씨가 작아서 / 버튼을 못 찾아서 / 기타. 말보다 관찰이 정확합니다.</p>
+<p class="q">C3. (현장 조치) 첫 게임 한 판을 같이 합니다</p>
+<p class="opts">가장 쉬운 것부터. 완료 여부와 어디서 손이 멈췄는지 기록.</p>
+<p class="q">C4. 평소에 폰 어려우면 누가 도와주세요?</p>
+<p class="opts">같이 사는 가족 / 따로 사는 자녀 / 도와줄 사람 없음 / 필요 없음</p>
+<p class="q">C5. 그동안 안 하셨던 게 앱이 어려워서였을까요, 아니면 다른 이유가 있으셨을까요?</p>
+<p class="opts">앱이 어려워서 / 관심이 없어서 / 몸이 안 좋아서 / 폰이 없거나 문제라 / 그런 게 있는 줄 몰라서 / 기타</p>
+<p class="q">C6. 내일 어르신 기록표가 나옵니다. 여기로 들어오시면 돼요.</p>
+<p class="opts">위치를 직접 눌러 보여드리고, 가능하면 화면에 표시를 남기거나 종이 안내를 드립니다.</p>
+<p class="q">C7. 다음 기수도 신청하시겠어요?</p>
+<p class="opts">신청 / 고민 중 / 안 함 → 이유</p>
+</div></details>
+
+<details><summary>응대 스크립트와 거절 대응</summary><div class="dbody">
+<p><b>첫 인사</b> "안녕하세요, 맬리 담당자입니다. 어르신 그동안 쓰신 기록 정리해서 내일 나오거든요. 잠깐 확인하고 가실래요?" 설문 얘기를 먼저 꺼내지 마세요. 기록 확인이 명분이고 설문은 그 안에서 진행합니다.</p>
+<p><b>"나는 안 했는데" (트랙 C 대부분)</b> "네, 그래서 오늘 같이 한 번 켜보려고요. 금방 됩니다." 안 했다는 사실을 확인시키지 말고 바로 조치로 넘어가세요.</p>
+<p><b>"기억이 안 나"</b> 카드나 화면을 보여주세요. 말로 묻지 말고 눈으로 고르게 하면 대부분 답이 나옵니다.</p>
+<p><b>"선물만 받으면 안 되나"</b> 조건이 확정된 대로 안내하고 실랑이하지 마세요. 형평성 문제가 가장 크게 터지는 지점입니다. 조건 문구는 전원 동일한 인쇄물로 준비해서 읽어드리세요.</p>
+<p><b>거절하실 때</b> "네, 다음 기수 때 더 좋은 내용으로 연락드릴게요." 붙잡지 말고, 거절 사유만 한 줄 남기세요.</p>
+<p><b>몸이나 마음이 힘들다는 말씀이 나오면</b> 설문을 멈추고 보건소 담당자에게 인계하세요. 우리가 더 묻지 않습니다. 인계 경로는 행사 전에 보건소와 합의해 두어야 합니다.</p>
+</div></details>
+</section>
+
+<section id="kpi">
+<h2><span class="n">05</span>무엇으로 성공을 판단하나</h2>
+<p class="h2sub">행사 당일 숫자와 이후 숫자를 나눠서 봅니다. 당일 숫자만 보면 전부 성공처럼 보입니다.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th>지표</th><th>시점</th><th>왜 보나</th></tr></thead>
+<tbody>
+<tr><td>트랙별 접촉 인원</td><td>당일</td><td>387명 중 몇 명이 왔는지. 안 온 사람이 진짜 이탈자입니다.</td></tr>
+<tr><td>현장 첫 실행 성공 수 (트랙 C)</td><td>당일</td><td>이 행사의 핵심 성과. 목표를 미리 정해두세요.</td></tr>
+<tr><td>막힌 단계 분포 (트랙 C)</td><td>당일</td><td>설치인지 로그인인지 첫 화면인지. 다음 기수 온보딩 설계의 근거.</td></tr>
+<tr><td>4기 사전신청 동의 수</td><td>당일</td><td>재등록 활성률이 2.7배라 가장 값이 큰 전환입니다.</td></tr>
+<tr><td>다음 날 리포트 열람률</td><td>D+1</td><td>리포트 후크가 리워드 없이 얼마나 작동하는지. 다음 기수에 그대로 재사용 가능한지 판단.</td></tr>
+<tr><td>D+7 재접속률</td><td>D+7</td><td>현장 조치가 하루짜리였는지 습관으로 갔는지.</td></tr>
+<tr><td>D+30 잔존율</td><td>D+30</td><td>포인트제 같은 지속 리워드를 도입할지 판단하는 최종 근거.</td></tr>
+</tbody></table></div>
+
+<p>세 트랙의 D+7과 D+30을 나눠서 비교해야 의미가 생깁니다. 트랙 C가 D+7에서 무너지면 문제는 진입이 아니라 콘텐츠이고, 트랙 C가 버티면 진입만 뚫어주면 되는 문제였다는 뜻입니다. 이 한 가지 비교가 다음 분기 우선순위를 정합니다.</p>
+</section>
+
+<section id="open">
+<h2><span class="n">06</span>행사 전에 확정할 것</h2>
+<p class="h2sub">아래가 정해지지 않으면 현장에서 즉흥 판단이 나오고, 응대자마다 다른 말을 하게 됩니다.</p>
+
+<ul class="check">
+<li><span class="bx"></span><span><b>리워드 조건 재설계.</b> 3기가 10월 30일에 끝나므로 "주 3일" 조건은 성립하지 않습니다. 4기 사전신청 기준으로 다시 정의.</span></li>
+<li><span class="bx"></span><span><b>현장 즉시 지급인지 조건 달성 후 배송인지.</b> 옆에서 보고 비교되는 순간 민원이 됩니다. 전원 같은 기준, 같은 인쇄 문구.</span></li>
+<li><span class="bx"></span><span><b>모건 콘드로이친과 4기 키링의 지급 기준 분리.</b> 두 개가 섞이면 설명이 불가능해집니다.</span></li>
+<li><span class="bx"></span><span><b>대상 모수 확정.</b> 892명(3기 전체), 720명(기존 기안), 657명(판정 가능 신규) 중 무엇을 기준으로 수량과 목표를 잡을지.</span></li>
+<li><span class="bx"></span><span><b>트랙 A(잘 쓰는 분)의 리워드 참여 여부.</b> 제외하면 형평성 문제, 포함하면 물량 소모. 리워드는 동일하게 주고 설문만 다르게 가는 쪽을 권합니다.</span></li>
+<li><span class="bx"></span><span><b>어드민 현장 조회 가능 여부.</b> 트랙 판정이 어드민 조회를 전제로 합니다. 현장 계정, 통신, 마스킹 해제 사유 입력 절차를 미리 확인하세요.</span></li>
+<li><span class="bx"></span><span><b>개인정보 동의 양식과 열람 기록.</b> 이름과 연락처 원문 열람 시 사유 입력이 필요한 구조입니다. 현장 응대에서 어떻게 처리할지 보건소와 사전 합의.</span></li>
+<li><span class="bx"></span><span><b>보건소 인계 경로.</b> 몸이나 마음 상태에 관한 말씀이 나왔을 때 넘길 담당자와 방법.</span></li>
+<li><span class="bx"></span><span><b>게임 카드 13종 인쇄.</b> 트랙 B의 핵심 도구입니다. 화면 캡처를 크게 뽑아 코팅해 두세요.</span></li>
+<li><span class="bx"></span><span><b>인력 배치.</b> 트랙 C가 387명에 1인당 10분 안팎입니다. 가장 숙련된 인원을 여기에 두고, 설치와 로그인 실패 유형별 대응을 미리 맞춰두세요.</span></li>
+<li><span class="bx"></span><span><b>현장에 못 오는 분 처리.</b> 트랙 C 387명이 전부 오지는 않습니다. 잔여 인원 전화 설문을 며칠까지 돌릴지 미리 정해야 모수가 닫힙니다.</span></li>
+</ul>
+</section>
+
+<footer>
+맬리브레인 리텐션 이벤트 현장 실행 가이드 · 데이터 기준 2026-09-14 재추출분 · 행사 2026-10-30(금) 인천 남동구 보건소
+</footer>
+
+</div>
+</body>
+</html>
