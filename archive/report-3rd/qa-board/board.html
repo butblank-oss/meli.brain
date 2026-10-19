@@ -1,0 +1,361 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>3기 리포트 QA 보드</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+/* 레이아웃: 상단 판정 바 → 탭 → 카드 목록 (TC 카드 = 왼쪽 내용 · 오른쪽 참고 비교 이미지) */
+:root{--bg:#F4F6F5;--card:#FFFFFF;--ink:#17201C;--ink2:#46524C;--ink3:#7D8A84;--line:#DDE3E0;--acc:#0E7A52;--accbg:#E3F1EA;
+--pass:#0E7A52;--passbg:#E3F4EC;--fail:#C2410C;--failbg:#FCEBE2;--hold:#8A6D00;--holdbg:#FFF3C9;--nabg:#ECEFEE;
+--font:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101513;--card:#19201D;--ink:#E7EEEA;--ink2:#B3BFB9;--ink3:#7F8C86;--line:#2A332F;--acc:#3DD598;--accbg:#173528;
+--pass:#3DD598;--passbg:#173326;--fail:#FF8A5B;--failbg:#3A2117;--hold:#E8C547;--holdbg:#3A3315;--nabg:#242C29;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101513;--card:#19201D;--ink:#E7EEEA;--ink2:#B3BFB9;--ink3:#7F8C86;--line:#2A332F;--acc:#3DD598;--accbg:#173528;
+--pass:#3DD598;--passbg:#173326;--fail:#FF8A5B;--failbg:#3A2117;--hold:#E8C547;--holdbg:#3A3315;--nabg:#242C29;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:14px/1.55 var(--font)}
+.wrap{max-width:1080px;margin:0 auto;padding-block:20px 80px;padding-inline:16px}
+h1{font-size:22px;margin:0 0 4px;text-wrap:balance}.sub{color:var(--ink2);margin:0 0 16px}
+.banner{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--ink2)}
+.banner.warn{border-color:var(--fail);color:var(--fail)}
+.top{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}.stat b{font-size:22px;display:block;font-variant-numeric:tabular-nums}.stat span{color:var(--ink3);font-size:12px}
+.verdict{grid-column:1/-1;font-weight:700;font-size:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 14px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;z-index:5}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit;font-weight:700}
+.tab[aria-selected="true"]{background:var(--acc);color:var(--card);border-color:var(--acc)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+select,input[type=text],textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px;max-width:100%}
+textarea{width:100%;min-height:44px;resize:vertical}
+button{font:inherit}.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.btn.pri{background:var(--acc);color:var(--card);border-color:var(--acc);font-weight:700}
+.btn:focus-visible,.tab:focus-visible,.rb:focus-visible,.drop:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.card.new{border-color:var(--fail)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:16px}@media(max-width:720px){.row{grid-template-columns:minmax(0,1fr)}}
+.hd{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.id{font-weight:800;font-variant-numeric:tabular-nums}.pill{font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--nabg);color:var(--ink2)}
+.pill.P1{background:var(--failbg);color:var(--fail)}.pill.bug{background:var(--failbg);color:var(--fail);cursor:pointer;border:0}
+dl{display:grid;grid-template-columns:72px minmax(0,1fr);gap:3px 10px;margin:6px 0}dt{color:var(--ink3);font-size:12px;padding-top:2px}dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.res{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin:6px 0}.res .lab{font-size:12px;color:var(--ink3);width:56px}
+.rb{font-size:12px;border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:6px;padding:3px 9px;cursor:pointer}
+.rb[aria-pressed="true"][data-v="통과"]{background:var(--passbg);color:var(--pass);border-color:var(--pass)}
+.rb[aria-pressed="true"][data-v="실패"]{background:var(--failbg);color:var(--fail);border-color:var(--fail)}
+.rb[aria-pressed="true"][data-v="보류"]{background:var(--holdbg);color:var(--hold);border-color:var(--hold)}
+.rb[aria-pressed="true"][data-v="해당없음"]{background:var(--nabg);color:var(--ink);border-color:var(--ink3)}
+.rb:disabled{opacity:.5;cursor:not-allowed}
+.who{font-size:12px;color:var(--ink3)}
+.accbar{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px}
+.accb{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 10px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink);min-width:108px;text-align:left}
+.accb span{font-size:12px;color:var(--ink3)}.accb .prog{color:var(--acc);font-weight:700}.accb .prog.full::after{content:" 완료"}
+.accb[aria-pressed=true]{border-color:var(--acc);background:var(--accbg);box-shadow:inset 0 0 0 1px var(--acc)}
+.accinfo{background:var(--card);border:1px solid var(--acc);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.seg{display:inline-flex;gap:4px}.seg .btn[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.acctag{background:var(--accbg);color:var(--acc);border-radius:6px;padding:1px 6px}
+.others{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:2px 0 8px;font-size:12px}
+.oa{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:2px 8px;font:inherit;font-size:12px;cursor:pointer;color:var(--ink2)}
+.oa.f{border-color:var(--fail);color:var(--fail);background:var(--failbg)}.oa.p{color:var(--pass);background:var(--passbg)}.oa.cur{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.ref img{width:100%;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;display:block}
+.ref .none{border:1px dashed var(--line);border-radius:10px;color:var(--ink3);font-size:12px;padding:20px 8px;text-align:center}
+.webres{font-size:12px;color:var(--ink2);background:var(--accbg);border-radius:8px;padding:6px 8px;margin-top:6px}
+.drop{margin-top:8px;border:1.5px dashed var(--line);border-radius:10px;padding:10px;font-size:12px;color:var(--ink3)}
+.drop.over,.drop:focus{border-color:var(--acc);background:var(--accbg);color:var(--ink2)}
+.ups{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.up{position:relative;width:84px}.up img{width:84px;height:84px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;display:block}
+.up .x{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;border-radius:11px;border:0;background:var(--fail);color:var(--card);cursor:pointer;font-size:11px;padding:0 6px}
+.pick{color:var(--acc);text-decoration:underline;cursor:pointer}
+.busy{color:var(--acc)}
+table{width:100%;border-collapse:collapse;background:var(--card)}th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{font-size:12px;color:var(--ink3);background:var(--bg)}
+.tablewrap{overflow-x:auto;border-radius:12px;border:1px solid var(--line)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.cmp figure{margin:0;min-width:0}.cmp figcaption{font-size:12px;color:var(--ink2);margin-top:4px}
+.cmp img{width:100%;border-radius:10px;border:1px solid var(--line);cursor:zoom-in}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.78);align-items:center;justify-content:center;z-index:20;padding:16px;display:flex}.zoom img{max-width:100%;max-height:100%;border-radius:10px}
+.note{color:var(--ink3);font-size:12px}h3{margin:18px 0 8px;font-size:16px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:13px;z-index:30;max-width:calc(100% - 32px)}
+[hidden]{display:none!important}
+.judge{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.jt{font-size:13px;font-weight:700;margin-bottom:4px}
+.chip{font-size:12px;border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:999px;padding:3px 10px;cursor:pointer}.chip[aria-pressed="true"]{background:var(--failbg);color:var(--fail);border-color:var(--fail)}.chip:disabled{opacity:.5;cursor:not-allowed}
+.cmpbox{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:10px}
+.cmpbox .col{min-width:0;display:flex;flex-direction:column;gap:6px}
+.cap{font-size:12px;font-weight:700;color:var(--ink2);display:flex;gap:6px;align-items:center}
+.cap .tag{font-size:11px;border-radius:999px;padding:1px 8px;background:var(--accbg);color:var(--acc)}.cap .tag.app{background:var(--failbg);color:var(--fail)}
+.frame{border:1px solid var(--line);border-radius:12px;background:var(--bg);height:460px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.frame img{max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;display:block}
+.frame .none{color:var(--ink3);font-size:12px;text-align:center;padding:12px}
+.drop.frame{border-style:dashed;border-width:1.5px;padding:0;margin:0;text-align:center}
+.drop .hint{font-size:12px;color:var(--ink3);padding:12px;line-height:1.7}
+.up.sel img{outline:3px solid var(--acc);outline-offset:1px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.sbs{display:flex;gap:16px;max-width:100%;max-height:100%;align-items:center;justify-content:center}
+.sbs figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;max-height:100%;min-width:0;flex:1}
+.sbs img{max-width:100%;max-height:calc(100vh - 90px);border-radius:10px;background:var(--card)}
+.sbs figcaption{color:#fff;font-size:13px;font-weight:700}
+@media(max-width:560px){.frame{height:340px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+<div class="wrap">
+<h1>3기 종료 리포트 QA 보드</h1>
+<p class="sub">dev 10/7 빌드 · 기준은 피그마 목업 + 디스크립션 (페이지 1028:3313). TC마다 피그마 목업과 직접 올린 앱 캡처를 나란히 비교합니다. 결과 · 결함 · 캡처는 이 페이지에 저장되어 어느 PC에서 열어도 똑같이 보입니다.</p>
+<div id="banner" class="banner">저장소에 연결하는 중입니다…</div>
+<div class="top" id="stats"></div>
+<div class="tabs" id="tabs" role="tablist"></div>
+<section id="v-tc"></section><section id="v-bug" hidden></section><section id="v-fig" hidden></section><section id="v-dec" hidden></section><section id="v-data" hidden></section><section id="v-shot" hidden></section><section id="v-guide" hidden></section>
+</div>
+<div class="zoom" id="zoom" hidden></div><div class="toast" id="toast" hidden></div>
+<script>
+const D={"tc": [{"id": "E-01", "pr": "P1", "stage": "1 진입", "scr": "체험 홈", "acc": "①", "env": "앱", "pre": "dev 빌드 설치 · 로그인", "step": "체험 홈으로 들어간다", "exp": "상단에 3기 리포트 카드(전용 배너 이미지)가 보인다", "ref": "B-01 · IA-R-08", "shot": "", "web": "", "webm": ""}, {"id": "E-02", "pr": "P1", "stage": "1 진입", "scr": "자동 팝업", "acc": "①", "env": "앱", "pre": "리포트를 한 번도 열지 않은 상태", "step": "로그인 직후 홈 진입", "exp": "리포트가 자동으로 1회 열리고 표지(SC-RP-01)부터 보인다", "ref": "IA-R-01", "shot": "cmp_01.png", "web": "", "webm": ""}, {"id": "E-03", "pr": "P2", "stage": "1 진입", "scr": "자동 팝업", "acc": "①", "env": "앱", "pre": "E-02 이후", "step": "리포트를 닫고 앱을 껐다 다시 연다", "exp": "자동 팝업이 다시 뜨지 않는다 · 홈 카드는 그대로 있다", "ref": "IA-R-01", "shot": "", "web": "", "webm": ""}, {"id": "E-04", "pr": "P1", "stage": "1 진입", "scr": "홈 카드", "acc": "①", "env": "앱", "pre": "—", "step": "홈 카드를 누른다", "exp": "리포트가 표지부터 열린다", "ref": "IA-R-03", "shot": "", "web": "", "webm": ""}, {"id": "E-05", "pr": "P1", "stage": "1 진입", "scr": "진행 내역", "acc": "①", "env": "앱", "pre": "10/20 제출 빌드", "step": "내 정보 > 프로그램 진행 내역 > 3기 항목을 누른다", "exp": "리포트가 표지부터 열린다", "ref": "F4 · IA-R-07", "shot": "", "web": "", "webm": ""}, {"id": "E-06", "pr": "P2", "stage": "1 진입", "scr": "체험 홈", "acc": "⑤", "env": "앱", "pre": "다른 프로그램 진행 중", "step": "홈으로 들어간다", "exp": "리포트 카드가 없다", "ref": "IA-R-08", "shot": "", "web": "", "webm": ""}, {"id": "E-07", "pr": "P2", "stage": "1 진입", "scr": "공개 전", "acc": "⑥", "env": "앱", "pre": "—", "step": "홈 확인 후 리포트 링크로 직접 연다", "exp": "카드 없음 · \"아직 볼 수 없어요\" 안내", "ref": "P09", "shot": "", "web": "", "webm": ""}, {"id": "E-08", "pr": "P1", "stage": "1 진입", "scr": "비대상 P20", "acc": "⑦", "env": "앱 · 웹", "pre": "—", "step": "리포트 링크로 직접 연다", "exp": "제목 없이 본문 \"2026년 인천 남동구 보건소 두뇌운동 치매 예방 교실 3기 참여자에게만 제공되는 리포트입니다. 자세한 문의는 인천 남동구 보건소로 문의 부탁드립니다.\" + [홈으로 돌아가기]", "ref": "P20 · gate-nontarget", "shot": "cmp_sys05.png", "web": "실패", "webm": "문구는 일치 · 아이콘 · 버튼 배치 다름 → BUG-07"}, {"id": "E-09", "pr": "P1", "stage": "1 진입", "scr": "강제 업데이트", "acc": "아무 계정", "env": "앱", "pre": "앱 4.1.0 이하 설치", "step": "앱을 연다", "exp": "4.1.1 미만은 업데이트 안내 · 앱 사용 차단", "ref": "K-15 · IA-R-13 · 개발 D-5", "shot": "", "web": "", "webm": ""}, {"id": "E-10", "pr": "P1", "stage": "1 진입", "scr": "네트워크 오류", "acc": "①", "env": "앱", "pre": "비행기 모드", "step": "홈 카드를 누른다", "exp": "전체 화면 오류 + [다시 시도] · \"참여자에게만\" 문구가 나오지 않는다", "ref": "P18", "shot": "", "web": "", "webm": ""}, {"id": "S-01", "pr": "P2", "stage": "2 8개 섹션", "scr": "01 표지", "acc": "② ③ ④", "env": "앱 · 웹", "pre": "—", "step": "표지를 본다", "exp": "피그마 목업처럼 배지 \"2026 인천 남동구 보건소 치매 예방 3기\" · \"{마스킹 이름}님,\" · 기간 · 참여일 · 왼쪽 정렬 · 메달 그래픽", "ref": "S1-01~04 · 목업 1097:791", "shot": "cmp_01.png", "web": "실패", "webm": "문구 일치 · 가운데 정렬 · 메달 없음 → BUG-03"}, {"id": "S-02", "pr": "P1", "stage": "2 8개 섹션", "scr": "02 숫자로 먼저", "acc": "②", "env": "앱", "pre": "§데이터 요청 5번 원값 수령", "step": "화면 숫자와 원값을 대조한다", "exp": "뇌 점수 시작→종료 · 함께한 날 · 참여율 · 게임 횟수 · 마음 기록이 원값과 같다", "ref": "S2 · F-01~F-04 · F-08", "shot": "cmp_02.png", "web": "실패", "webm": "숫자 정상 · 꺾은선이 거의 평평 → BUG-04"}, {"id": "S-03", "pr": "P2", "stage": "2 8개 섹션", "scr": "03 집중의 리듬", "acc": "②", "env": "앱 · 웹", "pre": "—", "step": "요일 · 시간 · 막대를 본다", "exp": "월~금만 · \"프로그램 운영일은 평일(월–금)입니다\"", "ref": "S3 · F-07", "shot": "cmp_03.png", "web": "실패", "webm": "88% 강조색 · 멘트 카드 다름 → BUG-05"}, {"id": "S-04", "pr": "P2", "stage": "2 8개 섹션", "scr": "04 게임", "acc": "②", "env": "앱 · 웹", "pre": "—", "step": "최다 게임 · 횟수 · 종수 · TOP3", "exp": "\"해본 게임 N종 / 전체 16종 중\" · TOP3 정렬", "ref": "S4 · F-03b · F-05", "shot": "cmp_04.png", "web": "통과", "webm": "게임명 줄바꿈만 다름 → BUG-09 (P3)"}, {"id": "S-05", "pr": "P1", "stage": "2 8개 섹션", "scr": "04B 랭킹", "acc": "② ①", "env": "앱 · 웹", "pre": "—", "step": "순위 · 상위 % 타일 · 배지 · 하단 문구", "exp": "타일 % = 배지 % · 1~3위면 내 행 없음 · \"아래로 {823-순위}명이 더 함께했어요\" · 최하위면 문구 없음", "ref": "S4B-04~08 · F-06 · F-06b · P08", "shot": "cmp_04B.png", "web": "통과", "webm": "12위 · 상위 2% · 811명 · 목업과 같음"}, {"id": "S-06", "pr": "P2", "stage": "2 8개 섹션", "scr": "05 마음", "acc": "② + 측정 1회 · 0회 계정", "env": "앱 · 웹", "pre": "측정 1회 · 0회 계정은 개발에 요청", "step": "게이지 · 상태 · 안내박스", "exp": "종료 점수 구간으로 판정 · 1회면 고스트 없음 · 0회면 \"검사 기록이 없습니다.\"", "ref": "S5 · P03 · P04", "shot": "cmp_05.png", "web": "통과", "webm": "7→3점 양호 · 라벨 위치만 다름 → BUG-09 (P3)"}, {"id": "S-07", "pr": "P2", "stage": "2 8개 섹션", "scr": "06 걸음", "acc": "② + 미연동 계정", "env": "앱 · 웹", "pre": "미연동 계정은 개발에 요청", "step": "걸음 · 환산 · 칼로리", "exp": "미연동이면 섹션 자체 없음 · 7km 미만이면 환산 카드 없음 · N=1이면 회차 없이 \"걸었어요\"", "ref": "S6 · P16 · P17", "shot": "cmp_06.png", "web": "통과", "webm": "목업과 같음"}, {"id": "S-08", "pr": "P2", "stage": "2 8개 섹션", "scr": "스크롤 힌트", "acc": "②", "env": "앱", "pre": "작은 폰(iPhone SE급)", "step": "각 섹션에 들어간 직후와 스크롤한 뒤", "exp": "진입 직후만 하단 고정 · 스크롤하면 풀림 · 본문을 계속 가리지 않음", "ref": "S1-05 · FE-05", "shot": "cmp_05.png", "web": "보류", "webm": "375×812 웹에서 진입 직후 힌트가 05 안내박스를 가림 → BUG-08 · 앱에서 확인"}, {"id": "S-09", "pr": "P1", "stage": "2 8개 섹션", "scr": "닫기 버튼", "acc": "①", "env": "앱", "pre": "—", "step": "아무 섹션에서 스크롤 중", "exp": "✕가 항상 우상단에 고정", "ref": "S1-06", "shot": "", "web": "", "webm": ""}, {"id": "S-10", "pr": "P3", "stage": "2 8개 섹션", "scr": "큰 글씨", "acc": "②", "env": "앱", "pre": "OS 글자 크기 최대", "step": "전 섹션을 본다", "exp": "줄 넘침 · 겹침 · 잘림 없음", "ref": "IA-R-14 · D-28", "shot": "", "web": "", "webm": ""}, {"id": "C-01", "pr": "P1", "stage": "3 증서 저장", "scr": "07 A", "acc": "①", "env": "앱", "pre": "사진 권한 허용", "step": "수료증 저장하기", "exp": "사진첩에 1:1 이미지 1장 · 숫자 0이나 빈칸 없음", "ref": "S7-10 · §12", "shot": "cmp_07A.png", "web": "", "webm": "웹은 앱 브리지가 없어 저장 버튼 비활성(정상) · 테두리 장식 없음 → BUG-06"}, {"id": "C-02", "pr": "P1", "stage": "3 증서 저장", "scr": "07 A", "acc": "①", "env": "앱", "pre": "C-01 이후", "step": "파일명 · 형식 확인", "exp": "맬리브레인_3기_수료증_{원문이름} · Android JPEG / iOS PNG", "ref": "S7-10 · Q-10", "shot": "", "web": "", "webm": ""}, {"id": "C-03", "pr": "P2", "stage": "3 증서 저장", "scr": "07 B", "acc": "③", "env": "앱 · 웹", "pre": "—", "step": "참여기록 저장하기", "exp": "라벨 \"참여기록 저장하기\" · 파일명 …_참여기록_…", "ref": "S7-10 · Q-02", "shot": "cmp_07B.png", "web": "통과", "webm": "라벨 확인(웹)"}, {"id": "C-04", "pr": "P1", "stage": "3 증서 저장", "scr": "07 C", "acc": "④", "env": "앱 · 웹", "pre": "—", "step": "증서 화면", "exp": "저장 버튼 없음 · 참여 실적 줄 없음 · 4기 · 홈 버튼만", "ref": "S7-08 · S7-10", "shot": "cmp_07C.png", "web": "통과", "webm": ""}, {"id": "C-05", "pr": "P3", "stage": "3 증서 저장", "scr": "07 A", "acc": "①", "env": "앱", "pre": "사진 권한 거부", "step": "수료증 저장하기", "exp": "권한 안내 · 앱이 멈추지 않음", "ref": "P15", "shot": "", "web": "", "webm": ""}, {"id": "C-06", "pr": "P2", "stage": "3 증서 저장", "scr": "07 A", "acc": "①", "env": "앱", "pre": "—", "step": "저장 후", "exp": "리포트가 닫히지 않고 그대로", "ref": "IA-R-10", "shot": "", "web": "", "webm": ""}, {"id": "C-07", "pr": "P2", "stage": "3 증서 저장", "scr": "07 A", "acc": "①", "env": "앱 · 웹", "pre": "—", "step": "증서 이름 확인", "exp": "표지는 마스킹(김*리) · 증서는 원문 이름", "ref": "S7-06 · P12", "shot": "cmp_07A.png", "web": "통과", "webm": ""}, {"id": "A-01", "pr": "P1", "stage": "4 4기 신청", "scr": "07-h 시트", "acc": "①", "env": "앱 · 웹", "pre": "—", "step": "4기도 참여하기", "exp": "바텀시트 · 문구는 결정 Q-1대로 · [닫기] [네, 신청합니다]", "ref": "07-h · K-13", "shot": "cmp_07h.png", "web": "통과", "webm": "목업과 같음 · 명칭에 4기 없음은 결정 Q-1"}, {"id": "A-02", "pr": "P2", "stage": "4 4기 신청", "scr": "07-h 시트", "acc": "①", "env": "앱 · 웹", "pre": "—", "step": "[닫기] / 딤 탭", "exp": "시트만 닫힘 · 신청 저장 안 됨", "ref": "07-h", "shot": "", "web": "통과", "webm": "[닫기] 확인(웹)"}, {"id": "A-03", "pr": "P1", "stage": "4 4기 신청", "scr": "08 완료", "acc": "①", "env": "앱 · 웹", "pre": "—", "step": "[네, 신청합니다]", "exp": "완료 화면 · 본문 4줄 \"4기가 시작될 때 보건소에서 연락드리겠습니다. 자세한 문의사항은 032-453-6160으로 문의 바랍니다. 감사합니다.\"", "ref": "SC-RP-08 · S8-05 · K-14", "shot": "cmp_08.png", "web": "실패", "webm": "배치는 목업과 같음 · 첫 줄 누락 · 번호 6163 → BUG-01 · 02"}, {"id": "A-04", "pr": "P2", "stage": "4 4기 신청", "scr": "08 완료", "acc": "①", "env": "앱", "pre": "—", "step": "[네, 신청합니다] 연타", "exp": "신청 1건만 저장", "ref": "IA-R-12", "shot": "", "web": "", "webm": ""}, {"id": "A-05", "pr": "P1", "stage": "4 4기 신청", "scr": "07-l", "acc": "①", "env": "앱 · 웹", "pre": "A-03 이후", "step": "홈 → 리포트 다시 열기", "exp": "4기 버튼 비활성 + \"4기 신청이 완료되었습니다\"", "ref": "07-l · IA-R-12", "shot": "cmp_07l.png", "web": "통과", "webm": "state=07l · 목업과 같음"}, {"id": "A-06", "pr": "P1", "stage": "4 4기 신청", "scr": "07-l", "acc": "①", "env": "앱", "pre": "A-03 이후", "step": "다른 폰에서 같은 계정 로그인", "exp": "07-l 상태 그대로 (서버 값 기준)", "ref": "apply.season4_applied", "shot": "", "web": "", "webm": ""}, {"id": "A-07", "pr": "P1", "stage": "4 4기 신청", "scr": "08-a 실패", "acc": "①", "env": "앱", "pre": "비행기 모드", "step": "[네, 신청합니다]", "exp": "실패 화면 · 제목은 FIG-03 결정대로 · 032-453-6160 · [다시 시도] 누르면 확인 없이 자동 재신청", "ref": "08-a · S8-06", "shot": "", "web": "미실행", "webm": "웹 샘플 없음 → 개발에 state=08a 요청"}, {"id": "A-08", "pr": "P2", "stage": "4 4기 신청", "scr": "07-l", "acc": "②", "env": "앱", "pre": "—", "step": "리포트 열기", "exp": "처음부터 07-l", "ref": "07-l", "shot": "", "web": "", "webm": ""}, {"id": "A-09", "pr": "P1", "stage": "4 4기 신청", "scr": "07-m", "acc": "⑤", "env": "앱", "pre": "—", "step": "증서 화면", "exp": "4기 버튼 없음", "ref": "07-m", "shot": "", "web": "", "webm": ""}, {"id": "A-10", "pr": "P2", "stage": "4 4기 신청", "scr": "노출 시점", "acc": "운영", "env": "앱", "pre": "10/27 출시 빌드", "step": "출시 전 · 후 버튼 노출", "exp": "10/27부터 노출", "ref": "S7-11", "shot": "", "web": "", "webm": ""}, {"id": "X-01", "pr": "P1", "stage": "5 닫기 · 뒤로가기", "scr": "공통", "acc": "①", "env": "앱", "pre": "—", "step": "아무 섹션에서 ✕", "exp": "홈으로 복귀", "ref": "IA-R-05", "shot": "", "web": "", "webm": ""}, {"id": "X-02", "pr": "P1", "stage": "5 닫기 · 뒤로가기", "scr": "공통", "acc": "①", "env": "Android", "pre": "—", "step": "리포트 / 시트 열림 / 완료 화면에서 뒤로가기", "exp": "시트가 열려 있으면 시트만 닫힘 · 그 외 홈", "ref": "IA-R-05", "shot": "", "web": "", "webm": ""}, {"id": "X-03", "pr": "P2", "stage": "5 닫기 · 뒤로가기", "scr": "공통", "acc": "①", "env": "iOS", "pre": "—", "step": "밀어서 닫기", "exp": "홈 복귀 · 화면 깨짐 없음", "ref": "개발 B-7", "shot": "", "web": "", "webm": ""}, {"id": "X-04", "pr": "P2", "stage": "5 닫기 · 뒤로가기", "scr": "08 완료", "acc": "①", "env": "앱", "pre": "—", "step": "[홈으로 돌아가기]", "exp": "홈 복귀", "ref": "S8-07", "shot": "", "web": "", "webm": "웹에서는 동작 안 하는 게 정상"}, {"id": "T-01", "pr": "P2", "stage": "6 4기 전환", "scr": "체험 홈", "acc": "4기 승인 계정", "env": "앱", "pre": "개발에 4기 시작일 당겨 달라고 요청", "step": "4기 홈 전환 후 확인", "exp": "리포트 카드 사라짐 · 진행 내역으로는 열림", "ref": "IA-R-08 · F4", "shot": "", "web": "", "webm": ""}, {"id": "M-01", "pr": "P2", "stage": "6 측정", "scr": "이벤트", "acc": "①", "env": "앱", "pre": "개발에 이벤트 로그 확인 요청", "step": "카드 / 자동 팝업 / 진행 내역으로 각각 진입", "exp": "entry 값이 경로별로 다르게 남음 · programId 채워짐", "ref": "IA-Q-06 · 개발 D-4", "shot": "", "web": "보류", "webm": "웹 샘플은 entry=manual · programId 빈 값"}, {"id": "M-02", "pr": "P2", "stage": "6 측정", "scr": "이벤트", "acc": "①", "env": "앱", "pre": "—", "step": "한 섹션에 30초 머문 뒤 이동", "exp": "해당 섹션 dwell ≈ 30초", "ref": "IA-Q-06", "shot": "", "web": "통과", "webm": "웹에서 section_view/leave + dwellMs 발생 확인"}, {"id": "PH-01", "pr": "P1", "stage": "6 전화번호", "scr": "전 화면", "acc": "①", "env": "앱 · 웹 · 문자", "pre": "개발 수정 반영 후", "step": "리포트 완료 · 실패 화면 · 신청폼 결과 화면 · 문자 본문의 번호", "exp": "모두 032-453-6160 (6163 · 담당자 번호 없음)", "ref": "K-14 · 보건소 요청 10/12", "shot": "cmp_08.png", "web": "실패", "webm": "완료 화면 032-453-6163 → BUG-01"}, {"id": "F-01", "pr": "P2", "stage": "6 신청폼 4기", "scr": "첫 화면", "acc": "—", "env": "휴대폰 브라우저", "pre": "—", "step": "/invitations/namdong4", "exp": "명칭 · 기관명은 결정 Q-1 · Q-2대로 · \"2027년 2월~11월\"", "ref": "개발 B-8", "shot": "dev_form4_landing.png", "web": "보류", "webm": "\"인천 남동구 보건소 x 맬리 · 치매예방교실 4기\" → Q-1 · Q-2"}, {"id": "F-02", "pr": "P1", "stage": "6 신청폼 4기", "scr": "입력 · 결과", "acc": "본인 번호", "env": "휴대폰 브라우저", "pre": "실제 문자 발송 — 본인 번호로 1회만", "step": "입력 폼 제출", "exp": "결과 화면 문구 · 문자 내용 · 케어센터 신청자 관리에 1건", "ref": "개발 B-8 · Q-3", "shot": "dev_form4_form.png", "web": "미실행", "webm": "제출 금지 조건으로 미실행 · 입력 폼 \"신청하면 바로 참여가 확정\" → Q-3"}, {"id": "F-03", "pr": "P2", "stage": "6 신청폼 4기", "scr": "중복", "acc": "본인 번호", "env": "휴대폰 브라우저", "pre": "F-02 이후", "step": "같은 번호로 다시 제출", "exp": "중복 안내 (정의 없음 → Q-4)", "ref": "—", "shot": "", "web": "", "webm": ""}, {"id": "F-04", "pr": "P3", "stage": "6 신청폼 4기", "scr": "대리 등록", "acc": "—", "env": "휴대폰 브라우저", "pre": "—", "step": "\"보건소 직원이신가요?\"", "exp": "대리 등록 경로가 열림 (제출하지 않음)", "ref": "—", "shot": "", "web": "", "webm": ""}, {"id": "F-05", "pr": "P2", "stage": "6 신청폼 3기", "scr": "3기 링크", "acc": "—", "env": "휴대폰 브라우저", "pre": "—", "step": "/invitations/namdong3", "exp": "결정 Q-6대로", "ref": "개발 §A ⑤", "shot": "dev_form3_landing.png", "web": "보류", "webm": "지금은 3기 첫 화면 정상 노출"}, {"id": "K-01", "pr": "P2", "stage": "6 케어센터", "scr": "4기", "acc": "—", "env": "PC", "pre": "로그인", "step": "목록 · 신청자 관리", "exp": "4기 \"진행 예정\" · 신청자 관리 탭 열림", "ref": "개발 B-9", "shot": "", "web": "", "webm": ""}], "bugs": [{"id": "BUG-01", "title": "문의 전화번호 6163 → 대표번호 6160", "sev": "Major", "pr": "P1", "status": "개발 수정", "scr": "SC-RP-08 완료 · 실패 · 신청폼 · 문자", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice → 4기도 참여하기 → 네, 신청합니다", "exp": "032-453-6160 (보건소 대표번호 · 10/12 확정 · 피그마 S8-05 디스크립션)", "act": "032-453-6163", "shot": "cmp_08.png", "ref": "K-14 · 변경이력 39", "owner": "개발", "tc": "PH-01 · A-03 · A-07"}, {"id": "BUG-02", "title": "4기 신청 완료 본문 첫 줄 누락", "sev": "Major", "pr": "P1", "status": "기획 선행", "scr": "SC-RP-08 완료", "path": "https://dev-meli-web.meli.health/report-3gi/apply?state=nice", "exp": "4줄: 4기가 시작될 때 보건소에서 / 연락드리겠습니다. / 자세한 문의사항은 032-453-6160으로 / 문의 바랍니다. 감사합니다. (피그마 S8-05 디스크립션)", "act": "2줄: 자세한 문의사항은 … 문의 바랍니다. 감사합니다. — 피그마 목업 카드(1463:1286)가 아직 2줄이라 개발이 목업을 따름", "shot": "cmp_08.png", "ref": "S8-05 · FIG-01", "owner": "기획(피그마 목업 수정) → 개발", "tc": "A-03"}, {"id": "BUG-03", "title": "표지 정렬 · 히어로 그래픽이 목업과 다름", "sev": "Minor", "pr": "P2", "status": "확인 필요", "scr": "SC-RP-01 표지", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice 첫 화면", "exp": "배지 · 이름 · 기간 왼쪽 정렬 / 캐릭터 뒤 메달(리본 + 원형 배경)", "act": "가운데 정렬 / 메달 없이 캐릭터만", "shot": "cmp_01.png", "ref": "SC-RP-01 목업 1097:791 · Q-11", "owner": "개발 (메달은 10/13 3D 에셋 확인 후)", "tc": "S-01"}, {"id": "BUG-04", "title": "뇌 점수 꺾은선이 거의 평평함", "sev": "Minor", "pr": "P2", "status": "개발 수정", "scr": "SC-RP-02", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice 두 번째 화면", "exp": "69점 → 77점이 눈에 띄게 올라가는 선 · 10월 라벨 강조 (목업)", "act": "시작과 끝이 거의 수평 · 10월 라벨 강조 없음", "shot": "cmp_02.png", "ref": "S2-05", "owner": "개발", "tc": "S-02"}, {"id": "BUG-05", "title": "요일 퍼센트 강조색 · 개인화 멘트 카드가 목업과 다름", "sev": "Minor", "pr": "P2", "status": "확인 필요", "scr": "SC-RP-03", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice 세 번째 화면", "exp": "최다 요일 퍼센트(88%) 녹색 / 멘트 카드는 원형 캐릭터 없이 헤드라인 1줄 (목업)", "act": "88% 검정 / 왼쪽에 회색 원(캐릭터 자리) + 헤드라인 2줄로 줄바꿈", "shot": "cmp_03.png", "ref": "S3-06 · S3-08 · FIG-05", "owner": "개발 (원형 캐릭터는 FIG-05 결정 후)", "tc": "S-03"}, {"id": "BUG-06", "title": "증서 테두리 장식 없음", "sev": "Minor", "pr": "P2", "status": "개발 수정", "scr": "SC-RP-07 A · B · C", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice 마지막 화면", "exp": "금박 테두리 + 이중 내부 라인 + 마름모 6개 (S7-04)", "act": "금박 테두리만 · 내부 라인 · 마름모 없음", "shot": "cmp_07A.png", "ref": "S7-04", "owner": "개발", "tc": "C-01 · C-04"}, {"id": "BUG-07", "title": "비대상 화면 아이콘 · 버튼 배치가 목업과 다름", "sev": "Minor", "pr": "P2", "status": "확인 필요", "scr": "SYS-05 (P20)", "path": "https://dev-meli-web.meli.health/report-3gi?state=sys05", "exp": "본문 위 원형 아이콘 · [홈으로 돌아가기]는 하단 전체 폭 흰 버튼 (목업 1136:5858)", "act": "아이콘 없음 · 버튼이 본문 바로 아래 좁은 회색 버튼", "shot": "cmp_sys05.png", "ref": "P20 · FIG-08", "owner": "기획(아이콘 확정) → 개발", "tc": "E-08"}, {"id": "BUG-08", "title": "스크롤 힌트가 카드 하단을 가림", "sev": "Minor", "pr": "P2", "status": "앱 확인", "scr": "SC-RP-04B · 05 · 06", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice 04B · 05 화면 진입 직후", "exp": "진입 직후만 하단 고정 · 본문을 가리지 않음 (S1-05 v3.2)", "act": "05 안내박스 마지막 줄 · 04B 하단 문구 위에 힌트가 겹침 (375×812)", "shot": "cmp_05.png", "ref": "S1-05 · FE-05", "owner": "개발", "tc": "S-08"}, {"id": "BUG-09", "title": "TOP 3 게임명 줄바꿈 · 게이지 라벨 위치", "sev": "Trivial", "pr": "P3", "status": "확인 필요", "scr": "SC-RP-04 · 05", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice 04 · 05 화면", "exp": "\"재밌는 숫자 퍼즐 9X9\" 한 줄 / 게이지 \"양호\" \"위험\" 라벨이 아크 옆 (목업)", "act": "게임명 2줄 / 라벨이 아크 끝 아래", "shot": "cmp_04.png", "ref": "S4-06 · S5-04", "owner": "개발", "tc": "S-04 · S-06"}, {"id": "BUG-10", "title": "TOP 3 순위 · 횟수 색이 목업과 다름", "sev": "Trivial", "pr": "P3", "status": "개발 수정", "scr": "SC-RP-04", "path": "https://dev-meli-web.meli.health/report-3gi?state=nice 04 화면", "exp": "순위 숫자 1~3 모두 강조색 · 횟수 모두 본문색 Bold · 썸네일 둥근 사각 (목업 · 디스크립션 10/12 정정)", "act": "1위만 강조색 · 2 · 3위 회색 · 횟수 1위만 강조색", "shot": "cmp_04.png", "ref": "S4-06 · 변경이력 40", "owner": "개발", "tc": "S-04"}], "dec": [{"id": "Q-1", "title": "4기 명칭이 화면마다 다름", "now": "리포트 완료 \"2027년 인천 남동구 보건소 치매예방 프로그램 4기\" · 리포트 시트 \"…프로그램을\"(4기 없음) · 신청폼 첫 화면 \"치매예방교실 4기\" · 입력 폼 \"두뇌운동 치매예방교실 4기\" · 케어센터 \"두뇌운동 치매예방교실-27년\"", "opts": "대외 명칭 1개 확정 · 리포트 시트에 \"4기\" 추가(권장)", "due": "10/15", "ref": "K-13 · 개발 §A ①"}, {"id": "Q-2", "title": "기관명 두 가지", "now": "신청폼 첫 화면 \"인천 남동구 보건소\" · 입력 폼 배지 \"인천 남동구 치매안심센터\" · 증서 \"인천남동구 보건소\"", "opts": "보건소 / 치매안심센터 중 하나, 띄어쓰기 포함", "due": "10/15", "ref": "K-09 · 개발 §A ①"}, {"id": "Q-3", "title": "신청폼 4기 즉시 승인", "now": "입력 폼 \"신청하면 바로 참여가 확정되고, 앱 설치 안내 문자가 갑니다\" · 신청폼 기획 v1.0(9/21)은 관리자 승인", "opts": "즉시 승인 유지 / 승인 대기 · 4기 접수 시작일과 문자 문구", "due": "10/15", "ref": "개발 D-2 · form 06 #1"}, {"id": "Q-4", "title": "리포트 신청과 신청폼 신청 중복", "now": "기획상 두 경로 연결 없음 (리포트 = 의사만 저장 · 문자 없음)", "opts": "중복 1건 처리 방식 · 리포트 신청자에게 4기 시작 문자 여부 · 명단 이관 A/B", "due": "10/15", "ref": "개발 §A ④"}, {"id": "Q-5", "title": "60세 이상 조건 검증", "now": "첫 화면에만 \"60세 이상\" 표기 · 입력 폼 검증 미확인", "opts": "생년월일로 막음 / 받고 보건소가 거름", "due": "10/15", "ref": "—"}, {"id": "Q-6", "title": "3기 신청폼 링크", "now": "namdong3 열림 · 제출 시 3기로 접수", "opts": "4기로 보냄 / 모집 종료 화면 / 그대로", "due": "10/15", "ref": "개발 §A ⑤"}, {"id": "Q-7", "title": "11/1 하루 안내 공백", "now": "10/31 종료 ~ 11/2 공개 사이 카드 · 안내 없음", "opts": "그대로 / 11/1로 당김", "due": "10/15", "ref": "개발 §A ②"}, {"id": "Q-8", "title": "푸시 · 사전 안내 문구", "now": "미발송 기본값", "opts": "보냄(문구) / 안 보냄", "due": "10/15 (마지막 기한)", "ref": "IA-Q-04 · IA-Q-05 · 개발 §A ⑥"}], "data": [{"n": 1, "req": "등급별 인원 A / B / C (F-16 변경 전 · 후)", "why": "12명 B → A가 맞는지", "tc": "S-02"}, {"n": 2, "req": "B → A로 바뀐 12명 목록 (참여일 · 게임 횟수 · 판정 조건)", "why": "두 번째 조건 단독 발동 확인", "tc": "S-02"}, {"n": 3, "req": "판정 근거 로그 샘플 (조건 1 / 조건 2 / 둘 다)", "why": "K-06 · D-30", "tc": "S-02"}, {"n": 4, "req": "폼 동의 기록 없는 계정 목록 (55명) · 그중 리포트 대상 수", "why": "07-m 범위", "tc": "A-09"}, {"n": 5, "req": "테스트 계정 ①~④ 리포트 원값 (payload)", "why": "화면 숫자와 대조", "tc": "S-02"}, {"n": 6, "req": "4기 신청 의사 저장 테이블 구조 + dev 기록 (누가 · 언제)", "why": "명단 이관 (§A ④)", "tc": "A-03 · A-06"}, {"n": 7, "req": "측정 이벤트 집계 (섹션별 방문 수 · 방문자 수 · 평균 체류)", "why": "IA-Q-06", "tc": "M-01 · M-02"}, {"n": 8, "req": "실패 화면 샘플 주소 (state=08a) · 측정 1회 / 0회 · 걸음 미연동 계정", "why": "웹 샘플로 못 본 화면", "tc": "A-07 · S-06 · S-07"}], "fig": [{"id": "FIG-01", "scr": "SC-RP-08 완료 본문", "mock": "2줄 · {전화번호}", "desc": "4줄 · 032-453-6160 (v3.2)", "dev": "목업(2줄)", "sug": "목업 카드를 4줄 · 6160으로 수정 (Pretendard 폰트라 피그마에서 직접)", "node": "1463:1286", "res": "디스크립션(4줄 · 6160) 유지 — 목업 카드는 Pretendard 폰트라 기획이 피그마에서 직접 수정 필요 (1463:1286 · 실패 1461:6914)"}, {"id": "FIG-02", "scr": "SC-RP-08 배치", "mock": "배지 → 프로그램명 → 카드(✓ · 제목 · 본문)", "desc": "S8-02 \"배지 바로 아래 큰 제목\"", "dev": "목업", "sug": "목업 유지 · 디스크립션 S8-02 문구만 \"카드 안 큰 제목\"으로 정정 (권장)", "node": "1484:1453", "res": "완료(10/12) — 디스크립션 S8-02 · S8-04를 목업 배치로 정정 · 프로토타입 · 문서 반영"}, {"id": "FIG-03", "scr": "08-a 실패 제목 · 프로그램명", "mock": "\"신청이 완료되지 못했습니다\" · 프로그램명 없음", "desc": "\"신청하지 못했습니다.\" · S8-04 프로그램명 완료·실패 공통", "dev": "확인 불가 (샘플 없음)", "sug": "제목 하나로 확정 · 실패 화면 프로그램명 유무 확정", "node": "1461:6901", "res": "완료(10/12) — 목업 기준 \"신청이 완료되지 못했습니다\" · 프로그램명 없음 · 디스크립션 · 프로토타입 · 문서 반영"}, {"id": "FIG-04", "scr": "SC-RP-01 배지", "mock": "\"2026 인천 남동구 보건소 치매 예방 3기\"", "desc": "S1-01 \"2026년 인천 남동구 보건소 치매 예방 3기\"", "dev": "목업", "sug": "\"2026\" / \"2026년\" 중 하나로 확정", "node": "1239:1351", "res": "완료(10/12) — 디스크립션 S1-01을 \"2026 …\"으로 정정 · 프로토타입 · 문서 반영"}, {"id": "FIG-05", "scr": "SC-RP-03 개인화 멘트", "mock": "원형 캐릭터 없음 · 헤드라인 1줄", "desc": "S3-08 \"좌측 46px 원형 캐릭터 + 우측 2줄\"", "dev": "디스크립션(회색 원)", "sug": "캐릭터를 넣을지 확정 — 넣으면 에셋 필요", "node": "1240:1351", "res": "완료(10/12) — 캐릭터 없음으로 정정 · 개발 BUG-05 유지"}, {"id": "FIG-06", "scr": "SC-RP-05 게이지 각도", "mock": "반원에 가까운 아크", "desc": "S5-04 \"145° → 20° (125°)\" · S5-05 \"145 − 점수 × 8.333\" (v2 값)", "dev": "180° 반원", "sug": "디스크립션을 정본 v3.0 \"180° · 180 − 점수 × 12\"로 정정", "node": "1239:1965", "res": "완료(10/12) — 디스크립션을 180° · 180 − 점수 × 12로 정정"}, {"id": "FIG-07", "scr": "SC-RP-07 인장", "mock": "둥근 사각 · 기울어짐", "desc": "S7-13 \"48×48 원형 인장\"", "dev": "목업", "sug": "목업 유지 · 디스크립션을 \"둥근 사각\"으로 정정 (권장)", "node": "1264:1433", "res": "완료(10/12) — 둥근 사각 인장으로 정정 · 프로토타입 · 문서 반영"}, {"id": "FIG-08", "scr": "SYS-05 아이콘", "mock": "회색 원(아이콘 자리)", "desc": "P20 \"제목 없이 본문 + 버튼\" (아이콘 언급 없음)", "dev": "아이콘 없음", "sug": "아이콘을 넣을지 확정 — 넣으면 에셋 필요", "node": "1136:5858", "res": "목업 유지(아이콘 자리) — 프로토타입은 이미 같음 · 개발 BUG-07 유지"}, {"id": "FIG-09", "scr": "SC-RP-02 참여율 샘플값", "mock": "142일인데 69%", "desc": "F-02: 142 ÷ 242 = 59%", "dev": "59%", "sug": "목업 샘플값을 59%로 정정 (표기 오류 · 개발 영향 없음)", "node": "1122:856", "res": "목업 샘플값 69% → 59% — Pretendard 폰트라 기획이 피그마에서 직접 수정 필요 (1122:887)"}], "acc": [{"k": "①", "tel": "099-0002-8800", "name": "박용주", "tier": "A 수료", "see": "자동 팝업 → 증서 저장 → 4기 신청"}, {"k": "②", "tel": "099-0002-1234", "name": "박희로", "tier": "A 수료", "see": "게임 · 마음 · 걸음 꽉 찬 데이터 · 랭킹 1위"}, {"k": "③", "tel": "099-3333-3333", "name": "서비스", "tier": "B 참여기록", "see": "\"참여기록 저장하기\" 라벨"}, {"k": "④", "tel": "099-5555-5555", "name": "김철순", "tier": "C 참여확인", "see": "저장 버튼 없음"}, {"k": "⑤", "tel": "099-0002-4096", "name": "김철순", "tier": "A · 동의 기록 없음", "see": "다른 프로그램 진행 중이라 카드 없음 · 4기 버튼 숨김(07-m)"}, {"k": "⑥", "tel": "099-0988-8888", "name": "안녕하세요", "tier": "공개 전", "see": "카드 없음 · 공개 전 안내 확인용"}, {"k": "⑦", "tel": "099-0008-9999", "name": "원메딕스", "tier": "리포트 없음", "see": "카드 없음 · 비대상 안내(P20) 확인용"}], "pri": [{"p": "P1", "name": "배포 차단", "desc": "실패하면 배포하지 않습니다. 진입 · 저장 · 4기 신청 · 닫기 · 번호 · 비대상처럼 사용자가 막히거나 잘못된 정보를 받는 항목"}, {"p": "P2", "name": "화면 · 문구", "desc": "정본과 문구 · 숫자 · 배치가 같은지. 실패해도 배포는 가능하지만 출시 전 수정 대상"}, {"p": "P3", "name": "예외 · 환경", "desc": "권한 거부 · 오프라인 · 작은 화면 · 큰 글씨 등 드문 상황. 출시 후 수정 가능"}], "fig_of": {"E-02": "01", "E-03": "01", "E-04": "01", "E-05": "01", "E-08": "sys05", "E-10": "sys03", "S-01": "01", "S-02": "02", "S-03": "03", "S-04": "04", "S-05": "04B", "S-06": "05", "S-07": "06", "S-08": "05", "S-09": "02", "C-01": "07A", "C-03": "07B", "C-04": "07C", "C-06": "07A", "C-07": "07A", "A-01": "07h", "A-02": "07h", "A-03": "08", "A-04": "08", "A-05": "07l", "A-06": "07l", "A-07": "08a", "A-08": "07l", "A-09": "07m", "A-10": "07A", "PH-01": "08", "BUG-01": "08", "BUG-02": "08", "BUG-03": "01", "BUG-04": "02", "BUG-05": "03", "BUG-06": "07A", "BUG-07": "sys05", "BUG-08": "05", "BUG-09": "04", "BUG-10": "04"}, "acc_note": "개발 서버 전용 가상 번호 · 인증번호 1234 · 10/12 전부 처음 상태로 초기화 · 리포트는 [QA]맬리브레인 앱(dev/uat 빌드)에서 로그인해야 보임 · 자동 팝업은 계정당 1번 (다시 보려면 개발에 초기화 요청 → 앱 완전 종료 → 재실행)", "install": ["안드로이드 폰에서 Firebase App Distribution 초대 메일(\"[QA]맬리브레인\")을 엽니다. 초대는 30일 동안 유효합니다.", "[Get started]를 누르고 구글 계정으로 로그인해 초대를 수락합니다.", "안내에 따라 'App Tester'(Firebase 테스트 앱)를 설치합니다.", "설정에서 '출처를 알 수 없는 앱 설치'를 허용합니다 (Chrome 또는 App Tester에 '이 출처 허용').", "App Tester에서 [QA]맬리브레인을 골라 [다운로드] → [설치]합니다. 패키지명 net.onemedics.app.care.uat — 스토어 맬리브레인과 따로 설치됩니다.", "앱을 열고 테스트 번호로 로그인합니다. 인증번호는 1234입니다.", "계정을 바꿀 때는 내 정보에서 로그아웃 후 다른 번호로 로그인합니다.", "초대가 만료됐거나 아이폰으로 보고 싶으면 개발(hcpark@onemedics.net)에 새 초대 · iOS 배포를 요청합니다."]};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const RES=['통과','실패','보류','해당없음'];const TYPES=['문구','배치·정렬','색·스타일','이미지·아이콘','숫자·데이터','동작·버튼','기타'];const SEV={P1:'Major',P2:'Minor',P3:'Trivial'};
+const today=()=>new Date().toISOString().slice(0,10);
+const toast=m=>{const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,2600)};
+$('#zoom').onclick=()=>$('#zoom').hidden=true;
+function zoomIt(src){$('#zoom').innerHTML=`<img src="${src}" alt="확대한 이미지">`;$('#zoom').hidden=false}
+function sideBySide(fig,app){$('#zoom').innerHTML=`<div class="sbs"><figure><figcaption>피그마 목업</figcaption>${fig?`<img src="${fig}" alt="피그마 목업">`:'<div class="note">피그마 목업 없음</div>'}</figure><figure><figcaption>앱 캡처</figcaption>${app?`<img src="${app}" alt="앱 캡처">`:'<div class="note" style="color:#fff">아직 올린 캡처가 없습니다</div>'}</figure></div>`;$('#zoom').hidden=false}
+const blob=id=>'/_blob/'+id;
+const accLabel=k=>{const a=D.acc.find(x=>x.k===k);return a?`${a.k} ${a.tel} ${a.name}`:k};
+/* ── 계정 ── 한 계정으로 로그인해 그 계정 TC를 쭉 돌리고, 다음 계정으로 넘어갑니다 */
+const ACCS=[...D.acc.map((a,i)=>({s:'a'+(i+1),k:a.k,a})),{s:'a0',k:'무관',a:null}];
+const symOf=s=>(ACCS.find(x=>x.s===s)||{}).k||'미지정';
+const slugOf=k=>(ACCS.find(x=>x.k===k)||{}).s||'ax';
+const accShort=s=>{const x=ACCS.find(y=>y.s===s);return !x?'계정 미지정':x.a?`${x.k} ${x.a.name}`:'계정 무관'};
+const accLong=s=>{const x=ACCS.find(y=>y.s===s);return !x?'계정 미지정 (예전 기록)':x.a?`${x.k} ${x.a.tel} ${x.a.name}`:'계정 무관'};
+const accsOf=t=>{const m=ACCS.filter(x=>x.a&&t.acc.includes(x.k)).map(x=>x.s);return m.length?m:['a0']};
+let ACC='a1',ONLY=true;try{const v=localStorage.getItem('qa-acc');if(v&&ACCS.some(x=>x.s===v))ACC=v;ONLY=localStorage.getItem('qa-only')!=='0'}catch(e){}
+function runsOf(tid){const o={};for(const [id,v] of Object.entries(DOC.tc)){if(id.startsWith(tid+'@'))o[id.slice(tid.length+1)]={id,...v};else if(id===tid){const s=slugOf(v.acct);if(!o[s])o[s]={id,...v}}}return o}
+const runId=(tid,s)=>{const r=runsOf(tid)[s];return r?r.id:tid+'@'+s};
+const isDone=r=>!!(r&&(r.a||r.i));
+const failAccs=tid=>Object.entries(runsOf(tid)).filter(([,r])=>r.a==='실패'||r.i==='실패').map(([s])=>s);
+function tcRes(t,k){const R=runsOf(t.id),v=Object.values(R).map(r=>r[k]).filter(Boolean);if(v.includes('실패'))return '실패';if(v.includes('보류'))return '보류';
+  if(accsOf(t).every(s=>R[s]&&R[s][k]))return v.every(x=>x==='해당없음')?'해당없음':'통과';return v.length?'진행 중':'미실행'}
+const bugsOfT=tid=>[...(failAccs(tid).length?known(tid):[]),...autoBugs().filter(b=>b.tc===tid).map(b=>b.id)];
+const refImg=f=>f?`<img src="shots/${esc(f)}" alt="개발과 피그마 비교 ${esc(f)}" loading="lazy" data-zoom>`:'<div class="none">참고 이미지 없음</div>';
+
+/* ── 공유 상태 ── */
+let db=null,assets=null,user=null,downloads=null,myId=null,canWrite=false;
+const DOC={tc:{},bugs:{},dec:{}};
+const chains={};
+function write(col,id,patch){const p=col+'/'+id;chains[p]=(chains[p]||Promise.resolve()).then(async()=>{
+  if(!db||!canWrite)return;const next={...(DOC[col][id]||{}),...patch};if(col==='tc'&&id.includes('@')&&!next.acct)next.acct=symOf(id.split('@')[1]);
+  try{await db.doc(p).set(next)}catch(e){toast(e&&e.code==='quota_exceeded'?'저장 공간이 가득 찼습니다. 오래된 스크린샷을 지워 주세요':'저장하지 못했습니다. 잠시 후 다시 시도해 주세요');}});return chains[p]}
+async function del(col,id){if(!db||!canWrite)return;try{await db.doc(col+'/'+id).delete()}catch(e){toast('삭제하지 못했습니다')}}
+const timers={};
+function writeSoon(col,id,patch){const k=col+'/'+id;timers[k]=Object.assign(timers[k]||{},{patch:{...((timers[k]||{}).patch||{}),...patch}});clearTimeout(timers[k].t);timers[k].t=setTimeout(()=>{const p=timers[k].patch;delete timers[k];write(col,id,p)},800)}
+
+/* ── 결함 번호 ── */
+const known=tid=>D.bugs.filter(b=>String(b.tc).split(/\s*·\s*/).includes(tid)).map(b=>b.id);
+const autoBugs=()=>Object.entries(DOC.bugs).filter(([,b])=>b.auto).map(([id,b])=>({id,...b}));
+const maxNum=()=>Math.max(10,...D.bugs.map(b=>+b.id.replace(/\D/g,'')),...Object.keys(DOC.bugs).map(x=>+x.replace(/\D/g,'')||0));
+async function nextId(){const holder=myId||('v'+Math.random().toString(36).slice(2));const ref=db.doc('meta/seq');
+  for(let i=0;i<6;i++){let r;try{r=await ref.acquire({holder,ttlMs:4000})}catch(e){break}
+    if(r&&r.acquired){const s=await ref.get();const n=Math.max(maxNum(),(s.exists&&s.data().n)||0)+1;await ref.set({n});return 'BUG-'+String(n).padStart(2,'0')}
+    await new Promise(ok=>setTimeout(ok,400+Math.random()*400))}
+  return 'BUG-'+String(maxNum()+1).padStart(2,'0')}
+/* 판정은 계정별로 따로 저장합니다: tc/<TC>@<계정> (예전 기록 tc/<TC> 는 그 안의 acct 로 읽음) */
+const envOfR=R=>[R.some(r=>r.a==='실패')?'Android':'',R.some(r=>r.i==='실패')?'iOS':''].filter(Boolean).join(' · ');
+const anyFail=R=>R.some(r=>r.a==='실패'||r.i==='실패');
+async function setResult(tid,k,v){if(!canWrite){toast('이 화면에서는 저장할 수 없습니다');return}
+  const t=D.tc.find(x=>x.id===tid),id=runId(tid,ACC),cur=DOC.tc[id]||{},nv=cur[k]===v?'':v;
+  const before=failAccs(tid).length>0;await write('tc',id,{[k]:nv,date:today(),by:myId||''});
+  const R={...runsOf(tid),[ACC]:{...cur,[k]:nv}};const all=Object.values(R),failed=anyFail(all),mine=autoBugs().filter(b=>b.tc===tid);
+  if(failed&&!before){const kb=known(tid);
+    if(kb.length)toast(`${tid}를 기존 ${kb.join(', ')}에 연결했습니다`);
+    else if(!mine.length){const bid=await nextId();await write('bugs',bid,{auto:true,tc:tid,title:`${t.scr} — 기대 결과와 다름`,pr:t.pr,sev:SEV[t.pr],status:'개발 수정',env:envOfR(all),created:today(),by:myId||''});toast(`${bid}를 만들었습니다. 결함 탭에서 제목만 다듬으세요`)}}
+  else if(failed&&nv==='실패'){const b=[...known(tid),...mine.map(x=>x.id)];if(b.length)toast(`${accShort(ACC)} 결과도 ${b.join(', ')}에 묶었습니다`)}
+  else if(!failed&&before){for(const m of mine)if(!m.edited){await del('bugs',m.id);toast(`${m.id}를 지웠습니다 (실패 해제)`)}}
+  if(failed)for(const m of mine)if(m.env!==envOfR(all))write('bugs',m.id,{env:envOfR(all)})}
+async function newBugFor(tid){if(!canWrite)return;const t=D.tc.find(x=>x.id===tid);const id=await nextId();
+  await write('bugs',id,{auto:true,tc:tid,title:`${t.scr} — 기대 결과와 다름`,pr:t.pr,sev:SEV[t.pr],status:'개발 수정',env:envOfR(Object.values(runsOf(tid))),created:today(),by:myId||'',edited:true});
+  toast(`${id}를 만들었습니다`);goBug(id)}
+
+/* ── 스크린샷 ── */
+function shrink(file){return new Promise(ok=>{const u=URL.createObjectURL(file);const im=new Image();im.onload=()=>{const m=1440,sc=Math.min(1,m/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>ok(b),'image/jpeg',.86)};im.onerror=()=>{URL.revokeObjectURL(u);ok(null)};im.src=u})}
+async function addFiles(key,files){if(!assets){toast('이 화면에서는 스크린샷을 올릴 수 없습니다');return}
+  const imgs=[...files].filter(f=>f.type&&f.type.startsWith('image/'));if(!imgs.length)return;const [col,id]=key.split(':');
+  const st=(document.querySelector(`[data-drop="${key}"]`)||{closest:()=>null}).closest('.cmpbox')?.querySelector('.busy');if(st)st.textContent=` 올리는 중… (${imgs.length}장)`;
+  const ids=[];for(const f of imgs){const b=await shrink(f);if(!b)continue;try{const r=await assets.upload(b,{type:'image/jpeg'});ids.push(r.id)}catch(e){toast(e&&e.code==='too_large'?'파일이 너무 큽니다':e&&e.code==='quota_or_state'?'저장 공간이 가득 찼습니다':'스크린샷을 올리지 못했습니다')}}
+  if(st)st.textContent='';if(!ids.length)return;
+  sel[key]=ids[ids.length-1];await write(col,id,{shots:[...((DOC[col][id]||{}).shots||[]),...ids]});paintShots(key);toast(`${id}에 앱 캡처 ${ids.length}장을 올렸습니다`)}
+const armed={};
+async function removeShot(key,aid){const k=key+'|'+aid;if(!armed[k]){armed[k]=1;paintShots(key);setTimeout(()=>{delete armed[k];paintShots(key)},3000);return}
+  delete armed[k];const [col,id]=key.split(':');await write(col,id,{shots:((DOC[col][id]||{}).shots||[]).filter(x=>x!==aid)});try{await assets.delete(aid)}catch(e){}}
+const figSrc=k=>k?`fig/fig_${k}.png`:'';const sel={};
+const cmpHtml=(key,fk,cmpFile)=>`<div class="cmpbox">
+ <div class="col"><div class="cap"><span class="tag">피그마 목업</span></div><div class="frame">${fk?`<img src="${figSrc(fk)}" alt="피그마 목업" data-zoom loading="lazy">`:'<div class="none">이 TC는 피그마 목업이 없습니다<br>앱 화면만 확인하세요</div>'}</div></div>
+ <div class="col"><div class="cap"><span class="tag app">앱 캡처</span><span class="busy"></span></div><div class="drop frame" tabindex="0" data-drop="${key}" aria-label="앱 캡처 올리기"><div data-main="${key}" style="height:100%;width:100%;display:flex;align-items:center;justify-content:center"></div></div></div></div>
+ <div class="ups" data-ups="${key}"></div>
+ <div class="tools"><button class="btn" data-sbs="${key}" data-fig="${fk||''}">나란히 크게 보기</button>${assets&&canWrite?`<label class="btn">캡처 올리기<input type="file" accept="image/*" multiple hidden data-file="${key}"></label>`:''}${cmpFile?`<button class="btn" data-zoomsrc="shots/${cmpFile}">개발 웹 샘플 비교 (기획 확인)</button>`:''}</div>`;
+const curShot=key=>{const [col,id]=key.split(':');const arr=(DOC[col][id]||{}).shots||[];return arr.includes(sel[key])?sel[key]:arr[arr.length-1]};
+function paintShots(key){const [col,id]=key.split(':');const arr=(DOC[col][id]||{}).shots||[];const c=curShot(key);
+  const m=document.querySelector(`[data-main="${key}"]`);if(m){const mh=c?`<img src="${blob(c)}" alt="${esc(id)} 앱 캡처" data-zoom>`:`<div class="hint">${assets&&canWrite?'여기를 누르고 <b>Ctrl+V</b>(맥 ⌘V)로 붙여넣기<br>또는 끌어놓기 · [캡처 올리기]':'아직 올린 캡처가 없습니다'}</div>`;if(m.dataset.h!==mh){m.innerHTML=mh;m.dataset.h=mh}}
+  const el=document.querySelector(`[data-ups="${key}"]`);if(!el)return;
+  const html=arr.length>1||(arr.length&&assets&&canWrite)?arr.map(a=>`<div class="up${a===c?' sel':''}"><img src="${blob(a)}" alt="${esc(id)} 캡처" data-selshot="${key}" data-aid="${a}" loading="lazy">${assets&&canWrite?`<button class="x" data-rm="${key}" data-aid="${a}" aria-label="캡처 삭제">${armed[key+'|'+a]?'삭제?':'✕'}</button>`:''}</div>`).join(''):'';
+  if(el.dataset.html!==html){el.innerHTML=html;el.dataset.html=html}}
+let lastDrop=null;
+document.addEventListener('focusin',e=>{const d=e.target.closest&&e.target.closest('[data-drop]');if(d)lastDrop=d.dataset.drop});
+document.addEventListener('paste',e=>{const d=document.activeElement&&document.activeElement.closest&&document.activeElement.closest('[data-drop]');const k=d?d.dataset.drop:lastDrop;if(!k)return;const f=[...((e.clipboardData&&e.clipboardData.files)||[])];if(f.length){e.preventDefault();addFiles(k,f)}});
+document.addEventListener('dragover',e=>{const d=e.target.closest&&e.target.closest('[data-drop]');if(d){e.preventDefault();d.classList.add('over')}});
+document.addEventListener('dragleave',e=>{const d=e.target.closest&&e.target.closest('[data-drop]');if(d)d.classList.remove('over')});
+document.addEventListener('drop',e=>{const d=e.target.closest&&e.target.closest('[data-drop]');if(!d)return;e.preventDefault();d.classList.remove('over');addFiles(d.dataset.drop,e.dataTransfer.files)});
+
+/* ── 이벤트 ── */
+document.addEventListener('click',e=>{const z=e.target.closest('[data-zoom]');if(z){zoomIt(z.src);return}
+  const rm=e.target.closest('[data-rm]');if(rm){removeShot(rm.dataset.rm,rm.dataset.aid);return}
+  const ss=e.target.closest('[data-selshot]');if(ss){sel[ss.dataset.selshot]=ss.dataset.aid;paintShots(ss.dataset.selshot);return}
+  const sb=e.target.closest('[data-sbs]');if(sb){const c=curShot(sb.dataset.sbs);sideBySide(sb.dataset.fig?figSrc(sb.dataset.fig):'',c?blob(c):'');return}
+  const zs=e.target.closest('[data-zoomsrc]');if(zs){zoomIt(zs.dataset.zoomsrc);return}
+  const rb=e.target.closest('.rb');if(rb){setResult(rb.dataset.id,rb.dataset.k,rb.dataset.v);return}
+  const ch=e.target.closest('.chip');if(ch&&canWrite){const id=runId(ch.dataset.id,ACC),cur=(DOC.tc[id]||{}).types||[],v=ch.dataset.type;write('tc',id,{types:cur.includes(v)?cur.filter(x=>x!==v):[...cur,v],date:today(),by:myId||''});return}
+  const ab=e.target.closest('[data-acc]');if(ab){setAcc(ab.dataset.acc,ab.dataset.to);return}
+  const on=e.target.closest('[data-only]');if(on){ONLY=on.dataset.only==='1';try{localStorage.setItem('qa-only',ONLY?'1':'0')}catch(e){}tcList();return}
+  const gb=e.target.closest('[data-gobug]');if(gb){goBug(gb.dataset.gobug);return}
+  const tb=e.target.closest('.tab');if(tb){showTab(tb.dataset.k)}});
+document.addEventListener('input',e=>{const el=e.target;if(!el.dataset.col)return;const patch={[el.dataset.f]:el.value};if(el.dataset.col==='bugs')patch.edited=true;writeSoon(el.dataset.col,el.dataset.id,patch)});
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset.file){addFiles(el.dataset.file,el.files);el.value='';return}
+  if(el.tagName==='SELECT'&&el.dataset.col){write(el.dataset.col,el.dataset.id,{[el.dataset.f]:el.value,...(el.dataset.col==='bugs'?{edited:true}:{})})}});
+
+/* ── 탭 ── */
+let cur='tc';const TABS=[['tc','TC'],['bug','결함'],['fig','피그마 정리'],['dec','결정 필요'],['data','데이터 요청'],['shot','스크린샷 비교'],['guide','계정 · 설치 · 쓰는 법']];
+function tabs(){$('#tabs').innerHTML=TABS.map(([k,n])=>{const c={tc:D.tc.length,bug:D.bugs.length+autoBugs().length,fig:D.fig.length,dec:D.dec.length}[k];return `<button class="tab" role="tab" data-k="${k}" aria-selected="${cur===k}">${n}${c!=null?' ('+c+')':''}</button>`}).join('')}
+function showTab(k){cur=k;tabs();document.querySelectorAll('section').forEach(s=>s.hidden=s.id!=='v-'+k);if(k==='bug')bugs();}
+function goBug(id){showTab('bug');setTimeout(()=>{const el=document.getElementById('bug-'+id);el&&el.scrollIntoView({block:'start'})},60)}
+
+/* ── 판정 ── */
+function stats(){const r=t=>tcRes(t,'a');const by=p=>D.tc.filter(t=>t.pr===p);const cnt=(a,v)=>a.filter(t=>r(t)===v).length;
+  const p1=by('P1'),f1=cnt(p1,'실패'),done1=p1.filter(t=>!['미실행','진행 중'].includes(r(t))).length;const v=f1?`배포 불가 — P1 실패 ${f1}건`:(done1<p1.length?`판단 보류 — P1 미완료 ${p1.length-done1}건`:'배포 가능 — P1 전부 통과');
+  $('#stats').innerHTML=['P1','P2','P3'].map(p=>{const a=by(p);return `<div class="stat"><span>${p} · ${D.pri.find(x=>x.p===p).name}</span><b>${cnt(a,'통과')} / ${a.length}</b><span>실패 ${cnt(a,'실패')} · 보류 ${cnt(a,'보류')}</span></div>`}).join('')
+  +`<div class="stat"><span>결함</span><b>${D.bugs.length+autoBugs().length}</b><span>새로 생긴 결함 ${autoBugs().length}</span></div>
+  <div class="stat verdict"><span style="color:${f1?'var(--fail)':'var(--ink)'}">${v}</span><span class="note">(Android · 대상 계정 전부 기준)</span><span style="flex:1"></span><button class="btn pri" id="exp">결함 리포트 내보내기</button></div>`;
+  $('#exp').onclick=exportReport;tabs()}
+
+/* ── TC ── */
+let F={pr:'',stage:'',res:''};
+const remainOf=s=>D.tc.filter(t=>accsOf(t).includes(s)&&!isDone(runsOf(t.id)[s]));
+const totalOf=s=>D.tc.filter(t=>accsOf(t).includes(s));
+function setAcc(s,to){if(!ACCS.some(x=>x.s===s))return;ACC=s;const tt=to&&D.tc.find(x=>x.id===to);if(tt&&ONLY&&!accsOf(tt).includes(s))ONLY=false;try{localStorage.setItem('qa-acc',s)}catch(e){}tcList();
+  setTimeout(()=>{const el=to?document.getElementById('tc-'+to):$('#v-tc');el&&el.scrollIntoView({block:'start'})},40)}
+function accInfo(){const x=ACCS.find(y=>y.s===ACC),rem=remainOf(ACC),i=ACCS.findIndex(y=>y.s===ACC);
+  const nx=ACCS.slice(i+1).concat(ACCS.slice(0,i)).find(y=>remainOf(y.s).length);
+  const login=x.a?`앱에서 로그아웃 → <b>${x.a.tel}</b> 로그인 · 인증번호 <b>1234</b>`:'아무 계정이나 · 휴대폰 브라우저 · PC';
+  return `<div><b>지금 로그인: ${esc(accLong(ACC))}</b>${x.a?` · ${esc(x.a.tier)}`:''}<div class="note">${login}${x.a?' · 볼 것: '+esc(x.a.see):''}</div></div><span style="flex:1"></span>
+  <span class="note">${rem.length?`이 계정 남은 TC <b>${rem.length}</b>개`:'이 계정 TC를 다 했습니다'}</span>
+  ${nx?`<button class="btn${rem.length?'':' pri'}" data-acc="${nx.s}">다음 계정 ${esc(accShort(nx.s))} →</button>`:''}
+  <span class="seg"><button class="btn" data-only="1" aria-pressed="${ONLY}">이 계정 TC만</button><button class="btn" data-only="0" aria-pressed="${!ONLY}">전체 TC</button></span>`}
+function accBar(){return ACCS.map(x=>{const tot=totalOf(x.s).length,done=tot-remainOf(x.s).length;
+  return `<button class="accb" data-acc="${x.s}" aria-pressed="${ACC===x.s}"><b>${x.a?x.k+' '+esc(x.a.name):'계정 무관'}</b><span>${x.a?esc(x.a.tier):'F · K · 운영'}</span><span class="prog${tot&&done===tot?' full':''}">${done} / ${tot}</span></button>`}).join('')}
+function tcList(){const stages=[...new Set(D.tc.map(t=>t.stage))];
+  const list=D.tc.filter(t=>(!ONLY||accsOf(t).includes(ACC))&&(!F.pr||t.pr===F.pr)&&(!F.stage||t.stage===F.stage)&&(!F.res||((runsOf(t.id)[ACC]||{}).a||'미실행')===F.res));
+  $('#v-tc').innerHTML=`<div class="accbar" id="accbar" role="group" aria-label="로그인 계정">${accBar()}</div><div class="accinfo" id="accinfo">${accInfo()}</div>
+  <div class="bar"><select id="fp" aria-label="우선순위"><option value="">우선순위 전체</option>${['P1','P2','P3'].map(p=>`<option ${F.pr===p?'selected':''}>${p}</option>`).join('')}</select>
+  <select id="fs" aria-label="여정"><option value="">여정 전체</option>${stages.map(s=>`<option ${F.stage===s?'selected':''}>${esc(s)}</option>`).join('')}</select>
+  <select id="fr" aria-label="결과"><option value="">이 계정 결과 전체</option>${['미실행',...RES].map(s=>`<option ${F.res===s?'selected':''}>${s}</option>`).join('')}</select>
+  <span class="note">${list.length}건 · 실패를 누르면 결함 번호가 자동으로 붙습니다</span></div>`+list.map(t=>{const rid=runId(t.id,ACC),mineT=accsOf(t).includes(ACC);return `<div class="card" id="tc-${t.id}" data-tid="${t.id}" data-run="${rid}"><div><div style="min-width:0">
+  <div class="hd"><span class="id">${t.id}</span><span class="pill ${t.pr}">${t.pr}</span><span class="pill">${esc(t.stage)}</span><span class="pill">${esc(t.scr)}</span><span class="pill">대상 ${esc(accsOf(t).map(symOf).join(' '))}</span><span class="pill">${esc(t.env)}</span><span data-pills="${t.id}"></span></div>
+  <dl>${t.pre&&t.pre!=='—'?`<dt>사전 조건</dt><dd>${esc(t.pre)}</dd>`:''}<dt>절차</dt><dd>${esc(t.step)}</dd><dt>기대 결과</dt><dd><b>${esc(t.exp)}</b></dd><dt>근거</dt><dd class="note">${esc(t.ref)}</dd>${/^[①-⑦\s]*$/.test(t.acc)?'':`<dt>계정 메모</dt><dd class="note">${esc(t.acc)}</dd>`}</dl>
+  ${t.web?`<div class="webres">기획 웹 샘플 확인 · <b>${esc(t.web)}</b>${t.webm?' — '+esc(t.webm):''}</div>`:''}
+  </div></div>${cmpHtml('tc:'+rid,D.fig_of[t.id],t.shot)}
+  <div class="judge"><div class="jt">판정 — <span class="acctag">${esc(accShort(ACC))}</span> 로 로그인한 결과${mineT?'':' <span class="note">(이 TC의 대상 계정은 아니지만 기록할 수 있습니다)</span>'}</div>
+  <div class="others" data-others="${t.id}"></div>
+  ${['a','i'].map(k=>`<div class="res"><span class="lab">${k==='a'?'Android':'iOS'}</span>${RES.map(v=>`<button class="rb" data-id="${t.id}" data-k="${k}" data-v="${v}" aria-pressed="false">${v}</button>`).join('')}</div>`).join('')}
+  <div class="res"><span class="lab">오류 유형</span>${TYPES.map(v=>`<button class="chip" data-id="${t.id}" data-type="${v}" aria-pressed="false">${v}</button>`).join('')}</div>
+  <textarea id="memo-${t.id}" placeholder="다른 점 — 피그마와 무엇이 달랐나요? (예: 배지가 '2026년 …'으로 나옴 · 버튼이 회색)" data-col="tc" data-id="${rid}" data-f="memo" aria-label="${t.id} 다른 점"></textarea>
+  <div class="who" data-who="${t.id}"></div></div></div>`}).join('');
+  $('#fp').onchange=e=>{F.pr=e.target.value;tcList()};$('#fs').onchange=e=>{F.stage=e.target.value;tcList()};$('#fr').onchange=e=>{F.res=e.target.value;tcList()};patchTc()}
+const names={};
+async function nameOf(ids){if(!user||!user.profiles)return;const need=ids.filter(x=>x&&!(x in names));if(!need.length)return;try{const ps=await user.profiles(need);for(const id of need)names[id]=(ps[id]&&ps[id].name)||''}catch(e){}patchTc()}
+const short=v=>({'통과':'통과','실패':'실패','보류':'보류','해당없음':'해당없음'}[v]||'—');
+function othersHtml(t){const R=runsOf(t.id);const keys=[...new Set([...accsOf(t),...Object.keys(R)])];
+  return '<span class="note">계정별</span>'+keys.map(s=>{const r=R[s]||{},f=r.a==='실패'||r.i==='실패',ok=isDone(r)&&!f;
+    return `<button class="oa${f?' f':ok?' p':''}${s===ACC?' cur':''}" data-acc="${ACCS.some(x=>x.s===s)?s:ACC}" data-to="${t.id}" title="${esc(accLong(s))}">${esc(accShort(s))} · A ${short(r.a)} · i ${short(r.i)}</button>`}).join('')}
+function patchTc(){const ids=[];let stale=false;
+  const ab=$('#accbar');if(ab){const h=accBar();if(ab.dataset.h!==h){ab.innerHTML=h;ab.dataset.h=h}}const ai=$('#accinfo');if(ai&&!ai.contains(document.activeElement)){const h=accInfo();if(ai.dataset.h!==h){ai.innerHTML=h;ai.dataset.h=h}}
+  document.querySelectorAll('#v-tc .card').forEach(c=>{const id=c.dataset.tid,rid=c.dataset.run;if(rid!==runId(id,ACC))stale=true;const s=DOC.tc[rid]||{};const t=D.tc.find(x=>x.id===id);
+  c.querySelectorAll('.rb').forEach(b=>{b.setAttribute('aria-pressed',String(s[b.dataset.k]===b.dataset.v));b.disabled=!canWrite});c.querySelectorAll('.chip').forEach(b=>{b.setAttribute('aria-pressed',String((s.types||[]).includes(b.dataset.type)));b.disabled=!canWrite});
+  const pl=c.querySelector('[data-pills]');const ph=bugsOfT(id).map(b=>`<button class="pill bug" data-gobug="${b}">${b}</button>`).join(' ');if(pl.dataset.h!==ph){pl.innerHTML=ph;pl.dataset.h=ph}
+  const ot=c.querySelector('[data-others]');const oh=othersHtml(t);if(ot.dataset.h!==oh){ot.innerHTML=oh;ot.dataset.h=oh}
+  const m=c.querySelector('textarea');if(document.activeElement!==m&&!timers['tc/'+rid]&&m.value!==(s.memo||''))m.value=s.memo||'';m.readOnly=!canWrite;
+  const w=c.querySelector('[data-who]');if(s.date){ids.push(s.by);w.textContent=`마지막 기록 ${s.date}${names[s.by]?' · '+names[s.by]:''} · ${accLong(ACC)}`}else w.textContent='';
+  paintShots('tc:'+rid)});
+  if(stale&&!document.activeElement?.closest?.('#v-tc textarea')){tcList();return}nameOf(ids)}
+
+/* ── 결함 ── */
+function bugRow(b,auto){const s=DOC.bugs[b.id]||{};const status=s.status||b.status;const opts=['기획 선행','확인 필요','개발 수정','수정 완료','재검수 실패','해결','보류'].map(v=>`<option ${status===v?'selected':''}>${v}</option>`).join('');
+  const t=D.tc.find(x=>x.id===(auto?s.tc:String(b.tc).split(' · ')[0]))||{};
+  return `<div class="card${auto?' new':''}" id="bug-${b.id}"><div><div style="min-width:0">
+  <div class="hd"><span class="id">${b.id}</span><span class="pill ${auto?s.pr:b.pr}">${auto?s.pr:b.pr}</span><span class="pill">${esc(auto?s.sev:b.sev)}</span>${auto?`<span class="pill bug">자동 생성 · ${esc(s.created)}</span>`:`<b>${esc(b.title)}</b>`}</div>
+  ${auto?`<input type="text" id="title-${b.id}" data-col="bugs" data-id="${b.id}" data-f="title" aria-label="${b.id} 제목" style="width:100%;font-weight:700;margin-bottom:6px">`:''}
+  <dl><dt>화면</dt><dd>${esc(auto?t.scr:b.scr)}</dd><dt>재현 경로</dt><dd>${esc(auto?((t.pre&&t.pre!=='—'?t.pre+' → ':'')+t.step):b.path)}</dd><dt>기대</dt><dd>${esc(auto?t.exp:b.exp)}</dd>
+  <dt>실제</dt><dd>${auto?`<textarea id="act-${b.id}" data-col="bugs" data-id="${b.id}" data-f="act" placeholder="실제로 어떻게 나왔는지" aria-label="${b.id} 실제 결과"></textarea>`:`<b>${esc(b.act)}</b>`}</dd>
+  <dt>근거</dt><dd class="note">${esc(auto?t.ref:b.ref)}</dd>${auto?`<dt>환경</dt><dd>${esc(envOfR(Object.values(runsOf(s.tc)))||s.env)}</dd><dt>실패한 계정</dt><dd>${esc(failAccs(s.tc).map(accLong).join(' · ')||'— (지금은 실패한 계정이 없습니다)')}</dd>`:`<dt>담당</dt><dd>${esc(b.owner)}</dd>`}<dt>관련 TC</dt><dd>${esc(auto?s.tc:b.tc)}</dd>
+  <dt>상태</dt><dd><select id="st-${b.id}" data-col="bugs" data-id="${b.id}" data-f="status" aria-label="${b.id} 상태" ${canWrite?'':'disabled'}>${opts}</select></dd></dl>
+  ${auto?'':`<textarea id="bm-${b.id}" placeholder="메모 · 회신" data-col="bugs" data-id="${b.id}" data-f="memo" aria-label="${b.id} 메모"></textarea>`}
+  </div></div>${cmpHtml(auto?bugKey(s.tc):'bugs:'+b.id,auto?D.fig_of[s.tc]:D.fig_of[b.id],auto?t.shot:b.shot)}${auto?`<div class="note">앱 캡처는 ${esc(s.tc)} TC · ${esc(accShort(bugAcc(s.tc)))} 판정칸과 같은 칸입니다</div>`:''}</div>`}
+const bugAcc=tid=>failAccs(tid)[0]||ACC;const bugKey=tid=>'tc:'+runId(tid,bugAcc(tid));
+let bugSig='';
+function bugs(){const A=autoBugs().sort((x,y)=>x.id<y.id?-1:1);const sig=A.map(b=>b.id+b.tc+failAccs(b.tc).join('')+runId(b.tc,bugAcc(b.tc))).join(',')+'|'+canWrite;const host=$('#v-bug');
+  if(sig!==bugSig||!host.innerHTML){bugSig=sig;host.innerHTML=(A.length?`<h3>새로 생긴 결함 (${A.length})</h3><p class="note">TC에서 실패를 누르면 다음 번호로 자동 생성됩니다. 제목과 실제 결과만 다듬으세요. 손대지 않은 결함은 실패를 해제하면 지워집니다.</p>`+A.map(b=>bugRow(b,true)).join(''):'')
+    +`<h3>기획이 웹 샘플로 찾은 결함 (${D.bugs.length})</h3>`+D.bugs.map(b=>bugRow(b,false)).join('')
+    +(canWrite?`<div class="bar"><span class="note">같은 TC에서 다른 문제가 또 나왔다면</span><select id="nb" aria-label="TC 선택">${D.tc.map(t=>`<option>${t.id}</option>`).join('')}</select><button class="btn" id="nbb">새 결함 만들기</button></div>`:'');
+    const nb=$('#nbb');if(nb)nb.onclick=()=>newBugFor($('#nb').value)}
+  for(const [sel,col,id,f] of [...A.flatMap(b=>[['#title-'+b.id,'bugs',b.id,'title'],['#act-'+b.id,'bugs',b.id,'act']]),...D.bugs.map(b=>['#bm-'+b.id,'bugs',b.id,'memo'])]){const el=$(sel);if(!el)continue;const v=(DOC.bugs[id]||{})[f]||'';if(document.activeElement!==el&&!timers['bugs/'+id]&&el.value!==v)el.value=v;el.readOnly=!canWrite}
+  [...D.bugs,...A].forEach(b=>{const el=$('#st-'+b.id);if(el&&document.activeElement!==el){const v=(DOC.bugs[b.id]||{}).status||b.status;if(v&&el.value!==v)el.value=v}});
+  A.forEach(b=>paintShots(bugKey(b.tc)));D.bugs.forEach(b=>paintShots('bugs:'+b.id))}
+
+/* ── 나머지 탭 (정적) ── */
+function staticTabs(){
+ $('#v-fig').innerHTML=`<p class="note">피그마 안에서 목업과 디스크립션이 서로 다른 곳입니다. 목업 우선으로 정리했습니다(10/12).</p>`+D.fig.map(f=>`<div class="card"><div class="hd"><span class="id">${f.id}</span><b>${esc(f.scr)}</b><span class="pill">노드 ${esc(f.node)}</span></div><dl><dt>목업</dt><dd>${esc(f.mock)}</dd><dt>디스크립션</dt><dd>${esc(f.desc)}</dd><dt>처리</dt><dd><b>${esc(f.res)}</b></dd></dl></div>`).join('');
+ $('#v-dec').innerHTML=D.dec.map(d=>`<div class="card"><div class="hd"><span class="id">${d.id}</span><b>${esc(d.title)}</b><span class="pill P1">기한 ${esc(d.due)}</span></div><dl><dt>지금 상태</dt><dd>${esc(d.now)}</dd><dt>선택지</dt><dd>${esc(d.opts)}</dd><dt>근거</dt><dd class="note">${esc(d.ref)}</dd></dl><textarea id="dec-${d.id}" placeholder="결정 내용" data-col="dec" data-id="${d.id}" data-f="memo" aria-label="${d.id} 결정"></textarea></div>`).join('');
+ $('#v-data').innerHTML=`<div class="tablewrap"><table><tr><th>#</th><th>요청 (개발)</th><th>왜</th><th>관련 TC</th></tr>${D.data.map(d=>`<tr><td>${d.n}</td><td>${esc(d.req)}</td><td>${esc(d.why)}</td><td>${esc(d.tc)}</td></tr>`).join('')}</table></div>`;
+ const CMP=[['01','SC-RP-01 표지'],['02','SC-RP-02'],['03','SC-RP-03'],['04','SC-RP-04'],['04B','SC-RP-04B'],['05','SC-RP-05'],['06','SC-RP-06'],['07A','SC-RP-07 A'],['07B','SC-RP-07 B'],['07C','SC-RP-07 C'],['07h','07-h 시트'],['07l','07-l'],['08','SC-RP-08'],['sys05','SYS-05']];
+ $('#v-shot').innerHTML=`<p class="note">왼쪽 빨간 테두리 = 개발 dev(375×812) · 오른쪽 초록 테두리 = 피그마 목업. 이미지를 누르면 크게 보입니다.</p><div class="cmp">${CMP.map(([k,c])=>`<figure><img src="shots/cmp_${k}.png" loading="lazy" data-zoom alt="${c} 비교"><figcaption>${c}</figcaption></figure>`).join('')}</div>`;
+ $('#v-guide').innerHTML=`<h3>쓰는 법</h3><ol>
+ <li>TC 탭 맨 위에서 <b>지금 로그인한 계정</b>을 누릅니다. 그 계정이 대상인 TC만 순서대로 나옵니다 (예: ① 22개).</li>
+ <li>앱에서 그 계정으로 TC를 돌리며 Android · iOS 결과를 누릅니다. 같은 버튼을 다시 누르면 해제됩니다. 결과는 <b>계정마다 따로</b> 저장되고, 카드의 '계정별' 줄에서 다른 계정 결과를 같이 봅니다.</li>
+ <li>남은 TC가 0이 되면 <b>[다음 계정 →]</b>을 누르고, 앱에서 로그아웃 → 다음 번호로 로그인(인증번호 1234)해 이어서 합니다.</li>
+ <li><b>실패</b>를 누르면 결함 번호가 자동으로 붙습니다. 기획이 이미 찾은 결함(BUG-01~10)과 같은 TC면 그 번호에 연결하고, 아니면 다음 번호(BUG-11~)를 새로 만듭니다.</li>
+ <li>TC마다 왼쪽에 <b>피그마 목업</b>이 기본으로 들어가 있습니다. 앱에서 같은 화면을 캡처해 오른쪽 <b>앱 캡처</b> 칸을 누르고 Ctrl+V(맥 ⌘V)로 붙여넣거나, 끌어놓거나, [캡처 올리기]로 올리면 나란히 비교됩니다.</li><li>[나란히 크게 보기]를 누르면 두 화면을 화면 가득 나란히 봅니다. 캡처를 여러 장 올렸다면 아래 썸네일을 눌러 비교할 캡처를 고릅니다.</li>
+ <li>입력 · 결함 · 스크린샷은 이 페이지에 저장되어 <b>어느 PC에서 열어도 똑같이</b> 보입니다. 같은 링크를 연 사람은 실시간으로 함께 봅니다.</li>
+ <li>개발에 파일로 넘길 때는 위의 <b>결함 리포트 내보내기</b>로 스크린샷이 들어간 HTML 파일 1개를 받습니다.</li>
+ <li>신청폼 4기는 제출하면 실제 문자가 갑니다. <b>본인 번호로만</b> 1회 제출합니다.</li></ol>
+ <h3>테스트 계정</h3><p class="note">${esc(D.acc_note)}</p><div class="tablewrap"><table><tr><th></th><th>번호</th><th>인증번호</th><th>이름</th><th>등급</th><th>주로 볼 것</th><th>진행 · 한 TC</th></tr>${D.acc.map(a=>`<tr><td>${a.k}</td><td>${a.tel}</td><td>1234</td><td>${esc(a.name)}</td><td>${esc(a.tier)}</td><td>${esc(a.see)}</td><td data-accused="${a.k}"></td></tr>`).join('')}</table></div>
+ <h3>앱 설치 — [QA]맬리브레인 (안드로이드 · Firebase App Distribution)</h3><ol>${D.install.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+ <h3>우선순위</h3><div class="tablewrap"><table>${D.pri.map(p=>`<tr><td><b>${p.p}</b></td><td>${p.name}</td><td>${esc(p.desc)}</td></tr>`).join('')}</table></div>
+ <p class="note">문서: https://butblank-oss.github.io/meli.brain/docs.html · 프로토타입: https://butblank-oss.github.io/meli.brain/index.html</p>`}
+function patchAcc(){document.querySelectorAll('[data-accused]').forEach(td=>{const sl=slugOf(td.dataset.accused);const tot=totalOf(sl);const done=D.tc.filter(t=>isDone(runsOf(t.id)[sl]));
+  const t=`${tot.length-remainOf(sl).length} / ${tot.length} 완료${done.length?' · '+done.map(x=>x.id+((runsOf(x.id)[sl].a==='실패'||runsOf(x.id)[sl].i==='실패')?'(실패)':'')).join(', '):''}`;if(td.textContent!==t)td.textContent=t})}
+function patchDec(){D.dec.forEach(d=>{const el=$('#dec-'+d.id);if(!el)return;const v=(DOC.dec[d.id]||{}).memo||'';if(document.activeElement!==el&&!timers['dec/'+d.id]&&el.value!==v)el.value=v;el.readOnly=!canWrite})}
+
+/* ── 내보내기 ── */
+async function toData(src){try{const r=await fetch(src);if(!r.ok)return null;const b=await r.blob();const s=await shrink(b);return await new Promise(ok=>{const f=new FileReader();f.onload=()=>ok(f.result);f.readAsDataURL(s||b)})}catch(e){return null}}
+async function exportReport(){if(!downloads){toast('이 화면에서는 파일을 내려받을 수 없습니다');return}toast('리포트를 만드는 중입니다…');const day=today();
+  const A=autoBugs().map(b=>{const t=D.tc.find(x=>x.id===b.tc)||{};const FA=failAccs(b.tc);return {id:b.id,accs:FA,title:b.title,pr:b.pr,sev:b.sev,status:b.status,scr:t.scr,path:(t.pre&&t.pre!=='—'?t.pre+' → ':'')+t.step,exp:t.exp,act:b.act||'',ref:t.ref,tc:b.tc,shot:t.shot,shots:FA.flatMap(x=>(runsOf(b.tc)[x]||{}).shots||[])}});
+  const S=D.bugs.map(b=>({...b,status:(DOC.bugs[b.id]||{}).status||b.status,memo:(DOC.bugs[b.id]||{}).memo||'',shots:(DOC.bugs[b.id]||{}).shots||[]}));
+  const open=[...A,...S].filter(b=>b.status!=='해결');const cards=[];
+  for(const b of open){const ups=[];for(const a of b.shots){const u=await toData(blob(a));if(u)ups.push(u)}const fk=D.fig_of[b.id]||D.fig_of[b.tc];const ref=fk?await toData(figSrc(fk)):null;
+    cards.push(`<section class="b"><h2>${esc(b.id)} <small>${esc(b.pr)} · ${esc(b.sev)} · ${esc(b.status)}</small></h2><h3>${esc(b.title)}</h3><table><tr><th>화면</th><td>${esc(b.scr)}</td></tr><tr><th>재현 경로</th><td>${esc(b.path)}</td></tr><tr><th>기대 (피그마)</th><td>${esc(b.exp)}</td></tr><tr><th>실제</th><td>${esc(b.act)}</td></tr><tr><th>근거</th><td>${esc(b.ref)}</td></tr><tr><th>관련 TC</th><td>${esc(b.tc)}</td></tr>${b.accs&&b.accs.length?`<tr><th>실패한 계정</th><td>${esc(b.accs.map(accLong).join(' · '))}</td></tr>`:''}${b.memo?`<tr><th>메모</th><td>${esc(b.memo)}</td></tr>`:''}</table><div class="imgs">${ups.map((u,i)=>`<figure><img src="${u}"><figcaption>앱 캡처 ${i+1}</figcaption></figure>`).join('')}${ref?`<figure><img src="${ref}"><figcaption>피그마 목업 (기대)</figcaption></figure>`:''}</div></section>`)}
+  const rows=D.tc.flatMap(t=>{const R=runsOf(t.id);const keys=[...new Set([...accsOf(t),...Object.keys(R)])];const bs=bugsOfT(t.id).join(', ');
+    return keys.map(k=>{const x=R[k]||{};return `<tr><td>${t.id}</td><td>${t.pr}</td><td>${esc(t.scr)}</td><td>${esc(accLong(k))}</td><td>${esc(x.a||'미실행')}</td><td>${esc(x.i||'')}</td><td>${esc(bs)}</td><td>${esc((x.types||[]).join(', '))}</td><td>${esc(x.memo||'')}</td></tr>`})}).join('');
+  const p1f=D.tc.filter(t=>t.pr==='P1'&&tcRes(t,'a')==='실패').length;
+  const html=`<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3기 리포트 결함 리포트 ${day}</title><style>body{font:14px/1.55 -apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:#17201C;max-width:980px;margin:0 auto;padding:24px 16px;background:#fff}h1{font-size:22px}h2{font-size:17px;margin:0}h2 small{font-weight:500;color:#C2410C;margin-left:6px}h3{font-size:15px;margin:4px 0 10px}.b{border:1px solid #DDE3E0;border-radius:12px;padding:16px;margin:14px 0}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #ECEFEE;padding:6px 8px;text-align:left;vertical-align:top}th{width:110px;color:#7D8A84;font-weight:500}.imgs{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}.imgs figure{margin:0;width:260px}.imgs .ref{width:420px}.imgs img{width:100%;border:1px solid #DDE3E0;border-radius:8px}figcaption{font-size:12px;color:#7D8A84}.sum{background:#F4F6F5;border-radius:12px;padding:12px 16px}.tc td,.tc th{font-size:12px;width:auto}</style></head><body><h1>3기 종료 리포트 — 결함 리포트</h1><p>작성 ${day} · 기준 피그마 목업 + 디스크립션 (페이지 1028:3313) · dev 10/7 빌드</p><div class="sum">열린 결함 <b>${open.length}건</b> (새로 생긴 결함 ${A.length}) · P1 실패 TC <b>${p1f}건</b></div>${cards.join('')}<h2 style="margin-top:28px">TC 결과 (계정별)</h2><table class="tc"><tr><th>TC</th><th>우선</th><th>화면</th><th>계정</th><th>Android</th><th>iOS</th><th>결함</th><th>오류 유형</th><th>다른 점</th></tr>${rows}</table></body></html>`;
+  try{await downloads.save({filename:`3기리포트_결함리포트_${day}.html`,data:new Blob([html],{type:'text/html'})});toast('결함 리포트를 내려받았습니다')}catch(e){toast('내려받기를 취소했거나 할 수 없습니다')}}
+
+/* ── 시작 ── */
+function renderAll(){patchAcc();stats();if(!$('#v-tc').innerHTML)tcList();else patchTc();if(cur==='bug')bugs();patchDec()}
+staticTabs();stats();tcList();showTab('tc');
+(async()=>{
+  try{db=await claude.use('db')}catch(e){db=null}
+  try{user=await claude.use('user')}catch(e){user=null}
+  try{assets=await claude.use('assets')}catch(e){assets=null}
+  try{downloads=await claude.use('downloads')}catch(e){downloads=null}
+  try{myId=user&&user.id?await user.id():null}catch(e){myId=null}
+  let w=null;try{w=user&&user.can?await user.can('data.write'):null}catch(e){}
+  canWrite=!!db&&w!==false;
+  const bn=$('#banner');
+  if(!db){bn.className='banner warn';bn.textContent='저장소에 연결하지 못했습니다. claude.ai에 로그인한 상태로 이 페이지를 열어 주세요. 지금은 읽기만 됩니다.'}
+  else if(!canWrite){bn.className='banner';bn.textContent='보기 권한으로 열었습니다. 결과 입력과 스크린샷 업로드는 편집 권한이 있는 사람만 할 수 있습니다.'}
+  else{bn.className='banner';bn.textContent=assets?'연결됨 — 입력과 스크린샷이 이 페이지에 바로 저장됩니다.':'연결됨 — 결과는 저장되지만 이 화면에서는 스크린샷을 올릴 수 없습니다.'}
+  tcList();bugSig='';if(cur==='bug')bugs();
+  if(!db)return;
+  for(const col of ['tc','bugs','dec']){db.collection(col).onSnapshot(snap=>{const o={};snap.docs.forEach(d=>{if(d.exists)o[d.id]=d.data()});DOC[col]=o;renderAll()},e=>{bn.className='banner warn';bn.textContent='저장소 연결이 끊겼습니다. 페이지를 새로 고쳐 주세요.'})}
+  patchTc();
+})();
+</script>
+</body></html>
