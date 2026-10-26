@@ -1,0 +1,79 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>3기 수료식 선물 소진 대비 POP</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;background:#888}
+.pg{width:794px;height:1123px;position:relative;overflow:hidden;padding:110px 80px 0;page-break-after:always;margin:0 auto 20px}
+@media print{body{background:none}.pg{margin:0}}
+.dark{background:#265F4D;color:#fff} .cream{background:#FFF7EF;color:#1B1B1B} .yel{background:#FFD54A;color:#1B1B1B}
+.circ{position:absolute;border-radius:50%;background:#2F6E59}
+.st{position:absolute}
+.pill{position:relative;z-index:1;display:inline-block;border:3px solid #fff;border-radius:40px;padding:8px 26px;font-size:26px;font-weight:700}
+.pill.dk{border-color:#265F4D;color:#265F4D}
+.tag{display:inline-block;background:#265F4D;color:#fff;border-radius:12px;padding:8px 22px;font-size:28px;font-weight:700}
+.hx{position:relative;font-size:92px;font-weight:900;line-height:1.18;letter-spacing:-3px}
+.g{color:#265F4D} .g2{color:#265F4D}
+.sub{position:relative;font-size:34px;font-weight:500;margin-top:30px;line-height:1.5;letter-spacing:-.5px}
+.box{position:absolute;left:80px;right:80px;background:#FFD54A;color:#265F4D;border-radius:24px;padding:30px;text-align:center;font-size:42px;font-weight:900;letter-spacing:-1px}
+.foot{position:absolute;left:0;right:0;bottom:36px;text-align:center;font-size:20px;font-weight:700;opacity:.75}
+.drink{position:relative;display:flex;align-items:center;gap:28px;margin-top:70px;background:#fff;border-radius:28px;padding:34px 36px;box-shadow:0 6px 20px rgba(0,0,0,.06);width:520px}
+.drink b{font-size:40px;font-weight:900;color:#265F4D} .drink span{font-size:26px;color:#555}
+.cup{width:76px;height:92px;background:#FFD54A;border-radius:6px 6px 22px 22px;position:relative;flex:none}
+.cup:after{content:"";position:absolute;right:-24px;top:20px;width:26px;height:40px;border:8px solid #FFD54A;border-left:none;border-radius:0 18px 18px 0}
+.num{width:320px;height:320px;margin:0 auto;border-radius:50%;background:#265F4D;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 18px #FFD54A}
+.num span{font-size:220px;font-weight:900;color:#fff;line-height:1}
+.steps{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:56px}
+.stp{width:196px;background:#fff;border-radius:22px;padding:24px 10px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.stp i{display:inline-flex;width:44px;height:44px;border-radius:50%;background:#265F4D;color:#fff;font-style:normal;font-weight:900;font-size:24px;align-items:center;justify-content:center}
+.stp b{display:block;font-size:36px;font-weight:900;color:#265F4D;margin-top:10px;letter-spacing:-1px}
+.stp span{display:block;font-size:23px;color:#666;margin-top:4px}
+.stp.gift{background:#FFD54A}
+.arr{font-size:54px;color:#265F4D;font-weight:700}
+.ticket{display:flex;align-items:center;gap:20px;margin:50px auto 0;width:640px;background:#265F4D;color:#fff;border-radius:18px;padding:24px 30px;font-size:32px;font-weight:700}
+.ticket .tl{color:#FFD54A;font-weight:900;font-size:22px;border-right:3px dashed #FFD54A;padding-right:18px}
+.ticket b{color:#FFD54A}
+.cp{display:flex;margin-top:46px;width:620px;height:150px;transform:rotate(-2deg)}
+.cp2{margin-left:20px;transform:rotate(2deg);margin-top:26px}
+.cpl{width:150px;background:#265F4D;color:#FFD54A;border-radius:20px 0 0 20px;border-right:4px dashed #FFD54A;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:22px}
+.cpl b{font-size:54px;color:#fff;font-weight:900;line-height:1}
+.cpr{flex:1;background:#265F4D;border-radius:0 20px 20px 0;color:#fff;display:flex;flex-direction:column;justify-content:center;padding-left:30px}
+.cpr span{font-size:24px;color:#CFE6DB} .cpr b{font-size:46px;font-weight:900;letter-spacing:-1px}
+.cp2 .cpl,.cp2 .cpr{background:#fff;color:#265F4D} .cp2 .cpl{color:#265F4D;border-right-color:#265F4D} .cp2 .cpl b{color:#265F4D} .cp2 .cpr span{color:#555}
+.phone{width:170px;height:290px;margin:40px auto 0;border-radius:30px;background:#265F4D;padding:14px;position:relative}
+.scr{width:100%;height:100%;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center}
+.dot{width:80px;height:80px;border-radius:50%;background:#FFD54A}
+.okbox{margin:40px auto 0;width:560px;background:#fff;border:4px solid #265F4D;border-radius:24px;padding:26px;text-align:center;font-size:38px;font-weight:900;color:#265F4D;letter-spacing:-1px}
+.okbox span{display:block;font-size:26px;font-weight:500;color:#555;margin-top:6px;letter-spacing:0}
+.sheet{width:100%;border-collapse:collapse;font-size:18px}
+.sheet th{background:#265F4D;color:#fff;padding:10px 6px;font-weight:700;border:1px solid #265F4D}
+.sheet td{border:1px solid #9BB5AA;height:47px;text-align:center;color:#888}
+*{word-break:keep-all;overflow-wrap:break-word}</style></head><body><section class="pg yel">
+<svg class="st" style="left:680px;top:100px;width:46px;height:46px" viewBox="0 0 10 10"><path d="M5 0L6.1 3.9 10 5 6.1 6.1 5 10 3.9 6.1 0 5 3.9 3.9Z" fill="#265F4D"/></svg><svg class="st" style="left:700px;top:330px;width:34px;height:34px" viewBox="0 0 10 10"><path d="M5 0L6.1 3.9 10 5 6.1 6.1 5 10 3.9 6.1 0 5 3.9 3.9Z" fill="#fff"/></svg>
+<div class="pill dk">선물 안내</div>
+<h1 class="hx g" style="margin-top:60px">선물이<br>얼마 남지<br>않았어요</h1>
+<p class="sub g2" style="font-weight:700">먼저 오신 분 순서대로 드려요</p>
+<div class="okbox" style="margin-top:60px;border-color:#265F4D">의견은 끝까지 들어요<br><span>선물이 없어도 편하게 들러 주세요</span></div>
+<img src="../img/pink.png" style="position:absolute;right:70px;bottom:90px;height:160px">
+<div class="foot g">남동구 보건소 · 맬리브레인</div></section><section class="pg dark">
+<div class="circ" style="right:-180px;top:-160px;width:520px;height:520px"></div>
+<svg class="st" style="left:560px;top:110px;width:40px;height:40px" viewBox="0 0 10 10"><path d="M5 0L6.1 3.9 10 5 6.1 6.1 5 10 3.9 6.1 0 5 3.9 3.9Z" fill="#FFD54A"/></svg>
+<div class="pill">선물 안내</div>
+<h1 class="hx" style="margin-top:60px;font-size:84px">오늘 준비한<br>선물이 모두<br>나갔어요</h1>
+<p class="sub" style="color:#CFE6DB">많이 와주셔서 감사합니다</p>
+<div class="box" style="top:720px;font-size:38px;line-height:1.4">성함을 남겨 주시면<br>선물을 따로 챙겨 드릴게요</div>
+<p class="sub" style="position:absolute;top:900px;left:80px;right:80px;text-align:center;color:#CFE6DB;font-size:28px">받으시는 방법은 보건소에서 다시 연락드려요</p>
+<div class="foot">남동구 보건소 · 맬리브레인</div></section><section class="pg dark">
+<div class="circ" style="left:-200px;bottom:-200px;width:600px;height:600px"></div>
+<svg class="st" style="left:660px;top:100px;width:44px;height:44px" viewBox="0 0 10 10"><path d="M5 0L6.1 3.9 10 5 6.1 6.1 5 10 3.9 6.1 0 5 3.9 3.9Z" fill="#FFD54A"/></svg><svg class="st" style="left:700px;top:330px;width:30px;height:30px" viewBox="0 0 10 10"><path d="M5 0L6.1 3.9 10 5 6.1 6.1 5 10 3.9 6.1 0 5 3.9 3.9Z" fill="#fff"/></svg>
+<div class="pill">선물 안내</div>
+<h1 class="hx" style="margin-top:60px;font-size:84px">오늘 준비한<br>선물이 모두<br>나갔어요</h1>
+<p class="sub" style="color:#CFE6DB">와주셔서 진심으로 감사합니다<br>의견은 계속 들려주세요</p>
+<img src="../img/party.png" style="position:absolute;right:110px;top:640px;height:220px">
+<div class="box" style="top:915px">문의 032-453-6160</div>
+<div class="foot">남동구 보건소 · 맬리브레인</div></section><section class="pg" style="background:#fff;padding:60px 56px 0">
+<div style="display:flex;justify-content:space-between;align-items:flex-end;border-bottom:4px solid #265F4D;padding-bottom:12px">
+<div><div style="font-size:18px;color:#666;font-weight:700">3기 수료식 · 10월 30일</div><div style="font-size:40px;font-weight:900;color:#265F4D;letter-spacing:-1px">선물 추후 전달 명부</div></div>
+<div style="font-size:18px;color:#666;text-align:right">작성 직원 ________<br>장 ___ / ___</div></div>
+<p style="font-size:17px;color:#444;margin:12px 0 14px">선물이 소진된 뒤 설문을 마치신 분만 적어요. <b>행사 후 총괄에게 반납 → 전달 끝나면 파기</b></p>
+<table class="sheet"><colgroup><col style="width:52px"><col style="width:150px"><col style="width:190px"><col style="width:120px"><col></colgroup>
+<thead><tr><th>번호</th><th>성함</th><th>연락처</th><th>4기 신청</th><th>비고</th></tr></thead><tbody><tr><td>1</td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td></tr><tr><td>4</td><td></td><td></td><td></td><td></td></tr><tr><td>5</td><td></td><td></td><td></td><td></td></tr><tr><td>6</td><td></td><td></td><td></td><td></td></tr><tr><td>7</td><td></td><td></td><td></td><td></td></tr><tr><td>8</td><td></td><td></td><td></td><td></td></tr><tr><td>9</td><td></td><td></td><td></td><td></td></tr><tr><td>10</td><td></td><td></td><td></td><td></td></tr><tr><td>11</td><td></td><td></td><td></td><td></td></tr><tr><td>12</td><td></td><td></td><td></td><td></td></tr><tr><td>13</td><td></td><td></td><td></td><td></td></tr><tr><td>14</td><td></td><td></td><td></td><td></td></tr><tr><td>15</td><td></td><td></td><td></td><td></td></tr><tr><td>16</td><td></td><td></td><td></td><td></td></tr><tr><td>17</td><td></td><td></td><td></td><td></td></tr><tr><td>18</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+</section></body></html>
