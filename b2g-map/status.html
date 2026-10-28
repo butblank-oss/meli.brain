@@ -173,13 +173,13 @@ function renderPanel(){
   const cnt=x=>rows().filter(d=>d["시도"]===sel&&d.counts&&d.units.includes(x)).length;
   const label=filter==="전체"?"전체 서비스":filter;
   const box = `<div class="cov">
-    <div class="covrow"><div class="covh">들어간 곳 <b>${have.length}</b></div><div class="echips">${have.length?have.map(x=>`<button class="echip yes" data-q="${esc(x)}" aria-pressed="${q===x}">${esc(x)}<span class="n">${cnt(x)}</span></button>`).join(""):'<span class="none">없음</span>'}</div></div>
+    <div class="covrow"><div class="covh">들어간 곳 <b>${have.length}</b></div><div class="echips">${have.length?`<button class="echip yes all" data-q="" aria-pressed="${!q}">${esc(sel)} 전체</button>`+have.map(x=>`<button class="echip yes" data-q="${esc(x)}" aria-pressed="${q===x}">${esc(x)}<span class="n">${cnt(x)}</span></button>`).join(""):'<span class="none">없음</span>'}</div></div>
     <div class="covrow"><div class="covh">빈 곳 <b>${empty.length}</b></div><div class="echips">${empty.length?empty.map(x=>`<span class="echip no">${esc(x)}</span>`).join(""):'<span class="none">없음</span>'}</div></div>
     ${hasWide(sel)?'<p class="covnote">이 시·도에는 시·도 단위 서비스도 있습니다(아래 「광역 단위」).</p>':''}
   </div>`;
-  document.getElementById("panel").innerHTML = `<button class="back" id="back">전국 보기</button><h2>${sel}</h2><div class="sub">${esc(label)} 기준, 시·군·구 ${all.length}곳 중 ${have.length}곳</div>${box}<div class="searchrow"><input class="search" id="q" placeholder="시·군·구나 서비스·업체 이름으로 찾기" value="${esc(q)}">${q?'<button class="clr" id="clr">필터 해제</button>':''}</div>${body||'<p class="sub">확인된 항목이 없습니다.</p>'}`;
+  document.getElementById("panel").innerHTML = `<button class="back" id="back">전국 보기</button><h2>${sel}</h2><div class="sub">${esc(label)} 기준, 시·군·구 ${all.length}곳 중 ${have.length}곳</div>${box}<div class="searchrow"><input class="search" id="q" placeholder="시·군·구나 서비스·업체 이름으로 찾기" value="${esc(q)}">${q?`<button class="clr" id="clr">${esc(sel)} 전체 보기</button>`:''}</div>${body||'<p class="sub">확인된 항목이 없습니다.</p>'}`;
   document.getElementById("back").onclick=()=>{sel=null;q="";KM&&KM.zoom(null);renderPanel()};
-  document.querySelectorAll(".echip[data-q]").forEach(b=>b.onclick=()=>{q=(q===b.dataset.q?"":b.dataset.q);renderPanel()});
+  document.querySelectorAll(".echip[data-q]").forEach(b=>b.onclick=()=>{q=(b.dataset.q===""||q===b.dataset.q)?"":b.dataset.q;renderPanel()});
   const c=document.getElementById("clr"); if(c) c.onclick=()=>{q="";renderPanel()};
   const inp=document.getElementById("q"); inp.oninput=()=>{q=inp.value.trim();renderPanel();const i=document.getElementById("q");i.focus();i.setSelectionRange(i.value.length,i.value.length)};
 }
