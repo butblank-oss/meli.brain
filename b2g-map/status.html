@@ -103,7 +103,7 @@ const MASTER = {"서울": ["종로구", "중구", "용산구", "성동구", "광
 const TYPES = [["인지훈련·치매예방","var(--c1)"],["걸음·건강관리","var(--c2)"],["AI돌봄·안부","var(--c3)"],["돌봄로봇","var(--c4)"],["스마트경로당","var(--c5)"]];
 const COLOR = Object.fromEntries(TYPES);
 const POS = {"인천":[0,0],"서울":[1,0],"강원":[2,0],"충남":[0,1],"경기":[1,1],"충북":[2,1],"경북":[3,1],"세종":[0,2],"대전":[1,2],"대구":[2,2],"울산":[3,2],"전북":[0,3],"경남":[2,3],"부산":[3,3],"광주":[0,4],"전남":[1,4],"제주":[0,5]};
-let filter = "전체", sel = null, q = "", sortSd = "order";
+let filter = "인지훈련·치매예방", sel = null, q = "", sortSd = "order";
 const ORDER = ["서울","인천","경기","강원","충북","충남","세종","대전","전북","광주","전남","경북","대구","울산","경남","부산","제주"];
 const TOTAL = ORDER.reduce((n,sd)=>n+MASTER[sd].length,0);
 const rows = () => DATA.filter(d => filter==="전체" || d["유형"]===filter);
@@ -111,7 +111,7 @@ function covered(sido, f){ const s=new Set(); DATA.filter(d=>(f===undefined?(fil
 function hasWide(sido){ return rows().some(d=>d["시도"]===sido&&d.counts&&d["시군구"]==="광역") }
 function natCount(f){ return ORDER.reduce((n,sd)=>n+covered(sd,f).size,0) }
 function renderStats(){
-  const opts=[["전체","전체 서비스","var(--ink)"],...TYPES.map(([t,c])=>[t,t,c])];
+  const opts=[...TYPES.map(([t,c])=>[t,t,c]),["전체","전체 서비스","var(--ink)"]];
   document.getElementById("stats").innerHTML = opts.map(([t,label,c])=>`<button class="stat" data-t="${t}" aria-pressed="${t===filter}"><span><i style="background:${c}"></i>${label}</span><b>${natCount(t)}곳</b><small>시·군·구 ${TOTAL}곳 중</small></button>`).join("");
   document.querySelectorAll(".stat").forEach(b=>b.onclick=()=>{filter=b.dataset.t;q="";render()});
 }
