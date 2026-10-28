@@ -45,7 +45,12 @@ h1{font-size:26px;margin:0 0 6px}
 .tag{font-size:11px;border:1px solid var(--line);border-radius:6px;padding:0 5px;margin-left:4px;color:var(--sub)}
 .emptybox{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
 .echips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.echip{font-size:13px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px 10px}
+.echip{font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 10px;font-family:inherit}
+.echip.yes{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);font-weight:600;cursor:pointer}
+.echip.no{border-style:dashed;color:var(--sub)}
+.echip.clr{margin-top:8px;cursor:pointer;color:var(--sub)}
+.lg{display:inline-block;width:12px;height:10px;border-radius:3px;margin:0 3px 0 4px;vertical-align:-1px}
+.lg.yes{background:var(--brand-soft);border:1px solid var(--brand)}.lg.no{border:1px dashed var(--sub)}
 .ctr{margin-top:4px;font-size:13px}
 .ctr summary{cursor:pointer;color:var(--brand)}
 .ctr ul{margin:6px 0 0;padding-left:16px}
@@ -129,8 +134,10 @@ function renderPanel(){
       const link = (d["링크"] && d["출처"]!=="나라장터") ? ` · <a href="${esc(d["링크"])}" target="_blank" rel="noopener">원문</a>` : "";
       return `<div class="svc ${ours?'ours':''}"><span class="dot" style="background:${COLOR[d["유형"]]||'var(--sub)'}"></span><div><div>${esc(d["서비스"])}${d["업체"]&&!/^미기재/.test(d["업체"])&&!d["서비스"].includes(d["업체"])?` <span class="meta">· ${esc(d["업체"])}</span>`:""}<span class="tag">${esc(d["유형"])}</span></div><div class="meta">${src}${link}</div>${ctr(d)}</div></div>`}).join("")}</div>`}).join("");
   const cov=covered(sel), empty=MASTER[sel].filter(x=>!cov.has(x));
-  const emptyBox = `<div class="emptybox"><b>빈 곳 ${empty.length} / ${MASTER[sel].length}</b> <span class="meta">(${esc(filter)} 기준${hasWide(sel)?' · 시·도 단위 서비스는 있음':''})</span><div class="echips">${empty.length?empty.map(x=>`<span class="echip">${esc(x)}</span>`).join(''):'<span class="meta">빈 곳 없음</span>'}</div></div>`;
+  const all=MASTER[sel];
+  const emptyBox = `<div class="emptybox"><b>시·군·구 ${all.length}곳</b> <span class="meta">· <span class="lg yes"></span>있음 ${all.length-empty.length} · <span class="lg no"></span>없음 ${empty.length} (${esc(filter)} 기준${hasWide(sel)?' · 시·도 단위 서비스는 따로 있음':''})</span><div class="echips">${all.map(x=>cov.has(x)?`<button class="echip yes" data-q="${esc(x)}" title="${esc(x)} 서비스 보기">✓ ${esc(x)}</button>`:`<span class="echip no">${esc(x)}</span>`).join('')}</div>${q?`<button class="echip clr" data-q="">전체 다시 보기</button>`:''}</div>`;
   document.getElementById("panel").innerHTML = `<h2>${sel}</h2><div class="sub">확인된 곳 ${cov.size} / ${MASTER[sel].length} · ${filter}</div>${emptyBox}<input class="search" id="q" placeholder="시·군·구나 서비스·업체 이름으로 찾기" value="${esc(q)}">${body||'<p class="sub">확인된 항목이 없습니다.</p>'}`;
+  document.querySelectorAll(".echip[data-q]").forEach(b=>b.onclick=()=>{q=b.dataset.q;renderPanel()});
   const inp=document.getElementById("q"); inp.oninput=()=>{q=inp.value.trim();renderPanel();const i=document.getElementById("q");i.focus();i.setSelectionRange(i.value.length,i.value.length)};
 }
 function render(){renderFilters();renderMap();renderPanel()}
