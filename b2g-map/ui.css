@@ -136,3 +136,9 @@ button, input, select { font: inherit; color: inherit; }
 .btn.ghost { background: var(--surface-3); color: var(--ink-2); }
 .btn.ghost:hover { background: var(--line); }
 .badge-soon { display: inline-block; font-size: var(--fs-sm); font-weight: 700; color: var(--warn-ink); background: var(--warn-soft); border-radius: var(--r-pill); padding: 4px 12px; margin-bottom: 16px; }
+
+/* 데이터 기준 + 다시 불러오기 */
+.asof { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin-top: 12px; font-size: var(--fs-sm); color: var(--ink-4); }
+.asof b { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.asof .refresh { display: inline-flex; align-items: center; min-height: 36px; padding: 4px 12px; border-radius: var(--r-pill); background: var(--brand-soft); color: var(--brand); font-weight: 700; text-decoration: none; transition: background-color var(--dur-micro) var(--ease); }
+.asof .refresh:hover { background: var(--brand-line); }
