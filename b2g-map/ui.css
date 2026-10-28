@@ -25,7 +25,7 @@
   --pA: #1FA971; --pB: #4DA3F5; --pC: #D5DBE1; --pE: #FF8A3D; --pM: #FFC83D; --pH: #8B95A1; --pO: #6E56CF;
   --pB-ink: #0B2A44; --pM-ink: #3A2E00;
   /* map: vendor picks */
-  --s0: #6E56CF; --s1: #3182F6; --s2: #FF8A3D; --s3: #1FA971; --s4: #E5508C; --ov: #191F28; --none: #E9ECEF;
+  --s0: #6E56CF; --s1: #3182F6; --s2: #FF8A3D; --s3: #1FA971; --s4: #E5508C; --s5: #14B8A6; --s6: #B7791F; --s7: #0EA5E9; --s8: #7C9A2E; --ov: #191F28; --none: #E9ECEF;
   /* map: coverage shades + service types */
   --cov-1: #BFE6D3; --cov-2: #5BBE97; --cov-3: #265F4D;
   --c1: #1FA971; --c2: #3182F6; --c3: #7A5FD6; --c4: #FF8A3D; --c5: #6B7684;
