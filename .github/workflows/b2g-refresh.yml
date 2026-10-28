@@ -1,0 +1,37 @@
+name: b2g-refresh
+# 나라장터 데이터를 "실행한 그 시점" 기준으로 다시 불러와 b2g-map 페이지를 새로 만듭니다.
+on:
+  workflow_dispatch:
+    inputs:
+      recent:
+        description: "다시 불러올 최근 개월 수 (기본 2, 전체 다시 받기는 36)"
+        required: false
+        default: "2"
+permissions:
+  contents: write
+concurrency:
+  group: b2g-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run pipeline
+        env:
+          G2B_KEY: ${{ secrets.G2B_KEY }}
+        run: |
+          if [ -z "$G2B_KEY" ]; then echo "::error::저장소 Secrets에 G2B_KEY(나라장터 인증키)를 먼저 등록해 주세요."; exit 1; fi
+          bash b2g-map/pipeline/run.sh "${{ github.event.inputs.recent || '2' }}"
+      - name: Commit
+        run: |
+          git config user.name "b2g-refresh"
+          git config user.email "b2g-refresh@users.noreply.github.com"
+          git add b2g-map
+          if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
+          git commit -m "b2g-map: 나라장터 데이터 새로 불러오기 ($(python3 -c 'import json;print(json.load(open("b2g-map/pipeline/data/asof.json"))["asof"])'))"
+          git push
