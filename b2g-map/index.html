@@ -1,144 +1,111 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="디지털 인지훈련이 비어 있는 시·군·구와 경쟁사를 바꿔 들어갈 시·군·구를 고르는 맬리브레인 영업 지도">
 <title>맬리브레인 영업 지도</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="ui.css">
 <style>
-:root{--bg:#f6f7f5;--card:#fff;--ink:#1c2320;--sub:#5f6b65;--faint:#8b958f;--line:#e2e6e3;--brand:#1f8a5b;
---a:#1f8a5b;--a-bg:#dff2e7;--b:#5aa982;--b-bg:#eef7f1;--c:#9cb8aa;--c-bg:#f6f8f7;
---e:#c4621d;--e-bg:#fde9d8;--m:#d99a5b;--m-bg:#fdf3e8;--h:#8a8f8c;--h-bg:#eceeed;--o:#2f6fb5;--o-bg:#e3eefb;--hot:#c0392b}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121614;--card:#1a201d;--ink:#e7ece9;--sub:#a3afa9;--faint:#7d8983;--line:#2b3430;--brand:#4cc38a;
---a:#4cc38a;--a-bg:#173528;--b:#3d9a6d;--b-bg:#18291f;--c:#5f7a6c;--c-bg:#1b221e;--e:#f0954f;--e-bg:#3a2414;--m:#d9a06a;--m-bg:#2e2418;--h:#8a8f8c;--h-bg:#252a28;--o:#6aa5ea;--o-bg:#16263a;--hot:#ff7b6b}}
-:root[data-theme="dark"]{--bg:#121614;--card:#1a201d;--ink:#e7ece9;--sub:#a3afa9;--faint:#7d8983;--line:#2b3430;--brand:#4cc38a;
---a:#4cc38a;--a-bg:#173528;--b:#3d9a6d;--b-bg:#18291f;--c:#5f7a6c;--c-bg:#1b221e;--e:#f0954f;--e-bg:#3a2414;--m:#d9a06a;--m-bg:#2e2418;--h:#8a8f8c;--h-bg:#252a28;--o:#6aa5ea;--o-bg:#16263a;--hot:#ff7b6b}
-:root{--pA:#16a34a;--pB:#38bdf8;--pC:#dbe3ea;--pE:#f97316;--pM:#facc15;--pH:#8a817c;--pO:#7c3aed}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pC:#3a4650}}
-:root[data-theme="dark"]{--pC:#3a4650}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;word-break:keep-all;overflow-wrap:break-word}
-a{color:var(--brand)}
-button{font:inherit;color:inherit}
-.wrap{max-width:1240px;margin:0 auto;padding:26px 16px 60px}
-.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-h1{font-size:25px;margin:0}
-.nav a{font-size:14px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--card);color:var(--sub)}
-.lead{color:var(--sub);margin:4px 0 18px;font-size:14px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;text-align:left;cursor:pointer}
-.kpi b{display:block;font-size:24px;line-height:1.2}
-.kpi span{font-size:13px;color:var(--sub)}
-.kpi small{display:block;font-size:12px;color:var(--faint);margin-top:2px}
-.kpi.k1 b{color:var(--a)}.kpi.k2 b{color:var(--e)}.kpi.k3 b{color:var(--hot)}.kpi.k4 b{color:var(--o)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:44px;background:var(--surface);border:0;border-radius:var(--r-lg);box-shadow:var(--shadow);padding:20px 20px;text-align:left;cursor:pointer;transition:transform var(--dur-micro) var(--ease),box-shadow var(--dur-micro) var(--ease)}
+.kpi:hover{box-shadow:var(--shadow-pop)}
+.kpi:active{transform:scale(0.98)}
+.kpi span{order:-1;font-size:var(--fs-sm);color:var(--ink-3);font-weight:600}
+.kpi b{font-size:var(--fs-num);line-height:1.25;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
+.kpi small{font-size:var(--fs-sm);color:var(--ink-4)}
+.kpi.k1 b{color:var(--pA)}.kpi.k2 b{color:var(--pE)}.kpi.k3 b{color:var(--hot)}.kpi.k4 b{color:var(--pO)}
 .main{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;align-items:start}
-@media (max-width:980px){.main{grid-template-columns:1fr}}
-.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
-.box h2{font-size:16px;margin:0 0 2px}
-.box .hint{font-size:12.5px;color:var(--faint);margin:0 0 10px}
-.legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--sub);margin:0 0 12px}
-.legend i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;border:1px solid transparent}
-.board .row{display:grid;grid-template-columns:52px 1fr;gap:8px;padding:6px 0;border-top:1px solid var(--line)}
+@media (max-width:980px){.main{grid-template-columns:minmax(0,1fr)}}
+.box{color:var(--ink);background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:20px}
+.box h2{font-size:var(--fs-md);font-weight:700}
+.board .row{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px;padding:8px 0;border-top:1px solid var(--line)}
 .board .row:first-child{border-top:0}
-.sdbtn{background:none;border:0;padding:2px 0;text-align:left;cursor:pointer;font-weight:700;font-size:14px}
-.sdbtn small{display:block;font-weight:400;font-size:11px;color:var(--faint)}
-.sdbtn.on{color:var(--brand)}
+.sdbtn{background:none;border:0;padding:2px 0;text-align:left;cursor:pointer;font-weight:700;font-size:var(--fs-sm);color:var(--ink)}
+.sdbtn small{display:block;font-weight:500;font-size:var(--fs-cap);color:var(--ink-4)}
+.sdbtn.on{color:var(--brand-2)}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
-.g{border:1px solid transparent;border-radius:6px;padding:1px 6px;font-size:12px;cursor:pointer;line-height:1.6}
-.g.A{background:var(--pA);color:#fff}.g.B{background:var(--pB);color:#0b2530}.g.C{background:var(--pC);color:var(--ink)}
-.g.E{background:var(--pE);color:#fff}.g.M{background:var(--pM);color:#3a2e00}.g.H{background:var(--pH);color:#fff}
-.g.O{background:var(--pO);color:#fff;font-weight:700}
+.g{border:0;border-radius:6px;padding:2px 8px;font-size:var(--fs-cap);font-weight:600;cursor:pointer;line-height:1.6;transition:opacity var(--dur-micro) var(--ease)}
+.g.A{background:var(--pA);color:var(--on-strong)}.g.B{background:var(--pB);color:var(--pB-ink)}.g.C{background:var(--pC);color:var(--ink)}
+.g.E{background:var(--pE);color:var(--on-strong)}.g.M{background:var(--pM);color:var(--pM-ink)}.g.H{background:var(--pH);color:var(--on-strong)}
+.g.O{background:var(--pO);color:var(--on-strong);font-weight:800}
 .g.hot{box-shadow:0 0 0 2px var(--hot)}
-.g.dim{opacity:.22}
+.g.dim{opacity:.3}
 .g.sel{outline:2px solid var(--ink);outline-offset:1px}
-.tabs{display:flex;gap:6px;margin-bottom:10px}
-.tab{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;cursor:pointer;text-align:left}
-.tab b{display:block;font-size:15px}
-.tab span{font-size:12px;color:var(--sub)}
-.tab[aria-selected="true"]{background:var(--card);border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--ink)}
-.tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
-.f{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 11px;font-size:13px;cursor:pointer}
-.f[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
-select.f{appearance:auto}
-.cnt{font-size:12.5px;color:var(--faint);margin:2px 0 6px}
-.list{max-height:none}
-.item{display:block;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:11px 2px;cursor:pointer}
-.item:hover{background:var(--bg)}
-.item .l1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.badge{font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px}
-.badge.A{background:var(--pA);color:#fff}.badge.B{background:var(--pB);color:#0b2530}.badge.C{background:var(--pC);color:var(--ink)}
-.badge.E{background:var(--pE);color:#fff}.badge.M{background:var(--pM);color:#3a2e00}.badge.H{background:var(--pH);color:#fff}
-.badge.hot{background:none;color:var(--hot);border:1px solid var(--hot)}
-.item .nm{font-weight:700;font-size:15px}
-.item .pop{font-size:12.5px;color:var(--sub)}
-.item .l2{font-size:13px;color:var(--sub);margin-top:3px}
-.item .l2 b{color:var(--ink);font-weight:600}
-.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.tag{font-size:11.5px;border-radius:5px;padding:0 6px;background:var(--bg);border:1px solid var(--line);color:var(--sub)}
-.tag.plus{color:var(--a);border-color:var(--b)}
-.tag.minus{color:var(--e);border-color:var(--m)}
-.more{display:block;margin:10px auto 0;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 16px;cursor:pointer;font-size:13px}
-/* drawer */
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .2s}
+.boardwrap{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.boardwrap summary{cursor:pointer;font-size:var(--fs-sm);color:var(--ink-3);font-weight:600;min-height:32px}
+.tabs{margin-bottom:16px}
+.tab b{display:block;font-size:var(--fs-body);font-weight:700}
+.tab span{font-size:var(--fs-cap);color:var(--ink-4);font-weight:500}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.f{min-height:36px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:var(--r-pill);padding:8px 16px;font-size:var(--fs-sm);font-weight:600;cursor:pointer;transition:background-color var(--dur-micro) var(--ease),color var(--dur-micro) var(--ease)}
+.f:hover{background:var(--surface-2)}
+.f[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+select.f{appearance:auto;background:var(--surface-2)}
+.cnt{font-size:var(--fs-sm);color:var(--ink-4);margin:4px 0 4px;font-weight:600}
+.item{display:block;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:16px 8px;margin:0 -8px;width:calc(100% + 16px);border-radius:var(--r-md);cursor:pointer;transition:background-color var(--dur-micro) var(--ease)}
+.item:hover{background:var(--surface-2)}
+.item:active{background:var(--surface-3)}
+.item .l1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{font-size:var(--fs-cap);font-weight:700;border-radius:6px;padding:2px 8px;line-height:1.6}
+.badge.A{background:var(--pA);color:var(--on-strong)}.badge.B{background:var(--pB);color:var(--pB-ink)}.badge.C{background:var(--pC);color:var(--ink)}
+.badge.E{background:var(--pE);color:var(--on-strong)}.badge.M{background:var(--pM);color:var(--pM-ink)}.badge.H{background:var(--pH);color:var(--on-strong)}
+.badge.O{background:var(--pO);color:var(--on-strong)}
+.badge.hot{background:var(--hot-soft);color:var(--hot)}
+.item .nm{font-weight:700;font-size:var(--fs-md);color:var(--ink)}
+.item .pop{font-size:var(--fs-sm);color:var(--ink-4)}
+.item .l2{font-size:var(--fs-sm);color:var(--ink-3);margin-top:4px}
+.item .l2 b{color:var(--ink);font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{font-size:var(--fs-cap);border-radius:6px;padding:2px 8px;background:var(--surface-2);color:var(--ink-3);font-weight:600}
+.tag.plus{background:var(--brand-soft);color:var(--brand)}
+.tag.minus{background:var(--hot-soft);color:var(--hot)}
+.more{display:block;margin:16px auto 0;min-height:44px;border:0;background:var(--surface-3);color:var(--ink-2);border-radius:var(--r-md);padding:12px 20px;cursor:pointer;font-size:var(--fs-sm);font-weight:700;width:100%}
+.more:hover{background:var(--line)}
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity var(--dur-short) var(--ease);z-index:5}
 .scrim.on{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(520px,100%);background:var(--card);border-left:1px solid var(--line);transform:translateX(100%);transition:transform .22s ease;overflow-y:auto;padding:20px 20px 40px;z-index:5}
-.drawer.on{transform:none}
-.drawer .x{position:absolute;top:12px;right:12px;border:1px solid var(--line);background:var(--bg);border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:16px}
-.drawer h3{font-size:21px;margin:0 0 4px;padding-right:40px}
-.drawer .meta{font-size:13px;color:var(--sub);margin-bottom:12px}
-.drawer h4{font-size:14px;margin:18px 0 6px}
-.act{background:var(--a-bg);border-radius:12px;padding:12px 14px;font-size:14px}
-.act.comp{background:var(--e-bg)}
-.act>b{display:block;margin-bottom:4px}
-.ct a.cn{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
-.ct a.cn:hover{color:var(--brand);text-decoration-color:var(--brand)}
-.dl{font-size:13.5px;margin:0;padding-left:18px}
-.dl li{margin:3px 0}
-.ct{font-size:13px;border-top:1px solid var(--line);padding:7px 0}
-.ct .d{color:var(--faint);font-variant-numeric:tabular-nums}
-.ct .k{font-size:11px;border:1px solid var(--line);border-radius:5px;padding:0 4px;color:var(--sub)}
-.ct b{white-space:nowrap}
-.svc{font-size:13.5px;margin:2px 0}
-.svc span{font-size:11.5px;color:var(--faint)}
-.kmap{position:relative}
-.kmap svg{width:100%;height:auto;display:block;max-height:80vh}
-.kmap-sgg{stroke:var(--card);stroke-width:.6px;vector-effect:non-scaling-stroke;cursor:pointer;transition:opacity .15s}
-.kmap-sgg:hover{stroke:var(--ink);stroke-width:1.6px}
-.kmap-sgg.out{opacity:.18}
-.kmap-sgg.dim{opacity:.55}
-.kmap-sgg.hot{stroke:var(--hot,#c0392b);stroke-width:2px}
-.kmap-sgg.sel{stroke:var(--ink);stroke-width:2.6px}
-.kmap-sido{fill:none;stroke:var(--ink);stroke-opacity:.8;stroke-width:1.6px;vector-effect:non-scaling-stroke}
-.kmap-hl{fill:none;stroke:var(--ink);stroke-width:3.2px;vector-effect:non-scaling-stroke}
-.kmap-chips{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 8px}
-.kmap-chips button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 10px;font:inherit;font-size:12.5px;cursor:pointer}
-.kmap-chips button:hover{border-color:var(--ink)}
-.kmap-chips button[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
-.kmap-lb{text-anchor:middle;dominant-baseline:middle;fill:var(--ink);font-weight:700;paint-order:stroke;stroke:var(--card);stroke-width:.22em;stroke-linejoin:round}
-.kmap-lb.sub{font-weight:600;fill:var(--sub)}
-.kmap-tip{position:absolute;display:none;pointer-events:none;background:var(--ink);color:var(--card);font-size:12.5px;line-height:1.45;padding:6px 9px;border-radius:8px;max-width:260px;z-index:3}
-.boardwrap{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
-.boardwrap summary{cursor:pointer;font-size:13.5px;color:var(--sub)}
-.foot{margin-top:22px;font-size:12.5px;color:var(--faint)}
-.foot li{margin:2px 0}
-</style></head><body><div class="wrap">
-<div class="top"><h1>맬리브레인 영업 지도 · 디지털 인지훈련</h1><div class="nav"><a href="vendors.html">경쟁 서비스 지도 →</a> <a href="status.html">전체 서비스 현황 지도 →</a></div></div>
-<p class="lead">빈 곳은 <b>새로 뚫고</b>, 이미 들어간 곳은 <b>바꿔 들어갈 곳</b>을 고릅니다. 나라장터 계약(2024.1~2026.10)·기사, 65세 이상 인구(2026년 9월 주민등록) 기준.</p>
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(520px,100%);background:var(--surface);box-shadow:none;transform:translateX(100%);visibility:hidden;transition:transform var(--dur-short) var(--ease);overflow-y:auto;padding:24px 24px 48px;z-index:6}
+.drawer.on{transform:none;visibility:visible;box-shadow:var(--shadow-pop)}
+.drawer .x{position:absolute;top:16px;right:16px;border:0;background:var(--surface-3);color:var(--ink-2);border-radius:var(--r-pill);width:40px;height:40px;cursor:pointer;font-size:var(--fs-body)}
+.drawer .x:hover{background:var(--line)}
+.drawer h3{font-size:var(--fs-xl);font-weight:800;padding-right:48px}
+.drawer .meta{font-size:var(--fs-sm);color:var(--ink-3);margin:8px 0 16px}
+.drawer h4{font-size:var(--fs-body);font-weight:700;margin:24px 0 8px}
+.act{background:var(--brand-soft);color:var(--ink);border-radius:var(--r-md);padding:16px 20px;font-size:var(--fs-body)}
+.act.comp{background:var(--warn-soft)}
+.act>b{display:block;margin-bottom:8px;font-weight:700}
+.dl{font-size:var(--fs-sm);margin:0;padding-left:20px;color:var(--ink-2)}
+.dl li{margin:4px 0}
+.ct{font-size:var(--fs-sm);border-top:1px solid var(--line);padding:12px 0;color:var(--ink-2)}
+.ct .d{color:var(--ink-4);font-variant-numeric:tabular-nums}
+.ct .k{font-size:var(--fs-cap);background:var(--surface-2);border-radius:5px;padding:2px 8px;color:var(--ink-3)}
+.ct b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.ct a.cn{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:3px}
+.ct a.cn:hover{color:var(--brand-2);text-decoration-color:var(--brand-2)}
+.svc{font-size:var(--fs-sm);margin:4px 0;color:var(--ink-2)}
+.svc span{font-size:var(--fs-cap);color:var(--ink-4)}
+.srcline{font-size:var(--fs-sm);color:var(--ink-4)}
+</style></head><body>
+<header class="topbar"><div class="topbar-in"><a class="wordmark" href="./">맬리브레인 <span>B2G</span></a><nav class="tabsnav" aria-label="지도 메뉴"><a href="./" aria-current="page">영업 지도</a><a href="vendors.html">경쟁 서비스</a><a href="status.html">전체 현황</a></nav></div></header>
+<main class="page">
+<div class="pagehead"><h1>영업 지도</h1><p>빈 곳은 <b>새로 뚫고</b>, 이미 들어간 곳은 <b>바꿔 들어갈 곳</b>을 고릅니다. 디지털 인지훈련 기준입니다.</p><p class="srcline">나라장터 계약(2024.1~2026.10)과 기사, 65세 이상 인구(2026년 9월 주민등록)</p></div>
 <div class="kpis" id="kpis"></div>
 <div class="main">
   <section class="box">
-    <h2>전국 시·군·구 지도</h2>
-    <p class="hint">위 시·도 버튼이나 지도에서 시·도를 누르면 확대되고 오른쪽 목록이 그 시·도로 좁혀집니다. 확대한 뒤 시·군·구를 누르면 상세가 열립니다.</p>
+    <h2>전국 시·군·구</h2>
+    <p class="hint">시·도를 누르면 확대되고 오른쪽 목록도 좁혀집니다. 확대한 뒤 시·군·구를 누르면 상세가 열립니다.</p>
     <div class="legend">
-      <span><i style="background:var(--pA)"></i>빈 곳 A</span><span><i style="background:var(--pB)"></i>빈 곳 B</span><span><i style="background:var(--pC)"></i>빈 곳 C</span>
-      <span><i style="background:var(--pE)"></i>교체 쉬움</span><span><i style="background:var(--pM)"></i>교체 보통</span><span><i style="background:var(--pH)"></i>교체 어려움</span>
-      <span><i style="background:var(--pO)"></i>우리</span><span><i style="box-shadow:0 0 0 2px var(--hot)"></i>재계약 시기</span>
+      <span><i style="background:var(--pA)"></i>빈 곳 가능성 높음</span><span><i style="background:var(--pB)"></i>빈 곳 보통</span><span><i style="background:var(--pC)"></i>빈 곳 낮음</span>
+      <span><i style="background:var(--pE)"></i>교체 가능성 높음</span><span><i style="background:var(--pM)"></i>교체 보통</span><span><i style="background:var(--pH)"></i>교체 낮음</span>
+      <span><i style="background:var(--pO)"></i>우리</span><span><i class="ring"></i>재계약 시기</span>
     </div>
-    <div id="kmap"></div>
+    <div id="kmap" style="margin-top:12px"></div>
     <details class="boardwrap"><summary>시·도별 칸으로 보기 (작은 구를 고를 때 편함)</summary><div class="board" id="board"></div></details>
   </section>
   <section class="box">
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" id="t-empty" aria-selected="true"><b>① 신규 개척</b><span id="t-empty-s"></span></button>
-      <button class="tab" role="tab" id="t-comp" aria-selected="false"><b>② 교체 공략</b><span id="t-comp-s"></span></button>
+    <div class="tabs seg" role="tablist">
+      <button class="tab" role="tab" id="t-empty" aria-selected="true"><b>신규 개척</b><span id="t-empty-s"></span></button>
+      <button class="tab" role="tab" id="t-comp" aria-selected="false"><b>교체 공략</b><span id="t-comp-s"></span></button>
     </div>
     <div class="tools" id="tools"></div>
     <div class="cnt" id="cnt"></div>
@@ -146,13 +113,14 @@ select.f{appearance:auto}
   </section>
 </div>
 <ul class="foot">
-  <li><b>빈 곳 등급</b>: 65세 이상 인구(10만+ 3점, 5만+ 2점, 2만+ 1점) + 고령화율 30%+ 1점 + 건강앱 연 이용료 결제 경험(워크온 등) 2점 + 스마트경로당 1점 − 시·도 공용 인지훈련 앱 2점. 4점 이상 A, 2~3점 B.</li>
-  <li><b>교체 난이도</b>: 쉬움 = 대면·교구만 운영, 또는 2천만 원 이하 앱 수의계약 / 보통 = 인지재활 장비 보유, 계약 정보 없는 서비스, 시·도 공용 앱 있음 / 어려움 = 3천만 원 이상 장비를 1년 안에 구매.</li>
+  <li><b>빈 곳 영업 가능성</b>: 65세 이상 인구(10만+ 3점, 5만+ 2점, 2만+ 1점) + 고령화율 30%+ 1점 + 건강앱 연 이용료 결제 경험(워크온 등) 2점 + 스마트경로당 1점 − 시·도 공용 인지훈련 앱 2점. 4점 이상 높음, 2~3점 보통, 1점 이하 낮음.</li>
+  <li><b>교체 가능성</b>: 높음 = 대면·교구만 운영, 또는 2천만 원 이하 앱 수의계약 / 보통 = 인지재활 장비 보유, 계약 정보 없는 서비스, 시·도 공용 앱 있음 / 낮음 = 3천만 원 이상 장비를 1년 안에 구매.</li>
   <li><b>재계약 시기</b>: 연 단위 용역의 최근 계약일 + 12개월. 「임박」= 3개월 안, 「갱신 미확인」= 예상 시기가 지났는데 새 계약이 안 잡힌 곳(그만뒀거나 다른 방식으로 바꿨을 수 있음).</li>
-  <li>빈 곳 = 나라장터·기사에서 인지훈련 계약이 확인되지 않은 곳입니다. 센터 자체 예산의 대면 교실은 잡히지 않을 수 있어 전화 확인이 필요합니다. 실종 예방 태그·CCTV·연구용역 등은 인지훈련에서 뺐고, 정부사업(AI·IoT 어르신건강관리, 모바일헬스케어) 기기 구매와 일반 물품은 전체에서 뺐습니다.</li>
+  <li>빈 곳 = 나라장터와 기사에서 인지훈련 계약이 확인되지 않은 곳입니다. 센터 자체 예산의 대면 교실은 잡히지 않을 수 있어 전화 확인이 필요합니다. 실종 예방 태그, CCTV, 연구용역은 인지훈련에서 뺐고, 정부사업(AI·IoT 어르신건강관리, 모바일헬스케어) 기기 구매와 일반 물품은 전체에서 뺐습니다.</li>
+  <li>서울은 브레인핏45(서울시 운영, 주식회사 기억산책 개발)가 45세 이상 전 시민 대상이라 25개 구 모두 교체 공략(보통)으로 봤습니다.</li>
   <li>전남·광주는 2026년 통합특별시 출범 후에도 기존 시·군·구 기준으로 표시했습니다. 인구: 행정안전부 주민등록 연령별 인구.</li>
 </ul>
-</div>
+</main>
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-hidden="true"><button class="x" id="x" aria-label="닫기">✕</button><div id="dbody"></div></aside>
 <script src="kmap.js"></script>
@@ -162,6 +130,7 @@ const rows=D.rows; const key=r=>r.sd+"|"+r.sgg; const byKey={}; rows.forEach(r=>
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const man=n=>n>=1e8?(n/1e8).toFixed(1).replace(/\.0$/,"")+"억":Math.round(n/1e4).toLocaleString()+"만";
 const ppl=n=>n>=1e4?(n/1e4).toFixed(1).replace(/\.0$/,"")+"만 명":n.toLocaleString()+"명";
+const LV={A:"높음",B:"보통",C:"낮음","쉬움":"높음","보통":"보통","어려움":"낮음"}; const lv=r=>r.status==="empty"?LV[r.grade]:LV[r.ease];
 const cls=r=>r.status==="ours"?"O":r.status==="empty"?r.grade:({"쉬움":"E","보통":"M","어려움":"H"})[r.ease];
 const hot=r=>r.status==="comp"&&(r.timing==="임박"||r.timing==="갱신 미확인");
 let tab="empty", sdSel=null, gradeSel=new Set(["A","B","C"]), easeSel=new Set(["쉬움","보통","어려움"]), hotOnly=false, sortBy="score", showN=30, selKey=null;
@@ -171,18 +140,18 @@ const MAPFILL={A:"var(--pA)",B:"var(--pB)",C:"var(--pC)",E:"var(--pE)",M:"var(--
 function mapInit(){
   if(!window.__GEO||KM) return;
   KM=KMap.create(document.getElementById("kmap"),{geo:window.__GEO, order:ORDER,
-    sdTip:sd=>{const rs=rows.filter(r=>r.sd===sd);const em=rs.filter(r=>r.status==="empty"),cp=rs.filter(r=>r.status==="comp");return `<b>${esc(sd)}</b> · 시·군·구 ${rs.length}곳<br>빈 곳 ${em.length} (A ${em.filter(r=>r.grade==="A").length}) · 교체 후보 ${cp.length}${rs.some(r=>r.status==="ours")?"<br>우리 있음":""}<br><span style="opacity:.75">눌러서 확대</span>`},
+    sdTip:sd=>{const rs=rows.filter(r=>r.sd===sd);const em=rs.filter(r=>r.status==="empty"),cp=rs.filter(r=>r.status==="comp");return `<b>${esc(sd)}</b> 시·군·구 ${rs.length}곳<br>빈 곳 ${em.length}곳 (가능성 높음 ${em.filter(r=>r.grade==="A").length}) · 교체 후보 ${cp.length}${rs.some(r=>r.status==="ours")?"<br>우리 있음":""}<br><span style="opacity:.75">눌러서 확대</span>`},
     fill:(sd,sgg)=>{const r=byKey[sd+"|"+sgg]; if(!r) return {}; const dim=(tab==="empty"&&r.status==="comp")||(tab==="comp"&&r.status==="empty"); return {fill:MAPFILL[cls(r)], cls:(dim?"dim ":"")+(hot(r)?"hot":"")}},
     selected:()=>selKey,
-    tip:(sd,sgg)=>{const r=byKey[sd+"|"+sgg]; if(!r) return esc(sd+" "+sgg); const st=r.status==="ours"?"우리":r.status==="empty"?`빈 곳 ${r.grade}`:`교체 ${r.ease}`; return `<b>${esc(sd)} ${esc(sgg)}</b> · ${st}<br>65세+ ${ppl(r.p65)} (${r.ratio}%)${r.status==="comp"?"<br>"+r.cog.slice(0,2).map(e=>esc(e.vendor&&!/다수|미기재/.test(e.vendor)?e.vendor:e.svc)).join(", "):""}${hot(r)?`<br>${r.timing==="임박"?"재계약 "+r.renew:"갱신 미확인"}`:""}`},
+    tip:(sd,sgg)=>{const r=byKey[sd+"|"+sgg]; if(!r) return esc(sd+" "+sgg); const st=r.status==="ours"?"우리":r.status==="empty"?`빈 곳, 가능성 ${lv(r)}`:`교체, 가능성 ${lv(r)}`; return `<b>${esc(sd)} ${esc(sgg)}</b> ${st}<br>65세+ ${ppl(r.p65)} (${r.ratio}%)${r.status==="comp"?"<br>"+r.cog.slice(0,2).map(e=>esc(e.vendor&&!/다수|미기재/.test(e.vendor)?e.vendor:e.svc)).join(", "):""}${hot(r)?`<br>${r.timing==="임박"?"재계약 "+r.renew:"갱신 미확인"}`:""}`},
     onSido:sd=>{sdSel=sd;showN=30;render()},
     onSgg:(sd,sgg)=>open_(sd+"|"+sgg)});
 }
 function kpis(){
   const em=rows.filter(r=>r.status==="empty"), cp=rows.filter(r=>r.status==="comp");
   const A=em.filter(r=>r.grade==="A").length, E=cp.filter(r=>r.ease==="쉬움").length, H=cp.filter(hot).length;
-  const k=[["k1",`${em.length}곳`,"빈 곳",`A등급 ${A}곳`,()=>{setTab("empty");gradeSel=new Set(["A"]);render()}],
-           ["k2",`${cp.length}곳`,"경쟁사·대면 진입",`교체 쉬움 ${E}곳`,()=>{setTab("comp");easeSel=new Set(["쉬움"]);render()}],
+  const k=[["k1",`${em.length}곳`,"빈 곳",`가능성 높음 ${A}곳`,()=>{setTab("empty");gradeSel=new Set(["A"]);render()}],
+           ["k2",`${cp.length}곳`,"경쟁사·대면 진입",`교체 가능성 높음 ${E}곳`,()=>{setTab("comp");easeSel=new Set(["쉬움"]);render()}],
            ["k3",`${H}곳`,"재계약 시기 (임박·갱신 미확인)","지금 연락할 곳",()=>{setTab("comp");hotOnly=true;render()}],
            ["k4",`${rows.filter(r=>r.status==="ours").length}곳`,"우리 (인천 남동구)","레퍼런스",()=>open_("인천|남동구")]];
   const el=document.getElementById("kpis"); el.innerHTML="";
@@ -205,8 +174,8 @@ function tools(){
   const el=document.getElementById("tools");
   const sdOpts=`<select class="f" id="sdsel"><option value="">전체 시·도</option>${ORDER.map(s=>`<option ${sdSel===s?"selected":""}>${s}</option>`).join("")}</select>`;
   let h=sdOpts;
-  if(tab==="empty") h+=["A","B","C"].map(g=>`<button class="f" data-g="${g}" aria-pressed="${gradeSel.has(g)}">${g}등급</button>`).join("");
-  else h+=["쉬움","보통","어려움"].map(g=>`<button class="f" data-e="${g}" aria-pressed="${easeSel.has(g)}">${g}</button>`).join("")+`<button class="f" id="hotb" aria-pressed="${hotOnly}">재계약 시기만</button>`;
+  if(tab==="empty") h+=["A","B","C"].map(g=>`<button class="f" data-g="${g}" aria-pressed="${gradeSel.has(g)}">${LV[g]}</button>`).join("");
+  else h+=["쉬움","보통","어려움"].map(g=>`<button class="f" data-e="${g}" aria-pressed="${easeSel.has(g)}">${LV[g]}</button>`).join("")+`<button class="f" id="hotb" aria-pressed="${hotOnly}">재계약 시기만</button>`;
   h+=`<select class="f" id="sortsel"><option value="score" ${sortBy==="score"?"selected":""}>우선순위순</option><option value="p65" ${sortBy==="p65"?"selected":""}>65세+ 인구순</option>${tab==="comp"?`<option value="renew" ${sortBy==="renew"?"selected":""}>재계약 시기순</option>`:""}</select>`;
   el.innerHTML=h;
   el.querySelector("#sdsel").onchange=e=>{sdSel=e.target.value||null;showN=30;KM&&KM.zoom(sdSel);render()};
@@ -217,7 +186,7 @@ function tools(){
 }
 function compLine(r){
   const ms=r.cog.map(e=>{const nm=e.svc.replace(/^인지훈련\(|\)$/g,"");const a=e.amt?` ${man(e.amt)} 원`:"";return `<b>${esc(e.vendor&&e.vendor!=="다수 납품업체"&&e.vendor!=="미기재"?e.vendor:nm)}</b> ${esc(e.kind)}${a}`});
-  return ms.slice(0,2).join(" · ")+(ms.length>2?` 외 ${ms.length-2}`:"");
+  return `<span class="ms">${ms.slice(0,2).map(x=>`<span>${x}</span>`).join("")}${ms.length>2?`<span>외 ${ms.length-2}곳</span>`:""}</span>`;
 }
 function list(){
   let rs=rows.filter(r=>r.status===tab&&(!sdSel||r.sd===sdSel));
@@ -225,15 +194,15 @@ function list(){
   else rs=rs.filter(r=>easeSel.has(r.ease)&&(!hotOnly||hot(r)));
   const tm={"갱신 미확인":0,"임박":1,"나중":2};
   rs.sort((a,b)=>sortBy==="p65"?b.p65-a.p65:sortBy==="renew"?((tm[a.timing]??3)-(tm[b.timing]??3)||(a.renew||"9").localeCompare(b.renew||"9")):(b.score-a.score||b.p65-a.p65));
-  document.getElementById("cnt").textContent=`${rs.length}곳${sdSel?" · "+sdSel:""}`;
+  document.getElementById("cnt").textContent=`${sdSel?sdSel+" ":""}${rs.length}곳`;
   const el=document.getElementById("list");
   el.innerHTML=rs.slice(0,showN).map(r=>{
-    const head=`<div class="l1"><span class="badge ${cls(r)}">${tab==="empty"?r.grade:r.ease}</span><span class="nm">${esc(r.sd)} ${esc(r.sgg)}</span><span class="pop">65세+ ${ppl(r.p65)} · ${r.ratio}%</span>${hot(r)?`<span class="badge hot">${r.timing==="임박"?"재계약 "+r.renew:"갱신 미확인"}</span>`:""}</div>`;
+    const head=`<div class="l1"><span class="badge ${cls(r)}">${lv(r)}</span><span class="nm">${esc(r.sd)} ${esc(r.sgg)}</span><span class="pop">65세 이상 ${ppl(r.p65)}, ${r.ratio}%</span>${hot(r)?`<span class="badge hot">${r.timing==="임박"?"재계약 "+r.renew:"갱신 미확인"}</span>`:""}</div>`;
     let body="";
     if(tab==="empty"){
       body=`<div class="tags">${r.why.map(w=>`<span class="tag ${/공용/.test(w)?"minus":"plus"}">${esc(w)}</span>`).join("")}</div>`;
     }else{
-      body=`<div class="l2">${compLine(r)}${r.renew&&!hot(r)?` · 재계약 예상 ${r.renew}`:""}</div><div class="tags">${r.reasons.map(w=>`<span class="tag ${/어려|공용|최근 구매/.test(w)?"minus":"plus"}">${esc(w)}</span>`).join("")}</div>`;
+      body=`<div class="l2">${compLine(r)}${r.renew&&!hot(r)?`<span class="ms" style="margin-left:12px">재계약 예상 ${r.renew}</span>`:""}</div><div class="tags">${r.reasons.map(w=>`<span class="tag ${/어려|공용|최근 구매/.test(w)?"minus":"plus"}">${esc(w)}</span>`).join("")}</div>`;
     }
     return `<button class="item" data-k="${esc(key(r))}">${head}${body}</button>`}).join("")+(rs.length>showN?`<button class="more" id="more">${rs.length-showN}곳 더 보기</button>`:"");
   el.querySelectorAll(".item").forEach(b=>b.onclick=()=>open_(b.dataset.k));
@@ -258,20 +227,20 @@ function action(r){
     if(e.seoulwide) t.push("서울시 <b>브레인핏45</b>(기억산책 개발)가 45세 이상 전 시민에게 무료로 깔려 있습니다. 구 보건소에는 앱 자체보다 「대면 교실 운영 + 참여 관리 + 결과 리포트」 묶음으로, 시 앱이 못 하는 현장 운영을 내세워 제안합니다.");
     if(e.kind==="앱·플랫폼"&&e.src==="나라장터") t.push(`${esc(e.vendor)} 앱을 쓰고 있습니다. 성과 데이터와 현장 운영 지원(교실 운영, 참여 관리)으로 비교 제안합니다.`);
   });
-  return `<div class="act comp"><b>교체 공략 접근 (${esc(r.ease)})</b><ul class="dl">${[...new Set(t)].map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+  return `<div class="act comp"><b>교체 공략 접근 (가능성 ${lv(r)})</b><ul class="dl">${[...new Set(t)].map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
 }
 function open_(k){
   const r=byKey[k]; if(!r) return; selKey=k; board(); KM&&KM.paint();
-  const st=r.status==="ours"?`<span class="badge O" style="background:var(--o);color:#fff">우리</span>`:r.status==="empty"?`<span class="badge ${r.grade}">빈 곳 ${r.grade}</span>`:`<span class="badge ${cls(r)}">교체 ${r.ease}</span>`;
-  let h=`<h3>${esc(r.sd)} ${esc(r.sgg)}</h3><div class="meta">${st} · 인구 ${ppl(r.pop)} · 65세 이상 ${ppl(r.p65)} (${r.ratio}%)${hot(r)?` · <b style="color:var(--hot)">${r.timing==="임박"?"재계약 "+r.renew:"갱신 미확인"}</b>`:""}</div>`;
+  const st=r.status==="ours"?`<span class="badge O">우리</span>`:r.status==="empty"?`<span class="badge ${r.grade}">빈 곳, 가능성 ${lv(r)}</span>`:`<span class="badge ${cls(r)}">교체, 가능성 ${lv(r)}</span>`;
+  let h=`<h3>${esc(r.sd)} ${esc(r.sgg)}</h3><div class="meta ms"><span>${st}</span><span>인구 ${ppl(r.pop)}</span><span>65세 이상 ${ppl(r.p65)} (${r.ratio}%)</span>${hot(r)?`<span><b style="color:var(--hot)">${r.timing==="임박"?"재계약 "+r.renew:"갱신 미확인"}</b></span>`:""}</div>`;
   h+=action(r);
-  if(r.status==="empty"){h+=`<h4>등급 근거</h4><div class="tags">${r.why.map(w=>`<span class="tag ${/공용/.test(w)?"minus":"plus"}">${esc(w)}</span>`).join("")||'<span class="tag">가점 없음</span>'}</div>`}
+  if(r.status==="empty"){h+=`<h4>가능성 근거</h4><div class="tags">${r.why.map(w=>`<span class="tag ${/공용/.test(w)?"minus":"plus"}">${esc(w)}</span>`).join("")||'<span class="tag">가점 없음</span>'}</div>`}
   if(r.status==="comp"){h+=`<h4>난이도 근거</h4><ul class="dl">${r.reasons.map(w=>`<li>${esc(w)}</li>`).join("")}</ul>`}
   if(r.cog&&r.cog.length){
     h+=`<h4>지금 들어가 있는 인지훈련</h4>`;
     r.cog.forEach(e=>{
-      h+=`<div class="svc"><b>${esc(e.svc)}</b> <span>${esc(e.kind)} · ${esc(e.vendor)}</span></div>`;
-      if(e.contracts.length) h+=e.contracts.map(c=>`<div class="ct"><span class="d">${esc(c[0])}</span> <span class="k">${esc(c[3])}·${esc(c[4])}</span> ${c[5]?`<a class="cn" href="${esc(c[5])}" target="_blank" rel="noopener">${esc(c[1])} ↗</a>`:esc(c[1])} <b>${man(c[2])} 원</b></div>`).join("");
+      h+=`<div class="svc"><b>${esc(e.svc)}</b> <span>${esc(e.kind)}, ${esc(e.vendor)}</span></div>`;
+      if(e.contracts.length) h+=e.contracts.map(c=>`<div class="ct"><span class="d">${esc(c[0])}</span> <span class="k">${esc(c[3])}·${esc(c[4])}</span> ${c[5]?`<a class="cn" href="${esc(c[5])}" target="_blank" rel="noopener">${esc(c[1])}</a>`:esc(c[1])} <b>${man(c[2])} 원</b></div>`).join("");
       else h+=`<div class="ct"><span class="d">${esc(e.last)}</span> 기사·공식자료 ${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">원문</a>`:""}</div>`;
     });
   }
@@ -293,8 +262,8 @@ function render(){
   document.getElementById("t-empty").setAttribute("aria-selected",tab==="empty");
   document.getElementById("t-comp").setAttribute("aria-selected",tab==="comp");
   const em=rows.filter(r=>r.status==="empty"), cp=rows.filter(r=>r.status==="comp");
-  document.getElementById("t-empty-s").textContent=`빈 곳 ${em.length} · A ${em.filter(r=>r.grade==="A").length}`;
-  document.getElementById("t-comp-s").textContent=`진입 ${cp.length} · 쉬움 ${cp.filter(r=>r.ease==="쉬움").length}`;
+  document.getElementById("t-empty-s").textContent=`빈 곳 ${em.length}곳, 가능성 높음 ${em.filter(r=>r.grade==="A").length}곳`;
+  document.getElementById("t-comp-s").textContent=`진입 ${cp.length}곳, 가능성 높음 ${cp.filter(r=>r.ease==="쉬움").length}곳`;
   board();tools();list();KM&&KM.paint();
 }
 kpis();render();
