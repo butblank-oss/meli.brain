@@ -5,13 +5,50 @@
 <title>전체 현황 지도</title>
 <link rel="stylesheet" href="ui.css">
 <style>
-.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
-@media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.stat{display:flex;flex-direction:column;gap:2px;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:20px 20px}
-.stat b{font-size:var(--fs-num);font-weight:800;line-height:1.25;font-variant-numeric:tabular-nums}
-.stat span{order:-1;color:var(--ink-3);font-size:var(--fs-sm);font-weight:600}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-.chip i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:0}
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:16px}
+@media (max-width:1100px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:44px;background:var(--surface);border:0;border-radius:var(--r-lg);box-shadow:var(--shadow);padding:16px 20px;text-align:left;cursor:pointer;transition:box-shadow var(--dur-micro) var(--ease),transform var(--dur-micro) var(--ease)}
+.stat:hover{box-shadow:var(--shadow-pop)}
+.stat:active{transform:scale(0.98)}
+.stat span{color:var(--ink-3);font-size:var(--fs-sm);font-weight:600;display:flex;align-items:center;gap:8px}
+.stat span i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.stat b{font-size:var(--fs-num);font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums;color:var(--ink)}
+.stat small{font-size:var(--fs-cap);color:var(--ink-4)}
+.stat[aria-pressed="true"]{background:var(--ink)}
+.stat[aria-pressed="true"] span,.stat[aria-pressed="true"] small{color:var(--surface-3)}
+.stat[aria-pressed="true"] b{color:var(--surface)}
+.sorts{margin:0 0 8px}
+.sorts button{text-align:center;font-size:var(--fs-sm);font-weight:600;min-height:36px}
+.sdlist{display:flex;flex-direction:column}
+.sdrow{display:grid;grid-template-columns:48px minmax(0,1fr) 72px 112px;gap:12px;align-items:center;width:100%;min-height:52px;border:0;border-top:1px solid var(--line);background:none;padding:8px;border-radius:var(--r-md);cursor:pointer;text-align:left;transition:background-color var(--dur-micro) var(--ease)}
+.sdrow:first-child{border-top:0}
+.sdrow:hover{background:var(--surface-2)}
+.sdn{font-weight:700;color:var(--ink)}
+.sdbar{height:8px;border-radius:4px;background:var(--surface-3);overflow:hidden}
+.sdbar i{display:block;height:100%;background:var(--brand-2);border-radius:4px}
+.sdv{font-size:var(--fs-sm);color:var(--ink-4);text-align:right;font-variant-numeric:tabular-nums}
+.sdv b{color:var(--ink);font-size:var(--fs-body)}
+.sde{font-size:var(--fs-sm);color:var(--ink-2);font-weight:600;text-align:right}
+.sde small{display:block;font-weight:500;color:var(--ink-4);font-size:var(--fs-cap)}
+.back{min-height:36px;border:0;background:var(--surface-3);color:var(--ink-2);border-radius:var(--r-pill);padding:4px 12px;font-size:var(--fs-sm);font-weight:600;cursor:pointer;margin-bottom:12px}
+.back:hover{background:var(--line)}
+.cov{background:var(--surface-2);border-radius:var(--r-md);padding:16px;margin-bottom:16px;display:grid;gap:16px}
+.covh{font-size:var(--fs-sm);color:var(--ink-3);font-weight:600;margin-bottom:8px}
+.covh b{color:var(--ink);font-size:var(--fs-body);margin-left:4px;font-variant-numeric:tabular-nums}
+.covnote{margin:0;font-size:var(--fs-sm);color:var(--ink-4)}
+.none{font-size:var(--fs-sm);color:var(--ink-4)}
+.echips{display:flex;flex-wrap:wrap;gap:8px}
+.echip{min-height:36px;font-size:var(--fs-sm);border:0;border-radius:var(--r-pill);padding:4px 12px;display:inline-flex;align-items:center;gap:6px}
+.echip.yes{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--shadow);cursor:pointer;transition:background-color var(--dur-micro) var(--ease),color var(--dur-micro) var(--ease)}
+.echip.yes:hover{background:var(--surface-3)}
+.echip.yes .n{font-size:var(--fs-cap);font-weight:700;color:var(--ink-4);font-variant-numeric:tabular-nums}
+.echip.yes[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.echip.yes[aria-pressed="true"] .n{color:var(--surface-3)}
+.echip.no{background:transparent;color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--line-2)}
+.searchrow{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.searchrow .search{margin:0;flex:1 1 auto;min-width:0}
+.clr{min-height:44px;border:0;background:var(--surface-3);color:var(--ink-2);border-radius:var(--r-md);padding:8px 12px;font-size:var(--fs-sm);font-weight:600;cursor:pointer;white-space:nowrap}
 .grid{display:grid;grid-template-columns:minmax(0,500px) minmax(0,1fr);gap:16px;align-items:start}
 @media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
 .mapbox{background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:20px;position:sticky;top:72px}
@@ -32,16 +69,6 @@
 .svc a{color:var(--brand-2)}
 .svc.ours{background:var(--brand-soft);border-radius:var(--r-md);padding:12px 12px;margin-left:-12px;margin-right:-12px}
 .tag{font-size:var(--fs-cap);background:var(--surface-2);border-radius:6px;padding:2px 8px;margin-left:8px;color:var(--ink-3);font-weight:600}
-.emptybox{background:var(--surface-2);border-radius:var(--r-md);padding:16px;margin-bottom:16px}
-.emptybox > b{font-size:var(--fs-body)}
-.emptybox .meta{color:var(--ink-3);font-size:var(--fs-sm)}
-.echips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.echip{min-height:32px;font-size:var(--fs-sm);border:0;background:var(--surface);color:var(--ink-4);border-radius:var(--r-pill);padding:4px 12px;box-shadow:inset 0 0 0 1px var(--line);display:inline-flex;align-items:center}
-.echip.yes{background:var(--brand-soft);color:var(--brand);font-weight:700;box-shadow:none;cursor:pointer;transition:background-color var(--dur-micro) var(--ease)}
-.echip.yes:hover{background:var(--brand-line)}
-.echip.clr{margin-top:12px;cursor:pointer;color:var(--ink-3);font-weight:600}
-.lg{display:inline-block;width:12px;height:12px;border-radius:4px;margin:0 4px 0 8px;vertical-align:-1px}
-.lg.yes{background:var(--brand-soft);box-shadow:inset 0 0 0 1px var(--brand)}.lg.no{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-2)}
 .ctr{margin-top:8px;font-size:var(--fs-sm)}
 .ctr summary{cursor:pointer;color:var(--brand-2);font-weight:600}
 .ctr ul{margin:8px 0 0;padding-left:16px}
@@ -56,7 +83,7 @@
 <main class="page">
 <div class="pagehead"><h1>전체 현황 지도</h1><p>시니어 디지털 서비스가 지역별로 어디에 들어가 있는지 봅니다. 시·도를 고르면 시·군·구마다 무엇이 들어갔는지 나옵니다.</p></div>
 <div class="stats" id="stats"></div>
-<div class="filters" id="filters"></div>
+
 <div class="grid">
  <div class="mapbox"><p class="mhint">시·도를 누르면 확대되고 오른쪽에 상세가 나옵니다. 확대한 뒤 시·군·구를 누르면 그곳만 걸러집니다.</p><div id="map"></div><div class="mlegend" id="mlegend"></div></div>
  <div class="panel" id="panel"></div>
@@ -76,26 +103,23 @@ const MASTER = {"서울": ["종로구", "중구", "용산구", "성동구", "광
 const TYPES = [["인지훈련·치매예방","var(--c1)"],["걸음·건강관리","var(--c2)"],["AI돌봄·안부","var(--c3)"],["돌봄로봇","var(--c4)"],["스마트경로당","var(--c5)"]];
 const COLOR = Object.fromEntries(TYPES);
 const POS = {"인천":[0,0],"서울":[1,0],"강원":[2,0],"충남":[0,1],"경기":[1,1],"충북":[2,1],"경북":[3,1],"세종":[0,2],"대전":[1,2],"대구":[2,2],"울산":[3,2],"전북":[0,3],"경남":[2,3],"부산":[3,3],"광주":[0,4],"전남":[1,4],"제주":[0,5]};
-let filter = "전체", sel = "인천", q = "";
+let filter = "전체", sel = null, q = "", sortSd = "order";
+const ORDER = ["서울","인천","경기","강원","충북","충남","세종","대전","전북","광주","전남","경북","대구","울산","경남","부산","제주"];
+const TOTAL = ORDER.reduce((n,sd)=>n+MASTER[sd].length,0);
 const rows = () => DATA.filter(d => filter==="전체" || d["유형"]===filter);
-function covered(sido){ const s=new Set(); rows().filter(d=>d["시도"]===sido&&d.counts).forEach(d=>d.units.forEach(u=>s.add(u))); return s }
+function covered(sido, f){ const s=new Set(); DATA.filter(d=>(f===undefined?(filter==="전체"||d["유형"]===filter):(f==="전체"||d["유형"]===f))&&d["시도"]===sido&&d.counts).forEach(d=>d.units.forEach(u=>s.add(u))); return s }
 function hasWide(sido){ return rows().some(d=>d["시도"]===sido&&d.counts&&d["시군구"]==="광역") }
+function natCount(f){ return ORDER.reduce((n,sd)=>n+covered(sd,f).size,0) }
 function renderStats(){
-  const all = DATA; const by = t => new Set(all.filter(d=>d["유형"]===t).map(d=>d["시도"]+d["시군구"])).size;
-  const s = [["전체 지역(시·도/시·군·구)", new Set(all.map(d=>d["시도"]+d["시군구"])).size+"곳"],
-   ["걸음·건강관리", by("걸음·건강관리")+"곳"],["인지훈련·치매예방", by("인지훈련·치매예방")+"곳"],
-   ["AI돌봄·안부 + 돌봄로봇", new Set(all.filter(d=>["AI돌봄·안부","돌봄로봇"].includes(d["유형"])).map(d=>d["시도"]+d["시군구"])).size+"곳"],["스마트경로당", by("스마트경로당")+"곳"]];
-  document.getElementById("stats").innerHTML = s.map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join("");
+  const opts=[["전체","전체 서비스","var(--ink)"],...TYPES.map(([t,c])=>[t,t,c])];
+  document.getElementById("stats").innerHTML = opts.map(([t,label,c])=>`<button class="stat" data-t="${t}" aria-pressed="${t===filter}"><span><i style="background:${c}"></i>${label}</span><b>${natCount(t)}곳</b><small>시·군·구 ${TOTAL}곳 중</small></button>`).join("");
+  document.querySelectorAll(".stat").forEach(b=>b.onclick=()=>{filter=b.dataset.t;q="";render()});
 }
-function renderFilters(){
-  const opts = [["전체","var(--ink)"],...TYPES];
-  document.getElementById("filters").innerHTML = opts.map(([t,c])=>`<button class="chip" aria-pressed="${t===filter}" data-t="${t}"><i style="background:${c}"></i>${t}</button>`).join("");
-  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filter=b.dataset.t;render()});
-}
+function renderFilters(){ const f=document.getElementById("filters"); if(f) f.remove(); }
 let KM=null;
 function renderMap(){
   if(!window.__GEO){ return; }
-  const opt={geo:window.__GEO, order:["서울","인천","경기","강원","충북","충남","세종","대전","전북","광주","전남","경북","대구","울산","경남","부산","제주"],
+  const opt={geo:window.__GEO, order:ORDER,
     sdTip:sd=>`<b>${esc(sd)}</b><br>${esc(filter)} 있음 ${covered(sd).size} / ${MASTER[sd].length}<br><span style="opacity:.75">눌러서 확대</span>`,
     fill:(sd,sgg)=>{const t=new Set(rows().filter(d=>d["시도"]===sd&&d.counts&&d.units.includes(sgg)).map(d=>d["유형"])).size;
       if(!t) return {fill:"var(--none)"};
@@ -104,7 +128,7 @@ function renderMap(){
     selected:()=>null,
     sdLabel:sd=>[sd,`${covered(sd).size}/${MASTER[sd].length}`],
     tip:(sd,sgg)=>{const n=rows().filter(d=>d["시도"]===sd&&d.counts&&d.units.includes(sgg)).map(d=>d["서비스"]);return `<b>${esc(sd)} ${esc(sgg)}</b><br>${n.length?n.slice(0,4).map(esc).join("<br>")+(n.length>4?`<br>외 ${n.length-4}개`:""):"확인된 서비스 없음"}`},
-    onSido:sd=>{ if(sd){sel=sd;q="";renderPanel()} },
+    onSido:sd=>{ sel=sd||null; q=""; renderPanel() },
     onSgg:(sd,sgg)=>{sel=sd;q=sgg;renderPanel();document.getElementById("panel").scrollIntoView({behavior:"smooth",block:"start"})}};
   document.getElementById("mlegend").innerHTML = filter==="전체"
     ? `<span><i style="background:var(--cov-1)"></i>유형 1개</span><span><i style="background:var(--cov-2)"></i>2개</span><span><i style="background:var(--cov-3)"></i>3개 이상</span><span><i style="background:var(--none)"></i>없음</span>`
@@ -119,7 +143,21 @@ function ctr(d){
   const tot=c.reduce((s,x)=>s+(x[2]||0),0);
   return `<details class="ctr" ${c.length<=2?"open":""}><summary>계약 ${c.length}건, 합계 ${won(tot)}</summary><ul>${list}</ul></details>`;
 }
+function goSido(sd){ sel=sd; q=""; KM&&KM.zoom(sd); renderPanel(); }
+function renderNational(){
+  let list=ORDER.map(sd=>{const c=covered(sd).size, n=MASTER[sd].length; return {sd,c,n,e:n-c,w:hasWide(sd)}});
+  if(sortSd==="empty") list.sort((a,b)=>b.e-a.e||a.c-b.c);
+  if(sortSd==="ratio") list.sort((a,b)=>b.c/b.n-a.c/a.n);
+  const tot=list.reduce((x,r)=>x+r.c,0);
+  const label=filter==="전체"?"전체 서비스":filter;
+  document.getElementById("panel").innerHTML = `<h2>전국</h2><div class="sub">${esc(label)} 기준, 시·군·구 ${TOTAL}곳 중 <b>${tot}곳</b>에 들어가 있습니다.</div>
+  <div class="sorts seg" role="group" aria-label="정렬">${[["order","지역순"],["empty","빈 곳 많은 순"],["ratio","들어간 비율 순"]].map(([k,l])=>`<button data-s="${k}" aria-pressed="${sortSd===k}">${l}</button>`).join("")}</div>
+  <div class="sdlist">${list.map(r=>`<button class="sdrow" data-sd="${r.sd}"><span class="sdn">${r.sd}</span><span class="sdbar"><i style="width:${r.c/r.n*100}%"></i></span><span class="sdv"><b>${r.c}</b>/${r.n}곳</span><span class="sde">${r.e?`빈 곳 ${r.e}`:"빈 곳 없음"}${r.w?`<small>시·도 단위 있음</small>`:""}</span></button>`).join("")}</div>`;
+  document.querySelectorAll(".sdrow").forEach(b=>b.onclick=()=>goSido(b.dataset.sd));
+  document.querySelectorAll(".sorts [data-s]").forEach(b=>b.onclick=()=>{sortSd=b.dataset.s;renderNational()});
+}
 function renderPanel(){
+  if(!sel){ renderNational(); return; }
   const rs = rows().filter(d=>d["시도"]===sel);
   const groups = {}; rs.forEach(d=>{(groups[d["시군구"]] ||= []).push(d)});
   let keys = Object.keys(groups).sort((a,b)=> (a==="광역"?-1:b==="광역"?1:a.localeCompare(b,"ko")));
@@ -131,14 +169,21 @@ function renderPanel(){
       const src = d["출처"]==="나라장터" ? `<span>나라장터</span><span>최근 ${esc(d["최근"])}</span>` : `<span>기사</span><span>${esc(d["최근"])}</span>`;
       const link = (d["링크"] && d["출처"]!=="나라장터") ? `<span><a href="${esc(d["링크"])}" target="_blank" rel="noopener">원문 보기</a></span>` : "";
       return `<div class="svc ${ours?'ours':''}"><span class="dot" style="background:${COLOR[d["유형"]]||'var(--ink-4)'}"></span><div><div>${esc(d["서비스"])}${d["업체"]&&!/^미기재/.test(d["업체"])&&!d["서비스"].includes(d["업체"])?` <span class="meta">${esc(d["업체"])}</span>`:""}<span class="tag">${esc(d["유형"])}</span></div><div class="meta ms">${src}${link}</div>${ctr(d)}</div></div>`}).join("")}</div>`}).join("");
-  const cov=covered(sel), empty=MASTER[sel].filter(x=>!cov.has(x));
-  const all=MASTER[sel];
-  const emptyBox = `<div class="emptybox"><b>시·군·구 ${all.length}곳</b> <span class="meta"><span class="lg yes"></span>있음 ${all.length-empty.length}<span class="lg no"></span>없음 ${empty.length}${hasWide(sel)?'<br>시·도 단위 서비스는 따로 있습니다.':''}</span><div class="echips">${all.map(x=>cov.has(x)?`<button class="echip yes" data-q="${esc(x)}" title="${esc(x)} 서비스 보기">✓ ${esc(x)}</button>`:`<span class="echip no">${esc(x)}</span>`).join('')}</div>${q?`<button class="echip clr" data-q="">전체 다시 보기</button>`:''}</div>`;
-  document.getElementById("panel").innerHTML = `<h2>${sel}</h2><div class="sub">${filter} 기준, 확인된 곳 ${cov.size}/${MASTER[sel].length}</div>${emptyBox}<input class="search" id="q" placeholder="시·군·구나 서비스·업체 이름으로 찾기" value="${esc(q)}">${body||'<p class="sub">확인된 항목이 없습니다.</p>'}`;
-  document.querySelectorAll(".echip[data-q]").forEach(b=>b.onclick=()=>{q=b.dataset.q;renderPanel()});
+  const cov=covered(sel), all=MASTER[sel], have=all.filter(x=>cov.has(x)), empty=all.filter(x=>!cov.has(x));
+  const cnt=x=>rows().filter(d=>d["시도"]===sel&&d.counts&&d.units.includes(x)).length;
+  const label=filter==="전체"?"전체 서비스":filter;
+  const box = `<div class="cov">
+    <div class="covrow"><div class="covh">들어간 곳 <b>${have.length}</b></div><div class="echips">${have.length?have.map(x=>`<button class="echip yes" data-q="${esc(x)}" aria-pressed="${q===x}">${esc(x)}<span class="n">${cnt(x)}</span></button>`).join(""):'<span class="none">없음</span>'}</div></div>
+    <div class="covrow"><div class="covh">빈 곳 <b>${empty.length}</b></div><div class="echips">${empty.length?empty.map(x=>`<span class="echip no">${esc(x)}</span>`).join(""):'<span class="none">없음</span>'}</div></div>
+    ${hasWide(sel)?'<p class="covnote">이 시·도에는 시·도 단위 서비스도 있습니다(아래 「광역 단위」).</p>':''}
+  </div>`;
+  document.getElementById("panel").innerHTML = `<button class="back" id="back">전국 보기</button><h2>${sel}</h2><div class="sub">${esc(label)} 기준, 시·군·구 ${all.length}곳 중 ${have.length}곳</div>${box}<div class="searchrow"><input class="search" id="q" placeholder="시·군·구나 서비스·업체 이름으로 찾기" value="${esc(q)}">${q?'<button class="clr" id="clr">필터 해제</button>':''}</div>${body||'<p class="sub">확인된 항목이 없습니다.</p>'}`;
+  document.getElementById("back").onclick=()=>{sel=null;q="";KM&&KM.zoom(null);renderPanel()};
+  document.querySelectorAll(".echip[data-q]").forEach(b=>b.onclick=()=>{q=(q===b.dataset.q?"":b.dataset.q);renderPanel()});
+  const c=document.getElementById("clr"); if(c) c.onclick=()=>{q="";renderPanel()};
   const inp=document.getElementById("q"); inp.oninput=()=>{q=inp.value.trim();renderPanel();const i=document.getElementById("q");i.focus();i.setSelectionRange(i.value.length,i.value.length)};
 }
-function render(){renderFilters();renderMap();renderPanel()}
+function render(){renderFilters();renderStats();renderMap();renderPanel()}
 fetch("sgg.geo.json").then(r=>r.json()).then(g=>{window.__GEO=g;renderMap()});
-renderStats();render();
+render();
 </script></body></html>
