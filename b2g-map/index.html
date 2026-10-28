@@ -10,6 +10,9 @@
 --a:#4cc38a;--a-bg:#173528;--b:#3d9a6d;--b-bg:#18291f;--c:#5f7a6c;--c-bg:#1b221e;--e:#f0954f;--e-bg:#3a2414;--m:#d9a06a;--m-bg:#2e2418;--h:#8a8f8c;--h-bg:#252a28;--o:#6aa5ea;--o-bg:#16263a;--hot:#ff7b6b}}
 :root[data-theme="dark"]{--bg:#121614;--card:#1a201d;--ink:#e7ece9;--sub:#a3afa9;--faint:#7d8983;--line:#2b3430;--brand:#4cc38a;
 --a:#4cc38a;--a-bg:#173528;--b:#3d9a6d;--b-bg:#18291f;--c:#5f7a6c;--c-bg:#1b221e;--e:#f0954f;--e-bg:#3a2414;--m:#d9a06a;--m-bg:#2e2418;--h:#8a8f8c;--h-bg:#252a28;--o:#6aa5ea;--o-bg:#16263a;--hot:#ff7b6b}
+:root{--pA:#16a34a;--pB:#38bdf8;--pC:#dbe3ea;--pE:#f97316;--pM:#facc15;--pH:#8a817c;--pO:#7c3aed}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pC:#3a4650}}
+:root[data-theme="dark"]{--pC:#3a4650}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;word-break:keep-all;overflow-wrap:break-word}
 a{color:var(--brand)}
@@ -40,9 +43,9 @@ h1{font-size:25px;margin:0}
 .sdbtn.on{color:var(--brand)}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
 .g{border:1px solid transparent;border-radius:6px;padding:1px 6px;font-size:12px;cursor:pointer;line-height:1.6}
-.g.A{background:var(--a);color:#fff}.g.B{background:var(--b-bg);color:var(--ink);border-color:var(--b)}.g.C{background:var(--c-bg);color:var(--sub);border-color:var(--line)}
-.g.E{background:var(--e);color:#fff}.g.M{background:var(--m-bg);color:var(--ink);border-color:var(--m)}.g.H{background:var(--h-bg);color:var(--sub);border-color:var(--h)}
-.g.O{background:var(--o);color:#fff;font-weight:700}
+.g.A{background:var(--pA);color:#fff}.g.B{background:var(--pB);color:#0b2530}.g.C{background:var(--pC);color:var(--ink)}
+.g.E{background:var(--pE);color:#fff}.g.M{background:var(--pM);color:#3a2e00}.g.H{background:var(--pH);color:#fff}
+.g.O{background:var(--pO);color:#fff;font-weight:700}
 .g.hot{box-shadow:0 0 0 2px var(--hot)}
 .g.dim{opacity:.22}
 .g.sel{outline:2px solid var(--ink);outline-offset:1px}
@@ -61,8 +64,8 @@ select.f{appearance:auto}
 .item:hover{background:var(--bg)}
 .item .l1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .badge{font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px}
-.badge.A{background:var(--a);color:#fff}.badge.B{background:var(--b-bg);color:var(--a);border:1px solid var(--b)}.badge.C{background:var(--c-bg);color:var(--sub);border:1px solid var(--line)}
-.badge.E{background:var(--e);color:#fff}.badge.M{background:var(--m-bg);color:var(--e);border:1px solid var(--m)}.badge.H{background:var(--h-bg);color:var(--sub);border:1px solid var(--h)}
+.badge.A{background:var(--pA);color:#fff}.badge.B{background:var(--pB);color:#0b2530}.badge.C{background:var(--pC);color:var(--ink)}
+.badge.E{background:var(--pE);color:#fff}.badge.M{background:var(--pM);color:#3a2e00}.badge.H{background:var(--pH);color:#fff}
 .badge.hot{background:none;color:var(--hot);border:1px solid var(--hot)}
 .item .nm{font-weight:700;font-size:15px}
 .item .pop{font-size:12.5px;color:var(--sub)}
@@ -100,14 +103,18 @@ select.f{appearance:auto}
 .kmap-sgg{stroke:var(--card);stroke-width:.6px;vector-effect:non-scaling-stroke;cursor:pointer;transition:opacity .15s}
 .kmap-sgg:hover{stroke:var(--ink);stroke-width:1.6px}
 .kmap-sgg.out{opacity:.18}
-.kmap-sgg.dim{opacity:.3}
+.kmap-sgg.dim{opacity:.55}
 .kmap-sgg.hot{stroke:var(--hot,#c0392b);stroke-width:2px}
 .kmap-sgg.sel{stroke:var(--ink);stroke-width:2.6px}
-.kmap-sido{fill:none;stroke:var(--ink);stroke-opacity:.5;stroke-width:1.1px;vector-effect:non-scaling-stroke}
+.kmap-sido{fill:none;stroke:var(--ink);stroke-opacity:.8;stroke-width:1.6px;vector-effect:non-scaling-stroke}
+.kmap-hl{fill:none;stroke:var(--ink);stroke-width:3.2px;vector-effect:non-scaling-stroke}
+.kmap-chips{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 8px}
+.kmap-chips button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 10px;font:inherit;font-size:12.5px;cursor:pointer}
+.kmap-chips button:hover{border-color:var(--ink)}
+.kmap-chips button[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
 .kmap-lb{text-anchor:middle;dominant-baseline:middle;fill:var(--ink);font-weight:700;paint-order:stroke;stroke:var(--card);stroke-width:.22em;stroke-linejoin:round}
 .kmap-lb.sub{font-weight:600;fill:var(--sub)}
 .kmap-tip{position:absolute;display:none;pointer-events:none;background:var(--ink);color:var(--card);font-size:12.5px;line-height:1.45;padding:6px 9px;border-radius:8px;max-width:260px;z-index:3}
-.kmap-back{position:absolute;top:6px;left:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer;z-index:2}
 .boardwrap{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
 .boardwrap summary{cursor:pointer;font-size:13.5px;color:var(--sub)}
 .foot{margin-top:22px;font-size:12.5px;color:var(--faint)}
@@ -119,11 +126,11 @@ select.f{appearance:auto}
 <div class="main">
   <section class="box">
     <h2>전국 시·군·구 지도</h2>
-    <p class="hint">시·도를 누르면 확대되고 오른쪽 목록이 그 시·도로 좁혀집니다. 확대한 뒤 시·군·구를 누르면 상세가 열립니다.</p>
+    <p class="hint">위 시·도 버튼이나 지도에서 시·도를 누르면 확대되고 오른쪽 목록이 그 시·도로 좁혀집니다. 확대한 뒤 시·군·구를 누르면 상세가 열립니다.</p>
     <div class="legend">
-      <span><i style="background:var(--a)"></i>빈 곳 A</span><span><i style="background:var(--b)"></i>빈 곳 B</span><span><i style="background:color-mix(in srgb,var(--a) 20%,var(--card))"></i>빈 곳 C</span>
-      <span><i style="background:var(--e)"></i>교체 쉬움</span><span><i style="background:var(--m)"></i>교체 보통</span><span><i style="background:var(--h)"></i>교체 어려움</span>
-      <span><i style="background:var(--o)"></i>우리</span><span><i style="box-shadow:0 0 0 2px var(--hot)"></i>재계약 시기</span>
+      <span><i style="background:var(--pA)"></i>빈 곳 A</span><span><i style="background:var(--pB)"></i>빈 곳 B</span><span><i style="background:var(--pC)"></i>빈 곳 C</span>
+      <span><i style="background:var(--pE)"></i>교체 쉬움</span><span><i style="background:var(--pM)"></i>교체 보통</span><span><i style="background:var(--pH)"></i>교체 어려움</span>
+      <span><i style="background:var(--pO)"></i>우리</span><span><i style="box-shadow:0 0 0 2px var(--hot)"></i>재계약 시기</span>
     </div>
     <div id="kmap"></div>
     <details class="boardwrap"><summary>시·도별 칸으로 보기 (작은 구를 고를 때 편함)</summary><div class="board" id="board"></div></details>
@@ -160,10 +167,11 @@ const hot=r=>r.status==="comp"&&(r.timing==="임박"||r.timing==="갱신 미확�
 let tab="empty", sdSel=null, gradeSel=new Set(["A","B","C"]), easeSel=new Set(["쉬움","보통","어려움"]), hotOnly=false, sortBy="score", showN=30, selKey=null;
 
 let KM=null;
-const MAPFILL={A:"var(--a)",B:"var(--b)",C:"color-mix(in srgb,var(--a) 20%,var(--card))",E:"var(--e)",M:"var(--m)",H:"var(--h)",O:"var(--o)"};
+const MAPFILL={A:"var(--pA)",B:"var(--pB)",C:"var(--pC)",E:"var(--pE)",M:"var(--pM)",H:"var(--pH)",O:"var(--pO)"};
 function mapInit(){
   if(!window.__GEO||KM) return;
-  KM=KMap.create(document.getElementById("kmap"),{geo:window.__GEO,
+  KM=KMap.create(document.getElementById("kmap"),{geo:window.__GEO, order:ORDER,
+    sdTip:sd=>{const rs=rows.filter(r=>r.sd===sd);const em=rs.filter(r=>r.status==="empty"),cp=rs.filter(r=>r.status==="comp");return `<b>${esc(sd)}</b> · 시·군·구 ${rs.length}곳<br>빈 곳 ${em.length} (A ${em.filter(r=>r.grade==="A").length}) · 교체 후보 ${cp.length}${rs.some(r=>r.status==="ours")?"<br>우리 있음":""}<br><span style="opacity:.75">눌러서 확대</span>`},
     fill:(sd,sgg)=>{const r=byKey[sd+"|"+sgg]; if(!r) return {}; const dim=(tab==="empty"&&r.status==="comp")||(tab==="comp"&&r.status==="empty"); return {fill:MAPFILL[cls(r)], cls:(dim?"dim ":"")+(hot(r)?"hot":"")}},
     selected:()=>selKey,
     tip:(sd,sgg)=>{const r=byKey[sd+"|"+sgg]; if(!r) return esc(sd+" "+sgg); const st=r.status==="ours"?"우리":r.status==="empty"?`빈 곳 ${r.grade}`:`교체 ${r.ease}`; return `<b>${esc(sd)} ${esc(sgg)}</b> · ${st}<br>65세+ ${ppl(r.p65)} (${r.ratio}%)${r.status==="comp"?"<br>"+r.cog.slice(0,2).map(e=>esc(e.vendor&&!/다수|미기재/.test(e.vendor)?e.vendor:e.svc)).join(", "):""}${hot(r)?`<br>${r.timing==="임박"?"재계약 "+r.renew:"갱신 미확인"}`:""}`},

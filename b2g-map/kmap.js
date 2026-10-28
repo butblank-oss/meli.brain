@@ -23,15 +23,21 @@
     const gS = mk("g", {}), gD = mk("g", { "pointer-events": "none" }), gL = mk("g", { "pointer-events": "none" });
     svg.append(gS, gD, gL);
     const tip = document.createElement("div"); tip.className = "kmap-tip";
-    const back = document.createElement("button"); back.className = "kmap-back"; back.textContent = "← 전국"; back.hidden = true;
-    wrap.append(svg, tip, back); el.appendChild(wrap);
+    const bar = document.createElement("div"); bar.className = "kmap-chips";
+    const ORDER = o.order || geo.sido.map(f => f.properties.sd);
+    bar.innerHTML = ["전국", ...ORDER].map(sd => `<button type="button" data-sd="${sd === "전국" ? "" : sd}">${sd}</button>`).join("");
+    el.appendChild(bar);
+    wrap.append(svg, tip); el.appendChild(wrap);
+    const hl = mk("path", { class: "kmap-hl", d: "" });
+    const sdPath = {}; geo.sido.forEach(f => sdPath[f.properties.sd] = geomPath(f.geometry));
     const all = [1e9, 1e9, -1e9, -1e9], sdBox = {};
     geo.sido.forEach(f => { const b = bbox(f.geometry); sdBox[f.properties.sd] = b; all[0] = Math.min(all[0], b[0]); all[1] = Math.min(all[1], b[1]); all[2] = Math.max(all[2], b[2]); all[3] = Math.max(all[3], b[3]); });
     const paths = geo.sgg.map(f => {
       const p = mk("path", { d: geomPath(f.geometry), class: "kmap-sgg" });
       p.__f = f.properties; gS.appendChild(p); return p;
     });
-    geo.sido.forEach(f => gD.appendChild(mk("path", { d: geomPath(f.geometry), class: "kmap-sido" })));
+    geo.sido.forEach(f => gD.appendChild(mk("path", { d: sdPath[f.properties.sd], class: "kmap-sido" })));
+    gD.appendChild(hl);
     let cur = null, vb = null;
     function setVB(b, pad) {
       const w = b[2] - b[0], h = b[3] - b[1], p = Math.max(w, h) * pad;
@@ -65,11 +71,12 @@
       });
     }
     function zoom(sd) {
-      cur = sd || null; back.hidden = !cur;
+      cur = sd || null; hl.setAttribute("d", "");
+      bar.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", (b.dataset.sd || null) === cur));
       const zb = cur && ZOOM[cur] ? (() => { const [a, b] = px([ZOOM[cur][0], ZOOM[cur][3]]), [c, d] = px([ZOOM[cur][2], ZOOM[cur][1]]); return [a, b, c, d]; })() : null;
       setVB(cur ? (zb || sdBox[cur]) : all, cur ? 0.06 : 0.02); paint(); labels();
     }
-    back.onclick = () => { zoom(null); o.onSido && o.onSido(null); };
+    bar.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; const sd = b.dataset.sd || null; zoom(sd); o.onSido && o.onSido(sd); });
     svg.addEventListener("click", e => {
       const p = e.target.closest(".kmap-sgg"); if (!p) return; const { sd, sgg } = p.__f;
       if (!cur || cur !== sd) { zoom(sd); o.onSido && o.onSido(sd); }
@@ -77,13 +84,15 @@
     });
     svg.addEventListener("mousemove", e => {
       const p = e.target.closest(".kmap-sgg"); if (!p) { tip.style.display = "none"; return; }
-      const { sd, sgg } = p.__f; tip.innerHTML = o.tip ? o.tip(sd, sgg) : `${sd} ${sgg}`;
+      const { sd, sgg } = p.__f;
+      if (!cur) { hl.setAttribute("d", sdPath[sd]); tip.innerHTML = o.sdTip ? o.sdTip(sd) : sd; }
+      else { hl.setAttribute("d", ""); tip.innerHTML = o.tip ? o.tip(sd, sgg) : `${sd} ${sgg}`; }
       const r = wrap.getBoundingClientRect(); tip.style.display = "block";
       let x = e.clientX - r.left + 12, y = e.clientY - r.top + 12;
       if (x + tip.offsetWidth > r.width) x = e.clientX - r.left - tip.offsetWidth - 12;
       tip.style.left = x + "px"; tip.style.top = y + "px";
     });
-    svg.addEventListener("mouseleave", () => tip.style.display = "none");
+    svg.addEventListener("mouseleave", () => { tip.style.display = "none"; hl.setAttribute("d", ""); });
     zoom(null);
     return { zoom, paint, relabel: labels, get current() { return cur; } };
   }

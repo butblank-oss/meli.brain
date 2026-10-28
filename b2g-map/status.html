@@ -67,11 +67,15 @@ h1{font-size:26px;margin:0 0 6px}
 .kmap-sgg.dim{opacity:.3}
 .kmap-sgg.hot{stroke:var(--hot,#c0392b);stroke-width:2px}
 .kmap-sgg.sel{stroke:var(--ink);stroke-width:2.6px}
-.kmap-sido{fill:none;stroke:var(--ink);stroke-opacity:.5;stroke-width:1.1px;vector-effect:non-scaling-stroke}
+.kmap-sido{fill:none;stroke:var(--ink);stroke-opacity:.8;stroke-width:1.6px;vector-effect:non-scaling-stroke}
+.kmap-hl{fill:none;stroke:var(--ink);stroke-width:3.2px;vector-effect:non-scaling-stroke}
+.kmap-chips{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 8px}
+.kmap-chips button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 10px;font:inherit;font-size:12.5px;cursor:pointer}
+.kmap-chips button:hover{border-color:var(--ink)}
+.kmap-chips button[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
 .kmap-lb{text-anchor:middle;dominant-baseline:middle;fill:var(--ink);font-weight:700;paint-order:stroke;stroke:var(--card);stroke-width:.22em;stroke-linejoin:round}
 .kmap-lb.sub{font-weight:600;fill:var(--sub)}
 .kmap-tip{position:absolute;display:none;pointer-events:none;background:var(--ink);color:var(--card);font-size:12.5px;line-height:1.45;padding:6px 9px;border-radius:8px;max-width:260px;z-index:3}
-.kmap-back{position:absolute;top:6px;left:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer;z-index:2}
 .mapbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;position:sticky;top:12px}
 .mlegend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--sub);margin-top:6px}
 .mlegend i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;border:1px solid var(--line)}
@@ -84,7 +88,7 @@ h1{font-size:26px;margin:0 0 6px}
 <div class="stats" id="stats"></div>
 <div class="filters" id="filters"></div>
 <div class="grid">
- <div class="mapbox"><p class="mhint">시·도를 누르면 확대되고, 오른쪽에 상세가 나옵니다. 확대한 뒤 시·군·구를 누르면 그곳만 걸러집니다.</p><div id="map"></div><div class="mlegend"><span><i style="background:var(--brand);border-color:var(--brand)"></i>있음</span><span><i style="background:color-mix(in srgb,var(--sub) 16%,var(--card))"></i>없음</span><span>(위에서 고른 유형 기준)</span></div></div>
+ <div class="mapbox"><p class="mhint">위 시·도 버튼이나 지도에서 시·도를 누르면 확대되고, 오른쪽에 상세가 나옵니다. 확대한 뒤 시·군·구를 누르면 그곳만 걸러집니다.</p><div id="map"></div><div class="mlegend" id="mlegend"></div></div>
  <div class="panel" id="panel"></div>
 </div>
 <div class="note">
@@ -123,13 +127,20 @@ function renderFilters(){
 let KM=null;
 function renderMap(){
   if(!window.__GEO){ return; }
-  const opt={geo:window.__GEO,
-    fill:(sd,sgg)=>({fill: covered(sd).has(sgg)?"color-mix(in srgb,var(--brand) 78%,var(--card))":"color-mix(in srgb,var(--sub) 16%,var(--card))"}),
+  const opt={geo:window.__GEO, order:["서울","인천","경기","강원","충북","충남","세종","대전","전북","광주","전남","경북","대구","울산","경남","부산","제주"],
+    sdTip:sd=>`<b>${esc(sd)}</b><br>${esc(filter)} 있음 ${covered(sd).size} / ${MASTER[sd].length}<br><span style="opacity:.75">눌러서 확대</span>`,
+    fill:(sd,sgg)=>{const t=new Set(rows().filter(d=>d["시도"]===sd&&d.counts&&d.units.includes(sgg)).map(d=>d["유형"])).size;
+      if(!t) return {fill:"color-mix(in srgb,var(--sub) 16%,var(--card))"};
+      if(filter!=="전체") return {fill:COLOR[filter]};
+      return {fill:t>=3?"#0f6b43":t===2?"#3fae7a":"#a6dcbf"}},
     selected:()=>null,
     sdLabel:sd=>[sd,`${covered(sd).size}/${MASTER[sd].length}`],
     tip:(sd,sgg)=>{const n=rows().filter(d=>d["시도"]===sd&&d.counts&&d.units.includes(sgg)).map(d=>d["서비스"]);return `<b>${esc(sd)} ${esc(sgg)}</b><br>${n.length?n.slice(0,4).map(esc).join("<br>")+(n.length>4?`<br>외 ${n.length-4}개`:""):"확인된 서비스 없음"}`},
     onSido:sd=>{ if(sd){sel=sd;q="";renderPanel()} },
     onSgg:(sd,sgg)=>{sel=sd;q=sgg;renderPanel();document.getElementById("panel").scrollIntoView({behavior:"smooth",block:"start"})}};
+  document.getElementById("mlegend").innerHTML = filter==="전체"
+    ? `<span><i style="background:#a6dcbf"></i>유형 1개</span><span><i style="background:#3fae7a"></i>2개</span><span><i style="background:#0f6b43"></i>3개 이상</span><span><i style="background:color-mix(in srgb,var(--sub) 16%,var(--card))"></i>없음</span>`
+    : `<span><i style="background:${COLOR[filter]}"></i>${esc(filter)} 있음</span><span><i style="background:color-mix(in srgb,var(--sub) 16%,var(--card))"></i>없음</span>`;
   if(!KM){ KM=KMap.create(document.getElementById("map"),opt) } else { KM.paint(); KM.relabel() }
 }
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
