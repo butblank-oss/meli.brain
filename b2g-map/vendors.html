@@ -58,11 +58,11 @@
 </style></head><body>
 <header class="topbar"><div class="topbar-in"><a class="wordmark" href="status.html">맬리브레인 <span>B2G</span></a><nav class="tabsnav" aria-label="지도 메뉴"><a href="status.html">전체 현황</a><a href="vendors.html" aria-current="page">경쟁 서비스</a><a href="sales.html">영업 지도</a></nav></div></header>
 <main class="page">
-<div class="pagehead"><h1>경쟁 서비스 지도</h1><p>우리와 경쟁하는 인지훈련 서비스(앱, 인지재활 장비, 대면 프로그램)가 들어간 시·군·구입니다. 최대 8개까지 골라 우리와 겹쳐 볼 수 있습니다.</p><div class="asof"><span>데이터 기준 <b>2026-10-28 18:48</b></span><span>나라장터 최근 계약일 2026-10-28</span><a class="refresh" href="https://github.com/butblank-oss/meli.brain/actions/workflows/b2g-refresh.yml" target="_blank" rel="noopener" title="GitHub에서 Run workflow를 누르면 그 시점 기준으로 나라장터를 다시 불러와 3~5분 뒤 이 화면에 반영됩니다">최신 데이터 불러오기</a></div></div>
+<div class="pagehead"><h1>경쟁 서비스 지도</h1><p>우리와 경쟁하는 인지훈련 서비스(앱, 인지재활 장비, 대면 프로그램)가 들어간 시·군·구입니다. 여러 곳을 골라 우리와 겹쳐 볼 수 있습니다.</p><div class="asof"><span>데이터 기준 <b>2026-10-28 18:48</b></span><span>나라장터 최근 계약일 2026-10-28</span><a class="refresh" href="https://github.com/butblank-oss/meli.brain/actions/workflows/b2g-refresh.yml" target="_blank" rel="noopener" title="GitHub에서 Run workflow를 누르면 그 시점 기준으로 나라장터를 다시 불러와 3~5분 뒤 이 화면에 반영됩니다">최신 데이터 불러오기</a></div></div>
 <div class="filters" id="filters"></div>
 <div class="main">
-  <section class="box"><h2>들어간 시·군·구 순위</h2><p class="hint">누르는 대로 지도에 더해지고(최대 8개), 다시 누르면 빠집니다.</p><div class="rank" id="rank"></div></section>
-  <section class="box"><h2>지도</h2><p class="hint">진한 색은 시·군·구 계약, 옅은 색은 시·도 단위 계약, 검정은 고른 서비스가 겹친 곳입니다.</p><div id="kmap"></div><div class="legend" id="legend"></div><div class="sel" id="sel"></div></section>
+  <section class="box"><h2>들어간 시·군·구 순위</h2><p class="hint">누르면 켜지고 다시 누르면 꺼집니다. 8곳까지는 업체마다 색이 다르고, 더 많이 켜면 들어간 업체 수에 따라 진하게 칠합니다.</p><div class="rank" id="rank"></div></section>
+  <section class="box"><h2>지도</h2><p class="hint">진한 색은 시·군·구 계약, 옅은 색은 시·도 단위 계약입니다. 8곳 이하로 고르면 업체별 색, 겹친 곳은 검정입니다. 9곳 이상 켜면 들어간 업체 수가 많을수록 진한 초록입니다.</p><div id="kmap"></div><div class="legend" id="legend"></div><div class="sel" id="sel"></div></section>
 </div>
 <ul class="foot">
 <li><b>서비스명</b>: 초록 칸은 앱 마켓과 기사로 확인한 제품명, 회색 칸은 제품명을 못 찾아 나라장터 계약명에서 딴 이름입니다.</li>
@@ -88,7 +88,10 @@ const KORD=["앱·플랫폼","인지재활 장비","대면·위탁 프로그램"
 const KINDS=[...KORD.filter(k=>COMP.some(v=>v.kind===k)),...[...new Set(COMP.map(v=>v.kind).filter(k=>k&&!KORD.includes(k)))],"전체"];
 let picked=COMP.filter(v=>v.kind==="앱·플랫폼").slice(0,8).map(v=>v.name), showOurs=!!OURS;
 picked.forEach(n=>assign(n));
-const color=n=>OURS&&n===OURS.name?"var(--s0)":PAL[slot[n]??picked.indexOf(n)];
+const many=()=>picked.length>MAXP;
+function fixSlots(){if(!many()) picked.forEach(n=>{if(slot[n]==null) assign(n)})}
+const color=n=>OURS&&n===OURS.name?"var(--s0)":many()?"var(--cov-2)":PAL[slot[n]??picked.indexOf(n)];
+const MANYFILL=c=>c>=3?"var(--cov-3)":c===2?"var(--cov-2)":"var(--cov-1)";
 function flash(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(flash.t);flash.t=setTimeout(()=>t.classList.remove("on"),2600)}
 function shown(){return [...(showOurs&&OURS?[OURS.name]:[]),...picked]}
 function list(){
@@ -103,11 +106,14 @@ function filters(){
   const sub = mode==="comp"
     ? KINDS.map(t=>`<button class="f" data-k="${t}" aria-pressed="${t===kind}">${t}</button>`).join("")+(OURS?`<button class="f ours" id="ours" aria-pressed="${showOurs}">우리(원메딕스 맬리브레인) 같이 보기</button>`:"")
     : `<button class="f" id="one" aria-pressed="${showOne}">1곳만 들어간 곳도 보기</button>`+(OURS?`<button class="f ours" id="ours" aria-pressed="${showOurs}">우리(원메딕스 맬리브레인) 같이 보기</button>`:"");
-  el.innerHTML=`<div class="frow tagrow">${main}</div><div class="frow">${sub}<input class="q" id="q" placeholder="업체·서비스 이름 찾기" value="${esc(q)}"></div>`;
+  const pool=list(); const allOn=pool.length&&pool.every(v=>picked.includes(v.name));
+  const bulk=`<button class="f" id="bulk" aria-pressed="${allOn}">${allOn?"전체 끄기":"전체 켜기"}</button>`;
+  el.innerHTML=`<div class="frow tagrow">${main}</div><div class="frow">${bulk}${sub}<input class="q" id="q" placeholder="업체·서비스 이름 찾기" value="${esc(q)}"></div>`;
   el.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const t=b.dataset.t; const m=t==="인지훈련·치매예방"?"comp":"other";
     if(m===mode&&(m==="comp"||t===type)) return; mode=m; type=t; q="";
-    if(m==="comp") kind="앱·플랫폼"; picked=(m==="comp"?COMP.filter(v=>v.kind==="앱·플랫폼"):OTHER.filter(v=>v.type===t)).slice(0,m==="comp"?8:1).map(v=>v.name); for(const k in slot) delete slot[k]; picked.forEach(n=>assign(n)); render()});
+    if(m==="comp") kind="앱·플랫폼"; picked=(m==="comp"?COMP.filter(v=>v.kind==="앱·플랫폼"):OTHER.filter(v=>v.type===t)).map(v=>v.name); for(const k in slot) delete slot[k]; picked.forEach(n=>assign(n)); render()});
   el.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{kind=b.dataset.k;render()});
+  el.querySelector("#bulk").onclick=()=>{const names=list().map(v=>v.name); if(allOn){picked=picked.filter(n=>!names.includes(n)); names.forEach(n=>delete slot[n])} else {names.forEach(n=>{if(!picked.includes(n)){picked.push(n);assign(n)}})} render()};
   const o=el.querySelector("#one"); if(o) o.onclick=()=>{showOne=!showOne;render()};
   const u=el.querySelector("#ours"); if(u) u.onclick=()=>{showOurs=!showOurs;render()};
   const i=el.querySelector("#q"); i.oninput=()=>{q=i.value.trim();rank()};
@@ -121,14 +127,14 @@ function rank(){
     <span class="ct"><b>${v.units.length}곳</b>${v.wide.length?`시·도 단위 ${v.wide.length}곳 더`:""}</span></button>`}).join("")||'<p class="empty">해당하는 서비스가 없습니다.</p>';
   document.querySelectorAll(".row").forEach(b=>b.onclick=()=>{const n=b.dataset.n;
     if(picked.includes(n)){ picked=picked.filter(x=>x!==n); delete slot[n]; }
-    else if(picked.length>=MAXP){ flash(`한 번에 ${MAXP}개까지 볼 수 있습니다. 하나를 빼고 다시 골라 주세요.`); return; }
     else { assign(n); picked.push(n) }
-    rank();sel();KM&&KM.paint()});
+    fixSlots(); filters(); rank();sel();KM&&KM.paint()});
 }
 function hits(sd,sgg){return shown().filter(n=>byName[n].units.some(u=>u[0]===sd&&u[1]===sgg))}
 function wides(sd){return shown().filter(n=>byName[n].wide.includes(sd))}
 function sel(){
-  document.getElementById("legend").innerHTML=shown().map(n=>`<span><i style="background:${color(n)}"></i>${esc(n)}</span>`).join("")+(shown().length>1?`<span><i style="background:var(--ov)"></i>겹침</span>`:"");
+  fixSlots();
+  document.getElementById("legend").innerHTML=many()?`<span><i style="background:var(--cov-1)"></i>고른 업체 1곳</span><span><i style="background:var(--cov-2)"></i>2곳</span><span><i style="background:var(--cov-3)"></i>3곳 이상</span>${showOurs&&OURS?`<span><i style="background:var(--s0)"></i>우리</span>`:""}<span>${picked.length}곳 켜짐</span>`:shown().map(n=>`<span><i style="background:${color(n)}"></i>${esc(n)}</span>`).join("")+(shown().length>1?`<span><i style="background:var(--ov)"></i>겹침</span>`:"");
   document.getElementById("sel").innerHTML=shown().length?shown().map(n=>{const v=byName[n];
     const bySd={}; v.units.forEach(([sd,g])=>(bySd[sd] ||= []).push(g));
     return `<h3><span class="swatch" style="background:${color(n)}"></span>${esc(n)}${v.svc?` <span class="sv ${v.svcsrc==="계약명"?"d":""}">${esc(v.svc)}</span>`:""}${v.ours?" (우리)":""}</h3><div class="meta ms"><span>${esc(v.comp||v.ours?v.kind:v.type)}</span><span>시·군·구 ${v.units.length}곳</span>${v.wide.length?`<span>시·도 단위 ${v.wide.map(esc).join(", ")}</span>`:""}${v.n?`<span>계약 ${v.n}건, ${man(v.amt)}</span>`:""}</div>
@@ -137,7 +143,7 @@ function sel(){
 }
 function mapInit(){
   KM=KMap.create(document.getElementById("kmap"),{geo:window.__GEO,order:ORDER,
-    fill:(sd,sgg)=>{const h=hits(sd,sgg); if(h.length>1) return {fill:"var(--ov)"}; if(h.length) return {fill:color(h[0])};
+    fill:(sd,sgg)=>{const h=hits(sd,sgg); if(many()){const o=OURS&&h.includes(OURS.name); const c=h.filter(n=>!(OURS&&n===OURS.name)).length; if(o) return {fill:"var(--s0)"}; if(c) return {fill:MANYFILL(c)}; const w=wides(sd).filter(n=>!(OURS&&n===OURS.name)); return w.length?{fill:"color-mix(in srgb,var(--cov-1) 45%,var(--surface))"}:{fill:"var(--none)"}} if(h.length>1) return {fill:"var(--ov)"}; if(h.length) return {fill:color(h[0])};
       const w=wides(sd); if(w.length) return {fill:`color-mix(in srgb,${color(w[0])} 22%,var(--surface))`}; return {fill:"var(--none)"}},
     sdTip:sd=>{const c=shown().map(n=>`${esc(n)}: ${byName[n].units.filter(u=>u[0]===sd).length}곳${byName[n].wide.includes(sd)?" (시·도 단위 포함)":""}`);return `<b>${sd}</b>${c.length?"<br>"+c.join("<br>"):""}<br><span style="opacity:.75">눌러서 확대</span>`},
     tip:(sd,sgg)=>{const all=V.filter(v=>v.units.some(u=>u[0]===sd&&u[1]===sgg)).map(v=>v.name);const h=hits(sd,sgg);
