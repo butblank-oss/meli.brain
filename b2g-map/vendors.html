@@ -52,6 +52,7 @@
 .ci a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:3px}
 .ci a:hover{color:var(--brand-2)}
 .ci b{font-variant-numeric:tabular-nums}
+.f:disabled{opacity:.4;cursor:default}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);background:var(--ink);color:var(--surface);padding:12px 20px;border-radius:var(--r-md);font-size:var(--fs-sm);font-weight:600;opacity:0;pointer-events:none;transition:opacity var(--dur-short) var(--ease),transform var(--dur-short) var(--ease);z-index:7;box-shadow:var(--shadow-pop)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .empty{color:var(--ink-4);font-size:var(--fs-sm);padding:12px 0}
@@ -61,8 +62,8 @@
 <div class="pagehead"><h1>경쟁 서비스 지도</h1><p>우리와 경쟁하는 인지훈련 서비스(앱, 인지재활 장비, 대면 프로그램)가 들어간 시·군·구입니다. 여러 곳을 골라 우리와 겹쳐 볼 수 있습니다.</p><div class="asof"><span>데이터 기준 <b>2026-10-28 18:48</b></span><span>나라장터 최근 계약일 2026-10-28</span><a class="refresh" href="https://github.com/butblank-oss/meli.brain/actions/workflows/b2g-refresh.yml" target="_blank" rel="noopener" title="GitHub에서 Run workflow를 누르면 그 시점 기준으로 나라장터를 다시 불러와 3~5분 뒤 이 화면에 반영됩니다">최신 데이터 불러오기</a></div></div>
 <div class="filters" id="filters"></div>
 <div class="main">
-  <section class="box"><h2>들어간 시·군·구 순위</h2><p class="hint">누르면 켜지고 다시 누르면 꺼집니다. 8곳까지는 업체마다 색이 다르고, 더 많이 켜면 들어간 업체 수에 따라 진하게 칠합니다.</p><div class="rank" id="rank"></div></section>
-  <section class="box"><h2>지도</h2><p class="hint">진한 색은 시·군·구 계약, 옅은 색은 시·도 단위 계약입니다. 8곳 이하로 고르면 업체별 색, 겹친 곳은 검정입니다. 9곳 이상 켜면 들어간 업체 수가 많을수록 진한 초록입니다.</p><div id="kmap"></div><div class="legend" id="legend"></div><div class="sel" id="sel"></div></section>
+  <section class="box"><h2>들어간 시·군·구 순위</h2><p class="hint">누르면 켜지고 다시 누르면 꺼집니다. 켠 업체마다 색이 다릅니다.</p><div class="rank" id="rank"></div></section>
+  <section class="box"><h2>지도</h2><p class="hint">진한 색은 시·군·구 계약, 옅은 색은 시·도 단위 계약, 검정은 고른 업체가 겹친 곳입니다. 지도에서 칸에 올리면 들어간 업체 이름이 나옵니다.</p><div id="kmap"></div><div class="legend" id="legend"></div><div class="sel" id="sel"></div></section>
 </div>
 <ul class="foot">
 <li><b>서비스명</b>: 초록 칸은 앱 마켓과 기사로 확인한 제품명, 회색 칸은 제품명을 못 찾아 나라장터 계약명에서 딴 이름입니다.</li>
@@ -77,7 +78,8 @@ const V=[{"name": "스왈라비", "svc": "워크온", "svcsrc": "제품", "type"
 const TYPES=["전체","인지훈련·치매예방","걸음·건강관리","AI돌봄·안부","돌봄로봇","스마트경로당"];
 const PAL=["var(--s1)","var(--s2)","var(--s3)","var(--s4)","var(--s5)","var(--s6)","var(--s7)","var(--s8)"];
 const MAXP=PAL.length; const slot={};
-function assign(n){const used=new Set(Object.values(slot));for(let i=0;i<MAXP;i++){if(!used.has(i)){slot[n]=i;return true}}return false}
+function assign(n){const used=new Set(Object.values(slot));for(let i=0;;i++){if(!used.has(i)){slot[n]=i;return true}}}
+const hue=i=>{const k=i-MAXP;return `hsl(${Math.round((k*137.508+20)%360)} ${k%2?58:70}% ${k%3===0?42:k%3===1?52:62}%)`};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const man=n=>!n?"-":n>=1e8?(n/1e8).toFixed(1).replace(/\.0$/,"")+"억 원":Math.round(n/1e4).toLocaleString()+"만 원";
 let mode="comp", type="전체", kind="앱·플랫폼", showOne=false, q="", KM=null;
@@ -88,9 +90,9 @@ const KORD=["앱·플랫폼","인지재활 장비","대면·위탁 프로그램"
 const KINDS=[...KORD.filter(k=>COMP.some(v=>v.kind===k)),...[...new Set(COMP.map(v=>v.kind).filter(k=>k&&!KORD.includes(k)))],"전체"];
 let picked=COMP.filter(v=>v.kind==="앱·플랫폼").slice(0,8).map(v=>v.name), showOurs=!!OURS;
 picked.forEach(n=>assign(n));
-const many=()=>picked.length>MAXP;
-function fixSlots(){if(!many()) picked.forEach(n=>{if(slot[n]==null) assign(n)})}
-const color=n=>OURS&&n===OURS.name?"var(--s0)":many()?"var(--cov-2)":PAL[slot[n]??picked.indexOf(n)];
+const many=()=>false;
+function fixSlots(){picked.forEach(n=>{if(slot[n]==null) assign(n)})}
+const color=n=>OURS&&n===OURS.name?"var(--s0)":(i=>i<MAXP?PAL[i]:hue(i))(slot[n]??picked.indexOf(n));
 const MANYFILL=c=>c>=3?"var(--cov-3)":c===2?"var(--cov-2)":"var(--cov-1)";
 function flash(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(flash.t);flash.t=setTimeout(()=>t.classList.remove("on"),2600)}
 function shown(){return [...(showOurs&&OURS?[OURS.name]:[]),...picked]}
@@ -106,14 +108,16 @@ function filters(){
   const sub = mode==="comp"
     ? KINDS.map(t=>`<button class="f" data-k="${t}" aria-pressed="${t===kind}">${t}</button>`).join("")+(OURS?`<button class="f ours" id="ours" aria-pressed="${showOurs}">우리(원메딕스 맬리브레인) 같이 보기</button>`:"")
     : `<button class="f" id="one" aria-pressed="${showOne}">1곳만 들어간 곳도 보기</button>`+(OURS?`<button class="f ours" id="ours" aria-pressed="${showOurs}">우리(원메딕스 맬리브레인) 같이 보기</button>`:"");
-  const pool=list(); const allOn=pool.length&&pool.every(v=>picked.includes(v.name));
-  const bulk=`<button class="f" id="bulk" aria-pressed="${allOn}">${allOn?"전체 끄기":"전체 켜기"}</button>`;
+  const poolAll=()=>mode==="comp"?list():OTHER.filter(v=>(type==="전체"||v.type===type)&&(!q||v.name.includes(q))); const pool=poolAll(); const allOn=pool.length&&pool.every(v=>picked.includes(v.name));
+  const noneOn=!pool.some(v=>picked.includes(v.name));
+  const bulk=`<button class="f" id="selall" ${allOn?"disabled":""}>전체 선택</button><button class="f" id="selnone" ${noneOn?"disabled":""}>전체 해제</button>`;
   el.innerHTML=`<div class="frow tagrow">${main}</div><div class="frow">${bulk}${sub}<input class="q" id="q" placeholder="업체·서비스 이름 찾기" value="${esc(q)}"></div>`;
   el.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const t=b.dataset.t; const m=t==="인지훈련·치매예방"?"comp":"other";
     if(m===mode&&(m==="comp"||t===type)) return; mode=m; type=t; q="";
     if(m==="comp") kind="앱·플랫폼"; picked=(m==="comp"?COMP.filter(v=>v.kind==="앱·플랫폼"):OTHER.filter(v=>v.type===t)).map(v=>v.name); for(const k in slot) delete slot[k]; picked.forEach(n=>assign(n)); render()});
   el.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{kind=b.dataset.k;render()});
-  el.querySelector("#bulk").onclick=()=>{const names=list().map(v=>v.name); if(allOn){picked=picked.filter(n=>!names.includes(n)); names.forEach(n=>delete slot[n])} else {names.forEach(n=>{if(!picked.includes(n)){picked.push(n);assign(n)}})} render()};
+  el.querySelector("#selall").onclick=()=>{poolAll().forEach(v=>{if(!picked.includes(v.name)){picked.push(v.name);assign(v.name)}});render()};
+  el.querySelector("#selnone").onclick=()=>{const names=poolAll().map(v=>v.name);picked=picked.filter(n=>!names.includes(n));names.forEach(n=>delete slot[n]);render()};
   const o=el.querySelector("#one"); if(o) o.onclick=()=>{showOne=!showOne;render()};
   const u=el.querySelector("#ours"); if(u) u.onclick=()=>{showOurs=!showOurs;render()};
   const i=el.querySelector("#q"); i.oninput=()=>{q=i.value.trim();rank()};
