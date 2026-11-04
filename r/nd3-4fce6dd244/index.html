@@ -97,11 +97,19 @@ main.wrap { padding-block: 40px 64px; display: flex; flex-direction: column; gap
 .sorts button { min-height: 44px; cursor: pointer; border-radius: 10px; padding: 0 14px; font-size: 14px; font-weight: 500; border: 1px solid var(--line-2); background: var(--panel); color: var(--muted); }
 .sorts button[aria-pressed="true"] { border-color: var(--ink); color: var(--ink); }
 
-.table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
-table { width: 100%; min-width: 1080px; border-collapse: collapse; font-size: 14px; }
+.table-box { overflow: auto; max-height: 72vh; border: 1px solid var(--line); border-radius: 14px; scrollbar-width: thin; scrollbar-color: #B9C4BF transparent; -webkit-overflow-scrolling: touch; }
+.table-box::-webkit-scrollbar { width: 10px; height: 10px; }
+.table-box::-webkit-scrollbar-thumb { background: #B9C4BF; border-radius: 999px; border: 2px solid #FFFFFF; }
+.table-box::-webkit-scrollbar-track { background: var(--soft); }
+.scroll-hint { font-size: 12px; color: var(--muted); display: none; }
+table { width: 100%; min-width: 820px; border-collapse: collapse; font-size: 14px; }
+thead th { position: sticky; top: 0; z-index: 1; background: var(--soft); }
+.graph-col { width: 22%; min-width: 120px; }
+.dot-line.fluid { width: 100%; min-width: 100px; }
+.dot-pad { padding: 0 8px; }
 thead tr { background: var(--soft); color: var(--muted); font-size: 13px; text-align: left; }
 th { padding: 12px 14px; font-weight: 600; white-space: nowrap; }
-td { padding: 12px 14px; border-top: 1px solid var(--row-line); vertical-align: middle; }
+td { padding: 12px 14px; border-top: 1px solid var(--row-line); vertical-align: middle; white-space: nowrap; }
 td.r, th.r { text-align: right; }
 td .sub { font-size: 12px; color: var(--muted); white-space: nowrap; }
 .pill { display: inline-block; font-size: 13px; font-weight: 700; border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
@@ -224,18 +232,18 @@ footer { font-size: 12px; color: #6A746E; text-align: center; padding-top: 8px; 
       <div class="sorts" role="group" aria-label="정렬" id="sorts"></div>
     </div>
 
-    <div class="table-box">
+    <div class="scroll-hint" id="scroll-hint">표가 화면보다 넓어요. 표를 옆으로 밀면 나머지 열이 보여요.</div>
+    <div class="table-box" id="table-box">
       <table>
         <thead>
           <tr>
             <th scope="col" style="width:44px">No.</th>
-            <th scope="col">이름</th>
-            <th scope="col">휴대폰</th>
+            <th scope="col">이름 · 휴대폰</th>
             <th scope="col">성별 · 연령대</th>
             <th scope="col" class="r">참여일</th>
             <th scope="col">시작</th>
             <th scope="col">종료</th>
-            <th scope="col" style="width:180px">변화 그래프</th>
+            <th scope="col" class="graph-col">변화 그래프</th>
             <th scope="col" class="r">변화</th>
             <th scope="col">결과</th>
           </tr>
@@ -502,25 +510,27 @@ var GD = [
       var tr = el('tr');
       var st = ST[r.key];
       tr.appendChild(el('td', 'num', r.no)).style.color = '#56615B';
-      tr.appendChild(el('td', null, r.name)).style.fontWeight = '600';
-      tr.appendChild(el('td', 'num', '010-****-' + r.tail)).style.color = '#56615B';
+      var nm = el('td'); nm.appendChild(el('div', null, r.name)).style.fontWeight = '600'; nm.appendChild(el('div', 'sub num', '010-****-' + r.tail)); tr.appendChild(nm);
       var sa = el('td'); var sx = el('span', null, r.sex); if (r.sex === '미상') sx.style.color = SAME; sa.append(sx, document.createTextNode(' · ' + r.age)); tr.appendChild(sa);
       tr.appendChild(el('td', 'num r', r.days + '일'));
       var s = el('td'); s.appendChild(el('div', 'num', r.sv)).style.fontWeight = '600';
       var ss = el('div', 'sub'); ss.appendChild(document.createTextNode(r.sd + ' · ')); var sw = el('span', null, r.sSub); if (r.sWarn) sw.style.color = '#A4470F'; ss.appendChild(sw); s.appendChild(ss); tr.appendChild(s);
       var e = el('td'); e.appendChild(el('div', 'num', r.ev)).style.fontWeight = '700'; e.appendChild(el('div', 'sub', r.ed + ' · ' + r.eSub)); tr.appendChild(e);
-      var g = el('td'); var line = el('div', 'dot-line'); line.style.width = '150px'; line.setAttribute('role', 'img'); line.setAttribute('aria-label', '시작 ' + r.sv + '에서 종료 ' + r.ev);
+      var g = el('td'); var line = el('div', 'dot-line fluid'); line.setAttribute('role', 'img'); line.setAttribute('aria-label', '시작 ' + r.sv + '에서 종료 ' + r.ev);
       var lo = Math.min(r.sP, r.eP), hi = Math.max(r.sP, r.eP);
       var seg = el('div', 'seg'); seg.style.left = lo + '%'; seg.style.width = (hi - lo) + '%'; seg.style.background = r.color;
       var sd = el('div', 's'); sd.style.left = r.sP + '%';
       var ed = el('div', 'e'); ed.style.left = r.eP + '%'; ed.style.background = r.color;
-      line.append(el('div', 'base'), seg, sd, ed); g.appendChild(line); tr.appendChild(g);
+      line.append(el('div', 'base'), seg, sd, ed); var pad = el('div', 'dot-pad'); pad.appendChild(line); g.appendChild(pad); tr.appendChild(g);
       var dl = el('td', 'num r', signed(r.delta, '점')); dl.style.fontWeight = '700'; dl.style.color = st.fg; tr.appendChild(dl);
       var p = el('td'); var pill = el('span', 'pill', st.label); pill.style.background = st.bg; pill.style.color = st.fg; p.appendChild(pill); tr.appendChild(p);
       tb.appendChild(tr);
     });
     document.getElementById('empty').hidden = rows.length > 0;
+    hint();
   }
+  function hint() { var b = document.getElementById('table-box'); document.getElementById('scroll-hint').style.display = b.scrollWidth > b.clientWidth + 1 ? 'block' : 'none'; }
+  window.addEventListener('resize', hint);
   document.querySelectorAll('.tabs button').forEach(function (b) {
     b.addEventListener('click', function () { state.tab = b.dataset.tab; state.filter = 'all'; render(); });
   });
