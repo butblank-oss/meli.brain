@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>3기 인지·정서 검사 결과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #0F7A4F; --accent-ink: #0F6B45; --accent-soft: #E6F4EC;
+  --blue: #2F5BA8; --blue-soft: #E8EFFA;
+  --warn: #D9692E; --warn-ink: #A4470F; --warn-soft: #FDEDE3; --warn-box: #FFF6EC; --warn-line: #F3DDC4; --warn-text: #6B3A12;
+  --ink: #17201B; --muted: #56615B; --faint: #8A958F; --line: #E3E8E5; --line-2: #D5DCD8; --row-line: #EDF1EF;
+  --bg: #F4F7F5; --panel: #FFFFFF; --soft: #F7FAF8; --track: #EEF2F0; --same: #C5CEC9;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Noto Sans KR', system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; letter-spacing: -0.01em; word-break: keep-all; overflow-wrap: break-word; }
+a { color: var(--accent); }
+button { font-family: inherit; }
+button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+
+header.top { background: var(--panel); border-bottom: 1px solid var(--line); }
+header.top .wrap { padding-block: 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.logo { width: 32px; height: 32px; border-radius: 10px; background: var(--accent); display: flex; align-items: center; justify-content: center; flex: none; }
+.brand-name { font-size: 17px; font-weight: 700; }
+.brand-sub { font-size: 14px; color: var(--muted); padding-left: 10px; border-left: 1px solid var(--line-2); }
+.asof { font-size: 13px; color: var(--muted); }
+
+main.wrap { padding-block: 40px 64px; display: flex; flex-direction: column; gap: 28px; }
+.hero { display: flex; flex-direction: column; gap: 10px; }
+.eyebrow { font-size: 14px; font-weight: 600; color: var(--accent); }
+.hero h1 { margin: 0; font-size: 34px; line-height: 1.3; font-weight: 800; text-wrap: balance; }
+.hero p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 820px; }
+
+.cards { display: flex; flex-wrap: wrap; gap: 20px; }
+.card { flex: 1 1 480px; min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 28px; box-shadow: 0 1px 2px rgba(23,32,27,0.04); display: flex; flex-direction: column; gap: 22px; }
+.card-head { display: flex; flex-direction: column; gap: 4px; }
+.card-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tag { font-size: 13px; font-weight: 700; border-radius: 6px; padding: 3px 8px; }
+.tag.g { color: var(--accent); background: var(--accent-soft); }
+.tag.b { color: var(--blue); background: var(--blue-soft); }
+.card-title strong { font-size: 18px; font-weight: 700; }
+.card-title span.n { font-size: 14px; color: var(--muted); }
+.card-sub { font-size: 13px; color: var(--muted); }
+.means { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.mean { display: flex; flex-direction: column; gap: 2px; }
+.mean small { font-size: 13px; color: var(--muted); }
+.mean .from { font-size: 30px; font-weight: 600; color: var(--muted); }
+.mean .to { font-size: 44px; line-height: 1.1; font-weight: 800; }
+.mean .to span { font-size: 20px; font-weight: 600; }
+.arrow { margin-bottom: 8px; }
+.delta { margin-bottom: 8px; font-size: 16px; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft); border-radius: 999px; padding: 6px 12px; }
+.raw { font-size: 13px; color: var(--muted); }
+.stack { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.notice { display: flex; gap: 10px; align-items: flex-start; background: var(--warn-box); border: 1px solid var(--warn-line); border-radius: 12px; padding: 14px 16px; }
+.notice div { font-size: 13px; line-height: 1.6; color: var(--warn-text); }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 22px; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+.panel-head h2 { margin: 0; font-size: 22px; font-weight: 700; }
+.panel-head p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+.tabs { display: flex; gap: 4px; background: var(--track); border-radius: 12px; padding: 4px; flex-wrap: wrap; }
+.tabs button { min-height: 44px; border: 0; cursor: pointer; border-radius: 9px; padding: 0 18px; font-size: 15px; font-weight: 600; background: transparent; color: var(--muted); }
+.tabs button[aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 1px 3px rgba(23,32,27,0.12); }
+.duo { display: flex; flex-wrap: wrap; gap: 20px; }
+.soft { flex: 1 1 360px; min-width: 0; background: var(--soft); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.soft h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.age-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 72px; align-items: center; gap: 12px; font-size: 14px; }
+.age-row .n { color: var(--muted); }
+.track { height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.track i { display: block; height: 100%; border-radius: 999px; }
+.age-row b { text-align: right; }
+.small { font-size: 12px; color: var(--muted); }
+.howto { display: flex; align-items: center; gap: 14px; font-size: 14px; }
+.howto-note { font-size: 13px; line-height: 1.6; color: var(--muted); }
+
+.dot-line { position: relative; height: 18px; }
+.dot-line .base { position: absolute; left: 0; right: 0; top: 8px; height: 2px; background: var(--line); }
+.dot-line .seg { position: absolute; top: 7px; height: 4px; opacity: 0.35; border-radius: 2px; }
+.dot-line .s, .dot-line .e { position: absolute; top: 3px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; }
+.dot-line .s { background: #FFFFFF; border: 2px solid var(--faint); }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.chips, .sorts { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button { min-height: 44px; cursor: pointer; border-radius: 999px; padding: 0 16px; font-size: 14px; font-weight: 600; border: 1px solid var(--line-2); background: var(--panel); color: var(--ink); }
+.chips button[aria-pressed="true"] { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
+.sorts button { min-height: 44px; cursor: pointer; border-radius: 10px; padding: 0 14px; font-size: 14px; font-weight: 500; border: 1px solid var(--line-2); background: var(--panel); color: var(--muted); }
+.sorts button[aria-pressed="true"] { border-color: var(--ink); color: var(--ink); }
+
+.table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; min-width: 1080px; border-collapse: collapse; font-size: 14px; }
+thead tr { background: var(--soft); color: var(--muted); font-size: 13px; text-align: left; }
+th { padding: 12px 14px; font-weight: 600; white-space: nowrap; }
+td { padding: 12px 14px; border-top: 1px solid var(--row-line); vertical-align: middle; }
+td.r, th.r { text-align: right; }
+td .sub { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.pill { display: inline-block; font-size: 13px; font-weight: 700; border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+.empty { padding: 40px; text-align: center; color: var(--muted); font-size: 15px; }
+
+.notes { display: flex; flex-wrap: wrap; gap: 20px; }
+.note { flex: 1 1 360px; min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.note h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.note p { margin: 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
+.formula { font-size: 15px; background: var(--soft); border-radius: 10px; padding: 12px 14px; }
+footer { font-size: 12px; color: #6A746E; text-align: center; padding-top: 8px; }
+
+@media (max-width: 640px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  main.wrap { padding-block: 28px 48px; gap: 20px; }
+  .hero h1 { font-size: 26px; }
+  .card, .panel { padding: 20px; border-radius: 16px; }
+  .card { flex-basis: 100%; }
+  .mean .to { font-size: 36px; }
+  .brand-sub { border-left: 0; padding-left: 0; flex-basis: 100%; }
+  .soft { flex-basis: 100%; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5a3 3 0 0 0-5.8 1A3 3 0 0 0 4 11a3 3 0 0 0 1.5 5.2A3 3 0 0 0 12 18z"></path><path d="M12 5a3 3 0 0 1 5.8 1A3 3 0 0 1 20 11a3 3 0 0 1-1.5 5.2A3 3 0 0 1 12 18z"></path><path d="M12 5v13"></path></svg></div>
+      <div class="brand-name">맬리브레인</div>
+      <div class="brand-sub">남동구 치매안심센터 3기 결과 보고</div>
+    </div>
+    <div class="asof">기준일 2026.11.04 · 운영기간 2026.03.03 ~ 10.30</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">3기 사전·사후 검사</div>
+    <h1>기억력 자가평가와 마음 건강, 모두 좋아졌어요</h1>
+    <p>시작·종료 검사를 모두 받은 분만 비교했어요. 기억력 자가평가 <span id="h-sn">60</span>명, 마음 건강 <span id="h-gn">47</span>명이에요. 11월 2일 집계와 같은 대상입니다.</p>
+  </section>
+
+  <section class="cards">
+    <article class="card">
+      <div class="card-head">
+        <div class="card-title"><span class="tag g">SMCQ</span><strong>기억력 자가평가</strong><span class="n"><span id="s-n">60</span>명</span></div>
+        <div class="card-sub">Subjective Memory Complaints Questionnaire (주관적 기억감퇴 설문) · 100점 환산 · 높을수록 좋음</div>
+      </div>
+      <div class="means">
+        <div class="mean"><small>시작 평균</small><span class="from num" id="s-from">-</span></div>
+        <svg class="arrow" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A958F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+        <div class="mean"><small>종료 평균</small><span class="to num"><span id="s-to" style="font-size:inherit;font-weight:inherit">-</span><span>점</span></span></div>
+        <span class="delta num" id="s-delta">-</span>
+      </div>
+      <div class="raw">원점수(14문항 중 "예" 개수, 낮을수록 좋음) <span class="num" id="s-raw">-</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="stack" id="s-stack" role="img"></div>
+        <div class="legend" id="s-legend"></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="card-title"><span class="tag b">GDS-SF</span><strong>마음 건강(우울)</strong><span class="n"><span id="g-n">47</span>명</span></div>
+        <div class="card-sub">Geriatric Depression Scale Short Form (노인 우울 척도 단축형) · 0~15점 · 낮을수록 좋음</div>
+      </div>
+      <div class="means">
+        <div class="mean"><small>시작 평균</small><span class="from num" id="g-from">-</span></div>
+        <svg class="arrow" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A958F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+        <div class="mean"><small>종료 평균</small><span class="to num"><span id="g-to" style="font-size:inherit;font-weight:inherit">-</span><span>점</span></span></div>
+        <span class="delta num" id="g-delta">-</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="stack" id="g-stack" role="img"></div>
+        <div class="legend" id="g-legend"></div>
+      </div>
+      <div class="notice">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A4470F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16.5v.5"></path></svg>
+        <div>시작 점수 47건 중 <span id="g-appn">40</span>건(3~5월 검사)은 앱 저장값을 그대로 썼어요. 채점 오류가 섞여 있을 수 있어 개선 폭이 실제보다 크게 보일 수 있어요. 앱 저장값끼리만 비교하면 <b class="num">4.66 → 3.45점(−1.21)</b>, 개선 30 · 유지 11 · 악화 6명이에요.</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="panel" aria-labelledby="people-title">
+    <div class="panel-head">
+      <div>
+        <h2 id="people-title">개인별 결과</h2>
+        <p id="tab-desc"></p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="검사 선택">
+        <button type="button" role="tab" data-tab="smcq" aria-selected="true">SMCQ 기억력 · 60명</button>
+        <button type="button" role="tab" data-tab="gds" aria-selected="false">GDS-SF 마음 건강 · 47명</button>
+      </div>
+    </div>
+
+    <div class="duo">
+      <div class="soft">
+        <h3>연령대별 평균 개선 폭</h3>
+        <div id="ages" style="display:flex;flex-direction:column;gap:14px"></div>
+        <div class="small" id="age-note"></div>
+      </div>
+      <div class="soft" style="gap:12px">
+        <h3>그래프 읽는 법</h3>
+        <div class="howto">
+          <div class="dot-line" style="width:140px;flex:none" aria-hidden="true">
+            <div class="base"></div>
+            <div class="seg" style="left:20%;width:55%;background:var(--accent)"></div>
+            <div class="s" style="left:20%"></div>
+            <div class="e" style="left:75%;background:var(--accent)"></div>
+          </div>
+          <span>빈 점이 시작, 채운 점이 종료예요. <b>오른쪽일수록 좋은 상태</b>예요.</span>
+        </div>
+        <div class="howto-note" id="scale-note"></div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="결과 필터" id="chips"></div>
+      <div class="sorts" role="group" aria-label="정렬" id="sorts"></div>
+    </div>
+
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" style="width:44px">No.</th>
+            <th scope="col">이름</th>
+            <th scope="col">휴대폰</th>
+            <th scope="col">성별 · 연령대</th>
+            <th scope="col" class="r">참여일</th>
+            <th scope="col">시작</th>
+            <th scope="col">종료</th>
+            <th scope="col" style="width:180px">변화 그래프</th>
+            <th scope="col" class="r">변화</th>
+            <th scope="col">결과</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>조건에 맞는 분이 없어요.</div>
+    </div>
+  </section>
+
+  <section class="notes">
+    <div class="note">
+      <h3>해석할 때 주의할 점</h3>
+      <p>대조군 없이 같은 분의 시작과 종료를 비교했어요. 두 번 모두 검사한 분(전체 932명 중 6%)은 꾸준히 참여한 분이 많아서, 전체 참여자의 변화로 넓혀 보기는 어려워요.</p>
+    </div>
+    <div class="note">
+      <h3>SMCQ 100점 환산식</h3>
+      <div class="formula num">환산 점수 = round((13 − 원점수) ÷ 13 × 100)</div>
+      <p>원점수는 14문항 중 "예"라고 답한 개수(0~14개)예요. 리포트와 같은 식이고 높을수록 좋아요.</p>
+    </div>
+    <div class="note">
+      <h3>GDS-SF 점수 기준</h3>
+      <p>종료 점수는 앱 채점 오류를 바로잡아 다시 계산한 값이라 앱·종료 리포트 화면의 마음 점수와 다를 수 있어요. 시작 점수 중 "앱 저장값" 표시가 있는 40건은 다시 계산할 수 없었어요. 보건소에 3월 시작 검사 종이 설문지가 있으면 그 값으로 확정할 수 있어요.</p>
+    </div>
+    <div class="note">
+      <h3>개인정보와 비어 있는 정보</h3>
+      <p>이름은 가운데 글자를, 휴대폰은 가운데 번호를 가렸어요. 이 주소는 담당자 확인용이니 다른 곳에 옮기지 말아 주세요. 성별 미상 11명, 연령대 미상 1명은 회원 정보와 신청서에 값이 없어 그대로 두었어요.</p>
+    </div>
+  </section>
+
+  <footer>원메딕스 맬리브레인 · 남동구 치매안심센터 3기 운영 결과 · 자료 기준 2026.11.04</footer>
+</main>
+
+<script>
+// [번호, 이름(가림), 휴대폰 뒤 4자리, 성별, 연령대, 참여일, 시작일, 시작 원점수, 종료일, 종료 원점수]
+var SM = [
+[1, "강*숙", "6189", "여", "70대", 227, "06-18", 4, "08-09", 1],
+[2, "고*식", "0553", "남", "60대", 241, "03-03", 0, "10-30", 0],
+[3, "고*옥", "6130", "여", "70대", 184, "05-02", 2, "09-04", 0],
+[4, "고*자", "3518", "여", "70대", 92, "07-31", 9, "08-10", 4],
+[5, "곽*옥", "9442", "남", "80대 이상", 242, "03-03", 0, "10-30", 0],
+[6, "곽*자", "3947", "여", "80대 이상", 229, "03-27", 8, "08-13", 5],
+[7, "구*일", "7426", "여", "70대", 242, "03-03", 3, "10-30", 1],
+[8, "구*회", "7840", "여", "70대", 232, "07-09", 3, "10-30", 1],
+[9, "권*희", "3409", "여", "60대", 93, "07-30", 1, "08-07", 1],
+[10, "권*화", "3516", "여", "70대", 242, "07-10", 7, "10-30", 2],
+[11, "금*순", "3889", "여", "70대", 240, "07-17", 1, "09-20", 0],
+[12, "김*환", "6068", "남", "70대", 242, "03-03", 9, "10-30", 4],
+[13, "김*희", "2518", "여", "70대", 230, "05-05", 3, "10-30", 1],
+[14, "김*순", "9335", "미상", "50대 이하", 242, "03-07", 5, "09-07", 0],
+[15, "김*국", "0771", "미상", "70대", 242, "03-03", 2, "10-30", 1],
+[16, "김*현", "1805", "여", "70대", 139, "06-30", 5, "08-13", 3],
+[17, "김*태", "2577", "여", "60대", 242, "03-03", 0, "10-30", 0],
+[18, "김*수", "5625", "남", "70대", 242, "05-06", 8, "10-30", 3],
+[19, "김*희", "2415", "여", "80대 이상", 236, "07-08", 6, "10-30", 3],
+[20, "박*미", "2132", "여", "60대", 236, "04-10", 10, "10-30", 6],
+[21, "박*자", "7375", "미상", "70대", 242, "03-03", 2, "10-30", 0],
+[22, "박*준", "6607", "남", "70대", 242, "03-03", 0, "10-30", 0],
+[23, "박*석", "2263", "남", "80대 이상", 115, "07-31", 2, "10-30", 1],
+[24, "박*심", "0677", "여", "60대", 241, "03-03", 3, "10-30", 1],
+[25, "백*애", "5061", "여", "70대", 241, "03-03", 0, "10-30", 1],
+[26, "신*금", "3745", "여", "80대 이상", 107, "05-17", 4, "09-01", 2],
+[27, "심*례", "5763", "미상", "80대 이상", 242, "04-14", 13, "10-01", 11],
+[28, "양*분", "6627", "여", "70대", 242, "04-14", 6, "10-30", 3],
+[29, "오*숙", "1301", "여", "60대", 242, "03-03", 0, "10-30", 0],
+[30, "오*종", "0305", "미상", "70대", 240, "03-03", 2, "08-26", 1],
+[31, "오*순", "3105", "여", "60대", 164, "05-26", 5, "08-17", 0],
+[32, "왕*자", "3187", "미상", "70대", 239, "03-03", 4, "10-30", 4],
+[33, "유*의", "9985", "여", "70대", 224, "05-29", 1, "10-22", 1],
+[34, "유*순", "3331", "여", "70대", 191, "05-20", 9, "10-11", 3],
+[35, "유*연", "5531", "여", "60대", 234, "03-17", 3, "10-30", 0],
+[36, "윤*지", "4527", "여", "70대", 237, "03-03", 3, "10-30", 1],
+[37, "윤*옥", "6068", "여", "60대", 242, "03-03", 1, "10-30", 0],
+[38, "이*욱", "7213", "미상", "미상", 242, "03-03", 0, "10-30", 0],
+[39, "이*자", "1395", "여", "70대", 241, "03-14", 3, "10-30", 2],
+[40, "이*숙", "2342", "여", "60대", 241, "05-05", 4, "10-30", 7],
+[41, "이*수", "6723", "여", "60대", 102, "07-21", 9, "09-18", 8],
+[42, "이*분", "2794", "여", "70대", 194, "04-21", 3, "10-30", 1],
+[43, "이*자", "4607", "여", "70대", 242, "03-03", 1, "10-30", 3],
+[44, "이*선", "7213", "미상", "50대 이하", 242, "03-03", 0, "10-30", 0],
+[45, "이*주", "5354", "여", "70대", 241, "03-03", 0, "10-30", 0],
+[46, "이*수", "6745", "미상", "80대 이상", 242, "05-23", 3, "10-30", 5],
+[47, "이*순", "1066", "여", "70대", 242, "03-03", 1, "10-30", 1],
+[48, "이*자", "2737", "미상", "50대 이하", 242, "03-06", 1, "10-30", 0],
+[49, "임*순", "6334", "여", "80대 이상", 241, "03-03", 3, "10-30", 1],
+[50, "장*순", "2094", "여", "70대", 234, "03-03", 0, "10-30", 0],
+[51, "장*자", "0174", "여", "70대", 108, "07-29", 3, "08-13", 3],
+[52, "전*순", "1225", "여", "60대", 144, "06-10", 4, "08-12", 1],
+[53, "정*임", "8073", "여", "70대", 242, "04-03", 1, "10-30", 1],
+[54, "정*란", "0110", "여", "60대", 239, "03-20", 0, "10-30", 1],
+[55, "정*순", "2593", "여", "70대", 242, "07-05", 2, "10-17", 6],
+[56, "최*애", "7707", "여", "70대", 10, "07-31", 5, "08-02", 5],
+[57, "최*숙", "0006", "미상", "50대 이하", 242, "03-03", 1, "10-30", 2],
+[58, "한*섭", "5515", "여", "80대 이상", 242, "06-15", 7, "10-29", 4],
+[59, "한*숙", "4373", "여", "60대", 241, "03-03", 5, "10-30", 4],
+[60, "황*주", "0318", "여", "70대", 242, "03-03", 6, "10-30", 1]
+];
+// [번호, 이름(가림), 휴대폰 뒤 4자리, 성별, 연령대, 참여일, 시작일, 시작 점수, 시작 재계산 여부(1/0), 종료일, 종료 점수]
+var GD = [
+[1, "고*식", "0553", "남", "60대", 241, "03-03", 3, 0, "10-30", 1],
+[2, "고*옥", "6130", "여", "70대", 184, "05-02", 3, 0, "09-04", 1],
+[3, "고*자", "3518", "여", "70대", 92, "07-30", 3, 1, "10-28", 0],
+[4, "곽*옥", "9442", "남", "80대 이상", 242, "03-03", 3, 0, "10-30", 5],
+[5, "구*일", "7426", "여", "70대", 242, "03-03", 2, 0, "10-30", 0],
+[6, "구*회", "7840", "여", "70대", 232, "05-02", 7, 0, "10-30", 0],
+[7, "권*희", "3409", "여", "60대", 93, "07-30", 1, 1, "08-04", 0],
+[8, "김*환", "6068", "남", "70대", 242, "03-03", 5, 0, "10-30", 3],
+[9, "김*희", "2518", "여", "70대", 230, "05-05", 6, 0, "10-30", 1],
+[10, "김*순", "9335", "미상", "50대 이하", 242, "03-04", 5, 0, "10-29", 0],
+[11, "김*국", "0771", "미상", "70대", 242, "03-03", 4, 0, "10-30", 1],
+[12, "김*현", "1805", "여", "70대", 139, "06-30", 6, 1, "08-13", 6],
+[13, "김*태", "2577", "여", "60대", 242, "03-04", 3, 0, "10-30", 0],
+[14, "김*수", "5625", "남", "70대", 242, "03-05", 8, 0, "10-30", 11],
+[15, "김*희", "2415", "여", "80대 이상", 236, "04-10", 3, 0, "10-30", 0],
+[16, "박*자", "7375", "미상", "70대", 242, "03-03", 4, 0, "10-30", 0],
+[17, "박*준", "6607", "남", "70대", 242, "03-19", 5, 0, "10-30", 1],
+[18, "박*석", "2263", "남", "80대 이상", 115, "07-31", 2, 1, "10-30", 1],
+[19, "박*심", "0677", "여", "60대", 241, "03-03", 3, 0, "10-30", 0],
+[20, "백*애", "5061", "여", "70대", 241, "03-03", 4, 0, "10-30", 1],
+[21, "심*례", "5763", "미상", "80대 이상", 242, "03-24", 5, 0, "10-26", 1],
+[22, "양*분", "6627", "여", "70대", 242, "03-05", 6, 0, "10-30", 4],
+[23, "오*숙", "1301", "여", "60대", 242, "03-03", 6, 0, "10-30", 0],
+[24, "오*종", "0305", "미상", "70대", 240, "03-03", 8, 0, "10-30", 11],
+[25, "오*순", "3105", "여", "60대", 164, "05-28", 3, 1, "08-17", 0],
+[26, "왕*자", "3187", "미상", "70대", 239, "03-03", 4, 0, "10-30", 2],
+[27, "윤*지", "4527", "여", "70대", 237, "03-03", 3, 0, "10-30", 6],
+[28, "윤*옥", "6068", "여", "60대", 242, "03-03", 6, 0, "10-30", 2],
+[29, "이*욱", "7213", "미상", "미상", 242, "03-03", 2, 0, "10-30", 0],
+[30, "이*자", "1395", "여", "70대", 241, "03-03", 3, 0, "10-30", 0],
+[31, "이*숙", "2342", "여", "60대", 241, "03-26", 9, 0, "10-30", 2],
+[32, "이*분", "2794", "여", "70대", 194, "04-21", 4, 0, "10-30", 2],
+[33, "이*자", "4607", "여", "70대", 242, "03-03", 3, 0, "10-30", 0],
+[34, "이*선", "7213", "미상", "50대 이하", 242, "03-03", 3, 0, "10-30", 0],
+[35, "이*주", "5354", "여", "70대", 241, "03-03", 2, 0, "10-30", 0],
+[36, "이*수", "6745", "미상", "80대 이상", 242, "03-03", 6, 0, "10-30", 5],
+[37, "이*순", "1066", "여", "70대", 242, "03-03", 2, 0, "10-30", 0],
+[38, "이*자", "2737", "미상", "50대 이하", 242, "03-03", 7, 0, "10-30", 4],
+[39, "임*순", "6334", "여", "80대 이상", 241, "03-03", 3, 0, "10-30", 0],
+[40, "장*순", "2094", "여", "70대", 234, "03-03", 6, 0, "10-30", 2],
+[41, "장*자", "0174", "여", "70대", 108, "07-29", 1, 1, "08-13", 2],
+[42, "전*순", "1225", "여", "60대", 144, "06-10", 8, 1, "10-30", 3],
+[43, "정*임", "8073", "여", "70대", 242, "03-07", 5, 0, "10-30", 0],
+[44, "최*숙", "0006", "미상", "50대 이하", 242, "03-03", 4, 0, "10-30", 0],
+[45, "한*섭", "5515", "여", "80대 이상", 242, "03-15", 6, 0, "09-06", 2],
+[46, "한*숙", "4373", "여", "60대", 241, "03-03", 3, 0, "10-30", 1],
+[47, "황*주", "0318", "여", "70대", 242, "03-03", 8, 0, "10-30", 6]
+];
+
+(function () {
+  var ACC = '#0F7A4F', WARN = '#D9692E', SAME = '#8A958F';
+  var ST = {
+    up: { label: '개선', bg: '#E6F4EC', fg: '#0F6B45' },
+    same: { label: '유지', bg: '#EEF2F0', fg: '#4A5550' },
+    down: { label: '악화', bg: '#FDEDE3', fg: '#A4470F' }
+  };
+  var AGES = ['50대 이하', '60대', '70대', '80대 이상'];
+  function c100(r) { return Math.round((13 - r) / 13 * 100); }
+  function md(s) { var p = s.split('-'); return Number(p[0]) + '.' + Number(p[1]); }
+  function signed(v, unit, dec) {
+    var a = dec ? Math.abs(v).toFixed(dec) : Math.abs(v);
+    return (v > 0 ? '+' : v < 0 ? '−' : '') + a + unit;
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function avg(a) { var s = 0; a.forEach(function (x) { s += x; }); return a.length ? s / a.length : 0; }
+
+  var data = {
+    smcq: SM.map(function (x) {
+      var a = c100(x[7]), b = c100(x[9]);
+      return { no: x[0], name: x[1], tail: x[2], sex: x[3], age: x[4], days: x[5], sd: md(x[6]), ed: md(x[8]),
+        s: a, e: b, sv: a + '점', ev: b + '점', sSub: '예 ' + x[7] + '개', eSub: '예 ' + x[9] + '개', sWarn: false,
+        sRaw: x[7], eRaw: x[9], gain: b - a, delta: b - a, sP: a, eP: b };
+    }),
+    gds: GD.map(function (x) {
+      var d = x[10] - x[7];
+      return { no: x[0], name: x[1], tail: x[2], sex: x[3], age: x[4], days: x[5], sd: md(x[6]), ed: md(x[9]),
+        s: x[7], e: x[10], sv: x[7] + '점', ev: x[10] + '점', sSub: x[8] ? '재계산' : '앱 저장값', eSub: '재계산', sWarn: !x[8],
+        gain: -d, delta: d, sP: (15 - x[7]) / 15 * 100, eP: (15 - x[10]) / 15 * 100 };
+    })
+  };
+  Object.keys(data).forEach(function (k) {
+    data[k].forEach(function (r) { r.key = r.gain > 0 ? 'up' : r.gain < 0 ? 'down' : 'same'; r.color = r.key === 'up' ? ACC : r.key === 'down' ? WARN : SAME; });
+  });
+
+  // 요약 카드
+  function summary(prefix, rows, dec, unit, rawFn) {
+    var n = rows.length, s = avg(rows.map(function (r) { return r.s; })), e = avg(rows.map(function (r) { return r.e; }));
+    var c = { up: 0, same: 0, down: 0 }; rows.forEach(function (r) { c[r.key]++; });
+    document.getElementById(prefix + '-n').textContent = n;
+    document.getElementById(prefix + '-from').textContent = s.toFixed(dec);
+    document.getElementById(prefix + '-to').textContent = e.toFixed(dec);
+    document.getElementById(prefix + '-delta').textContent = signed(e - s, '점', dec);
+    var stack = document.getElementById(prefix + '-stack'), leg = document.getElementById(prefix + '-legend');
+    stack.setAttribute('aria-label', '개선 ' + c.up + '명, 유지 ' + c.same + '명, 악화 ' + c.down + '명');
+    [['up', ACC, '개선'], ['same', '#C5CEC9', '유지'], ['down', WARN, '악화']].forEach(function (k) {
+      var bar = el('div'); bar.style.width = (c[k[0]] / n * 100) + '%'; bar.style.background = k[1]; stack.appendChild(bar);
+      var item = el('span'); var sw = el('span', 'sw'); sw.style.background = k[1];
+      item.appendChild(sw); item.appendChild(document.createTextNode(k[2] + ' ')); item.appendChild(el('b', 'num', c[k[0]] + '명')); leg.appendChild(item);
+    });
+    if (rawFn) rawFn(rows);
+    return n;
+  }
+  var sn = summary('s', data.smcq, 1, '점', function (rows) {
+    document.getElementById('s-raw').textContent = avg(rows.map(function (r) { return r.sRaw; })).toFixed(2) + '개 → ' + avg(rows.map(function (r) { return r.eRaw; })).toFixed(2) + '개';
+  });
+  var gn = summary('g', data.gds, 2, '점');
+  document.getElementById('h-sn').textContent = sn;
+  document.getElementById('h-gn').textContent = gn;
+  document.getElementById('g-appn').textContent = data.gds.filter(function (r) { return r.sWarn; }).length;
+
+  // 개인별
+  var state = { tab: 'smcq', filter: 'all', sort: 'no' };
+  var TEXT = {
+    smcq: { desc: 'SMCQ 100점 환산 점수 기준이에요. 높을수록 기억력 걱정이 적어요.',
+      scale: 'SMCQ: 0점(왼쪽) ~ 100점(오른쪽). 점수가 오를수록 오른쪽으로 이동해요.',
+      age: '개선 폭 = 종료 환산 점수 − 시작 환산 점수. 연령대 미상 1명은 제외했어요.' },
+    gds: { desc: 'GDS-SF 0~15점 기준이에요. 낮을수록 마음이 건강해요. 주황색 "앱 저장값"은 다시 계산하지 못한 시작 점수예요.',
+      scale: 'GDS-SF: 15점(왼쪽) ~ 0점(오른쪽). 점수가 내려갈수록 오른쪽으로 이동해요.',
+      age: '개선 폭 = 시작 점수 − 종료 점수. 시작 점수에 앱 저장값이 섞여 있어 참고용이에요. 연령대 미상 1명은 제외했어요.' }
+  };
+
+  function render() {
+    var all = data[state.tab], t = TEXT[state.tab];
+    document.querySelectorAll('.tabs button').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.tab === state.tab)); });
+    document.getElementById('tab-desc').textContent = t.desc;
+    document.getElementById('scale-note').textContent = t.scale;
+    document.getElementById('age-note').textContent = t.age;
+
+    // 연령대
+    var groups = AGES.map(function (g) {
+      var list = all.filter(function (r) { return r.age === g; });
+      return { label: g, n: list.length, avg: avg(list.map(function (r) { return r.gain; })) };
+    });
+    var maxAbs = Math.max.apply(null, groups.map(function (g) { return Math.abs(g.avg); })) || 1;
+    var ages = document.getElementById('ages'); ages.replaceChildren();
+    groups.forEach(function (g) {
+      var row = el('div', 'age-row');
+      var lab = el('span'); lab.appendChild(document.createTextNode(g.label + ' ')); lab.appendChild(el('span', 'n', g.n + '명'));
+      var track = el('div', 'track'), fill = el('i'); fill.style.width = (Math.abs(g.avg) / maxAbs * 100) + '%'; fill.style.background = g.avg >= 0 ? ACC : WARN; track.appendChild(fill);
+      var val = el('b', 'num', signed(Math.round(g.avg * 10) / 10, '점', 1)); val.style.color = g.avg >= 0 ? '#0F6B45' : '#A4470F';
+      row.append(lab, track, val); ages.appendChild(row);
+    });
+
+    // 필터·정렬
+    var counts = { all: all.length, up: 0, same: 0, down: 0 }; all.forEach(function (r) { counts[r.key]++; });
+    var chips = document.getElementById('chips'); chips.replaceChildren();
+    [['all', '전체'], ['up', '개선'], ['same', '유지'], ['down', '악화']].forEach(function (f) {
+      var b = el('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(state.filter === f[0]));
+      b.appendChild(document.createTextNode(f[1] + ' ')); b.appendChild(el('span', 'num', counts[f[0]]));
+      b.addEventListener('click', function () { state.filter = f[0]; render(); }); chips.appendChild(b);
+    });
+    var sorts = document.getElementById('sorts'); sorts.replaceChildren();
+    [['no', '이름순'], ['gain', '많이 좋아진 순'], ['loss', '나빠진 순']].forEach(function (s) {
+      var b = el('button', null, s[1]); b.type = 'button'; b.setAttribute('aria-pressed', String(state.sort === s[0]));
+      b.addEventListener('click', function () { state.sort = s[0]; render(); }); sorts.appendChild(b);
+    });
+
+    var rows = all.filter(function (r) { return state.filter === 'all' || r.key === state.filter; }).slice();
+    if (state.sort === 'gain') rows.sort(function (a, b) { return b.gain - a.gain || a.no - b.no; });
+    if (state.sort === 'loss') rows.sort(function (a, b) { return a.gain - b.gain || a.no - b.no; });
+    if (state.sort === 'no') rows.sort(function (a, b) { return a.no - b.no; });
+
+    var tb = document.getElementById('rows'); tb.replaceChildren();
+    rows.forEach(function (r) {
+      var tr = el('tr');
+      var st = ST[r.key];
+      tr.appendChild(el('td', 'num', r.no)).style.color = '#56615B';
+      tr.appendChild(el('td', null, r.name)).style.fontWeight = '600';
+      tr.appendChild(el('td', 'num', '010-****-' + r.tail)).style.color = '#56615B';
+      var sa = el('td'); var sx = el('span', null, r.sex); if (r.sex === '미상') sx.style.color = SAME; sa.append(sx, document.createTextNode(' · ' + r.age)); tr.appendChild(sa);
+      tr.appendChild(el('td', 'num r', r.days + '일'));
+      var s = el('td'); s.appendChild(el('div', 'num', r.sv)).style.fontWeight = '600';
+      var ss = el('div', 'sub'); ss.appendChild(document.createTextNode(r.sd + ' · ')); var sw = el('span', null, r.sSub); if (r.sWarn) sw.style.color = '#A4470F'; ss.appendChild(sw); s.appendChild(ss); tr.appendChild(s);
+      var e = el('td'); e.appendChild(el('div', 'num', r.ev)).style.fontWeight = '700'; e.appendChild(el('div', 'sub', r.ed + ' · ' + r.eSub)); tr.appendChild(e);
+      var g = el('td'); var line = el('div', 'dot-line'); line.style.width = '150px'; line.setAttribute('role', 'img'); line.setAttribute('aria-label', '시작 ' + r.sv + '에서 종료 ' + r.ev);
+      var lo = Math.min(r.sP, r.eP), hi = Math.max(r.sP, r.eP);
+      var seg = el('div', 'seg'); seg.style.left = lo + '%'; seg.style.width = (hi - lo) + '%'; seg.style.background = r.color;
+      var sd = el('div', 's'); sd.style.left = r.sP + '%';
+      var ed = el('div', 'e'); ed.style.left = r.eP + '%'; ed.style.background = r.color;
+      line.append(el('div', 'base'), seg, sd, ed); g.appendChild(line); tr.appendChild(g);
+      var dl = el('td', 'num r', signed(r.delta, '점')); dl.style.fontWeight = '700'; dl.style.color = st.fg; tr.appendChild(dl);
+      var p = el('td'); var pill = el('span', 'pill', st.label); pill.style.background = st.bg; pill.style.color = st.fg; p.appendChild(pill); tr.appendChild(p);
+      tb.appendChild(tr);
+    });
+    document.getElementById('empty').hidden = rows.length > 0;
+  }
+  document.querySelectorAll('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () { state.tab = b.dataset.tab; state.filter = 'all'; render(); });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
