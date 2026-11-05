@@ -31,7 +31,8 @@ const fmt = (d: string) =>
 
 const Q = new URLSearchParams(location.search)
 const BARE = Q.has('bare')
-const LOOK = Q.get('look') === 'b' ? 'b' : 'a'   // a 정리안 · b 다시 설계안
+const LOOK = ['a','b','c','d','e'].includes(Q.get('look') || '') ? Q.get('look')! : 'a'
+// a 정리안 · b 카드형 · c 종이 안내문 · d 큰 색면 · e 초록 안심
 
 export default function App() {
   const [tel, setTel] = useState('')
