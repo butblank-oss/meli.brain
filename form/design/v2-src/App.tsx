@@ -43,12 +43,13 @@ export default function App() {
   const [sheet, setSheet] = useState(false)
   const [toast, setToast] = useState('')
   const [tried, setTried] = useState(false)
+  const [age, setAge] = useState<'' | 'yes' | 'no'>('')
   const timer = useRef<number>()
 
   // 번호가 다 적히면 조회한다. 번호가 바뀌면 조회 결과와 잠금은 처음으로 돌아간다 (불변식 1)
   useEffect(() => {
     window.clearTimeout(timer.current)
-    if (tel.length < 11) { setStatus('idle'); setName(''); setDong(''); setAgree({ a: false, b: false, c: false }); return }
+    if (tel.length < 11) { setStatus('idle'); setName(''); setDong(''); setAge(''); setAgree({ a: false, b: false, c: false }); return }
     setStatus('checking')
     timer.current = window.setTimeout(() => setStatus(tel === '01012345678' ? 'exists' : 'new'), 700)
     return () => window.clearTimeout(timer.current)
@@ -66,15 +67,17 @@ export default function App() {
     tel.length < 11 && '휴대전화 번호',
     !name.trim() && '이름',
     !dong && '사시는 곳',
+    age !== 'yes' && '나이 확인',
     !all && '동의',
   ].filter(Boolean) as string[]
 
   const submit = () => {
     setTried(true)
     if (status === 'exists') return setToast('이미 신청하신 번호예요. 다른 번호로 해보세요.')
+    if (age === 'no') return setToast('만 60세 이상이신 분만 신청할 수 있어요.')
     if (!left.length) return setToast('여기까지 확인했습니다. 접수 완료 화면은 다음 단계에서 붙입니다.')
     // 빠진 칸이 있으면 알리고 끝내지 않고, 첫 번째 빠진 칸으로 데려간다
-    const first = tel.length < 11 ? 'e-tel' : !name.trim() ? 'e-name' : !dong ? 'e-dong' : 'e-agree'
+    const first = tel.length < 11 ? 'e-tel' : !name.trim() ? 'e-name' : !dong ? 'e-dong' : age !== 'yes' ? 'e-age' : 'e-agree'
     window.setTimeout(() => {
       document.getElementById(first)?.scrollIntoView({ block: 'center', behavior: 'smooth' })
     }, 60)
@@ -125,6 +128,10 @@ export default function App() {
                 <Collapse open={status === 'new'}>
                   <div className="note ok"><Box on /> 처음 오셨네요. 아래 항목만 적어주시면 됩니다.</div>
                 </Collapse>
+                <p className="safe">적어주신 번호는 <b>보건소 확인과 안내 문자</b>에만 씁니다. 다른 곳에 알리지 않습니다.</p>
+                <button className="ask" onClick={() => setToast('번호를 모르시면 보건소 032-453-6160 으로 전화 주세요. 직원이 도와드립니다.')}>
+                  번호를 잘 모르시겠어요?
+                </button>
                 <Err show={tried && tel.length < 11} id="e-tel">번호를 11자리 다 적어주세요</Err>
                 <Collapse open={status === 'exists'}>
                   <div className="note warn">이미 이 번호로 신청하셨어요. 보건소 <b>032-453-6160</b> 으로 물어보시면 됩니다.</div>
@@ -155,6 +162,32 @@ export default function App() {
                   <div className="lock">번호를 먼저 적어주세요</div>
                 )}
                 <Err show={tried && open && !dong} id="e-dong">사시는 동을 골라주세요</Err>
+              </section>
+
+              <section>
+                <div className="lb">나이 확인 <i className="need">꼭 골라주세요</i></div>
+                <div className="help">이 교실은 <b>만 60세 이상</b> 어르신을 위한 수업이에요.</div>
+                {open ? (
+                  <>
+                    <div className="pickrow">
+                      <button className={`opt${age === 'yes' ? ' on' : ''}`} onClick={() => setAge('yes')}>
+                        <Box on={age === 'yes'} /> 만 60세 이상이에요
+                      </button>
+                      <button className={`opt${age === 'no' ? ' on' : ''}`} onClick={() => setAge('no')}>
+                        <Box on={age === 'no'} /> 아직 60세가 안 됐어요
+                      </button>
+                    </div>
+                    <Collapse open={age === 'no'}>
+                      <div className="note warn">
+                        이 교실은 만 60세 이상이신 분만 신청할 수 있어요.<br />
+                        보건소 <b>032-453-6160</b> 으로 물어보시면 다른 교실을 알려드립니다.
+                      </div>
+                    </Collapse>
+                  </>
+                ) : (
+                  <div className="lock">번호를 먼저 적어주세요</div>
+                )}
+                <Err show={tried && open && age !== 'yes'} id="e-age">나이를 골라주세요</Err>
               </section>
 
               <section>
