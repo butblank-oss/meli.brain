@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>신청폼 비교 — 기존 v1.0 vs 새 판 v2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--key:#1F3C5D;--ink:#1A1F26;--ink2:#59636D;--ink3:#8B95A1;--line:#E4E1DA;--bg:#F4F3F0;
+  --warn:#6A4A11;--warn-bg:#FAF2E3;--warn-line:#E6D3AE}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased}
+body,button,a{word-break:keep-all;overflow-wrap:break-word}
+header{background:linear-gradient(140deg,#1F3C5D,#132840);color:#fff;padding:40px 24px 34px}
+header .in{max-width:1080px;margin:0 auto}
+header .chip{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:700}
+header h1{font-size:30px;font-weight:800;letter-spacing:-.045em;margin:14px 0 10px}
+header p{font-size:15.5px;color:rgba(255,255,255,.84);max-width:640px}
+main{max-width:1080px;margin:0 auto;padding:30px 24px 90px}
+
+.bar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
+.bar button{border:1px solid var(--line);background:#fff;border-radius:11px;padding:11px 16px;
+  font-size:14.5px;font-weight:700;color:var(--ink2);cursor:pointer;font-family:inherit}
+.bar button[aria-pressed="true"]{background:var(--key);border-color:var(--key);color:#fff}
+
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.pair.solo{grid-template-columns:minmax(0,520px);justify-content:center}
+.pair.solo .side[hidden]{display:none}
+.side{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.side h2{font-size:16.5px;font-weight:800;letter-spacing:-.03em;padding:15px 18px 4px}
+.side .meta{font-size:13.5px;color:var(--ink2);padding:0 18px 13px;border-bottom:1px solid var(--line)}
+.side .meta b{color:var(--key)}
+.frame{position:relative;background:#EFEDE7}
+iframe{display:block;width:100%;height:880px;border:0;background:#fff}
+.oops{display:none;padding:16px 18px;font-size:14px;line-height:1.7;color:var(--warn);background:var(--warn-bg);
+  border-top:1px solid var(--warn-line)}
+.oops.on{display:block}
+
+h3{font-size:15px;font-weight:800;letter-spacing:.02em;color:var(--ink3);text-transform:uppercase;margin:46px 0 14px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{text-align:left;padding:13px 15px;font-size:14.5px;line-height:1.65;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#F7F6F3;font-weight:800;font-size:13.5px;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+td b{color:var(--key)}
+td .keep{color:#1C6B4B;font-weight:800}
+td .new{color:#9E241D;font-weight:800}
+.note{background:var(--warn-bg);border:1px solid var(--warn-line);border-left:4px solid #A9701A;
+  border-radius:12px;padding:15px 17px;font-size:14.5px;line-height:1.75;color:var(--warn);margin-top:18px}
+@media(max-width:900px){ .pair{grid-template-columns:1fr} iframe{height:760px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <span class="chip">인천 남동구 보건소 · 치매예방교실 4기</span>
+    <h1>신청폼 — 기존 판과 새 판 비교</h1>
+    <p>왼쪽은 2026-09-21 기획자에게 전달한 <b>v1.0 박제본</b>, 오른쪽은 stageshow 키트로 다시 만든 <b>v2 작업본</b>입니다.
+       둘 다 실제 파일이고, 양쪽 모두 눌러집니다.</p>
+  </div>
+</header>
+
+<main>
+  <div class="bar">
+    <button id="b-both" aria-pressed="true">나란히 보기</button>
+    <button id="b-old" aria-pressed="false">기존만</button>
+    <button id="b-new" aria-pressed="false">새 판만</button>
+  </div>
+
+  <div class="pair" id="pair">
+    <section class="side" id="s-old">
+      <h2>기존 · v1.0 박제본</h2>
+      <div class="meta">2026-09-21 기획자 전달본 · 검수 패널은 <b>비교를 위해 가렸습니다</b></div>
+      <div class="frame"><iframe id="f-old" src="v1.0.html" title="기존 v1.0"></iframe></div>
+      <div class="oops" id="oops-old">
+        기존 판의 검수 패널을 가리지 못했습니다. 이 페이지를 <b>파일로 직접 열면</b> 생기는 일입니다.
+        깃허브 페이지 주소로 열면 정상으로 보입니다.
+      </div>
+    </section>
+
+    <section class="side" id="s-new">
+      <h2>새 판 · v2 작업본</h2>
+      <div class="meta">stageshow 키트 적용 · 폰 프레임 안에서 <b>실제로 눌러집니다</b></div>
+      <div class="frame"><iframe id="f-new" src="v2.html?bare=1" title="새 판 v2"></iframe></div>
+    </section>
+  </div>
+
+  <h3>무엇이 달라졌나</h3>
+  <table>
+    <tr><th style="width:20%">항목</th><th style="width:34%">기존 v1.0</th><th style="width:34%">새 판 v2</th><th style="width:12%">판단</th></tr>
+    <tr><td><b>보는 틀</b></td><td>브라우저 화면 그대로. 폰에서 열면 검수 패널이 화면을 덮습니다</td><td>폰 프레임 안. 폰·PC 어디서 열어도 같게 보입니다</td><td class="keep">새 판</td></tr>
+    <tr><td><b>검수 패널</b></td><td>모드·화면 9종·예외 17종을 바로 바꿔 봅니다</td><td>없습니다. 첫 화면 하나만 있습니다</td><td class="new">기존</td></tr>
+    <tr><td><b>체크박스</b></td><td>빈 네모(9px 라운드)에서 눌리면 네이비로 찹니다</td><td>같게 맞췄습니다</td><td>같음</td></tr>
+    <tr><td><b>이름 칸</b></td><td>처음부터 열려 있습니다</td><td>번호를 적기 전에는 <b>잠겨 있습니다</b></td><td>정해야 함</td></tr>
+    <tr><td><b>번호 조회</b></td><td>11자리를 채우면 조회합니다</td><td>같습니다. 돌아가는 표시가 보입니다</td><td>같음</td></tr>
+    <tr><td><b>번호를 바꾸면</b></td><td>조회 결과가 처음으로 돌아갑니다</td><td>적어둔 값까지 함께 비웁니다</td><td class="keep">새 판</td></tr>
+    <tr><td><b>스크롤 유도</b></td><td>"아래에 더 있어요 ▾" 알약이 뜹니다</td><td>아직 없습니다</td><td class="new">기존</td></tr>
+    <tr><td><b>거주 동 고르기</b></td><td>시트로 20개 + 탈출구 2개</td><td>같습니다</td><td>같음</td></tr>
+    <tr><td><b>약관 전문</b></td><td>시트로 전문을 끝까지 읽힙니다</td><td>아직 없습니다</td><td class="new">기존</td></tr>
+    <tr><td><b>접수 완료 화면</b></td><td>있습니다 (상태 · 4단계 설치 안내)</td><td>아직 없습니다</td><td class="new">기존</td></tr>
+    <tr><td><b>글자 · 터치</b></td><td>본문 17 · 입력 19 · 터치 44 · 주요 버튼 58~88</td><td>본문 17 · 입력 19 · <b>터치 62</b> · 버튼 64</td><td>정해야 함</td></tr>
+  </table>
+
+  <div class="note">
+    <b>지금 단계에서 새 판은 첫 화면 하나뿐입니다.</b>
+    접수 완료 화면 · 약관 전문 · 직원 대리 접수 · 검수 패널은 아직 옮기지 않았습니다.
+    기능이 빠진 것이 아니라 <b>아직 만들지 않은 것</b>이고, 순서대로 붙입니다.
+  </div>
+</main>
+
+<script>
+  // 기존 판은 실제 파일을 그대로 띄운다. 비교에 방해가 되는 검수 패널만 가린다.
+  // 같은 주소에서 열렸을 때만 가능하다 (파일로 직접 열면 막힌다).
+  var f = document.getElementById('f-old');
+  f.addEventListener('load', function () {
+    try {
+      var d = f.contentDocument;
+      var st = d.createElement('style');
+      st.textContent = 'aside{display:none !important} body{background:#EFEDE7 !important}';
+      d.head.appendChild(st);
+    } catch (e) {
+      document.getElementById('oops-old').classList.add('on');
+    }
+  });
+
+  var pair = document.getElementById('pair');
+  var btns = { both: document.getElementById('b-both'), old: document.getElementById('b-old'), nw: document.getElementById('b-new') };
+  function show(which) {
+    for (var k in btns) btns[k].setAttribute('aria-pressed', String((k === 'nw' ? 'new' : k) === which));
+    pair.classList.toggle('solo', which !== 'both');
+    document.getElementById('s-old').hidden = which === 'new';
+    document.getElementById('s-new').hidden = which === 'old';
+  }
+  btns.both.onclick = function () { show('both') };
+  btns.old.onclick = function () { show('old') };
+  btns.nw.onclick = function () { show('new') };
+</script>
+
+</body>
+</html>

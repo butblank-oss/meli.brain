@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Phone, Check, Spinner, Collapse } from './kit'
+import { Phone, Spinner, Collapse } from './kit'
 
 const DONGS = ['구월1동','구월2동','구월3동','구월4동','간석1동','간석2동','간석3동','간석4동',
   '만수1동','만수2동','만수3동','만수4동','만수5동','만수6동','남촌도림동','논현1동','논현2동',
@@ -8,13 +8,20 @@ const DONGS = ['구월1동','구월2동','구월3동','구월4동','간석1동',
 const AGREES = [
   { k: 'a', t: '맬리브레인 서비스 이용약관' },
   { k: 'b', t: '개인정보 수집·이용 동의' },
-  { k: 'c', t: '남동구 보건소 제3자 제공 동의' },
+  { k: 'c', t: '남동구 보건소에 참여 정보 제공 동의' },
 ] as const
 
 type Status = 'idle' | 'checking' | 'new' | 'exists'
 
+// 기존 판과 같은 네모 체크 (9px 라운드 · 미체크는 빈 네모 · 34/32px)
+function Box({ on, big }: { on: boolean; big?: boolean }) {
+  return <i className={`bx${on ? ' on' : ''}${big ? ' big' : ''}`} aria-hidden>{on ? '✓' : ''}</i>
+}
+
 const fmt = (d: string) =>
   d.length <= 3 ? d : d.length <= 7 ? `${d.slice(0, 3)}-${d.slice(3)}` : `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7, 11)}`
+
+const BARE = new URLSearchParams(location.search).has('bare')
 
 export default function App() {
   const [tel, setTel] = useState('')
@@ -61,7 +68,7 @@ export default function App() {
   }
 
   return (
-    <div className="pg">
+    <div className={`pg${BARE ? ' bare' : ''}`}>
       <header className="pg-head">
         <span className="pg-chip">맬리브레인 신청폼 v2 · 눌러보는 판</span>
         <h1>두뇌운동 치매예방교실 4기 참가 신청</h1>
@@ -75,10 +82,11 @@ export default function App() {
       <Phone width={392} className="pg-phone">
         <div className="sc">
           <div className="sc-scroll">
+            <div className="sc-brand">매일 이롭게, 맬리브레인</div>
             <div className="sc-top">
               <span className="sc-org">인천 남동구 보건소</span>
-              <div className="sc-h1">두뇌운동 치매예방교실 4기<br />참가 신청</div>
-              <div className="sc-sub">인천 남동구에 사시는 분만 신청할 수 있어요.</div>
+              <div className="sc-h1">치매예방교실 4기<br />참가 신청</div>
+              <div className="sc-sub">인천 남동구에 사시는 분만 신청할 수 있어요.<br />보건소에서 확인한 뒤 이용하실 수 있습니다.</div>
             </div>
 
             <div className="sc-body">
@@ -95,7 +103,7 @@ export default function App() {
                   {status === 'checking' && <Spinner size={22} />}
                 </label>
                 <Collapse open={status === 'new'}>
-                  <div className="note ok"><Check on size={22} /> 처음 오셨네요. 아래 항목만 적어주시면 됩니다.</div>
+                  <div className="note ok"><Box on /> 처음 오셨네요. 아래 항목만 적어주시면 됩니다.</div>
                 </Collapse>
                 <Collapse open={status === 'exists'}>
                   <div className="note warn">이미 이 번호로 신청하셨어요. 보건소 <b>032-453-6160</b> 으로 물어보시면 됩니다.</div>
@@ -131,7 +139,7 @@ export default function App() {
                 {open ? (
                   <>
                     <button className="agr all" onClick={toggleAll}>
-                      <Check on={all} size={34} />
+                      <Box on={all} big />
                       <span>
                         아래 내용에 모두 동의합니다
                         <i>세 가지 모두 동의하셔야 신청할 수 있어요</i>
@@ -139,8 +147,8 @@ export default function App() {
                     </button>
                     {AGREES.map((a) => (
                       <button key={a.k} className="agr" onClick={() => setAgree((p) => ({ ...p, [a.k]: !p[a.k] }))}>
-                        <Check on={agree[a.k]} size={34} />
-                        <span>(필수) {a.t}</span>
+                        <Box on={agree[a.k]} />
+                        <span>[필수] {a.t}</span>
                         <i className="view" onClick={(e) => { e.stopPropagation(); setToast('약관 전문은 다음 단계에서 붙입니다.') }}>보기</i>
                       </button>
                     ))}
