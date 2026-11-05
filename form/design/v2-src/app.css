@@ -256,3 +256,39 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
 .look-e .sc-cta{background:var(--card);border-top:0;box-shadow:0 -10px 26px rgba(30,43,38,.07)}
 .look-e .note.ok{border-radius:14px}
 .look-e .sh-i,.look-e .sh-out button{border-radius:15px}
+
+/* ═══ 순차 공개 (?flow=1) ════════════════════════════════════════════
+   지금 여쭙는 것만 크게 펼친다. 끝난 것은 한 줄로 접혀 위에 쌓인다.
+   큰 제목이 화면에 하나뿐이라 눈이 갈 곳이 분명해진다. */
+.flow .sc-top{padding-bottom:20px}
+.flow .sc-body{padding:20px 20px 28px;gap:12px}
+.flow section{padding:6px 0 4px}
+
+.flow .ask-h{font-size:27px;font-weight:800;letter-spacing:-.045em;line-height:1.36;
+  color:var(--ink);margin:14px 0 0}
+.flow .help{margin-top:12px;font-size:16px;line-height:1.65}
+.flow .inp{margin-top:18px;height:68px}
+.flow .pick{margin-top:12px;height:68px}
+.flow .fixed{margin-top:14px}
+.flow .pickrow{margin-top:18px;gap:10px}
+.flow .opt{min-height:66px}
+.flow .safe{margin-top:14px}
+.flow .agr{padding:14px 2px}
+.flow .agr.all{margin-top:16px}
+
+/* 끝난 항목 한 줄 */
+.row-done{display:flex;align-items:center;gap:12px;min-height:56px;padding:0 2px;
+  border-bottom:1px solid var(--line)}
+.rd-k{flex:none;min-width:84px;font-size:14.5px;font-weight:700;color:var(--ink2)}
+.rd-v{flex:1;font-size:18px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.rd-fix{flex:none;padding:12px 4px;font-size:15px;font-weight:700;color:var(--key)}
+.rd-fix::after{content:" ›"}
+
+/* 각 안에서의 결 */
+.look-c.flow .ask-h{font-family:'Noto Serif KR',serif;font-weight:500;letter-spacing:.004em;font-size:29px}
+.look-c.flow .row-done{border-bottom:1px solid var(--line)}
+.look-d.flow .sc-body{margin-top:-34px;border-radius:28px 28px 0 0;padding:24px 22px 28px}
+.look-d.flow .ask-h{letter-spacing:-.05em}
+.look-e.flow section{background:var(--card);border-radius:22px;padding:20px 18px;
+  box-shadow:0 2px 3px rgba(30,43,38,.04),0 10px 24px rgba(30,43,38,.06)}
+.look-e.flow .row-done{background:var(--card);border-radius:16px;border:0;padding:0 16px;min-height:60px}
