@@ -185,8 +185,8 @@ export default function App() {
           </div>
 
           <div className="sc-cta">
-            <button className="btn" onClick={submit}>신청하기</button>
             <div className="rest">{left.length ? `아직 남은 것: ${left.join(' · ')}` : '다 적으셨어요. 신청하기를 눌러주세요.'}</div>
+            <button className="btn" onClick={submit}>신청하기</button>
           </div>
 
           {/* 거주 동 고르기 */}
