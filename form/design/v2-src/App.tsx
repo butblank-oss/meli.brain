@@ -73,9 +73,9 @@ export default function App() {
 
   const submit = () => {
     setTried(true)
-    if (status === 'exists') return setToast('이미 신청하신 번호예요. 다른 번호로 해보세요.')
-    if (age === 'no') return setToast('만 60세 이상이신 분만 신청할 수 있어요.')
-    if (!left.length) return setToast('여기까지 확인했습니다. 접수 완료 화면은 다음 단계에서 붙입니다.')
+    if (status === 'exists') return setToast('이 번호로는 이미 신청하셨어요.')
+    if (age === 'no') return setToast('만 60세가 넘으신 분만 신청하실 수 있어요.')
+    if (!left.length) return setToast('여기까지 확인했어요. 접수 완료 화면은 다음 단계에 붙일게요.')
     // 빠진 칸이 있으면 알리고 끝내지 않고, 첫 번째 빠진 칸으로 데려간다
     const first = tel.length < 11 ? 'e-tel' : !name.trim() ? 'e-name' : !dong ? 'e-dong' : age !== 'yes' ? 'e-age' : 'e-agree'
     window.setTimeout(() => {
@@ -106,14 +106,14 @@ export default function App() {
             <div className="sc-brand">매일 이롭게, 맬리브레인</div>
             <div className="sc-top">
               <span className="sc-org">인천 남동구 보건소</span>
-              <div className="sc-h1">치매예방교실 4기<br />참가 신청</div>
-              <div className="sc-sub">인천 남동구에 사시는 분만 신청할 수 있어요.<br />보건소에서 확인한 뒤 이용하실 수 있습니다.</div>
+              <div className="sc-h1">치매예방교실 4기<br />신청을 도와드릴게요</div>
+              <div className="sc-sub">인천 남동구에 사시는 분만 신청하실 수 있어요.<br />보건소에서 확인한 뒤에 이용하실 수 있어요.</div>
             </div>
 
             <div className="sc-body">
               <section>
-                <div className="lb">휴대전화 번호 <i className="need">꼭 적어주세요</i></div>
-                <div className="help">앱에 들어갈 때 쓰는 번호입니다. 번호만 있으면 들어갈 수 있어요.</div>
+                <div className="lb">휴대폰 번호를 알려주세요 <i className="need">꼭 필요해요</i></div>
+                <div className="help">앱에 들어가실 때 쓰는 번호예요. 번호만 있으면 들어가실 수 있어요.</div>
                 <label className={`inp${tel ? ' on' : ''}`}>
                   <input
                     inputMode="numeric"
@@ -126,52 +126,52 @@ export default function App() {
                   {status === 'checking' && <Spinner size={22} />}
                 </label>
                 <Collapse open={status === 'new'}>
-                  <div className="note ok"><Box on /> 처음 오셨네요. 아래 항목만 적어주시면 됩니다.</div>
+                  <div className="note ok"><Box on /> 처음 오셨네요! 아래 것들만 알려주시면 돼요.</div>
                 </Collapse>
-                <p className="safe">적어주신 번호는 <b>보건소 확인과 안내 문자</b>에만 씁니다. 다른 곳에 알리지 않습니다.</p>
-                <button className="ask" onClick={() => setToast('번호를 모르시면 보건소 032-453-6160 으로 전화 주세요. 직원이 도와드립니다.')}>
-                  번호를 잘 모르시겠어요?
+                <p className="safe">알려주신 번호는 보건소 확인과 안내 문자에만 써요. 다른 곳에 알리지 않아요.</p>
+                <button className="ask" onClick={() => setToast('보건소 032-453-6160 으로 전화 주세요. 직원이 도와드릴게요.')}>
+                  번호가 기억나지 않으세요?
                 </button>
-                <Err show={tried && tel.length < 11} id="e-tel">번호를 11자리 다 적어주세요</Err>
+                <Err show={tried && tel.length < 11} id="e-tel">번호를 11자리 다 눌러주세요</Err>
                 <Collapse open={status === 'exists'}>
-                  <div className="note warn">이미 이 번호로 신청하셨어요. 보건소 <b>032-453-6160</b> 으로 물어보시면 됩니다.</div>
+                  <div className="note warn">이 번호로 이미 신청하셨어요. 보건소 <b>032-453-6160</b> 으로 물어보시면 돼요.</div>
                 </Collapse>
               </section>
 
               <section>
-                <div className="lb">이름 <i className="need">꼭 적어주세요</i></div>
+                <div className="lb">성함이 어떻게 되세요? <i className="need">꼭 필요해요</i></div>
                 {open ? (
                   <label className={`inp${name ? ' on' : ''}`}>
                     <input value={name} placeholder="예) 홍길동" aria-label="이름" aria-describedby="e-name" onChange={(e) => setName(e.target.value.slice(0, 20))} />
                   </label>
                 ) : (
-                  <div className="lock">번호를 먼저 적어주세요</div>
+                  <div className="lock">번호를 먼저 알려주세요</div>
                 )}
-                <Err show={tried && open && !name.trim()} id="e-name">이름을 적어주세요</Err>
+                <Err show={tried && open && !name.trim()} id="e-name">성함을 알려주세요</Err>
               </section>
 
               <section>
-                <div className="lb">사시는 곳 <i className="need">꼭 골라주세요</i></div>
-                <div className="help">인천 남동구 보건소에서 운영하는 교실이라 인천 남동구에 사시는 분만 신청할 수 있어요.</div>
+                <div className="lb">어디에 사세요? <i className="need">꼭 필요해요</i></div>
+                <div className="help">인천 남동구 보건소에서 여는 교실이라, 남동구에 사시는 분만 신청하실 수 있어요.</div>
                 <div className="fixed"><span>인천광역시 남동구</span><span className="dim">고정</span></div>
                 {open ? (
                   <button className={`pick${dong ? ' on' : ''}`} onClick={() => setSheet(true)}>
                     <span>{dong || '동을 골라주세요'}</span><span className="arr">›</span>
                   </button>
                 ) : (
-                  <div className="lock">번호를 먼저 적어주세요</div>
+                  <div className="lock">번호를 먼저 알려주세요</div>
                 )}
                 <Err show={tried && open && !dong} id="e-dong">사시는 동을 골라주세요</Err>
               </section>
 
               <section>
-                <div className="lb">나이 확인 <i className="need">꼭 골라주세요</i></div>
-                <div className="help">이 교실은 <b>만 60세 이상</b> 어르신을 위한 수업이에요.</div>
+                <div className="lb">연세가 어떻게 되세요? <i className="need">꼭 필요해요</i></div>
+                <div className="help">이 교실은 만 60세 이상 어르신을 위한 수업이에요.</div>
                 {open ? (
                   <>
                     <div className="pickrow">
                       <button className={`opt${age === 'yes' ? ' on' : ''}`} onClick={() => setAge('yes')}>
-                        <Box on={age === 'yes'} /> 만 60세 이상이에요
+                        <Box on={age === 'yes'} /> 네, 만 60세가 넘었어요
                       </button>
                       <button className={`opt${age === 'no' ? ' on' : ''}`} onClick={() => setAge('no')}>
                         <Box on={age === 'no'} /> 아직 60세가 안 됐어요
@@ -179,38 +179,38 @@ export default function App() {
                     </div>
                     <Collapse open={age === 'no'}>
                       <div className="note warn">
-                        이 교실은 만 60세 이상이신 분만 신청할 수 있어요.<br />
-                        보건소 <b>032-453-6160</b> 으로 물어보시면 다른 교실을 알려드립니다.
+                        이 교실은 만 60세가 넘으신 분만 신청하실 수 있어요.<br />
+                        보건소 <b>032-453-6160</b> 으로 물어보시면 다른 교실을 알려드릴게요.
                       </div>
                     </Collapse>
                   </>
                 ) : (
-                  <div className="lock">번호를 먼저 적어주세요</div>
+                  <div className="lock">번호를 먼저 알려주세요</div>
                 )}
-                <Err show={tried && open && age !== 'yes'} id="e-age">나이를 골라주세요</Err>
+                <Err show={tried && open && age !== 'yes'} id="e-age">연세를 골라주세요</Err>
               </section>
 
               <section>
-                <div className="lb">동의해 주세요 <i className="need">세 가지 모두</i></div>
+                <div className="lb">마지막이에요 <i className="need">세 가지 모두</i></div>
                 {open ? (
                   <>
                     <button className="agr all" onClick={toggleAll}>
                       <Box on={all} big />
                       <span>
-                        아래 내용에 모두 동의합니다
-                        <i>세 가지 모두 동의하셔야 신청할 수 있어요</i>
+                        세 가지 모두 동의할게요
+                        <i>하나씩 눌러서 보셔도 돼요</i>
                       </span>
                     </button>
                     {AGREES.map((a) => (
                       <button key={a.k} className="agr" onClick={() => setAgree((p) => ({ ...p, [a.k]: !p[a.k] }))}>
                         <Box on={agree[a.k]} />
                         <span>[필수] {a.t}</span>
-                        <i className="view" onClick={(e) => { e.stopPropagation(); setToast('약관 전문은 다음 단계에서 붙입니다.') }}>보기</i>
+                        <i className="view" onClick={(e) => { e.stopPropagation(); setToast('약관 전문은 다음 단계에 붙일게요.') }}>보기</i>
                       </button>
                     ))}
                   </>
                 ) : (
-                  <div className="lock">번호를 먼저 적어주세요</div>
+                  <div className="lock">번호를 먼저 알려주세요</div>
                 )}
                 <Err show={tried && open && !all} id="e-agree">세 가지 모두 눌러주세요</Err>
               </section>
@@ -218,7 +218,7 @@ export default function App() {
           </div>
 
           <div className="sc-cta">
-            <div className="rest">{left.length ? `아직 남은 것: ${left.join(' · ')}` : '다 적으셨어요. 신청하기를 눌러주세요.'}</div>
+            <div className="rest">{left.length ? `아직 남은 것이 있어요: ${left.join(' · ')}` : '다 되셨어요. 아래 버튼을 눌러주세요.'}</div>
             <button className="btn" onClick={submit}>신청하기</button>
           </div>
 
@@ -226,7 +226,7 @@ export default function App() {
           <div className={`sh${sheet ? ' open' : ''}`} onClick={() => setSheet(false)}>
             <div className="sh-box" onClick={(e) => e.stopPropagation()}>
               <div className="sh-head">
-                <b>어느 동에 사시나요?</b>
+                <b>어느 동에 사세요?</b>
                 <button className="sh-x" onClick={() => setSheet(false)}>닫기</button>
               </div>
               <div className="sh-list">
@@ -235,8 +235,8 @@ export default function App() {
                 ))}
               </div>
               <div className="sh-out">
-                <button onClick={() => { setSheet(false); setToast('잘 모르시면 보건소 032-453-6160 으로 물어보세요.') }}>잘 모르겠어요 · 도와주세요</button>
-                <button onClick={() => { setSheet(false); setToast('남동구에 안 사시면 이 교실은 신청할 수 없어요. 앱은 그냥 쓰실 수 있습니다.') }}>인천 남동구에 살지 않아요</button>
+                <button onClick={() => { setSheet(false); setToast('보건소 032-453-6160 으로 물어보시면 알려드릴게요.') }}>잘 모르겠어요, 도와주세요</button>
+                <button onClick={() => { setSheet(false); setToast('남동구에 안 사시면 이 교실은 어려워요. 앱은 그냥 쓰실 수 있어요.') }}>남동구에 살지 않아요</button>
               </div>
             </div>
           </div>
