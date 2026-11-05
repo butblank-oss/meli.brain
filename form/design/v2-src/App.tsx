@@ -18,10 +18,20 @@ function Box({ on, big }: { on: boolean; big?: boolean }) {
   return <i className={`bx${on ? ' on' : ''}${big ? ' big' : ''}`} aria-hidden>{on ? '✓' : ''}</i>
 }
 
+function Err({ show, children, id }: { show: boolean; children: string; id: string }) {
+  return (
+    <Collapse open={show}>
+      <p className="err" id={id} role="alert">{children}</p>
+    </Collapse>
+  )
+}
+
 const fmt = (d: string) =>
   d.length <= 3 ? d : d.length <= 7 ? `${d.slice(0, 3)}-${d.slice(3)}` : `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7, 11)}`
 
-const BARE = new URLSearchParams(location.search).has('bare')
+const Q = new URLSearchParams(location.search)
+const BARE = Q.has('bare')
+const LOOK = Q.get('look') === 'b' ? 'b' : 'a'   // a 정리안 · b 다시 설계안
 
 export default function App() {
   const [tel, setTel] = useState('')
@@ -31,6 +41,7 @@ export default function App() {
   const [agree, setAgree] = useState({ a: false, b: false, c: false })
   const [sheet, setSheet] = useState(false)
   const [toast, setToast] = useState('')
+  const [tried, setTried] = useState(false)
   const timer = useRef<number>()
 
   // 번호가 다 적히면 조회한다. 번호가 바뀌면 조회 결과와 잠금은 처음으로 돌아간다 (불변식 1)
@@ -58,8 +69,14 @@ export default function App() {
   ].filter(Boolean) as string[]
 
   const submit = () => {
+    setTried(true)
     if (status === 'exists') return setToast('이미 신청하신 번호예요. 다른 번호로 해보세요.')
-    setToast(left.length ? `${left.join(' · ')}을(를) 아직 안 적으셨어요` : '여기까지 확인했습니다. 접수 완료 화면은 다음 단계에서 붙입니다.')
+    if (!left.length) return setToast('여기까지 확인했습니다. 접수 완료 화면은 다음 단계에서 붙입니다.')
+    // 빠진 칸이 있으면 알리고 끝내지 않고, 첫 번째 빠진 칸으로 데려간다
+    const first = tel.length < 11 ? 'e-tel' : !name.trim() ? 'e-name' : !dong ? 'e-dong' : 'e-agree'
+    window.setTimeout(() => {
+      document.getElementById(first)?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    }, 60)
   }
 
   const toggleAll = () => {
@@ -80,7 +97,7 @@ export default function App() {
       </header>
 
       <Phone width={392} className="pg-phone">
-        <div className="sc">
+        <div className={`sc look-${LOOK}`}>
           <div className="sc-scroll">
             <div className="sc-brand">매일 이롭게, 맬리브레인</div>
             <div className="sc-top">
@@ -98,6 +115,8 @@ export default function App() {
                     inputMode="numeric"
                     value={fmt(tel)}
                     placeholder="010-0000-0000"
+                    aria-label="휴대전화 번호"
+                    aria-describedby="e-tel"
                     onChange={(e) => setTel(e.target.value.replace(/\D/g, '').slice(0, 11))}
                   />
                   {status === 'checking' && <Spinner size={22} />}
@@ -105,6 +124,7 @@ export default function App() {
                 <Collapse open={status === 'new'}>
                   <div className="note ok"><Box on /> 처음 오셨네요. 아래 항목만 적어주시면 됩니다.</div>
                 </Collapse>
+                <Err show={tried && tel.length < 11} id="e-tel">번호를 11자리 다 적어주세요</Err>
                 <Collapse open={status === 'exists'}>
                   <div className="note warn">이미 이 번호로 신청하셨어요. 보건소 <b>032-453-6160</b> 으로 물어보시면 됩니다.</div>
                 </Collapse>
@@ -114,11 +134,12 @@ export default function App() {
                 <div className="lb">이름 <i className="need">꼭 적어주세요</i></div>
                 {open ? (
                   <label className={`inp${name ? ' on' : ''}`}>
-                    <input value={name} placeholder="예) 홍길동" onChange={(e) => setName(e.target.value.slice(0, 20))} />
+                    <input value={name} placeholder="예) 홍길동" aria-label="이름" aria-describedby="e-name" onChange={(e) => setName(e.target.value.slice(0, 20))} />
                   </label>
                 ) : (
                   <div className="lock">번호를 먼저 적어주세요</div>
                 )}
+                <Err show={tried && open && !name.trim()} id="e-name">이름을 적어주세요</Err>
               </section>
 
               <section>
@@ -132,6 +153,7 @@ export default function App() {
                 ) : (
                   <div className="lock">번호를 먼저 적어주세요</div>
                 )}
+                <Err show={tried && open && !dong} id="e-dong">사시는 동을 골라주세요</Err>
               </section>
 
               <section>
@@ -156,6 +178,7 @@ export default function App() {
                 ) : (
                   <div className="lock">번호를 먼저 적어주세요</div>
                 )}
+                <Err show={tried && open && !all} id="e-agree">세 가지 모두 눌러주세요</Err>
               </section>
             </div>
           </div>
