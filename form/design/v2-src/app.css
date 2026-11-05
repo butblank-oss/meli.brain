@@ -82,6 +82,16 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
 .err::before{content:"!";flex:none;width:22px;height:22px;border-radius:50%;background:var(--warn);color:#fff;
   font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center}
 
+.safe{margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--ink2)}
+.safe b{color:var(--ink)}
+.ask{margin-top:11px;font-size:15.5px;font-weight:700;color:var(--key);
+  text-decoration:underline;text-underline-offset:4px;padding:8px 0;min-height:44px}
+
+.pickrow{margin-top:11px;display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:center;gap:12px;min-height:62px;padding:0 16px;background:#fff;
+  border:2px solid var(--line-strong);border-radius:14px;font-size:18px;font-weight:700;color:var(--ink)}
+.opt.on{border-color:var(--key);background:var(--soft)}
+
 /* 동의 */
 .agr{width:100%;display:flex;align-items:center;gap:13px;min-height:62px;padding:10px 14px;
   background:#fff;border-bottom:1px solid var(--line)}
@@ -99,13 +109,12 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
 .bx.big{width:34px;height:34px}
 .bx.on{border-color:var(--key);background:var(--key)}
 
-/* 붙박이 — 버튼은 화면 맨 아래에 꽉 차게 붙인다.
-   한국 금융·공공 앱의 관습이고, 가장자리에 붙은 버튼은 겨냥하기 쉽다. */
-.sc-cta{padding:0;border-top:1px solid var(--line);background:#fff}
-.rest{padding:12px 20px 11px;text-align:center;font-size:14.5px;line-height:1.55;color:var(--ink2)}
-.btn{width:100%;height:92px;border-radius:0;background:var(--key);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;letter-spacing:-.03em;
-  padding-bottom:20px}   /* 아이폰 하단 바와 글자가 겹치지 않게 색만 끝까지 내린다 */
+/* 붙박이 — 토스·당근처럼 좌우 여백을 두고 모서리를 둥글린다.
+   안내 한 줄은 버튼 위에 둔다. */
+.sc-cta{padding:0 18px 26px;border-top:1px solid var(--line);background:#fff}
+.rest{padding:12px 2px 11px;text-align:center;font-size:14.5px;line-height:1.55;color:var(--ink2)}
+.btn{width:100%;height:66px;border-radius:16px;background:var(--key);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:800;letter-spacing:-.03em}
 .btn:active{background:var(--key-d)}
 
 /* 동 고르기 시트 */
@@ -157,7 +166,7 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
 .look-b .agr:first-of-type,.look-b .agr:last-of-type{border-radius:0}
 .look-b .agr>span{font-size:18px}
 .look-b .agr.all>span{font-size:19.5px}
-.look-b .btn{height:94px;font-size:22px}
+.look-b .btn{height:68px;font-size:22px;border-radius:18px}
 .look-b .rest{font-size:15px}
 .look-b .sc-brand{font-size:17px}
 
@@ -186,10 +195,11 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
 .look-c .agr{background:transparent;padding:12px 0;border-bottom:1px solid var(--line)}
 .look-c .agr:first-of-type,.look-c .agr:last-of-type{border-radius:0}
 .look-c .bx{border-radius:0;border-color:var(--ink)}
+.look-c .opt{border-radius:0;border-width:1px}
 .look-c .bx.on{background:var(--ink);border-color:var(--ink)}
 .look-c .agr .view{border-radius:0;border:1px solid var(--line-strong);color:var(--ink2)}
-.look-c .btn{border-radius:0;letter-spacing:.02em}
-.look-c .sc-cta{background:var(--bg);border-top:2px solid var(--ink)}
+.look-c .btn{border-radius:0;letter-spacing:.02em;height:68px}
+.look-c .sc-cta{background:var(--bg);border-top:2px solid var(--ink);padding:0 18px 26px}
 .look-c .note.ok{border-radius:0;border-left:3px solid var(--ok);background:#F2F4EE}
 .look-c .err{border-radius:0;border-left:3px solid var(--warn)}
 .look-c .sh-box{border-radius:0}
@@ -210,7 +220,7 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
   font-size:38px;font-weight:800;line-height:1;letter-spacing:-.04em;color:#9FC3E3;margin-bottom:4px}
 .look-d .need{margin-left:8px}
 .look-d .inp,.look-d .pick{border-radius:16px;border-color:#C9C4B8}
-.look-d .btn{height:94px}
+.look-d .btn{height:68px;border-radius:999px}
 .look-d .agr{background:transparent;padding:12px 2px}
 .look-d .agr:first-of-type,.look-d .agr:last-of-type{border-radius:0}
 .look-d .bx{border-radius:8px}
@@ -240,7 +250,8 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
 .look-e .agr{background:transparent;padding:12px 2px}
 .look-e .agr:first-of-type,.look-e .agr:last-of-type{border-radius:0}
 .look-e .bx{border-radius:10px}
-.look-e .btn{height:94px}
+.look-e .btn{height:68px;border-radius:20px}
+.look-e .opt{border-radius:16px;min-height:66px}
 .look-e .sc-cta{background:var(--card);border-top:0;box-shadow:0 -10px 26px rgba(30,43,38,.07)}
 .look-e .note.ok{border-radius:14px}
 .look-e .sh-i,.look-e .sh-out button{border-radius:15px}
