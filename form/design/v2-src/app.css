@@ -158,3 +158,86 @@ button:focus-visible,.agr:focus-visible{outline:3px solid var(--key);outline-off
 .look-b .btn{height:68px;font-size:22px;border-radius:18px}
 .look-b .rest{font-size:15px}
 .look-b .sc-brand{font-size:17px}
+
+/* ═══ C · 종이 안내문 ══════════════════════════════════════════════
+   보건소 안내문의 품위. 색면 대신 활자와 선으로 위계를 만든다.
+   제목은 명조, 입력은 밑줄, 모서리는 각지게. 움직임 없음. */
+.look-c{--ink:#141414;--ink2:#5A5248;--ink3:#5A5248;--hint:#6E6559;
+  --line-strong:#8A8073;--line:#DCD4C4;--bg:#FBF8F1;--card:#FBF8F1;
+  --t-h1:32px;--t-label:19px;--t-body:17px;--t-input:21px;--t-help:15.5px}
+.look-c .sc,.look-c .sc-scroll,.look-c .sc-body{background:var(--bg)}
+.look-c .sc-brand{background:var(--bg);border-bottom:1px solid var(--line);
+  font-family:'Noto Serif KR',serif;font-weight:500;color:var(--ink);letter-spacing:.01em}
+.look-c .sc-top{background:var(--bg);color:var(--ink);border-bottom:2px solid var(--ink);padding:22px 20px 20px}
+.look-c .sc-org{border:0;border-radius:0;padding:0;font-size:13.5px;font-weight:800;
+  letter-spacing:.14em;color:#6E6559}
+.look-c .sc-h1{font-family:'Noto Serif KR',serif;font-weight:500;letter-spacing:.004em;line-height:1.44;margin-top:11px}
+.look-c .sc-sub{color:var(--ink2);margin-top:11px}
+.look-c .sc-body{counter-reset:sec;gap:26px;padding:22px 20px}
+.look-c .lb{font-family:'Noto Serif KR',serif;font-weight:500;align-items:baseline;gap:10px}
+.look-c .lb::before{content:counter(sec) ".";counter-increment:sec;font-family:'Noto Serif KR',serif;
+  font-size:22px;font-weight:500;color:var(--ink)}
+.look-c .need{background:transparent;border:1px solid #9E241D;border-radius:0;padding:2px 7px}
+.look-c .inp,.look-c .pick,.look-c .lock,.look-c .fixed{border:0;border-bottom:2px solid var(--line-strong);
+  border-radius:0;background:transparent;padding-left:2px;padding-right:2px}
+.look-c .inp:focus-within{box-shadow:none;border-bottom-color:var(--key);outline:2px solid var(--key);outline-offset:4px}
+.look-c .agr{background:transparent;padding:12px 0;border-bottom:1px solid var(--line)}
+.look-c .agr:first-of-type,.look-c .agr:last-of-type{border-radius:0}
+.look-c .bx{border-radius:0;border-color:var(--ink)}
+.look-c .bx.on{background:var(--ink);border-color:var(--ink)}
+.look-c .agr .view{border-radius:0;border:1px solid var(--line-strong);color:var(--ink2)}
+.look-c .btn{border-radius:0;letter-spacing:.02em}
+.look-c .sc-cta{background:var(--bg);border-top:2px solid var(--ink)}
+.look-c .note.ok{border-radius:0;border-left:3px solid var(--ok);background:#F2F4EE}
+.look-c .err{border-radius:0;border-left:3px solid var(--warn)}
+.look-c .sh-box{border-radius:0}
+.look-c .sh-i{border-radius:0;border-width:1px}
+
+/* ═══ D · 큰 색면 ═════════════════════════════════════════════════
+   머리말을 크게 깔고 흰 종이가 그 위로 올라탄다. 번호는 큰 숫자로. */
+.look-d{--t-h1:34px;--t-label:19px;--t-input:20px}
+.look-d .sc-brand{background:var(--key);color:#fff;padding-bottom:0}
+.look-d .sc-top{padding:14px 22px 54px}
+.look-d .sc-org{background:rgba(255,255,255,.14)}
+.look-d .sc-h1{letter-spacing:-.05em;line-height:1.24;margin-top:14px}
+.look-d .sc-sub{color:#BBD0E4}
+.look-d .sc-body{margin-top:-34px;background:#fff;border-radius:28px 28px 0 0;
+  padding:26px 22px 24px;gap:26px;counter-reset:sec}
+.look-d .lb{display:block;font-size:var(--t-label)}
+.look-d .lb::before{content:counter(sec);counter-increment:sec;display:block;
+  font-size:38px;font-weight:800;line-height:1;letter-spacing:-.04em;color:#9FC3E3;margin-bottom:4px}
+.look-d .need{margin-left:8px}
+.look-d .inp,.look-d .pick{border-radius:16px;border-color:#C9C4B8}
+.look-d .btn{border-radius:999px;height:66px}
+.look-d .agr{background:transparent;padding:12px 2px}
+.look-d .agr:first-of-type,.look-d .agr:last-of-type{border-radius:0}
+.look-d .bx{border-radius:8px}
+.look-d .sc-cta{border-top:0;box-shadow:0 -10px 24px rgba(26,31,38,.06)}
+
+/* ═══ E · 초록 안심 ════════════════════════════════════════════════
+   맬리브레인 그린 + 따뜻한 모래빛. 둥근 카드와 부드러운 그늘. */
+.look-e{--key:#265F4D;--key-d:#1C4B3C;--soft:#EAF3EE;
+  --ink:#1E2B26;--ink2:#5E6B64;--ink3:#5E6B64;--hint:#6B7872;
+  --line-strong:#7A8B83;--line:#DCE7E1;--bg:#F2EDE4;--card:#fff;
+  --ok:#1E4F40;--ok-bg:#EAF3EE;
+  --t-h1:26px;--t-label:18.5px;--t-input:20px;--t-body:17.5px}
+.look-e .sc-brand{color:var(--key)}
+.look-e .sc-top{border-radius:0 0 28px 28px;padding:20px 22px 26px}
+.look-e .sc-sub{color:#CBE2D6}
+.look-e .sc-body{gap:14px;padding:18px 16px;counter-reset:sec}
+.look-e section{background:var(--card);border-radius:22px;padding:20px 18px;
+  box-shadow:0 2px 3px rgba(30,43,38,.04),0 10px 24px rgba(30,43,38,.06)}
+.look-e .lb{align-items:center;gap:11px}
+.look-e .lb::before{content:counter(sec);counter-increment:sec;flex:none;width:36px;height:36px;
+  border-radius:50%;background:var(--soft);color:var(--key);font-size:17px;font-weight:800;
+  display:flex;align-items:center;justify-content:center}
+.look-e .inp,.look-e .pick{border-radius:16px;height:66px}
+.look-e .lock{border-radius:16px;height:66px}
+.look-e .fixed{border-radius:16px;background:#F7F5F0}
+.look-e .agr{background:transparent;padding:12px 2px}
+.look-e .agr:first-of-type,.look-e .agr:last-of-type{border-radius:0}
+.look-e .bx{border-radius:10px}
+.look-e .btn{border-radius:20px;height:66px}
+.look-e .sc-cta{background:var(--card);border-top:0;box-shadow:0 -10px 26px rgba(30,43,38,.07)}
+.look-e .note.ok{border-radius:14px}
+.look-e .sh-i,.look-e .sh-out button{border-radius:15px}
