@@ -15,7 +15,7 @@ type Status = 'idle' | 'checking' | 'new' | 'exists'
 
 const Q = new URLSearchParams(location.search)
 const BARE = Q.has('bare')
-const LOOK = ['a','b','c','d','e'].includes(Q.get('look') || '') ? Q.get('look')! : 'a'
+const LOOK = ['a','b','c','d','e','p4'].includes(Q.get('look') || '') ? Q.get('look')! : 'a'
 const FLOW = Q.has('flow')   // 순차 공개 — 지금 여쭙는 것만 펼친다
 
 function Box({ on, big }: { on: boolean; big?: boolean }) {
