@@ -219,6 +219,16 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .facts div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
 .facts b{font-family:var(--f-xb);font-size:24px;color:var(--ink)}
 .facts span{font-size:14px;color:var(--body)}
+.retro{display:grid;gap:10px}
+.retro .rg{font-family:var(--f-xb);font-size:18px;color:var(--title);margin-top:8px}
+.retro ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.retro li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.retro li.bad{border-left:4px solid #E8C77A}
+.retro li.good{border-left:4px solid var(--soft)}
+.retro li.next{border-left:4px solid var(--accent)}
+.retro li b{font-family:var(--f-bold);font-weight:400;font-size:16px;color:var(--ink)}
+.retro li span{font-size:14px;color:var(--body)}
+.retro li em{font-style:normal;font-family:var(--f-bold);color:var(--title)}
 .gloss{font-size:13px;color:var(--muted);display:grid;gap:4px;border-top:1px solid var(--line);padding-top:14px}
 .gloss b{color:var(--body);font-family:var(--f-bold);font-weight:400}
 @media (max-width:720px){.ctx,.ch,.who,.facts{grid-template-columns:1fr}.fn .r{grid-template-columns:84px minmax(0,1fr) 118px;gap:8px}.fn .gap{margin-left:100px}.fn .val{font-size:16px}.fn .val small{font-size:11.5px;margin-left:4px}.fn .trk{height:26px}}
@@ -291,6 +301,37 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
     <div><b>수료증 37.5초</b><span>가장 오래 머문 화면. 다른 화면의 2배 이상입니다.</span></div>
     <div><b>79명 · 평균 2.4회</b><span>홈 배너로 리포트를 다시 열어 본 사람. 첫 열람은 대부분 자동 팝업입니다.</span></div>
     <div><b>저장 실패 0건</b><span>수료증 저장 107회 모두 성공. 가족 공유 기능은 아직 없습니다.</span></div>
+  </div>
+</section>
+
+<section class="part step">
+  <div class="step-h"><span class="n">4</span><h2>회고 · 다음 리포트 때 참고할 것</h2></div>
+  <p class="lead">리포트를 연 사람은 잘 봤고, 끝까지 본 사람은 잘 신청했습니다. <strong>리포트까지 오는 길과 신청 버튼 위치</strong>가 아쉬웠습니다.</p>
+  <div class="retro">
+    <p class="rg">아쉬웠던 점</p>
+    <ul>
+      <li class="bad"><b>열람률 26%, 원인은 앱 접속</b><span>3기 932명 중 676명(73%)이 기간 중 앱을 열지 않았습니다. 앱을 연 256명 중에서는 95%가 리포트를 봤습니다. <em>리포트 자체보다 리포트까지 데려오는 길이 막혔습니다.</em></span></li>
+      <li class="bad"><b>4기 신청률이 열람에 비해 낮음</b><span>리포트를 본 243명 중 4기 신청은 56명(23%)입니다. 신청 버튼이 마지막 화면에만 있어 끝까지 간 128명만 누를 수 있었고, 그중에선 44%가 신청했습니다. <em>버튼까지 간 사람은 잘 신청했으니, 버튼이 늦게 나온 게 문제였습니다.</em></span></li>
+      <li class="bad"><b>끝까지 본 사람 53%</b><span>표지에서 요약으로 넘어가며 47명이 빠졌습니다. 요약만 넘기면 수료증까지 거의 그대로 갑니다.</span></li>
+      <li class="bad"><b>신청이 곧 등록은 아니었음</b><span>리포트 버튼은 신청 의사만 기록돼서 실제 등록은 사람이 손으로 했습니다. 집계 직전까지 3명이 등록 대기로 남아 있었습니다.</span></li>
+      <li class="bad"><b>신청 기록이 네 군데로 흩어짐</b><span>리포트 · 수료식 사전신청 · 현장 접수 · 신청폼이 따로 쌓여서 전화번호로 331건을 137명으로 맞췄습니다. 1·2기 이력이 없어 기수별 구분도 할 수 없었습니다.</span></li>
+      <li class="bad"><b>목표와 지표 정의가 늦게 정해짐</b><span>열람·재등록 정의와 재등록 목표(186명 → 200명 → 재등록률 30%)를 오픈 후에 정했습니다. 사전 KPI(4기 신청 약 81명)도 집계 기준이 달라 바로 비교하기 어려웠습니다.</span></li>
+    </ul>
+    <p class="rg">잘된 점</p>
+    <ul>
+      <li class="good"><b>리포트가 새 신청 통로가 됨</b><span>56명이 리포트에서 신청했고, 35명은 수료식 없이 리포트만 보고 왔습니다. 현장 행사(54명)만큼 큰 통로입니다.</span></li>
+      <li class="good"><b>수료증이 가장 강한 화면</b><span>평균 37.5초로 가장 오래 머물렀고, 본 사람의 67%가 저장했습니다. 저장 실패는 0건이었습니다.</span></li>
+      <li class="good"><b>다시 찾아보는 리포트</b><span>79명이 홈 배너로 평균 2.4회 다시 열었습니다.</span></li>
+    </ul>
+    <p class="rg">다음 리포트 만들 때</p>
+    <ul>
+      <li class="next"><b>앱 밖에서 바로 열리게</b><span>문자·알림톡에 리포트 링크를 직접 넣어 앱을 열지 않아도 보이게 하고, 보건소 안내 문자와 발송 시점을 맞춥니다.</span></li>
+      <li class="next"><b>신청 버튼을 앞에도</b><span>요약 화면과 홈 배너에도 4기 신청 버튼을 둡니다. 수료증 화면 옆 버튼은 그대로 둡니다.</span></li>
+      <li class="next"><b>요약 화면을 짧게</b><span>표지에서 요약으로 갈 때 이탈이 가장 크니, 요약은 숫자 몇 개로 줄이고 수료증을 일찍 보여줍니다.</span></li>
+      <li class="next"><b>신청하면 바로 등록</b><span>버튼을 누르면 등록까지 자동으로 처리해 수작업과 누락을 없앱니다.</span></li>
+      <li class="next"><b>신청 기록은 한 곳에</b><span>모든 신청을 한 명단에 쌓고 경로와 이전 기수 이력을 같이 남겨, 중복 정리 없이 바로 집계합니다.</span></li>
+      <li class="next"><b>오픈 전에 목표와 정의 확정</b><span>열람·완독·신청·재등록의 정의와 목표 숫자를 오픈 전에 정하고, 같은 기준으로 매일 집계합니다.</span></li>
+    </ul>
   </div>
 </section>
 
