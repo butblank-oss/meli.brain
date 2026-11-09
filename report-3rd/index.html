@@ -192,6 +192,21 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .who2 b small{font-size:15px;color:var(--muted)}
 .who2 .ws{font-size:13.5px;color:var(--muted)}
 @media (max-width:720px){.who2{grid-template-columns:1fr}}
+.mem{background:var(--sub);border-radius:12px;padding:18px;display:grid;gap:14px}
+.mem .m-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
+.mem .m-t{font-family:var(--f-xb);font-size:21px;color:var(--title);line-height:1.3}
+.mem .m-v{font-family:var(--f-xb);font-size:26px;color:var(--ink);white-space:nowrap}
+.mem .m-v small{font-family:var(--f-body);font-size:15px;color:var(--muted);margin-left:4px}
+.mem .mbar{display:flex;height:40px;border-radius:8px;overflow:hidden;gap:2px;background:var(--paper)}
+.mem .mbar span{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--f-bold);font-size:14px;white-space:nowrap;overflow:hidden}
+.mem .s1{background:var(--accent)} .mem .s2{background:var(--soft)} .mem .s3{background:#8A9893}
+.mem ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.mem li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:baseline}
+.mem li i{width:14px;height:14px;border-radius:3px;align-self:start;margin-top:6px}
+.mem li .k{font-family:var(--f-bold);color:var(--ink)}
+.mem li .k small{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted)}
+.mem li b{font-family:var(--f-bold);font-weight:400;color:var(--ink);white-space:nowrap}
+.mem li b small{font-size:13px;color:var(--muted);margin-left:4px}
 .goal2{background:var(--paper);border:2px solid var(--accent);border-radius:14px;padding:16px 18px;display:grid;gap:10px}
 .g-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
 .g-t{font-family:var(--f-xb);font-size:19px;color:var(--title)}
@@ -235,9 +250,16 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   </div>
   <p class="cap">세 칸은 서로 겹치지 않게 나눴습니다(56 + 54 + 27 = 137). 리포트와 수료식에서 모두 신청한 21명은 리포트 칸에 넣었습니다.</p>
   <p class="sub">신청자는 누구인가</p>
-  <div class="who2">
-    <div><span class="wl">기존 3기 참여자 재등록</span><b>99명 <small>(72.3%)</small></b><span class="ws">3기에 참여하던 분이 4기도 이어서 신청</span></div>
-    <div><span class="wl">4기 신규 신청자</span><b>38명 <small>(27.7%)</small></b><span class="ws">3기 때 4기 동시 신청 32명 + 수료식 오프라인 신규등록 6명</span></div>
+  <div class="mem">
+    <div class="m-head"><span class="m-t">1·2·3기 회원 재등록</span><span class="m-v">131명<small>/ 137명 (95.6%)</small></span></div>
+    <div class="mbar" role="img" aria-label="4기 신청 137명 중 3기 참여자 재등록 99명, 3기 동시 등록 32명, 신규 6명">
+      <span class="s1" style="flex:99">99</span><span class="s2" style="flex:32">32</span><span class="s3" style="flex:6"></span>
+    </div>
+    <ul>
+      <li><i class="s1"></i><span class="k">3기 참여자 재등록<small>3기를 하던 분이 4기도 이어서 신청 (1·2기 출신 포함)</small></span><b>99명<small>72.3%</small></b></li>
+      <li><i class="s2"></i><span class="k">3기 동시 등록 회원<small>4기 신청하면서 3기에도 함께 등록된 분</small></span><b>32명<small>23.4%</small></b></li>
+      <li><i class="s3"></i><span class="k">4기 신규<small>수료식 오프라인에서 처음 등록</small></span><b>6명<small>4.4%</small></b></li>
+    </ul>
   </div>
   <div class="goal2">
     <div class="g-head"><span class="g-t">4기 재등록 목표 · 재등록률 30%</span><span class="g-v">99 <small>/ 280명</small> <em>35%</em></span></div>
