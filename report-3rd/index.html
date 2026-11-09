@@ -229,6 +229,11 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .g-steps .v{font-family:var(--f-xb);font-size:20px;color:var(--ink);line-height:1.35}
 .g-steps .ok .v{color:var(--title)}
 .g-steps .v small{font-family:var(--f-bold);font-size:14px;color:var(--label);margin-left:4px}
+@media (max-width:600px){table.t3{min-width:0;font-size:12.5px}.t3 th,.t3 td{padding-left:6px!important;padding-right:6px!important}.t3 td small{font-size:11px}}
+.t3 td small{display:block;font-family:var(--f-body);font-size:12.5px;color:var(--muted);font-weight:400}
+.t3 .done{color:var(--title);font-family:var(--f-xb);font-weight:400}
+.t3 tr.sum td{border-top:2px solid var(--accent);font-family:var(--f-bold)}
+.goal2 .g-head + .tbl{margin-top:2px}
 .g-mark{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--hi);border:1px solid var(--note);border-radius:2px;transform:translateX(-50%)}
 .g-axis{position:relative;height:20px;font-size:12.5px;color:var(--note);font-family:var(--f-bold)}
 .g-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
@@ -290,24 +295,29 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
     </ul>
   </div>
   <div class="goal2">
-    <div class="g-head"><span class="g-t">4기 재등록 목표 · 재등록률 30%</span><span class="g-v">131 <small>/ 280명</small> <em>목표의 47%</em></span></div>
-    <div class="g-steps">
-      <div class="ok"><span class="k">1단계 · 사전신청 목표 100명</span><span class="v">131명 달성 <small>목표의 131%</small></span></div>
-      <div class="left"><span class="k">2단계 · 최종 목표 280명 (재등록률 30%)</span><span class="v">149명 남음 <small>현재 47%</small></span></div>
-    </div>
-    <div class="g-trk" role="img" aria-label="최종 목표 280명 중 131명, 사전신청 목표 100명 지점을 넘김"><div class="g-fill" style="width:46.8%"></div><span class="g-mark" style="left:35.7%"></span></div>
-    <div class="g-axis"><span style="left:35.7%">사전신청 목표 100명</span><span class="end">280명</span></div>
-    <div class="tbl"><table>
-      <colgroup><col style="width:34%"><col style="width:22%"><col style="width:22%"><col style="width:22%"></colgroup>
-      <thead><tr><th>비교</th><th class="r">3기 실적</th><th class="r">4기 목표</th><th class="r">4기 현재</th></tr></thead>
+    <div class="g-head"><span class="g-t">3기 실적과 4기 목표</span></div>
+    <div class="tbl"><table class="t3">
+      <colgroup><col style="width:30%"><col style="width:35%"><col style="width:35%"></colgroup>
+      <thead><tr><th>항목</th><th class="r">3기 실적</th><th class="r">4기 목표</th></tr></thead>
       <tbody>
-        <tr><td>직전 기수 참여자</td><td class="r">793명 (1·2기)</td><td class="r">932명 (3기)</td><td class="r">932명 (3기)</td></tr>
-        <tr class="good"><td>재등록 인원</td><td class="r">158명</td><td class="r">280명</td><td class="r">131명</td></tr>
-        <tr class="good"><td>재등록률 (직전 기수 대비)</td><td class="r">19.9%</td><td class="r">30%</td><td class="r">14.1%</td></tr>
-        <tr><td>기수 정원 중 재등록 비중</td><td class="r">17.7% (892명 중)</td><td class="r">28% (1,000명 중)</td><td class="r">13.1%</td></tr>
-        <tr><td>기수 전체 꾸준사용률</td><td class="r">32.0%</td><td class="r">35.6% (예상)</td><td class="r">29.4% (예상)</td></tr>
+        <tr><td>총 회원수</td><td class="r">932명</td><td class="r">1,000명</td></tr>
+        <tr class="good"><td>활동회원수</td><td class="r">261명 <small>(932명 중 28.0%)</small></td><td class="r">356명 <small>(1,000명 중 35.6%)</small></td></tr>
+        <tr class="good"><td>재등록 회원수</td><td class="r">158명 <small>(1·2기 793명 중 19.9%)</small></td><td class="r">280명 <small>(3기 932명 중 30%)</small></td></tr>
       </tbody></table></div>
-    <p class="cap">3기 재등록률(19.9%)보다 10%p 높은 30%를 목표로 잡았습니다. 올해는 작년에 없던 신청 통로(3기 리포트 · 수료식 현장 신청)가 생겼고, 280명은 3기 꾸준 사용자(약 261명)를 거의 모두 다시 데려오는 수준입니다. 달성하면 4기 꾸준사용률이 35.6%로 3기(32.0%)보다 높게 출발합니다. 재등록자 꾸준사용률 65.8% · 신규 23.9%(운영 대시보드, 가입 30일 이상 기준), 4기 정원 1,000명 가정. 4기는 2027년 2월 시작이고 남은 인원은 149명입니다.</p>
+    <p class="cap">활동회원을 늘리는 가장 효율적인 방법은 재등록입니다. 재등록 회원은 65.8%가 꾸준히 쓰지만 신규는 23.9%입니다(운영 대시보드). 재등록 280명을 채우면 4기 활동회원 356명이 됩니다.</p>
+
+    <div class="g-head"><span class="g-t">재등록 280명 채우기</span><span class="g-v">131 <small>/ 280명</small> <em>47%</em></span></div>
+    <div class="g-trk" role="img" aria-label="재등록 목표 280명 중 131명. 1차 목표 100명을 넘김"><div class="g-fill" style="width:46.8%"></div><span class="g-mark" style="left:35.7%"></span><span class="g-mark" style="left:71.4%"></span></div>
+    <div class="g-axis"><span style="left:35.7%">1차 100</span><span style="left:71.4%">2차 200</span><span class="end">3차 280</span></div>
+    <div class="tbl"><table class="t3">
+      <colgroup><col style="width:22%"><col style="width:38%"><col style="width:16%"><col style="width:24%"></colgroup>
+      <thead><tr><th>차수</th><th>방법</th><th class="r">목표</th><th class="r">현재</th></tr></thead>
+      <tbody>
+        <tr class="good"><td>1차 사전등록</td><td>10/30 수료식 · 3기 리포트</td><td class="r">100명</td><td class="r"><b class="done">131명 달성</b></td></tr>
+        <tr><td>2차 사전등록</td><td>4기 신청 페이지 배너 · 문자 · 이벤트·챌린지</td><td class="r">100명</td><td class="r">예정</td></tr>
+        <tr><td>3차 (4기 시작 후)</td><td>보건소 신청 접수 (협의 예정)</td><td class="r">80명</td><td class="r">예정</td></tr>
+        <tr class="sum"><td>합계</td><td></td><td class="r">280명</td><td class="r">131명 · 149명 남음</td></tr>
+      </tbody></table></div>
   </div>
 </section>
 
