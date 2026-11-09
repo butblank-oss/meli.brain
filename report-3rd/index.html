@@ -215,6 +215,19 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 .g-v em{font-style:normal;font-size:20px;color:#fff;background:var(--accent);border-radius:999px;padding:2px 12px;margin-left:6px;vertical-align:4px}
 .g-trk{position:relative;height:22px;background:var(--track);border-radius:6px}
 .g-fill{height:100%;background:var(--accent);border-radius:6px}
+.g-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.g-steps div{border-radius:10px;padding:10px 14px;display:grid;gap:2px}
+.g-steps .ok{background:var(--accent-soft)}
+.g-steps .left{background:var(--sub)}
+.g-steps .k{font-size:13.5px;color:var(--muted)}
+.g-steps .v{font-family:var(--f-xb);font-size:20px;color:var(--ink);line-height:1.35}
+.g-steps .ok .v{color:var(--title)}
+.g-steps .v small{font-family:var(--f-bold);font-size:14px;color:var(--label);margin-left:4px}
+.g-mark{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--hi);border:1px solid var(--note);border-radius:2px;transform:translateX(-50%)}
+.g-axis{position:relative;height:20px;font-size:12.5px;color:var(--note);font-family:var(--f-bold)}
+.g-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.g-axis .end{right:0;transform:none;color:var(--muted)}
+@media (max-width:520px){.g-steps{grid-template-columns:1fr}}
 .facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .facts div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
 .facts b{font-family:var(--f-xb);font-size:24px;color:var(--ink)}
@@ -272,7 +285,12 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   </div>
   <div class="goal2">
     <div class="g-head"><span class="g-t">4기 재등록 목표 · 재등록률 30%</span><span class="g-v">131 <small>/ 280명</small> <em>목표의 47%</em></span></div>
-    <div class="g-trk"><div class="g-fill" style="width:46.8%"></div></div>
+    <div class="g-steps">
+      <div class="ok"><span class="k">1단계 · 사전신청 목표 100명</span><span class="v">131명 달성 <small>목표의 131%</small></span></div>
+      <div class="left"><span class="k">2단계 · 최종 목표 280명 (재등록률 30%)</span><span class="v">149명 남음 <small>현재 47%</small></span></div>
+    </div>
+    <div class="g-trk" role="img" aria-label="최종 목표 280명 중 131명, 사전신청 목표 100명 지점을 넘김"><div class="g-fill" style="width:46.8%"></div><span class="g-mark" style="left:35.7%"></span></div>
+    <div class="g-axis"><span style="left:35.7%">사전신청 목표 100명</span><span class="end">280명</span></div>
     <div class="tbl"><table>
       <colgroup><col style="width:34%"><col style="width:22%"><col style="width:22%"><col style="width:22%"></colgroup>
       <thead><tr><th>비교</th><th class="r">3기 실적</th><th class="r">4기 목표</th><th class="r">4기 현재</th></tr></thead>
