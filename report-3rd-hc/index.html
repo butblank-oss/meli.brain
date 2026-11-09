@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>3기 리포트 · 4기 사전등록 결과 보고</title>
+<style>
+@font-face{font-family:"Paperlogy";src:url("https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-4Regular.woff2") format("woff2");font-display:swap}
+@font-face{font-family:"Paperlogy Bold";src:url("https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-7Bold.woff2") format("woff2");font-display:swap}
+@font-face{font-family:"Paperlogy ExtraBold";src:url("https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-8ExtraBold.woff2") format("woff2");font-display:swap}
+/* 레이아웃: 한 줄 결론 → 한눈에 보기 → 주제별 섹션(숫자 · 그래프 · 이유 / 할 일, 맬랑이 1개) → 남은 확인. 맬리 제안서 토큰, 밝은 테마 고정 */
+:root{
+  --bg:#FBFCFA; --paper:#FFFFFF; --ink:#1E2B26; --title:#265F4D; --body:#3E4C46; --muted:#6B7872; --line:#DCE7E1; --track:#E8F5EE; --sub:#F1F5F3;
+  --accent:#265F4D; --accent-soft:#E8F5EE; --soft:#5BBE97; --label:#2E8A64; --bad:#265F4D; --bad-soft:#E8F5EE; --grey:#5BBE97;
+  --hold:#55635D; --hold-soft:#F1F5F3; --note-bg:#FFF6D9; --note:#8A6400; --on-dark:#BFE6D3; --on-dark-2:#E1F2EA; --hi:#FFE27A;
+  --f-body:"Paperlogy",Arial,"Apple SD Gothic Neo",sans-serif; --f-bold:"Paperlogy Bold",Arial,sans-serif; --f-xb:"Paperlogy ExtraBold",Arial,sans-serif;
+  --f-num:"Paperlogy Bold",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{word-break:keep-all;overflow-wrap:break-word}
+body{background:var(--bg);color:var(--body);font-family:var(--f-body);font-size:16px;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding-block:40px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2,h3,p{margin:0}
+h1{color:var(--title);font-family:var(--f-xb);font-size:clamp(28px,5vw,38px);line-height:1.25;font-weight:400;text-wrap:balance}
+h2{color:var(--title);font-family:var(--f-xb);font-size:clamp(20px,3.6vw,25px);line-height:1.4;font-weight:400;text-wrap:balance}
+h3{color:var(--title);font-family:var(--f-bold);font-size:15px;font-weight:400;letter-spacing:.02em}
+strong{color:var(--title);font-family:var(--f-bold);font-weight:400}
+.eyebrow{font-size:14px;color:var(--label);font-family:var(--f-bold);letter-spacing:.04em}
+.meta{font-size:14px;color:var(--muted)}
+header{display:grid;gap:10px;position:relative;padding-right:120px}
+.logo{position:absolute;top:0;right:0;width:150px;height:auto}
+@media (max-width:640px){header{padding-right:0;padding-top:44px}.logo{width:120px;left:0;right:auto}}
+/* 한 줄 결론 */
+.thesis{position:relative;background:var(--accent);color:#fff;border-radius:16px;padding:24px;display:grid;gap:18px}
+.thesis p{font-size:clamp(18px,2.9vw,21px);line-height:1.6;color:#fff}
+.thesis p strong{color:var(--on-dark)}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.duo div{border:1px solid color-mix(in srgb,var(--bg) 22%,transparent);border-radius:12px;padding:14px;display:grid;gap:2px}
+.duo b{font-family:var(--f-xb);font-weight:400;font-size:clamp(26px,4.8vw,36px);line-height:1.15;color:#fff}
+.duo b.key{color:var(--hi)}
+.duo b s{color:color-mix(in srgb,var(--bg) 50%,transparent);text-decoration-thickness:2px;font-size:.62em;margin-right:6px}
+.duo span{font-size:14px;color:var(--on-dark-2)}
+.thesis small{font-size:13px;color:var(--on-dark)}
+/* 한눈에 */
+.glance{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:8px 0}
+.glance h2{font-size:17px;padding:14px 20px 6px}
+.glance a{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:4px 12px;align-items:start;padding:14px 20px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.glance a:hover,.glance a:focus-visible{background:var(--accent-soft);outline:none}
+.glance .no{grid-row:span 2}
+.glance .q{color:var(--title);font-family:var(--f-bold)}
+.glance .a{grid-column:2/4;font-size:14.5px;color:var(--body)}
+.no{font-family:var(--f-num);font-weight:600;font-size:13px;color:var(--accent);background:var(--accent-soft);border-radius:8px;width:28px;height:28px;display:grid;place-items:center}
+.chip{display:inline-block;font-size:13px;font-family:var(--f-bold);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.chip.ok{background:var(--accent-soft);color:var(--accent)}
+.chip.fix{background:var(--note-bg);color:var(--note)}
+.chip.info{background:var(--hold-soft);color:var(--hold)}
+/* 섹션 */
+.part{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:18px;scroll-margin-top:16px}
+.part-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.kicker{font-size:15px;font-family:var(--f-bold);color:var(--label)}
+.mally{position:absolute;top:14px;right:18px;width:104px;height:104px;object-fit:contain;pointer-events:none}
+.part-head,.part h2{padding-right:112px}
+.part-head .chip{margin-left:0}
+.part-head .chip{margin-left:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.stat{background:var(--sub);border-radius:12px;padding:14px 16px;display:grid;gap:2px;align-content:start}
+.stat b{font-family:var(--f-xb);font-weight:400;font-size:30px;line-height:1.2;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat span{font-size:13.5px;color:var(--muted);line-height:1.5}
+.stat b{color:var(--title)}
+.figure{display:grid;gap:10px;min-width:0}
+.cap{font-size:13px;color:var(--muted);line-height:1.55}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.why,.todo{display:grid;gap:8px;align-content:start}
+.why p{font-size:15.5px}
+.todo{background:var(--accent-soft);border-radius:12px;padding:16px 18px}
+.todo h3{color:var(--accent)}
+.todo ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.todo li{position:relative;padding-left:26px;color:var(--ink);font-size:15px;line-height:1.55}
+.todo li::before{content:"";position:absolute;left:0;top:5px;width:15px;height:15px;border:2px solid var(--soft);border-radius:4px;background:#fff}
+.plain{margin:0;padding-left:18px;display:grid;gap:6px;font-size:15px}
+.miss{font-size:15px;color:var(--ink)}
+.goal{font-family:var(--f-bold);font-size:14px;color:var(--title);border-top:1px solid color-mix(in srgb,var(--accent) 25%,transparent);padding-top:8px}
+@media (max-width:640px){.split{grid-template-columns:1fr}.part{padding:20px 16px}.duo{grid-template-columns:1fr}.mally{width:68px;height:68px;top:10px;right:10px}.part-head,.part h2{padding-right:72px}}
+/* 막대 */
+.bars{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 62px;align-items:center;gap:10px;font-size:14px}
+.bar .lab{color:var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .trk{display:block;height:14px;background:var(--track);border-radius:4px;overflow:hidden}
+.bar .fill{display:block;height:100%;background:var(--accent);border-radius:4px}
+.bar .fill.soft{background:var(--soft)}
+.bar .fill.grey{background:var(--soft)}
+.bar .fill.bad{background:var(--bad)}
+.bar .fill.grey{background:var(--grey)}
+.bar .val{text-align:right;color:var(--ink);font-family:var(--f-num);font-size:13px;font-variant-numeric:tabular-nums}
+@media (max-width:420px){.bar{grid-template-columns:92px minmax(0,1fr) 54px;font-size:13px}}
+.stack{display:flex;height:32px;border-radius:8px;overflow:hidden;gap:2px}
+.stack span{display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-family:var(--f-num);white-space:nowrap;overflow:hidden}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.comp{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:center;gap:10px}
+.comp-lab{font-size:14px;color:var(--body);font-family:var(--f-bold)}
+.why .plain{gap:10px}
+.eff-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.eff-card{background:var(--sub);border-radius:12px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+@media (max-width:760px){.eff-grid{grid-template-columns:1fr}}
+.part .stats{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.split.solo{grid-template-columns:1fr}
+.split.solo .why p{max-width:72ch}
+.stack.big{height:56px;border-radius:10px}
+.stack.big span{font-size:16px}
+.routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.route{background:var(--sub);border-radius:12px;padding:16px 18px;display:grid;gap:4px;align-content:start}
+.route i{width:14px;height:14px;border-radius:4px}
+.route .rl{font-family:var(--f-bold);color:var(--title);font-size:15px}
+.route b{font-family:var(--f-xb);font-weight:400;font-size:34px;line-height:1.15;color:var(--ink)}
+.route .rs{font-size:13.5px;color:var(--muted)}
+@media (max-width:640px){.routes{grid-template-columns:1fr}}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.tl li{display:grid;grid-template-columns:250px minmax(0,1fr);gap:12px;align-items:baseline;border-bottom:1px solid color-mix(in srgb,#fff 18%,transparent);padding-bottom:10px}
+.tl li:last-child{border-bottom:0;padding-bottom:0}
+.tl b{font-family:var(--f-xb);font-weight:400;font-size:22px;color:#fff}
+.tl li:first-child b{color:var(--hi)}
+.tl span{font-size:16px;color:var(--on-dark-2)}
+@media (max-width:640px){.tl li{grid-template-columns:1fr;gap:2px}}
+.funnel-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.funnel-wrap svg.funnel{min-width:860px}
+.sub{font-size:14px;font-family:var(--f-bold);color:var(--title);margin-top:6px}
+svg.chart{width:100%;height:auto;display:block}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:420px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:#fff;background:var(--accent);font-family:var(--f-bold);font-weight:400}
+tbody tr:nth-child(even) td{background:#F6FAF8}
+td.r,th.r{text-align:right;font-family:var(--f-num);font-variant-numeric:tabular-nums}
+tr.good td:first-child{color:var(--title);font-family:var(--f-bold)}
+tr.flag td{color:var(--note)}
+/* 하단 */
+.ends{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:10px;align-content:start}
+.box.warn{background:var(--note-bg);border-color:transparent}
+.box.warn h3{color:var(--note)}
+.box ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14.5px}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+<style>
+.ctx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ctx div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.ctx b{font-family:var(--f-bold);color:var(--title);font-size:15px}
+.ctx span{font-size:14px;color:var(--body);line-height:1.55}
+.ctx em{font-style:normal;font-family:var(--f-num);color:var(--label);font-size:13px}
+.hero{background:var(--accent);border-radius:16px;padding:28px 24px;display:grid;gap:10px}
+.hero .big{font-family:var(--f-xb);font-size:clamp(44px,9vw,72px);line-height:1;color:var(--hi)}
+.hero .big small{font-size:.38em;color:#fff;margin-left:8px}
+.hero p{color:#fff;font-size:clamp(17px,2.8vw,20px);line-height:1.55}
+.hero p strong{color:var(--on-dark)}
+.step{display:grid;gap:16px}
+.step-h{display:flex;gap:12px;align-items:baseline}
+.step-h .n{font-family:var(--f-xb);font-size:15px;color:#fff;background:var(--accent);border-radius:999px;width:28px;height:28px;display:grid;place-items:center;flex:none}
+.step-h h2{font-size:clamp(20px,3.4vw,26px)}
+.lead{font-size:16px;color:var(--body);max-width:68ch}
+.lead strong{color:var(--title)}
+.ch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ch .c{border-radius:14px;padding:18px;display:grid;gap:6px;align-content:start;background:var(--paper);border:1px solid var(--line)}
+.ch .c.hl{border:2px solid var(--accent);background:var(--accent-soft)}
+.ch .t{font-family:var(--f-bold);color:var(--title);font-size:15px}
+.ch .v{font-family:var(--f-xb);font-size:44px;line-height:1.05;color:var(--ink)}
+.ch .v small{font-size:16px;color:var(--muted);margin-left:4px;font-family:var(--f-bold)}
+.ch .d{font-size:14px;color:var(--body);line-height:1.5}
+.ch .d b{font-family:var(--f-bold);color:var(--title);font-weight:400}
+.who{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.who div{background:var(--sub);border-radius:12px;padding:12px 14px;display:grid;gap:2px}
+.who b{font-family:var(--f-xb);font-size:26px;color:var(--ink);line-height:1.1}
+.who span{font-size:13.5px;color:var(--muted)}
+.fn{display:grid;gap:6px}
+.fn .r{display:grid;grid-template-columns:150px minmax(0,1fr) 170px;gap:12px;align-items:center}
+.fn .lab{font-size:15px;color:var(--ink);font-family:var(--f-bold)}
+.fn .lab small{display:block;font-family:var(--f-body);font-size:12.5px;color:var(--muted)}
+.fn .trk{height:34px;background:var(--track);border-radius:6px;overflow:hidden}
+.fn .fill{height:100%;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-family:var(--f-bold);font-size:14px;white-space:nowrap}
+.fn .fill.soft{background:var(--soft)}
+.fn .trk.split{display:flex;gap:2px;background:transparent}
+.fn .seg{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--f-bold);font-size:13px;white-space:nowrap;overflow:hidden}
+.fn .seg.a{background:var(--soft);color:#fff;border-radius:6px 0 0 6px}
+.fn .seg.b{background:#C9D3CE;color:var(--ink);border-radius:0 6px 6px 0}
+.fn .m-only{display:none;font-style:normal}
+@media (max-width:600px){.fn .seg{font-size:0}.fn .m-only{display:block}}
+.fn .fill.out{justify-content:flex-start;padding-left:0}
+.fn .val{font-family:var(--f-xb);font-size:22px;color:var(--ink);text-align:right;white-space:nowrap}
+.fn .val small{display:block;font-family:var(--f-body);font-size:12.5px;color:var(--muted);line-height:1.3}
+.fn .gap{margin-left:162px;font-size:13px;color:var(--muted);padding-left:6px;border-left:2px dashed var(--line)}
+.fn .gap.warn{color:var(--note);border-left-color:#E8C77A}
+.who2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.who2 div{background:var(--sub);border-radius:12px;padding:16px 18px;display:grid;gap:4px}
+.who2 .wl{font-family:var(--f-xb);font-size:21px;color:var(--title);line-height:1.3}
+.who2 b{font-family:var(--f-bold);font-weight:400;font-size:20px;color:var(--ink)}
+.who2 b small{font-size:15px;color:var(--muted)}
+.who2 .ws{font-size:13.5px;color:var(--muted)}
+@media (max-width:720px){.who2{grid-template-columns:1fr}}
+.mem{background:var(--sub);border-radius:12px;padding:18px;display:grid;gap:14px}
+.mem .m-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
+.mem .m-t{font-family:var(--f-xb);font-size:21px;color:var(--title);line-height:1.3}
+.mem .m-v{font-family:var(--f-xb);font-size:26px;color:var(--ink);white-space:nowrap}
+.mem .m-v small{font-family:var(--f-body);font-size:15px;color:var(--muted);margin-left:4px}
+.mem .mbar{display:flex;height:40px;border-radius:8px;overflow:hidden;gap:2px;background:var(--paper)}
+.mem .mbar span{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--f-bold);font-size:14px;white-space:nowrap;overflow:hidden}
+.mem .s1{background:var(--accent)} .mem .s2{background:var(--soft)} .mem .s3{background:#8A9893}
+.mem ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.mem li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:baseline}
+.mem li i{width:14px;height:14px;border-radius:3px;align-self:start;margin-top:6px}
+.mem li .k{font-family:var(--f-bold);color:var(--ink)}
+.mem li .k small{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted)}
+.mem li b{font-family:var(--f-bold);font-weight:400;color:var(--ink);white-space:nowrap}
+.mem li b small{font-size:13px;color:var(--muted);margin-left:4px}
+.goal2{background:var(--paper);border:2px solid var(--accent);border-radius:14px;padding:16px 18px;display:grid;gap:10px}
+.g-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.g-t{font-family:var(--f-xb);font-size:19px;color:var(--title)}
+.g-v{font-family:var(--f-xb);font-size:30px;color:var(--ink)}
+.g-v small{font-family:var(--f-bold);font-size:16px;color:var(--muted)}
+.g-v em{font-style:normal;font-size:20px;color:#fff;background:var(--accent);border-radius:999px;padding:2px 12px;margin-left:6px;vertical-align:4px}
+.g-trk{position:relative;height:22px;background:var(--track);border-radius:6px}
+.g-fill{height:100%;background:var(--accent);border-radius:6px}
+.g-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.g-steps div{border-radius:10px;padding:10px 14px;display:grid;gap:2px}
+.g-steps .ok{background:var(--accent-soft)}
+.g-steps .left{background:var(--sub)}
+.g-steps .k{font-size:13.5px;color:var(--muted)}
+.g-steps .v{font-family:var(--f-xb);font-size:20px;color:var(--ink);line-height:1.35}
+.g-steps .ok .v{color:var(--title)}
+.g-steps .v small{font-family:var(--f-bold);font-size:14px;color:var(--label);margin-left:4px}
+@media (max-width:600px){table.t3{min-width:0;font-size:12.5px}.t3 th,.t3 td{padding-left:6px!important;padding-right:6px!important}.t3 td small{font-size:11px}}
+.t3 td small{display:block;font-family:var(--f-body);font-size:12.5px;color:var(--muted);font-weight:400}
+.t3 .done{color:var(--title);font-family:var(--f-xb);font-weight:400}
+.t3 tr.sum td{border-top:2px solid var(--accent);font-family:var(--f-bold)}
+.goal2 .g-head + .tbl{margin-top:2px}
+.chg{display:grid;gap:8px}
+.chg-h,.chg-r{display:grid;grid-template-columns:120px minmax(0,1fr) 28px minmax(0,1fr) 130px;align-items:center;gap:8px}
+.chg-h span{font-size:12.5px;color:var(--muted);font-family:var(--f-bold)}
+.chg-h span:nth-child(2),.chg-h span:nth-child(4){text-align:center}
+.chg-r{background:var(--sub);border-radius:12px;padding:12px 14px}
+.chg-r.hl{background:var(--accent-soft)}
+.chg-r .l{font-family:var(--f-bold);color:var(--title);font-size:15px}
+.chg-r .f,.chg-r .t{text-align:center;font-family:var(--f-xb);font-size:22px;color:var(--ink);line-height:1.25}
+.chg-r .f{color:var(--muted)}
+.chg-r small{display:block;font-family:var(--f-body);font-size:12px;color:var(--muted)}
+.chg-r .ar{font-family:var(--f-xb);font-size:22px;color:var(--soft);text-align:center}
+.chg-r .d{display:grid;justify-items:end;gap:2px}
+.chg-r .d b{font-family:var(--f-xb);font-weight:400;font-size:16px;color:#fff;background:var(--accent);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.chg-r .d i{font-style:normal;font-family:var(--f-bold);font-size:13px;color:var(--label)}
+@media (max-width:600px){
+ .chg-h{display:none}
+ .chg-r{grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);grid-template-areas:"l l l" "f a t" "d d d";row-gap:6px}
+ .chg-r .l{grid-area:l}.chg-r .f{grid-area:f}.chg-r .ar{grid-area:a}.chg-r .t{grid-area:t}
+ .chg-r .d{grid-area:d;grid-auto-flow:column;justify-content:start;align-items:center;gap:8px}
+ .chg-r .f,.chg-r .t{font-size:19px}
+}
+.win{display:flex;gap:12px;align-items:flex-start;background:var(--accent);color:#fff;border-radius:12px;padding:14px 16px}
+.win .wi{flex:none;width:28px;height:28px;border-radius:50%;background:var(--hi);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--f-xb);font-size:16px}
+.win p{display:grid;gap:2px}
+.win b{font-family:var(--f-xb);font-weight:400;font-size:18px;color:#fff;line-height:1.4}
+.win span{font-size:14px;color:var(--on-dark-2)}
+.g-mark{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--hi);border:1px solid var(--note);border-radius:2px;transform:translateX(-50%)}
+.g-axis{position:relative;height:20px;font-size:12.5px;color:var(--note);font-family:var(--f-bold)}
+.g-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.g-axis .end{right:0;transform:none;color:var(--muted)}
+@media (max-width:520px){.g-steps{grid-template-columns:1fr}}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.facts div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.facts b{font-family:var(--f-xb);font-size:24px;color:var(--ink)}
+.facts span{font-size:14px;color:var(--body)}
+.retro{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.retro .box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;align-content:start}
+.retro .box.wide{grid-column:1/-1}
+.retro .rg{font-family:var(--f-xb);font-size:16px;color:var(--title)}
+.retro .bad .rg{color:var(--note)}
+.retro ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px;color:var(--body);line-height:1.6}
+.retro .wide ul{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
+.retro li b{font-family:var(--f-bold);font-weight:400;color:var(--ink)}
+@media (max-width:720px){.retro{grid-template-columns:1fr}.retro .wide ul{grid-template-columns:1fr}}
+.gloss{font-size:13px;color:var(--muted);display:grid;gap:4px;border-top:1px solid var(--line);padding-top:14px}
+.gloss b{color:var(--body);font-family:var(--f-bold);font-weight:400}
+@media (max-width:720px){.ctx,.ch,.who,.facts{grid-template-columns:1fr}.fn .r{grid-template-columns:84px minmax(0,1fr) 118px;gap:8px}.fn .gap{margin-left:100px}.fn .val{font-size:16px}.fn .val small{font-size:11.5px;margin-left:4px}.fn .trk{height:26px}}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">인천 남동구 보건소 · 맬리브레인 치매예방교실 · 11/9 기준</span>
+  <h1>3기 리포트 · 4기 사전등록 결과 보고</h1>
+</header>
+
+<section class="ctx" aria-label="배경">
+  <div><em>배경 1</em><b>3기 치매예방교실</b><span>2026.3~10월 운영. 어르신 932명이 앱으로 매일 두뇌훈련을 했습니다.</span></div>
+  <div><em>배경 2 · 10/30</em><b>수료식 현장 행사</b><span>보건소 대강당에서 설문을 받고 4기 사전신청을 받았습니다.</span></div>
+  <div><em>배경 3 · 11/2~</em><b>3기 리포트 오픈</b><span>앱에서 개인별 8개월 기록과 수료증을 보여주고, 마지막에 4기 신청 버튼을 두었습니다.</span></div>
+</section>
+
+<section class="hero">
+  <span class="big">137명<small>4기 사전등록 (중복 제외)</small></span>
+  <p>이 중 <strong>114명(137명 중 83%)을 맬리브레인이 3기 리포트와 10/30 수료식에서 모았습니다</strong>(재등록 108명 · 신규 6명). 리포트에서만 <strong>56명</strong>이 신청했습니다.</p>
+</section>
+
+<section class="part step">
+  <div class="step-h"><span class="n">1</span><h2>4기 사전등록 137명은 어디서 왔나</h2></div>
+  <p class="lead">한 사람이 여러 곳에서 신청한 경우는 한 번만 셌습니다. <strong>137명 중 114명을 맬리브레인이 리포트와 수료식에서 모았고</strong>, 리포트가 현장 행사만큼 큰 신청 통로였습니다.</p>
+  <div class="ch">
+    <div class="c hl"><span class="t">3기 리포트에서<br>4기 신청 버튼</span><span class="v">56<small>명</small></span><span class="d">리포트만 보고 신청 <b>35명</b><br>수료식에도 신청 21명</span></div>
+    <div class="c hl"><span class="t">10/30 수료식 현장에서<br>4기 사전등록</span><span class="v">58<small>명</small></span><span class="d">현장 사전신청·접수<br>신규 6명 모두 이곳에서 등록</span></div>
+    <div class="c"><span class="t">보건소<br>신청폼</span><span class="v">23<small>명</small></span><span class="d">보건소에서 직접 접수<br>리포트·수료식과 겹치는 사람 0명</span></div>
+  </div>
+  <p class="cap">세 칸은 서로 겹치지 않게 나눴습니다(56 + 58 + 23 = 137). 맬리브레인 114명(리포트 56 + 수료식 58) · 보건소 23명. 리포트와 수료식에서 모두 신청한 21명은 리포트 칸에 넣었습니다.</p>
+  <p class="sub">신청자는 누구인가</p>
+  <div class="mem">
+    <div class="m-head"><span class="m-t">1·2·3기 회원 재등록</span><span class="m-v">131명<small>/ 137명 (95.6%)</small></span></div>
+    <div class="mbar" role="img" aria-label="4기 신청 137명 중 3기 참여자 재등록 99명, 3기 동시 등록 32명, 신규 6명">
+      <span class="s1" style="flex:99">99</span><span class="s2" style="flex:32">32</span><span class="s3" style="flex:6"></span>
+    </div>
+    <ul>
+      <li><i class="s1"></i><span class="k">3기 참여자 재등록<small>3기를 하던 분이 4기도 이어서 신청 (1·2기 출신 포함)</small></span><b>99명<small>72.3%</small></b></li>
+      <li><i class="s2"></i><span class="k">3기 동시 등록 회원<small>4기 신청하면서 3기에도 함께 등록된 분</small></span><b>32명<small>23.4%</small></b></li>
+      <li><i class="s3"></i><span class="k">4기 신규<small>수료식 오프라인에서 처음 등록</small></span><b>6명<small>4.4%</small></b></li>
+    </ul>
+  </div>
+  <div class="goal2">
+    <div class="g-head"><span class="g-t">3기 실적과 4기 목표</span></div>
+    <div class="chg">
+      <div class="chg-h"><span></span><span>3기 실적</span><span></span><span>4기 목표</span><span>변화</span></div>
+      <div class="chg-r"><span class="l">총 회원수</span><span class="f">932명<small></small></span><span class="ar" aria-hidden="true">→</span><span class="t">1,000명<small></small></span><span class="d"><b>+68명</b><i>+7%</i></span></div>
+      <div class="chg-r hl"><span class="l">활동회원수</span><span class="f">261명<small>932명 중 28.0%</small></span><span class="ar" aria-hidden="true">→</span><span class="t">356명<small>1,000명 중 35.6%</small></span><span class="d"><b>+95명</b><i>+7.6%p</i></span></div>
+      <div class="chg-r hl"><span class="l">재등록 회원수</span><span class="f">158명<small>1·2기 793명 중 19.9%</small></span><span class="ar" aria-hidden="true">→</span><span class="t">280명<small>3기 932명 중 30%</small></span><span class="d"><b>+122명</b><i>+10.1%p</i></span></div>
+    </div>
+    <p class="cap">활동회원을 늘리는 가장 효율적인 방법은 재등록입니다. 재등록 회원은 65.8%가 꾸준히 쓰지만 신규는 23.9%입니다(운영 대시보드). 재등록 280명을 채우면 4기 활동회원 356명이 됩니다.</p>
+
+    <div class="g-head"><span class="g-t">재등록 280명 채우기</span><span class="g-v">131 <small>/ 280명</small> <em>47%</em></span></div>
+    <div class="win"><span class="wi" aria-hidden="true">✓</span><p><b>사전등록을 미리 받아 4기 모집에 도움이 되었습니다.</b><span>4기 시작 전에 맬리브레인이 리포트와 수료식에서 114명(재등록 108명 · 신규 6명)을 먼저 모아, 4기 인원 모집 부담을 덜었습니다.</span></p></div>
+    <div class="g-trk" role="img" aria-label="재등록 목표 280명 중 131명. 1차 목표 100명을 넘김"><div class="g-fill" style="width:46.8%"></div><span class="g-mark" style="left:35.7%"></span><span class="g-mark" style="left:71.4%"></span></div>
+    <div class="g-axis"><span style="left:35.7%">1차 100</span><span style="left:71.4%">2차 200</span><span class="end">3차 280</span></div>
+    <div class="tbl"><table class="t3">
+      <colgroup><col style="width:22%"><col style="width:38%"><col style="width:16%"><col style="width:24%"></colgroup>
+      <thead><tr><th>차수</th><th>방법</th><th class="r">목표</th><th class="r">현재</th></tr></thead>
+      <tbody>
+        <tr class="good"><td>1차 사전등록</td><td>10/30 수료식 · 3기 리포트</td><td class="r">100명</td><td class="r"><b class="done">131명 달성</b><small>맬리브레인 108명 · 보건소 23명</small></td></tr>
+        <tr><td>2차 사전등록</td><td>4기 신청 페이지 배너 · 문자 · 이벤트·챌린지</td><td class="r">100명</td><td class="r">예정</td></tr>
+        <tr><td>3차 (4기 시작 후)</td><td>보건소 신청 접수</td><td class="r">80명</td><td class="r">예정</td></tr>
+        <tr class="sum"><td>합계</td><td></td><td class="r">280명</td><td class="r">131명 · 149명 남음</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<section class="part step">
+  <div class="step-h"><span class="n">2</span><h2>리포트는 어디까지 봤나</h2></div>
+  <p class="lead">앱을 연 사람은 거의 다 리포트를 봤고, 본 사람의 절반이 끝(수료증)까지 내려갔습니다. <strong>걸림돌은 리포트가 아니라 앱 접속</strong>입니다. %는 두 기준으로 적었습니다. <b>전체</b> = 3기 932명 대비, <b>활동</b> = 활동회원 261명 대비. 활동회원은 운영 대시보드 기준(3기 892명 집계, 최근 30일 활동)이라 시점이 조금 다릅니다.</p>
+  <div class="fn" role="img" aria-label="리포트 대상 932명에서 4기 신청 56명까지"><div class="r"><span class="lab">리포트 대상<small>3기 전원<em class="m-only">활동 261 · 비활동 671</em></small></span><div class="trk split"><div class="seg a" style="width:28.0%">활동 261</div><div class="seg b" style="width:72.0%">비활동 671</div></div><span class="val">932명 <small>전체 100%</small></span></div><div class="gap warn">최근 30일 안에 앱을 쓴 활동회원은 4명 중 1명꼴</div><div class="r"><span class="lab">활동회원<small>최근 30일 활동</small></span><div class="trk"><div class="fill soft" style="width:28.0%"></div></div><span class="val">261명 <small>전체 28% · 활동 100%</small></span></div><div class="gap warn">리포트는 앱을 연 사람만 볼 수 있음 · 활동회원 수만큼 접속했고, 676명은 기간 중 접속 기록 없음</div><div class="r"><span class="lab">앱 접속<small>11/2 이후</small></span><div class="trk"><div class="fill soft" style="width:27.5%"></div></div><span class="val">256명 <small>전체 27% · 활동 98%</small></span></div><div class="gap">접속자 중 95%가 리포트를 엶</div><div class="r"><span class="lab">리포트 열람<small></small></span><div class="trk"><div class="fill " style="width:26.1%"></div></div><span class="val">243명 <small>전체 26% · 활동 93%</small></span></div><div class="gap warn">끝까지 내려간 사람 53%</div><div class="r"><span class="lab">수료증 도달<small>마지막 화면</small></span><div class="trk"><div class="fill " style="width:13.7%"></div></div><span class="val">128명 <small>전체 14% · 활동 49%</small></span></div><div class="gap">수료증 본 사람의 67%가 저장</div><div class="r"><span class="lab">수료증 저장<small></small></span><div class="trk"><div class="fill " style="width:9.2%"></div></div><span class="val">86명 <small>전체 9% · 활동 33%</small></span></div><div class="r"><span class="lab">4기 신청<small>리포트 버튼</small></span><div class="trk"><div class="fill " style="width:6.0%"></div></div><span class="val">56명 <small>전체 6% · 활동 21%</small></span></div></div>
+</section>
+
+<section class="part step">
+  <div class="step-h"><span class="n">3</span><h2>함께 알아둘 것</h2></div>
+  <div class="facts">
+    <div><b>표지 → 요약 −47명</b><span>리포트 안에서 가장 많이 빠지는 곳. 요약을 넘기면 수료증까지 거의 그대로 갑니다.</span></div>
+    <div><b>수료증 37.5초</b><span>가장 오래 머문 화면. 다른 화면의 2배 이상입니다.</span></div>
+    <div><b>79명 · 평균 2.4회</b><span>홈 배너로 리포트를 다시 열어 본 사람. 첫 열람은 대부분 자동 팝업입니다.</span></div>
+    <div><b>저장 실패 0건</b><span>수료증 저장 107회 모두 성공. 가족 공유 기능은 아직 없습니다.</span></div>
+  </div>
+</section>
+
+<section class="part step">
+  <div class="step-h"><span class="n">4</span><h2>회고 · 다음 리포트 때 참고할 것</h2></div>
+  <div class="retro">
+    <div class="box bad">
+      <p class="rg">아쉬웠던 점</p>
+      <ul>
+        <li><b>열람률 26% (932명 중 243명)</b> — 676명은 앱을 열지 않아 리포트를 못 봤습니다. 앱 밖에서 따로 문자 안내가 필요합니다.</li>
+        <li><b>열람에 비해 4기 신청이 적음 (열람 243명 중 56명, 23%)</b> — 신청 버튼이 맨 아래에 있었고, 수료증 저장 등 버튼이 여러 개 겹쳐 무엇을 할지 헷갈렸을 수 있습니다.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <p class="rg">잘된 점</p>
+      <ul>
+        <li><b>리포트가 새 신청 통로</b> — 56명 신청, 35명은 리포트만 보고 신청</li>
+        <li><b>수료증이 가장 강한 화면</b> — 37.5초 체류, 수료증 본 128명 중 67% 저장, 실패 0건</li>
+        <li><b>다시 찾아봄</b> — 79명이 홈 배너로 평균 2.4회 재열람</li>
+      </ul>
+    </div>
+    <div class="box wide">
+      <p class="rg">다음 리포트 만들 때</p>
+      <ul>
+        <li><b>앱 밖에서 바로 열리게</b> — 문자·알림톡에 리포트 링크</li>
+        <li><b>신청 버튼을 앞에도</b> — 요약 화면·홈 배너에 추가</li>
+        <li><b>요약 화면을 짧게</b> — 수료증을 일찍 보여주기</li>
+        <li><b>신청하면 바로 등록</b> — 수작업·누락 없애기</li>
+        <li><b>신청 기록은 한 곳에</b> — 경로·이전 기수 이력 같이 저장</li>
+        <li><b>오픈 전에 목표와 정의 확정</b> — 같은 기준으로 매일 집계</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="gloss">
+  <span><b>집계</b> 2026.11.2 00:00 ~ 11.9 10:42 · 개발팀 집계. 4기 신청은 리포트·현장 설문·신청서·4기 등록 기록을 전화번호로 합쳐 1명 1건으로 셌습니다(단순 합 331건 → 137명).</span>
+  <span><b>앱 접속</b> 11/2 이후 앱 로그인 기록이 있는 사람. 걸음 자동 동기화만 된 사람은 빠져 있어 실제보다 적을 수 있습니다.</span>
+  <span><b>수료식 현장 54명</b> 행사에서만 사전신청 53명 + 행사 당일 현장 접수 1명.</span>
+</div>
+</div>
