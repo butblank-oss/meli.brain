@@ -5,7 +5,7 @@
 <style>
 /* Layout: 상단 고정 탭 9개(해시 이동). 프로토타입 탭은 왼쪽 컨트롤+폰, 오른쪽 현재 화면 디스크립션. 문서 탭은 980px 한 단 */
 :root{
-  --page:#F2F5F3; --paper:#FFFFFF; --ink:#18201C; --ink-2:#47534E; --ink-3:#6C7873; --line:#DCE3DF;
+  --page:#F2F5F3; --paper:#FFFFFF; --ink:#18201C; --ink-2:#47534E; --ink-3:#5E6A65; --line:#DCE3DF;
   --brand:#0E7A52; --brand-soft:#E3F1EA; --deep:#265F4D; --gold:#8A6A00; --gold-soft:#FBF3D9;
   --warn:#B4441E; --warn-soft:#FBEDE6; --chip:#ECF0EE; --code:#0B6A47;
   --f-body:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
@@ -137,8 +137,8 @@ footer a{color:var(--brand)}
 .appbar{display:flex;align-items:center;gap:6px;height:52px;padding:0 10px;font-size:18px;font-weight:700;flex:none}
 .back{width:44px;height:44px;border:0;background:transparent;border-radius:10px;cursor:pointer;display:grid;place-items:center;color:#191F28}
 .cta{height:56px;border:0;border-radius:16px;background:#0E7A52;color:#fff;font:inherit;font-size:18px;font-weight:700;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px}
-.cta:disabled,.cta.off{background:#E5E8EB;color:#8B95A1;cursor:default}
-.cta.loading,.cta.loading:disabled{background:#3E8F6C;color:#fff;cursor:progress}
+.cta:disabled,.cta.off{background:#E5E8EB;color:#5C6675;cursor:default}
+.cta.loading,.cta.loading:disabled{background:#2F7D5B;color:#fff;cursor:progress}
 .cta.sub{background:#E9EEF0;color:#333D4B}
 .spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff;animation:sp 0.8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -192,7 +192,10 @@ footer a{color:var(--brand)}
 .linkrow{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:48px;margin-top:6px;padding:0 4px;background:none;border:0;font:inherit;font-size:15px;color:#4E5968;cursor:pointer;text-align:left}
 .linkrow b{color:#0E7A52;white-space:nowrap}
 .agree{border:1px solid #E5E8EB;border-radius:14px;overflow:hidden}
-.agree .row{display:flex;align-items:center;gap:10px;padding:8px 6px 8px 14px;min-height:56px;font-size:15px;cursor:pointer}
+.agree .row{display:flex;align-items:stretch;gap:4px;padding:0 6px 0 0;min-height:56px;font-size:15px}
+.agree .hit{flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:8px 0 8px 14px;cursor:pointer}
+.agree .hit:focus-visible{outline:3px solid #F0B429;outline-offset:-3px}
+.agree .row .see{align-self:center}
 .agree.nudge{box-shadow:0 0 0 3px #F0B429}
 .agree .row+.row{border-top:1px solid #F0F2F4}
 .agree .all{background:#F7F9F8;font-weight:700}
@@ -317,6 +320,7 @@ footer a{color:var(--brand)}
             </select></label>
           <div class="row2">
             <label class="tg" for="c-rm"><input type="checkbox" id="c-rm">동작 줄이기 켬 (S2 정지 이미지)</label>
+            <span class="lab" style="font-weight:500">키보드 Esc = 기기 뒤로 가기</span>
             <button type="button" class="rs" id="c-reset">처음부터 (홈)</button>
           </div>
           <span class="lab">화면 바로 가기</span>
@@ -634,7 +638,7 @@ footer a{color:var(--brand)}
         <thead><tr><th>용도</th><th>값</th></tr></thead>
         <tbody>
         <tr><td>앱 배경 · 카드</td><td>#F2F4F6 · 카드 #FFFFFF, 모서리 20, 안쪽 여백 20</td></tr>
-        <tr><td>주요 버튼 · 강조</td><td>#0E7A52 · 뱃지 배경 #E5F2EC · 로딩 버튼 #3E8F6C + 흰 글자 · 흐린 버튼 #E5E8EB / #8B95A1</td></tr>
+        <tr><td>주요 버튼 · 강조</td><td>#0E7A52 · 뱃지 배경 #E5F2EC · 로딩 버튼 #2F7D5B + 흰 글자 (v4 #3E8F6C는 3.9:1이라 변경) · 흐린 버튼 #E5E8EB / #5C6675 (v4 #8B95A1은 2.5:1이라 변경)</td></tr>
         <tr><td>글자</td><td>본문 #191F28 · 보조 #4E5968 · 라벨 #5C6675 (4.5:1 이상)</td></tr>
         <tr><td>오류 · 토스트</td><td>오류 #B4441E / #FBEDE6 · 토스트 #2B3036, 모서리 14, 4초</td></tr>
         <tr><td>배너</td><td>343 × 84, 배경 #265F4D, 장식 원 #2F6E59, 서브 #FFD54A Bold 14, 헤드라인 #FFFFFF Black 23, 화살표 #9FD3BF, 누르면 scale .98</td></tr>
@@ -800,7 +804,7 @@ CREATE INDEX ix_app_cohort ON cohort_application (cohort_id, status, applied_at)
     </section>
 
     <section>
-      <h2>웹 신청서과의 통합</h2>
+      <h2>웹 신청서와의 통합</h2>
       <p>3기 미등록자는 S4를 거쳐 <a href="https://meli.health/invitations/dementia" target="_blank" rel="noopener">meli.health/invitations/dementia</a>에서 신청합니다. 11/9 기준 사전등록 137명 중 23명은 보건소 신청폼(보건소 직접 접수)으로 들어왔습니다(report-3rd-hc 보고 페이지 기준). 이 경로가 웹 신청서와 같은 것인지는 O-06에서 확인합니다. 앱과 웹 신청이 한곳에 모여야 중복 1건 규칙과 APPLIED 판정이 맞습니다.</p>
       <div class="tbl"><table>
         <colgroup><col style="width:120px"><col><col style="width:190px"><col style="width:190px"></colgroup>
@@ -923,8 +927,8 @@ function home(s){
   sheet(s)+toast(s.toast,78)+'</div>';
 }
 
-function chk(on){return '<span class="chk'+(on?' on':'')+'" aria-hidden="true">'+ICON.check+'</span>'}
-function crow(on,act,cls,inner,see){return '<div class="row'+cls+'" data-act="'+act+'" role="checkbox" tabindex="0" aria-checked="'+on+'">'+chk(on)+'<span class="lbl">'+inner+'</span>'+(see?'<button type="button" class="see" data-act="'+see+'">보기</button>':'')+'</div>'}
+function chk(on){return '<span class="chk'+(on===true?' on':'')+'" aria-hidden="true">'+ICON.check+'</span>'}
+function crow(on,act,cls,inner,see){return '<div class="row'+cls+'"><span class="hit" data-act="'+act+'" role="checkbox" tabindex="0" aria-checked="'+on+'">'+chk(on)+'<span class="lbl">'+inner+'</span></span>'+(see?'<button type="button" class="see" data-act="'+see+'" aria-label="'+(act==='c1'?'개인정보 수집·이용 동의':'개인정보 제3자 제공 동의')+' 보기">보기</button>':'')+'</div>'}
 
 /* 신청 화면: 교실 요약 + 신청자 정보 (+ 약관 시트, 약관 상세) */
 function applyScr(s){
@@ -945,7 +949,7 @@ function agreeSheet(s){
   var a=s.c1,b=s.c2,all=a&&b;
   return '<h3>필수 약관에 동의해 주세요</h3><p>교실 운영과 개강 안내에 필요한 정보만 받아요</p>'+
    '<div class="agree'+(s.nudge?' nudge':'')+'">'+
-     crow(all,'cAll',' all','모두 동의해요')+
+     crow(all?true:(a||b)?'mixed':false,'cAll',' all','모두 동의해요')+
      crow(a,'c1','','<span class="req">[필수]</span>개인정보 수집·이용 동의','terms1')+
      crow(b,'c2','','<span class="req">[필수]</span>개인정보 제3자 제공 동의 (남동구 치매안심센터)','terms2')+
    '</div>'+
@@ -1127,7 +1131,7 @@ var SCR={
    ex:['뒤로 → 체크 변화 없이 S1-1','시트와 딤은 그리지 않음 (QA-17)','보유 기간 “4기 종료 후 1년”은 확인 필요 (O-07)'],
    sys:['약관 문구는 terms_version에서 읽음 (제안)']},
  'S1-3':{p:'요청이 가는 중임을 보여주고 중복 요청과 이탈을 막습니다.',
-   el:['체크 모두 켜진 시트','버튼 배경 #3E8F6C + 흰 스피너 + 흰 글자','안내 문구 자리는 비워 높이 유지'],
+   el:['체크 모두 켜진 시트','버튼 배경 #2F7D5B + 흰 스피너 + 흰 글자 (v4 #3E8F6C에서 대비 보강)','안내 문구 자리는 비워 높이 유지'],
    c:['A-06'],
    ex:['버튼 · 바깥 · 뒤로 모두 무시','10초 넘으면 S1-4'],
    sys:['POST /cohort/4/apply (Idempotency-Key)','apply_4th_submit']},
@@ -1244,6 +1248,7 @@ var HIST=[
  ['2026-11-10<small>통합본</small>','문구 ID','20개','31개 (A-10 ~ A-12, D-05 ~ D-07, N-02 · N-03, C-02 · C-03, P-02 제안)','ID 없는 화면 문구 정리 (I-07)'],
  ['2026-11-10<small>통합본</small>','프로토타입 컨트롤','사용자 상태 · 신청 결과','+ 동작 줄이기 토글, 화면 13장 바로 가기, 화면별 디스크립션 패널','QA와 리뷰를 프로토타입 한 곳에서'],
  ['2026-11-10<small>통합본</small>','확인 필요','v4 7장 8개 + 이전 핸드오프 8장 · 10장','O-01 ~ O-19로 중복 없이 합치고 담당 · 상태 부여','흩어진 질문을 한 표로'],
+ ['2026-11-10<small>통합본</small>','QA · QC 반영','로딩 버튼 #3E8F6C(3.9:1), 흐린 버튼 글자 #8B95A1(2.5:1), 체크 줄 안에 보기 버튼, 키보드 조작 뒤 포커스 사라짐','로딩 #2F7D5B(5.0:1), 흐린 글자 #5C6675(4.7:1), 보기 버튼을 체크 줄 밖으로, 포커스 유지 · 시트 안으로 이동, Esc = 기기 뒤로','QA 전문가 · QC 2명 검토 결과 (TC-19 실패 해소, 대비 기준 4.5:1)'],
  ['2026-11-10<small>통합본</small>','배너 달력 아이콘','흰 달력 카드 56에 “2027년” 11px · “2월” 9px · “1일” 18px (B-03)','날짜 글자 없는 달력 모양 아이콘 56. 날짜는 서브 문구 B-01에만','“2월” 9px가 너무 작고, 키우면 둔탁해 보임. 서브 문구에 이미 날짜가 있어 중복 제거 (리뷰 결정). v4 시안 · Figma에도 반영 필요']
 ];
 
@@ -1254,7 +1259,7 @@ var OPEN=[
  ['O-03','4기 프로그램 명칭','K-13 “2027년 인천 남동구 보건소 치매예방 프로그램 4기”를 앱에도 쓸지, “두뇌운동 치매예방교실 4기”를 화면용 짧은 표기로 따로 둘지.','핸드오프 D-01 · 10-5 · K-13','기획','d'],
  ['O-04','운영 주체 표기','“남동구 치매안심센터”(S1 비용 줄 · 제3자 제공 받는 곳 · S6 제목)와 확정된 발급기관 “인천남동구 보건소”(변경이력 30, 이전 값이 바로 “치매안심센터”였음) 중 무엇으로 맞출지. S6 번호 032-453-6160은 docs에서 “보건소 대표번호”. 제3자 제공 받는 곳이 법적 주체와 같아야 하는지도 확인.','핸드오프 D-05 · 10-5','기획 · 보건소','d'],
  ['O-05','치매안심센터 운영 시간','S6 “평일 오전 9시부터 오후 6시까지”가 맞는지. 번호 032-453-6160은 Q-13과 같음(D-04 해소). 번호를 누구 번호로 표기할지는 O-04.','v4 7-6 · D-04','보건소','q'],
- ['O-06','신청 데이터 저장 위치','3기 회원 정보로 4기 신청 레코드를 만들 수 있는지, 웹 신청서과 같은 표에 쌓을지(방식 A/B), 리포트 S7-11 “참여 의사”를 신청 1건으로 볼지.','v4 7-1 · D-06 · A-09','개발','d'],
+ ['O-06','신청 데이터 저장 위치','3기 회원 정보로 4기 신청 레코드를 만들 수 있는지, 웹 신청서와 같은 표에 쌓을지(방식 A/B), 리포트 S7-11 “참여 의사”를 신청 1건으로 볼지.','v4 7-1 · D-06 · A-09','개발','d'],
  ['O-07','동의 문구와 보유 기간','웹 신청서 필수 동의 문구를 그대로 쓸 수 있는지, 보유 기간 “4기 종료 후 1년”이 맞는지.','v4 7-2','보건소 · 개발','q'],
  ['O-08','신청 직후 완료 문자 · 푸시','앱 신청에도 완료 문자를 보낼지, 앱 푸시를 같이 쓸지, 발송 시각.','v4 7-3 · 10-8','기획 · 보건소','q'],
  ['O-09','개강 전날 문자 발송일','2027년 1월 31일은 일요일. 주말 발송이 되는지, 금요일 1월 29일로 당길지. 당기면 화면 문구 “개강 전날 문자로 보내요”도 바뀜.','v4 7-7 · QA-15','보건소','d'],
@@ -1306,7 +1311,19 @@ function describe(id){
 var lastId=null;
 function draw(){
   var id=idOf(st);
-  $('live').innerHTML=render(st);
+  var live=$('live'), ae=document.activeElement, had=live.contains(ae), key=had&&ae.getAttribute?ae.getAttribute('data-act'):null;
+  live.innerHTML=render(st);
+  var layer=live.querySelector('.page')||live.querySelector('.sheet');
+  if(layer){
+    var scr=live.querySelector('.scr');
+    if(scr) Array.prototype.forEach.call(scr.children,function(c){ if(c!==layer&&!c.classList.contains('dim')&&!c.classList.contains('toast')&&!c.contains(layer)) c.setAttribute('inert',''); });
+    if(layer.classList.contains('sheet')){ var h=layer.querySelector('h3'); if(h){ h.id='sheet-title'; layer.setAttribute('aria-labelledby','sheet-title'); } }
+  }
+  if(had){
+    var t=key&&live.querySelector('[data-act="'+key+'"]');
+    if(!t||t.closest('[inert]')) t=(layer||live).querySelector('button:not([disabled]),[tabindex="0"]');
+    if(t) t.focus({preventScroll:true});
+  }
   if(id!==lastId){ $('now').innerHTML=describe(id); lastId=id; }
   document.querySelectorAll('#jump button').forEach(function(b){b.classList.toggle('on',b.dataset.id===id)});
 }
@@ -1394,6 +1411,13 @@ function act(a){
 $('live').addEventListener('click',function(e){ var t=e.target.closest('[data-act]'); if(!t||t.disabled) return; e.stopPropagation(); act(t.getAttribute('data-act')); });
 $('live').addEventListener('keydown',function(e){ if((e.key===' '||e.key==='Enter')&&e.target.matches('[role=checkbox]')){ e.preventDefault(); act(e.target.getAttribute('data-act')); } });
 $('c-reset').addEventListener('click',function(){ go('S0'); });
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Escape'||$('tab-proto').hidden||st.loading||st.checking) return;
+  /* Esc = 기기 뒤로 가기 (정책서 6장) */
+  if(st.terms) return act('termsBack');
+  if(st.sheet) return act('close');
+  if(st.screen!=='S0') return act('home');
+});
 $('c-user').addEventListener('change',function(){ go('S0'); });
 $('c-rm').addEventListener('change',function(){ if(st.screen==='S2') go('S2'); });
 
@@ -1419,7 +1443,8 @@ $('jump').addEventListener('click',function(e){
   var g=GAL.find(function(x){return x[0]===b.dataset.id}); var ex=Object.assign({},g[1]);
   /* S0-L, S1-3은 컨트롤 패널 값으로 실제 흐름을 한 번 돌림 */
   if(b.dataset.id==='S0-L'){ go('S0'); return act('banner'); }
-  if(b.dataset.id==='S1-3'){ go('S1',{sheet:'agree',c1:true,c2:true}); return act('submit'); }
+  if(b.dataset.id==='S1-3'){ go('S1',{sheet:'agree',c1:true,c2:true,loading:true}); timer=setTimeout(function(){ st.loading=false; draw(); },1500); return; }
+  if(b.dataset.id==='S3'){ delete ex.toast; }
   go(ex.screen,ex);
   if(ex.toast) showToast(ex.toast);
 });
@@ -1443,7 +1468,8 @@ function buildGallery(){
     var d=DEF.find(function(r){return r[0]===g[0]});
     return '<div class="shot-wrap"><div class="shot-cap">'+g[0]+' '+NAMES[g[0]]+'<small>'+esc(d[2])+'</small></div><div class="shot dev" aria-label="'+g[0]+' 화면 시안">'+render(Object.assign({},S0,g[1]))+'</div></div>';
   }).join('');
-  $('gal').querySelectorAll('[data-act]').forEach(function(n){n.setAttribute('tabindex','-1')});
+  $('gal').querySelectorAll('.shot').forEach(function(n){ n.setAttribute('inert',''); n.setAttribute('aria-hidden','true'); });
+  $('gal').querySelectorAll('[role=dialog],[role=status],[role=alert]').forEach(function(n){ n.removeAttribute('role'); n.removeAttribute('aria-modal'); });
 }
 
 /* 탭 */
