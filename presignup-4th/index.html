@@ -240,8 +240,8 @@ footer a{color:var(--brand)}
 .mallie .shd{position:absolute;left:50%;bottom:-2px;width:66px;height:10px;margin-left:-33px;border-radius:50%;background:rgba(25,31,40,.14);transform-origin:50% 50%}
 .mallie.go img{animation:mPop 1.15s cubic-bezier(.3,.7,.35,1) both}
 .mallie.go .shd{animation:mShd 1.15s cubic-bezier(.3,.7,.35,1) both}
-.mallie.idle img{animation:mIdle 2.6s ease-in-out infinite}
-.mallie.idle .shd{animation:mIdleShd 2.6s ease-in-out infinite}
+.mallie.idle img{animation:mIdle 2.6s ease-in-out 2}
+.mallie.idle .shd{animation:mIdleShd 2.6s ease-in-out 2}
 @keyframes mPop{
  0%{transform:perspective(420px) translateY(0) rotate(0) rotateY(0) scale(1,1)}
  14%{transform:perspective(420px) translateY(5px) rotate(5deg) rotateY(0) scale(1.1,.86)}
@@ -269,7 +269,8 @@ footer a{color:var(--brand)}
 .tel{font-size:26px;font-weight:900;letter-spacing:.02em;color:#191F28}
 .banner.busy::before{content:"";position:absolute;inset:0;background:rgba(18,40,32,.55);z-index:2}
 .banner .bspin{display:none}
-.banner.busy .bspin{display:block;position:absolute;z-index:3;left:50%;top:50%;margin:-14px 0 0 -14px;width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .8s linear infinite}
+.banner.busy .chev{visibility:hidden}
+.banner.busy .bspin{display:block;position:absolute;z-index:3;right:14px;top:50%;margin:-14px 0 0;width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .8s linear infinite}
 .toast{position:absolute;left:16px;right:16px;z-index:7;background:#2B3036;color:#fff;border-radius:14px;padding:13px 16px;font-size:15px;line-height:1.45;box-shadow:0 6px 18px rgba(0,0,0,.2)}
 
 </style>
@@ -423,7 +424,7 @@ footer a{color:var(--brand)}
           <tr><td><code>F-06</code></td><td>S1-3 · 대기</td><td>200: 신청 1건 + 동의 2건 + 개강 전날 문자 예약을 한 번에 저장 <span class="prop">제안</span>, <code>apply_4th_result=200</code></td><td>S2, 250ms 뒤 맬리 폭죽</td></tr>
           <tr><td><code>F-07</code></td><td>S2 · [확인] 또는 기기 뒤로</td><td>—</td><td>S0. 이후 배너 탭은 APPLIED → S3</td></tr>
           <tr><td colspan="4"><b>B. 신청 결과 예외</b></td></tr>
-          <tr><td><code>F-11</code></td><td>S1-3 · 409</td><td>저장 없음, <code>apply_4th_result=409</code></td><td>S3 + 토스트 T-02 4초</td></tr>
+          <tr><td><code>F-11</code></td><td>S1-3 · 409</td><td>저장 없음, <code>apply_4th_result=409</code></td><td>S3 + 토스트 T-02 6초</td></tr>
           <tr><td><code>F-12</code></td><td>S1-3 · 410</td><td>저장 없음, <code>apply_4th_result=410</code></td><td>S5</td></tr>
           <tr><td><code>F-13</code></td><td>S1-3 · 5xx / 네트워크 / 10초 초과</td><td>저장 없음 (A-09), <code>apply_4th_result=error</code></td><td>S1-4 시트 안 오류 문구, 체크 유지</td></tr>
           <tr><td><code>F-14</code></td><td>S1-4 · [동의하고 신청하기] 다시</td><td>같은 요청 키로 재요청 <span class="prop">제안</span></td><td>F-05로</td></tr>
@@ -432,9 +433,9 @@ footer a{color:var(--brand)}
           <tr><td><code>F-22</code></td><td>S0-L · NO_PRIOR</td><td><code>form_url</code> 받음</td><td>홈 위 S4 시트</td></tr>
           <tr><td><code>F-23</code></td><td>S4 · [신청서 열기]</td><td><code>apply_4th_form_open</code>, 외부 브라우저로 meli.health/invitations/dementia</td><td>시트 닫힘. 웹 작성 뒤 앱에 오면 계정 연결 전까지 다시 S4 <span class="tbd">확인 필요</span></td></tr>
           <tr><td><code>F-24</code></td><td>S0-L · CLOSED</td><td>—</td><td>S5, [홈으로] → S0, 전화 문의 → S6</td></tr>
-          <tr><td><code>F-25</code></td><td>S0-L · 조회 실패 / 5초 초과</td><td>상태값 없음</td><td>S0에 머묾, 토스트 T-01 4초. 다시 누르면 재조회</td></tr>
+          <tr><td><code>F-25</code></td><td>S0-L · 조회 실패 / 5초 초과</td><td>상태값 없음</td><td>S0에 머묾, 토스트 T-01 6초. 다시 누르면 재조회</td></tr>
           <tr><td colspan="4"><b>D. 문의</b></td></tr>
-          <tr><td><code>F-31</code></td><td>S1 “정보가 바뀌었어요” · S3 “신청을 취소하고 싶어요” · S5 전화 문의</td><td>—</td><td>S6 시트</td></tr>
+          <tr><td><code>F-31</code></td><td>S1 “정보가 다르면 전화로 알려 주세요” · S3 “신청을 취소하고 싶어요” · S5 전화 문의</td><td>—</td><td>S6 시트</td></tr>
           <tr><td><code>F-32</code></td><td>S6 · [전화 걸기]</td><td><code>apply_4th_call_tap</code>, <code>tel:0324536160</code></td><td>기기 전화 앱. 전화가 안 되는 기기는 화면 번호를 보고 직접 걸기</td></tr>
         </tbody>
       </table></div>
@@ -495,7 +496,7 @@ footer a{color:var(--brand)}
     <section>
       <h2>5. 알림</h2>
       <ul>
-        <li>개강 전날 신청자 전원에게 문자를 보냅니다. 화면에는 “개강 전날 문자로 보내요”로 안내합니다. 개강 전날인 2027년 1월 31일은 일요일입니다 <span class="tbd">발송일 확인 필요</span></li>
+        <li>개강 전날 신청자 전원에게 문자를 보냅니다. 화면에는 “개강 전날 문자로 알려 드려요”로 안내합니다. 개강 전날인 2027년 1월 31일은 일요일입니다 <span class="tbd">발송일 확인 필요</span></li>
         <li>신청 직후 완료 문자를 보낼지 정해야 합니다 <span class="tbd">확인 필요</span></li>
         <li>4기 신청은 실제 문자가 나갑니다. 테스트는 반드시 본인 번호 계정으로만 합니다.</li>
       </ul>
@@ -507,7 +508,7 @@ footer a{color:var(--brand)}
         <thead><tr><th>상황</th><th>처리</th><th>화면</th></tr></thead>
         <tbody>
         <tr><td>배너 탭 후 조회 응답 대기</td><td>배너에 덮개와 스피너, 그동안 다시 눌러도 무시</td><td>S0-L</td></tr>
-        <tr><td>배너 탭 시 상태 조회 실패</td><td>이동하지 않고 토스트 4초. 다시 누르면 재조회</td><td>S0-E</td></tr>
+        <tr><td>배너 탭 시 상태 조회 실패</td><td>이동하지 않고 토스트 6초. 다시 누르면 재조회</td><td>S0-E</td></tr>
         <tr><td>360px 미만 작은 기기</td><td>배너 서브 문구 말줄임 없이 표시 (B-01s 문구는 확인 필요)</td><td>S0</td></tr>
         <tr><td>동의 전 [동의하고 신청하기]</td><td>버튼을 흐리게 두고, 누르면 약관 박스 테두리를 1.6초 강조(#F0B429)하고 안내 문구를 빨간색으로. 요청은 보내지 않음</td><td>S1-1</td></tr>
         <tr><td>약관 시트를 닫았다가 다시 열기</td><td>체크 상태 유지 (S1을 벗어나면 초기화, TC-03)</td><td>S1-1</td></tr>
@@ -534,7 +535,7 @@ footer a{color:var(--brand)}
         <tr><td><code>Q-13</code> · <code>K-14</code> 문의 전화<small>01_정책·상수·산식</small></td><td>보건소 대표번호 032-453-6160 일괄 사용 (2026-10-12 종결)</td><td>S6 번호 032-453-6160은 같음. 다만 docs는 “보건소 대표번호”, S6 제목은 “남동구 치매안심센터”</td><td><span class="st h">번호 일치 · 명칭 다름 · O-04</span></td></tr>
         <tr><td>변경이력 30 발급기관<small>01_정책·상수·산식</small></td><td>“인천남동구 보건소”로 확정 (2026-09-07). K-13의 “보건소”와 주체를 맞춤</td><td>S1 “남동구 치매안심센터”, 제3자 제공 받는 곳 “남동구 치매안심센터”</td><td><span class="st q">다름 · O-04</span></td></tr>
         <tr><td><code>S7-11</code> → <code>07-h</code> → <code>SC-RP-08</code><small>03_화면설계서</small></td><td>리포트의 “4기도 참여하기” → 확인 바텀시트 “신청하시겠습니까?” [닫기]/[네, 신청합니다] → 결과 화면 완료/실패(08-a). 이미 신청함은 확인 시트를 건너뛰고 완료 화면. 폼 동의 기록 없음(07-m)은 버튼 미노출</td><td>배너 경로는 S1 정보 확인 → S1-1 약관 시트 → S2. 실패는 별도 화면이 아니라 시트 안 오류(S1-4). 3기 미등록은 버튼을 숨기지 않고 S4로 웹 신청서 안내</td><td><span class="st q">다름 · O-13</span></td></tr>
-        <tr><td><code>S8-05</code> 완료 본문<small>03_화면설계서</small></td><td>“4기가 시작될 때 보건소에서 연락드리겠습니다. 자세한 문의사항은 032-453-6160으로…”</td><td>S2 알림 줄 “개강 전날 문자로 보내요”</td><td><span class="st q">다름 · O-13</span></td></tr>
+        <tr><td><code>S8-05</code> 완료 본문<small>03_화면설계서</small></td><td>“4기가 시작될 때 보건소에서 연락드리겠습니다. 자세한 문의사항은 032-453-6160으로…”</td><td>S2 알림 줄 “개강 전날 문자로 알려 드려요”</td><td><span class="st q">다름 · O-13</span></td></tr>
         <tr><td><code>A-09</code> 4기 신청 DB 저장<small>11_QA_개발검수-20261012</small></td><td>신청 후 저장 테이블 · 행(사용자 ID · 프로그램 · 신청 시각 · 플랫폼) 공유, 중복 1건, 08-a 실패 시 저장 없음</td><td>데이터베이스 탭의 <code>cohort_application</code>에 네 값 + 진입 경로를 담고, 중복은 고유 인덱스로 1건, 실패 시 트랜잭션 롤백 <span class="prop">제안</span></td><td><span class="st h">반영 · 제안</span></td></tr>
         </tbody>
       </table></div>
@@ -625,7 +626,7 @@ footer a{color:var(--brand)}
         <tr><td>160 → 550 ms</td><td>튀어 오르며 고깔 들기</td><td>위로 40px, 몸 -13도, 3D 회전 Y -20도, 그림자 0.55배</td></tr>
         <tr><td>400 ms</td><td>폭죽 터짐</td><td>고깔 입구에서 색종이 80개 + 140ms 뒤 30개. 위쪽 부채꼴(왼쪽 160도 ~ 오른쪽 20도), 중력과 공기 저항, 앞뒤로 뒤집히며 회전. 약 2.5초 뒤 사라짐</td></tr>
         <tr><td>550 → 1150 ms</td><td>착지와 반동</td><td>세로 0.90으로 눌렸다가 7px 한 번 더 튐</td></tr>
-        <tr><td>1150 ms ~</td><td>숨쉬기 반복</td><td>2.6초 주기로 위아래 5px, 그림자 함께</td></tr>
+        <tr><td>1150 ms ~</td><td>숨쉬기 2번</td><td>2.6초 주기로 위아래 5px 두 번 뒤 멈춤, 그림자 함께 (v4는 끝없이 반복)</td></tr>
         <tr><td>맬리 탭</td><td>다시 재생</td><td>처음부터. 터치 영역 112 × 109</td></tr>
         <tr><td>동작 줄이기</td><td>연출 끔</td><td>OS 동작 줄이기가 켜져 있으면 정지 이미지만, 색종이 없음</td></tr>
         </tbody>
@@ -641,7 +642,7 @@ footer a{color:var(--brand)}
         <tr><td>앱 배경 · 카드</td><td>#F2F4F6 · 카드 #FFFFFF, 모서리 20, 안쪽 여백 20</td></tr>
         <tr><td>주요 버튼 · 강조</td><td>#0E7A52 · 뱃지 배경 #E5F2EC · 로딩 버튼 #2F7D5B + 흰 글자 (v4 #3E8F6C는 3.9:1이라 변경) · 흐린 버튼 #E5E8EB / #5C6675 (v4 #8B95A1은 2.5:1이라 변경)</td></tr>
         <tr><td>글자</td><td>본문 #191F28 · 보조 #4E5968 · 라벨 #5C6675 (4.5:1 이상)</td></tr>
-        <tr><td>오류 · 토스트</td><td>오류 #B4441E / #FBEDE6 · 토스트 #2B3036, 모서리 14, 4초</td></tr>
+        <tr><td>오류 · 토스트</td><td>오류 #B4441E / #FBEDE6 · 토스트 #2B3036, 모서리 14, 6초 (v4 4초)</td></tr>
         <tr><td>배너</td><td>343 × 84, 배경 #265F4D, 장식 원 #2F6E59, 서브 #FFD54A Bold 14, 헤드라인 #FFFFFF Black 23, 화살표 #9FD3BF, 누르면 scale .98</td></tr>
         <tr><td>하단 버튼</td><td>높이 56, 모서리 16, 좌우 16, 아래 여백 30</td></tr>
         <tr><td>크기 기준</td><td>본문 15px 이상, 보조 14px 이상, 정보 표 17px. 터치 최소 44 × 44, 체크 줄 높이 56. word-break keep-all, 이모지 없음, “~해요”체</td></tr>
@@ -942,7 +943,7 @@ function applyScr(s){
     '<div class="box"><div class="box-h"><span>신청자</span></div>'+
       '<dl class="who big"><div><dt>이름</dt><dd>박영자</dd></div><div><dt>연락처</dt><dd>010-****-5678</dd></div><div><dt>사는 곳</dt><dd>남동구 구월1동</dd></div></dl></div>'+
   '</div></div>';
-  var foot='<div class="foot"><button class="cta" type="button" data-act="openAgree">맞아요, 신청할게요</button><button class="textbtn" type="button" data-act="call">정보가 바뀌었어요</button></div>';
+  var foot='<div class="foot"><button class="cta" type="button" data-act="openAgree">맞아요, 신청할게요</button><button class="textbtn" type="button" data-act="call">정보가 다르면 전화로 알려 주세요</button></div>';
   return '<div class="scr">'+appbar('4기 미리 신청',s.loading?'noop':'home')+body+foot+(s.terms?'':sheet(s))+termsPage(s)+toast(s.toast,140)+'</div>';
 }
 
@@ -956,7 +957,7 @@ function agreeSheet(s){
    '</div>'+
    (s.error?'<div class="err" role="alert">신청을 보내지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.</div>':'')+
    (s.loading?'<button class="cta loading" type="button" disabled aria-busy="true"><span class="spin" aria-hidden="true"></span>신청하는 중이에요</button>'
-             :'<button class="cta'+(all?'':' off')+'" type="button" data-act="submit"'+(all?'':' aria-disabled="true"')+'>동의하고 신청하기</button>')+
+             :'<button class="cta'+(all?'':' off')+'" type="button" data-act="submit"'+(all?'':' aria-disabled="true"')+'>'+(s.error?'다시 신청하기':'동의하고 신청하기')+'</button>')+
    '<div class="helper'+(s.nudge?' warn':'')+'"'+(all||s.loading?' style="visibility:hidden" aria-hidden="true"':'')+'>필수 항목에 모두 동의해야 신청할 수 있어요</div>';
 }
 
@@ -976,11 +977,11 @@ function doneScr(s,view){
   return '<div class="scr">'+top+'<div class="body"><div class="done">'+
     (view?'<img src="'+MASCOT+'" alt="">':'<button type="button" class="mallie" data-act="pop" aria-label="맬리 폭죽 다시 터뜨리기"><span class="shd" aria-hidden="true"></span><img src="'+MASCOT+'" alt=""></button>')+
     '<span class="ok">'+ICON.okc+'신청 완료</span>'+
-    '<h2>'+(view?'4기 신청이<br>끝났어요':'4기 미리 신청을<br>받았어요')+'</h2>'+
-    '<p>'+(view?'11월 10일 (화)에 신청했어요':'3기 정보 그대로 신청했어요')+'</p>'+
-    '<dl class="rows"><div><dt>신청자</dt><dd>박영자</dd></div><div><dt>교실</dt><dd>두뇌운동 치매예방교실 4기</dd></div><div><dt>개강</dt><dd>2027년 2월 1일 (월)</dd></div><div><dt>알림</dt><dd>개강 전날 문자로 보내요</dd></div></dl>'+
+    '<h2>'+(view?'4기에 미리<br>신청했어요':'4기 미리 신청을<br>받았어요')+'</h2>'+
+    '<p>'+(view?'2026년 11월 10일 (화)에 신청했어요':'3기 정보 그대로 신청했어요')+'</p>'+
+    '<dl class="rows"><div><dt>신청자</dt><dd>박영자</dd></div><div><dt>교실</dt><dd>두뇌운동 치매예방교실 4기</dd></div><div><dt>개강</dt><dd>2027년 2월 1일 (월)</dd></div><div><dt>알림</dt><dd>개강 전날 문자로 알려 드려요</dd></div></dl>'+
     '<p class="note">그 전까지는 지금처럼 오늘의 활동을 할 수 있어요</p>'+
-    (view?'<button type="button" class="linkrow" data-act="call" style="background:#fff;border-radius:14px;padding:0 16px"><span>신청을 취소하고 싶어요</span><b>전화로 문의 ›</b></button>':'')+
+    (view?'<button type="button" class="linkrow" data-act="call" style="background:#fff;border-radius:14px;padding:0 16px"><span>신청을 취소하고 싶어요</span><b>전화로 물어보기 ›</b></button>':'')+
   '</div></div><div class="foot"><button class="cta" type="button" data-act="home">확인</button></div>'+sheet(s)+(s.toast?'<div class="toast" role="status" style="top:60px">'+s.toast+'</div>':'')+'</div>';
 }
 
@@ -1027,8 +1028,8 @@ function render(s){
 var DEF=[
  ['S0','홈 · 배너','앱 실행, 홈 탭','기존 홈 위에 고정 배너 1개. 배너 문구는 상태와 상관없이 같음'],
  ['S0-L','홈 · 상태 조회 중','배너 탭 직후, 조회 응답 전','배너 위 어두운 덮개와 스피너. 조회 중 다시 눌러도 무시'],
- ['S0-E','홈 · 상태 조회 실패','배너 탭 후 조회 실패나 5초 초과','홈에 머물고 토스트 4초. 다시 누르면 재조회'],
- ['S1','신청 화면 · 교실과 정보 확인','배너 탭, ELIGIBLE','큰 제목 “이 정보로 4기에 신청할게요”, 신청할 교실(교실명, 개강, 비용·운영), 신청자(이름, 연락처, 사는 곳). 스크롤 없음. 하단 [맞아요, 신청할게요], 정보가 바뀌었어요'],
+ ['S0-E','홈 · 상태 조회 실패','배너 탭 후 조회 실패나 5초 초과','홈에 머물고 토스트 6초. 다시 누르면 재조회'],
+ ['S1','신청 화면 · 교실과 정보 확인','배너 탭, ELIGIBLE','큰 제목 “이 정보로 4기에 신청할게요”, 신청할 교실(교실명, 개강, 비용·운영), 신청자(이름, 연락처, 사는 곳). 스크롤 없음. 하단 [맞아요, 신청할게요], 정보가 다르면 전화로 알려 주세요'],
  ['S1-1','약관 동의 시트','S1에서 [맞아요, 신청할게요]','모두 동의, 필수 2개(보기), [동의하고 신청하기]. 동의 전에는 흐린 버튼'],
  ['S1-2','약관 상세','S1-1에서 [보기]','전체 화면. 수집 항목, 목적, 보유 기간. [동의하기]는 해당 항목을 체크하고 시트로 돌아감'],
  ['S1-3','신청하는 중','S1-1에서 [동의하고 신청하기]','시트 버튼 로딩. 시트 닫기와 뒤로 가기 막음'],
@@ -1043,7 +1044,7 @@ var ACTS=[
  ['S0','배너 (카드 전체)','S0-L 조회 중 → ELIGIBLE: S1 · APPLIED: S3 · NO_PRIOR: S4 · CLOSED: S5 · 실패: S0-E'],
  ['S0-E','배너 다시 탭','재조회 (S0-L)'],
  ['S1','맞아요, 신청할게요','S1-1 약관 시트 열기'],
- ['S1','정보가 바뀌었어요','S6 시트'],
+ ['S1','정보가 다르면 전화로 알려 주세요','S6 시트'],
  ['S1','뒤로','홈 (S0)'],
  ['S1-1','모두 동의해요 (줄 전체)','2개 모두 켜기. 이미 모두 켜져 있으면 모두 끄기'],
  ['S1-1','각 [필수] 항목 (줄 전체)','해당 항목만 켜고 끄기'],
@@ -1054,7 +1055,7 @@ var ACTS=[
  ['S1-2','동의하기','해당 항목 체크하고 S1-1로'],
  ['S1-2','뒤로','체크 변화 없이 S1-1로'],
  ['S1-3','모든 버튼 · 바깥 · 뒤로','무시 (응답까지)'],
- ['S1-4','동의하고 신청하기','다시 요청 (S1-3)'],
+ ['S1-4','다시 신청하기','다시 요청 (S1-3)'],
  ['S2','확인 · 기기 뒤로','홈 (S0)'],
  ['S2','맬리 (캐릭터)','폭죽 연출 다시 재생'],
  ['S3','확인 · 뒤로','홈 (S0)'],
@@ -1074,7 +1075,7 @@ var COPY=[
  ['B-03','S0 달력 아이콘','없음 — 통합본에서 날짜 글자를 빼고 아이콘만 (v4: 2027년 / 2월 / 1일)'],
  ['T-01','S0-E 토스트','신청 정보를 불러오지 못했어요. 잠시 후 다시 눌러 주세요.'],
  ['A-02','S1 제목 · 설명','이 정보로 4기에 신청할게요 / 3기에 등록한 정보예요'],
- ['A-03','S1 버튼','맞아요, 신청할게요 / 정보가 바뀌었어요'],
+ ['A-03','S1 버튼','맞아요, 신청할게요 / 정보가 다르면 전화로 알려 주세요'],
  ['A-08','S1 카드 제목','신청할 교실 · 미리 신청 중 / 신청자'],
  ['A-04','S1-1 제목 · 설명','필수 약관에 동의해 주세요 / 교실 운영과 개강 안내에 필요한 정보만 받아요'],
  ['A-12','S1-1 체크 항목','모두 동의해요 / [필수] 개인정보 수집·이용 동의 / [필수] 개인정보 제3자 제공 동의 (남동구 치매안심센터)',1],
@@ -1082,14 +1083,14 @@ var COPY=[
  ['A-10','S1-2 제목','개인정보 수집·이용 동의 / 개인정보 제3자 제공 동의',1],
  ['A-11','S1-2 안내 · 버튼','동의하지 않을 수 있어요. 다만 동의하지 않으면 4기에 참여할 수 없어요. / 동의하기',1],
  ['A-06','S1-3 버튼','신청하는 중이에요'],
- ['A-07','S1-4 오류','신청을 보내지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'],
+ ['A-07','S1-4 오류 · 버튼','신청을 보내지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요. / 다시 신청하기 (버튼은 통합본 변경)'],
  ['D-01','S2 제목','4기 미리 신청을 받았어요'],
  ['D-05','S2 설명','3기 정보 그대로 신청했어요',1],
- ['D-07','S2 · S3 정보 표','신청자 / 교실 / 개강 / 알림 · 개강 전날 문자로 보내요',1],
+ ['D-07','S2 · S3 정보 표','신청자 / 교실 / 개강 / 알림 · 개강 전날 문자로 알려 드려요',1],
  ['D-06','S2 · S3 안내','그 전까지는 지금처럼 오늘의 활동을 할 수 있어요',1],
- ['D-02','S3 제목','4기 신청이 끝났어요'],
- ['D-03','S3 신청일','{신청일 M월 D일 (요일)}에 신청했어요'],
- ['D-04','S3 취소 줄','신청을 취소하고 싶어요 / 전화로 문의'],
+ ['D-02','S3 제목','4기에 미리 신청했어요 (v4: 4기 신청이 끝났어요)'],
+ ['D-03','S3 신청일','{신청일 YYYY년 M월 D일 (요일)}에 신청했어요 (v4는 연도 없음)'],
+ ['D-04','S3 취소 줄','신청을 취소하고 싶어요 / 전화로 물어보기'],
  ['T-02','S3 토스트 (409)','이미 4기에 신청되어 있어요'],
  ['N-01','S4 제목','4기 신청서를 작성해 주세요'],
  ['N-02','S4 설명','3기에 등록한 정보가 없어서 신청서에서 이름과 연락처를 받아요. 3분쯤 걸려요.',1],
@@ -1110,11 +1111,11 @@ var SCR={
    ex:['2027년 1월 1일부터 서브 문구를 B-01b로 서버에서 교체','마감 뒤에는 서버 설정으로 배너를 내림 (앱 업데이트 없이)','360px 미만 기기의 짧은 문구 B-01s는 정의 없음 (O-18)'],
    sys:['home_banner_4th_view (하루 1회)','탭 시 home_banner_4th_tap + GET apply-status']},
  'S0-L':{p:'조회를 기다리는 동안 눌렸다는 것을 보여주고, 연타로 두 번 이동하는 것을 막습니다.',
-   el:['배너 위 어두운 덮개 (검정 55%)','흰 스피너 28'],c:[],
+   el:['배너 위 어두운 덮개 (검정 55%)','흰 스피너 28, 오른쪽 화살표 자리 (통합본 변경, v4는 가운데)'],c:[],
    ex:['조회 중 다시 누르면 무시','5초 안에 응답이 없으면 S0-E'],
    sys:['GET /cohort/4/apply-status (제한 5초)']},
  'S0-E':{p:'조회에 실패해도 사용자를 낯선 화면으로 보내지 않고 홈에 둔 채 다시 누르라고 알려줍니다.',
-   el:['하단 탭바 위 토스트 #2B3036, 4초'],c:['T-01'],
+   el:['하단 탭바 위 토스트 #2B3036, 6초'],c:['T-01'],
    ex:['다시 누르면 재조회 (S0-L)'],sys:['home_banner_4th_tap에 status 없이 실패 기록']},
  'S1':{p:'3기에 등록한 정보 그대로 4기에 신청해도 되는지 한 장에서 확인받습니다. 입력은 받지 않습니다.',
    el:['상단 ‹ 4기 미리 신청','큰 제목 Black 25 + 설명','카드1 신청할 교실: 뱃지 미리 신청 중, 교실명 Black 19, 개강 · 비용','카드2 신청자: 이름 · 연락처(가림) · 사는 곳 17px','하단 고정 [맞아요, 신청할게요] + 텍스트 버튼'],
@@ -1137,7 +1138,7 @@ var SCR={
    ex:['버튼 · 바깥 · 뒤로 모두 무시','10초 넘으면 S1-4'],
    sys:['POST /cohort/4/apply (Idempotency-Key)','apply_4th_submit']},
  'S1-4':{p:'신청이 저장되지 않았다는 것을 시트 안에서 알리고, 체크를 그대로 둔 채 다시 누르게 합니다.',
-   el:['버튼 위 오류 박스 #FBEDE6 / #B4441E','활성 [동의하고 신청하기]'],
+   el:['버튼 위 오류 박스 #FBEDE6 / #B4441E, 15px','활성 [다시 신청하기]'],
    c:['A-07'],
    ex:['신청 레코드는 저장하지 않음 (A-09)','동의 체크 유지'],
    sys:['apply_4th_result = error']},
@@ -1147,9 +1148,9 @@ var SCR={
    ex:['뒤로 가기 → S1이 아니라 홈','동작 줄이기 켜짐 → 정지 이미지, 색종이 없음','“개강 전날” 발송일은 확인 필요 (O-09)'],
    sys:['apply_4th_result = 200','신청 1 + 동의 2 + 문자 예약 1 저장 (제안)']},
  'S3':{p:'이미 신청한 사람이 다시 들어왔을 때 신청 내용과 신청일을 보여주고, 취소는 전화로 안내합니다.',
-   el:['상단 ‹ 4기 신청 내용','맬리 정지 이미지, 뱃지','제목, 신청일','S2와 같은 정보 표','줄 버튼 “신청을 취소하고 싶어요 / 전화로 문의 ›”','하단 [확인]'],
+   el:['상단 ‹ 4기 신청 내용','맬리 정지 이미지, 뱃지','제목, 신청일','S2와 같은 정보 표','줄 버튼 “신청을 취소하고 싶어요 / 전화로 물어보기 ›”','하단 [확인]'],
    c:['D-02','D-03','D-07','D-06','D-04','T-02'],
-   ex:['409로 들어오면 상단 토스트 T-02 4초','신청일은 applied_at으로 계산'],
+   ex:['409로 들어오면 상단 토스트 T-02 6초','신청일은 applied_at으로 계산'],
    sys:['apply-status의 applied_at']},
  'S4':{p:'3기 등록 정보가 없는 사람에게 앱 대신 웹 신청서로 안내합니다.',
    el:['홈 위 바텀 시트','제목 · 설명','[신청서 열기] · 다음에 할게요'],
@@ -1207,7 +1208,7 @@ var TCS=[
  ['TC-14','4기 신청 완료 상태 → 배너 탭','S3, 취소 줄 → S6','통과'],
  ['TC-15','3기 미등록 → 배너 탭','S4 시트, 신청서 열기 시 외부 브라우저','통과'],
  ['TC-16','마감 → 배너 탭','S5, 홈으로 → S0','통과'],
- ['TC-17','상태 조회 실패 · 조회 중 연타','S0-E 토스트 4초 / 한 번만 이동','통과'],
+ ['TC-17','상태 조회 실패 · 조회 중 연타','S0-E 토스트 6초 (v4 4초) / 한 번만 이동','통과'],
  ['TC-18','320 · 360 · 375 · 412px 배너','말줄임 없음','통과'],
  ['TC-19','키보드 Space · Enter로 체크','줄 단위로 켜고 끔','통과'],
  ['TC-20','Figma 13장 ↔ 프로토타입 문구 대조','차이 없음','통과'],
@@ -1250,6 +1251,8 @@ var HIST=[
  ['2026-11-10<small>통합본</small>','프로토타입 컨트롤','사용자 상태 · 신청 결과','+ 동작 줄이기 토글, 화면 13장 바로 가기, 화면별 디스크립션 패널','QA와 리뷰를 프로토타입 한 곳에서'],
  ['2026-11-10<small>통합본</small>','확인 필요','v4 7장 8개 + 이전 핸드오프 8장 · 10장','O-01 ~ O-19로 중복 없이 합치고 담당 · 상태 부여','흩어진 질문을 한 표로'],
  ['2026-11-10<small>통합본</small>','QA · QC 반영','로딩 버튼 #3E8F6C(3.9:1), 흐린 버튼 글자 #8B95A1(2.5:1), 체크 줄 안에 보기 버튼, 키보드 조작 뒤 포커스 사라짐','로딩 #2F7D5B(5.0:1), 흐린 글자 #5C6675(4.7:1), 보기 버튼을 체크 줄 밖으로, 포커스 유지 · 시트 안으로 이동, Esc = 기기 뒤로','QA 전문가 · QC 2명 검토 결과 (TC-19 실패 해소, 대비 기준 4.5:1)'],
+ ['2026-11-10<small>통합본</small>','화면 문구 (시니어 UI/UX 점검)','S3 “4기 신청이 끝났어요”, S1 “정보가 바뀌었어요”, S3 “전화로 문의 ›”, 알림 “개강 전날 문자로 보내요”, 신청일 “11월 10일 (화)”','“4기에 미리 신청했어요”, “정보가 다르면 전화로 알려 주세요”, “전화로 물어보기 ›”, “개강 전날 문자로 알려 드려요”, “2026년 11월 10일 (화)”','마감(S5)과 헷갈림 방지, 누르면 전화로 이어진다는 것을 드러냄, 보내는 대상 명시, 개강일 연도와 표기 맞춤. 사용자 결정'],
+ ['2026-11-10<small>통합본</small>','동작 (시니어 UI/UX 점검)','S1-4 버튼 “동의하고 신청하기”, 토스트 4초, 맬리 숨쉬기 끝없이 반복, 조회 스피너 배너 가운데','S1-4 버튼 “다시 신청하기”, 토스트 6초, 숨쉬기 2번 뒤 멈춤, 스피너 화살표 자리','다시 눌러도 된다는 것을 알림, 어르신 읽기 시간, 읽는 동안 주의 분산 감소, 헤드라인 가림 방지. 사용자 결정'],
  ['2026-11-10<small>통합본</small>','배너 달력 아이콘','흰 달력 카드 56에 “2027년” 11px · “2월” 9px · “1일” 18px (B-03)','날짜 글자 없는 달력 모양 아이콘 56. 날짜는 서브 문구 B-01에만','“2월” 9px가 너무 작고, 키우면 둔탁해 보임. 서브 문구에 이미 날짜가 있어 중복 제거 (리뷰 결정). v4 시안 · Figma에도 반영 필요']
 ];
 
@@ -1263,11 +1266,11 @@ var OPEN=[
  ['O-06','신청 데이터 저장 위치','3기 회원 정보로 4기 신청 레코드를 만들 수 있는지, 웹 신청서와 같은 표에 쌓을지(방식 A/B), 리포트 S7-11 “참여 의사”를 신청 1건으로 볼지.','v4 7-1 · D-06 · A-09','개발','d'],
  ['O-07','동의 문구와 보유 기간','웹 신청서 필수 동의 문구를 그대로 쓸 수 있는지, 보유 기간 “4기 종료 후 1년”이 맞는지.','v4 7-2','보건소 · 개발','q'],
  ['O-08','신청 직후 완료 문자 · 푸시','앱 신청에도 완료 문자를 보낼지, 앱 푸시를 같이 쓸지, 발송 시각.','v4 7-3 · 10-8','기획 · 보건소','q'],
- ['O-09','개강 전날 문자 발송일','2027년 1월 31일은 일요일. 주말 발송이 되는지, 금요일 1월 29일로 당길지. 당기면 화면 문구 “개강 전날 문자로 보내요”도 바뀜.','v4 7-7 · QA-15','보건소','d'],
+ ['O-09','개강 전날 문자 발송일','2027년 1월 31일은 일요일. 주말 발송이 되는지, 금요일 1월 29일로 당길지. 당기면 화면 문구 “개강 전날 문자로 알려 드려요”도 바뀜.','v4 7-7 · QA-15','보건소','d'],
  ['O-10','웹 신청과 앱 계정 연결','웹 신청서으로 신청한 사람을 연락처로 앱 계정에 연결해도 되는지. 연결 전에는 앱에서 다시 S4가 뜸.','v4 7-4 · 정책서 6장','개발 · 보건소','q'],
  ['O-11','배너 노출 종료와 문구 교체','마감일까지 노출. 1월에도 노출하면 1월 1일에 B-01b로 교체. 개강일 이후 배너 처리, 신청하지 않은 쉬는 기간 회원이 개강 후 일반 회원으로 넘어가는지.','v4 7-8 · 10-1','기획','q'],
  ['O-12','쉬는 기간 화면과 빈틈','쉬는 기간의 시작 · 끝(3기 종료 11/30 다음 날 ~ 개강 전날), 멈춘 순위 신청 버튼(G-01), 잠금 카드 문구(G-07), 3기 기록 카드(G-08), 먼저 신청한 진행 중 회원의 상태 이어받기(G-09).','10-2 · 9장 G-01 · G-07 ~ G-09','기획','x'],
- ['O-13','신청 경로 간 확인 단계 · 결과 화면 통일','리포트(07-h 확인 시트 → SC-RP-08 / 08-a)와 배너(S1 → 약관 시트 → S2 / S1-4)를 맞출지. 실패 표시 방식, 완료 문구(“보건소에서 연락드리겠습니다” vs “개강 전날 문자로 보내요”), 리포트 경로에도 약관 동의를 받을지.','D-02 · D-03 · 10-3 · S8-05','기획','d'],
+ ['O-13','신청 경로 간 확인 단계 · 결과 화면 통일','리포트(07-h 확인 시트 → SC-RP-08 / 08-a)와 배너(S1 → 약관 시트 → S2 / S1-4)를 맞출지. 실패 표시 방식, 완료 문구(“보건소에서 연락드리겠습니다” vs “개강 전날 문자로 알려 드려요”), 리포트 경로에도 약관 동의를 받을지.','D-02 · D-03 · 10-3 · S8-05','기획','d'],
  ['O-14','정보 변경 · 신청 취소','v4는 앱에서 받지 않고 전화로(S6). 센터가 취소를 처리할 운영 도구가 있는지.','10-6 · G-04 · G-06','기획 · 보건소','h'],
  ['O-15','D-day 표기','v4는 넣지 않음. 이대로 확정인지.','10-7 · C-02','기획','h'],
  ['O-16','거주지 확인','앱에서 막지 않고 보건소가 사후 확인. 3기 이후 남동구 밖으로 이사한 회원 처리.','v4 4장 · G-10','보건소','q'],
@@ -1361,7 +1364,7 @@ function popMallie(){
   }
   popRAF=requestAnimationFrame(frame);
 }
-function showToast(msg){ st.toast=msg; clearTimeout(toastTimer); toastTimer=setTimeout(function(){st.toast=null;st.err0=false;draw()},4000); }
+function showToast(msg){ st.toast=msg; clearTimeout(toastTimer); toastTimer=setTimeout(function(){st.toast=null;st.err0=false;draw()},6000); }
 function go(screen,extra){ clearTimeout(timer); cancelAnimationFrame(popRAF); st=Object.assign({},S0,{screen:screen},extra||{}); draw(); if(screen==='S2') setTimeout(popMallie,250); }
 
 function act(a){
