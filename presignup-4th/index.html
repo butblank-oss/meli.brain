@@ -1,4 +1,4 @@
-<title>4기 미리 신청 통합본</title>
+<title>4기 사전 신청 통합본</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
@@ -277,8 +277,8 @@ footer a{color:var(--brand)}
 
 <div class="wrap">
   <header class="top">
-    <div class="eyebrow">맬리브레인 · 인천 남동구 보건소 치매예방교실 · 4기 미리 신청 통합본 · 2026-11-10</div>
-    <h1>홈 배너 “4기 미리 신청하기”부터 신청 완료까지</h1>
+    <div class="eyebrow">맬리브레인 · 인천 남동구 보건소 치매예방교실 · 4기 사전 신청 통합본 · 2026-11-10</div>
+    <h1>홈 배너 “4기 신청하기”부터 신청 완료까지</h1>
     <p class="lede">v4 핸드오프(2026-11-10)를 기준으로 눌러 보는 프로토타입, 화면 디스크립션, 플로우, 정책서, 정의서, 데이터베이스 설계안, QA, 변경이력, 확인 필요 항목을 한 페이지에 모았습니다. 사용자는 60~80대 어르신이라 한 화면에 한 가지 일만 두고, 모든 화면이 375 × 812에서 스크롤 없이 들어갑니다.</p>
     <div class="meta">
       <span class="pill go">기준: proto-4th/handoff/v4_20261110</span>
@@ -361,7 +361,7 @@ footer a{color:var(--brand)}
       <h2>플로우 다이어그램</h2>
       <p>배너를 누를 때마다 신청 상태를 서버에 조회하고(S0-L), 결과에 따라 다섯 갈래로 나뉩니다. 실제 신청 요청은 약관 시트의 [동의하고 신청하기] 한 번뿐이고, 그 결과가 다시 네 갈래로 나뉩니다.</p>
       <div class="svgwrap">
-        <svg viewBox="0 0 1190 610" role="img" aria-label="4기 미리 신청 플로우: S0 배너 탭, S0-L 조회, 상태별 S1, S3, S4, S5, S0-E 분기, S1에서 S1-1 약관 시트, S1-3 신청 중, 결과별 S2, S1-4, S3, S5">
+        <svg viewBox="0 0 1190 610" role="img" aria-label="4기 사전 신청 플로우: S0 배너 탭, S0-L 조회, 상태별 S1, S3, S4, S5, S0-E 분기, S1에서 S1-1 약관 시트, S1-3 신청 중, 결과별 S2, S1-4, S3, S5">
           <defs>
             <marker id="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker>
             <marker id="mko" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah ok" d="M0 0L10 5L0 10z"/></marker>
@@ -452,7 +452,7 @@ footer a{color:var(--brand)}
   <div id="tab-policy" hidden><div class="doc">
     <section>
       <h2>1. 목적과 범위</h2>
-      <p>3기 종료 리포트는 볼 만한 사람은 이미 거의 다 봤습니다(11/9 기준 열람 243명, 3기 932명 중 26%). 같은 홈 배너 자리를 4기 미리 신청 배너로 바꿔 재등록을 늘립니다. 재등록 목표는 280명이고, 11/9 기준 사전등록은 137명입니다.</p>
+      <p>3기 종료 리포트는 볼 만한 사람은 이미 거의 다 봤습니다(11/9 기준 열람 243명, 3기 932명 중 26%). 같은 홈 배너 자리를 4기 사전 신청 배너로 바꿔 재등록을 늘립니다. 재등록 목표는 280명이고, 11/9 기준 사전등록은 137명입니다.</p>
       <ul>
         <li>이번 범위: 홈 배너 1개, 4기 신청 화면(교실과 신청자 정보 확인)과 약관 시트, 신청 완료, 신청 내용, 미등록자 안내, 마감 안내, 전화 문의</li>
         <li>설계 원칙: 한 화면에 한 가지 일만 둡니다. 모든 화면이 375 × 812에서 스크롤 없이 들어가고, 주요 버튼은 하단에 고정합니다.</li>
@@ -482,7 +482,7 @@ footer a{color:var(--brand)}
         <li>신청을 취소하면 다음 홈 진입부터 다시 4기 배너가 나옵니다. 마감 전이면 다시 신청할 수 있습니다 <span class="st ok">11/10 확정</span></li>
         <li>노출 위치: 홈 상단, 기존 3기 리포트 배너 자리 (카드 1개)</li>
         <li>노출 기간: 배포일부터 마감일까지 <span class="tbd">마감일 확인 필요</span>. 마감 뒤에는 서버 설정으로 내리고, 앱 업데이트 없이 끌 수 있어야 합니다.</li>
-        <li>문구: 서브 B-01 “27년 2월 1일 시작 예정이에요”, 헤드라인 B-02 “4기 미리 신청하기”. 연도를 적어서 1월 1일에 문구를 바꿀 필요가 없습니다 <span class="st ok">11/10 확정</span></li>
+        <li>문구: 서브 B-01 “27년 2월 1일 시작 예정이에요”, 헤드라인 B-02 “4기 신청하기”. 연도를 적어서 1월 1일에 문구를 바꿀 필요가 없습니다 <span class="st ok">11/10 확정</span></li>
         <li>날짜 표기는 모든 화면에서 “27년 2월 1일 (월)”처럼 두 자리 연도로 씁니다. D-day는 넣지 않습니다 <span class="st ok">11/10 확정</span></li>
         <li>웹 신청서로 신청한 사람(3기 리포트 없음)은 신청 뒤에도 4기 배너를 그대로 두고, 탭하면 S3 신청 내용으로 갑니다 <span class="st ok">11/10 확정</span></li>
         <li>신청자에게 다시 보여주는 3기 리포트 배너는 3기 리포트 노출 종료일까지 둡니다. 그 뒤에는 배너 자리를 비웁니다 <span class="st ok">11/10 확정</span></li>
@@ -910,7 +910,7 @@ CREATE INDEX ix_app_cohort ON cohort_application (cohort_id, status, applied_at)
   <div id="tab-history" hidden><div class="doc">
     <section>
       <h2>변경이력</h2>
-      <p>세 시점을 비교합니다. <b>이전</b> = 쉬는 기간 배너 핸드오프와 4기 개편 프로토타입(<code>proto-4th/index.html</code>, PR #18). <b>v4</b> = 4기 미리 신청 핸드오프(2026-11-10). <b>통합본</b> = 이 페이지.</p>
+      <p>세 시점을 비교합니다. <b>이전</b> = 쉬는 기간 배너 핸드오프와 4기 개편 프로토타입(<code>proto-4th/index.html</code>, PR #18). <b>v4</b> = 4기 사전 신청 핸드오프(2026-11-10). <b>통합본</b> = 이 페이지.</p>
       <div class="tbl"><table style="min-width:920px">
         <colgroup><col style="width:104px"><col style="width:120px"><col style="width:200px"><col style="width:220px"><col></colgroup>
         <thead><tr><th>날짜</th><th>항목</th><th>이전</th><th>이후</th><th>이유</th></tr></thead>
@@ -966,9 +966,9 @@ function home(s){
    (s.rb?'<button class="banner" type="button" data-act="report" aria-label="3기 리포트 보러가기. 242일 두뇌운동 기록이 나왔어요">'+
      '<span class="cal ic" aria-hidden="true">'+ICON.report+'</span>'+
      '<span class="btxt"><span class="sub"><span class="l">242일 두뇌운동 기록이 나왔어요</span><span class="s">242일 두뇌운동 기록이 나왔어요</span></span><span class="hd">3기 리포트 보러가기</span></span><span class="chev" aria-hidden="true">›</span></button>'
-   :'<button class="banner'+(s.checking?' busy':'')+'" type="button" data-act="banner"'+(s.checking?' aria-busy="true"':'')+' aria-label="4기 미리 신청하기. 27년 2월 1일 시작 예정이에요">'+
+   :'<button class="banner'+(s.checking?' busy':'')+'" type="button" data-act="banner"'+(s.checking?' aria-busy="true"':'')+' aria-label="4기 신청하기. 27년 2월 1일 시작 예정이에요">'+
      '<span class="cal ic" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="3.5" fill="#fff"/><path d="M3 9.5h18" stroke="#FFD54A" stroke-width="2.2"/><path d="M8 3v3.5M16 3v3.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="8.5" cy="14" r="1.3" fill="#265F4D"/><circle cx="12" cy="14" r="1.3" fill="#265F4D"/><circle cx="15.5" cy="14" r="1.3" fill="#FFB547"/></svg></span>'+
-     '<span class="btxt"><span class="sub"><span class="l">27년 2월 1일 시작 예정이에요</span><span class="s">27년 2월 1일 시작 예정이에요</span></span><span class="hd">4기 미리 신청하기</span></span><span class="chev" aria-hidden="true">›</span><span class="bspin" aria-hidden="true"></span></button>')+
+     '<span class="btxt"><span class="sub"><span class="l">27년 2월 1일 시작 예정이에요</span><span class="s">27년 2월 1일 시작 예정이에요</span></span><span class="hd">4기 신청하기</span></span><span class="chev" aria-hidden="true">›</span><span class="bspin" aria-hidden="true"></span></button>')+
    '<div class="ghost"><span class="ghost-tag">기존 홈 영역 · 변경 없음</span><i class="m"></i><i class="s"></i><i class="l"></i></div>'+
    '<div class="ghost"><span class="ghost-tag">기존 홈 영역 · 변경 없음</span><i class="m"></i><i></i><i class="s"></i></div>'+
    '<div class="ghost"><span class="ghost-tag">기존 홈 영역 · 변경 없음</span><i class="m"></i><i class="s"></i></div>'+
@@ -984,14 +984,14 @@ function applyScr(s){
   var body='<div class="body"><div class="ask">'+
     '<h2>이 정보로<br>4기에 신청할게요</h2>'+
     '<p>3기에 등록한 정보예요<br>남동구에 사는 어르신이 대상이에요</p>'+
-    '<div class="box"><div class="box-h"><span>신청할 교실</span><span class="badge">미리 신청 중</span></div>'+
+    '<div class="box"><div class="box-h"><span>신청할 교실</span><span class="badge">사전 신청 중</span></div>'+
       '<div class="box-t">두뇌운동 치매예방교실 4기</div>'+
       '<dl class="who big"><div><dt>개강</dt><dd>27년 2월 1일 (월)</dd></div><div><dt>비용</dt><dd>무료 · 인천남동구 보건소</dd></div></dl></div>'+
     '<div class="box"><div class="box-h"><span>신청자</span></div>'+
       '<dl class="who big"><div><dt>이름</dt><dd>박영자</dd></div><div><dt>연락처</dt><dd>010-****-5678</dd></div><div><dt>사는 곳</dt><dd>남동구 구월1동</dd></div></dl></div>'+
   '</div></div>';
   var foot='<div class="foot"><button class="cta" type="button" data-act="openAgree">맞아요, 신청할게요</button><button class="textbtn" type="button" data-act="call">정보가 다르면 전화로 알려 주세요</button></div>';
-  return '<div class="scr">'+appbar('4기 미리 신청',s.loading?'noop':'home')+body+foot+(s.terms?'':sheet(s))+termsPage(s)+toast(s.toast,140)+'</div>';
+  return '<div class="scr">'+appbar('4기 신청',s.loading?'noop':'home')+body+foot+(s.terms?'':sheet(s))+termsPage(s)+toast(s.toast,140)+'</div>';
 }
 
 function agreeSheet(s){
@@ -1024,7 +1024,7 @@ function doneScr(s,view){
   return '<div class="scr">'+top+'<div class="body"><div class="done">'+
     (view?'<img src="'+MASCOT+'" alt="">':'<button type="button" class="mallie" data-act="pop" aria-label="맬리 폭죽 다시 터뜨리기"><span class="shd" aria-hidden="true"></span><img src="'+MASCOT+'" alt=""></button>')+
     '<span class="ok">'+ICON.okc+'신청 완료</span>'+
-    '<h2>'+(view?'4기에 미리<br>신청했어요':'4기 미리 신청을<br>받았어요')+'</h2>'+
+    '<h2>'+(view?'4기에<br>신청되어 있어요':'4기에<br>신청했어요')+'</h2>'+
     '<p>'+(view?'26년 11월 10일 (화)에 신청했어요':'3기 정보 그대로 신청했어요')+'</p>'+
     '<dl class="rows"><div><dt>신청자</dt><dd>박영자</dd></div><div><dt>교실</dt><dd>두뇌운동 치매예방교실 4기</dd></div><div><dt>개강</dt><dd>27년 2월 1일 (월)</dd></div><div><dt>알림</dt><dd>개강 전날 문자로 알려 드려요</dd></div></dl>'+
     '<p class="note">그 전까지는 지금처럼 오늘의 활동을 할 수 있어요</p>'+
@@ -1033,10 +1033,10 @@ function doneScr(s,view){
 }
 
 function closed(s){
-  return '<div class="scr">'+appbar('4기 미리 신청','home')+'<div class="body"><div class="done">'+
+  return '<div class="scr">'+appbar('4기 신청','home')+'<div class="body"><div class="done">'+
    '<div class="closed-ic">'+ICON.cal+'</div>'+
    '<span class="ok" style="color:#4E5968;background:#E9ECEF">신청 마감</span>'+
-   '<h2>4기 미리 신청이<br>마감됐어요</h2>'+
+   '<h2>4기 사전 신청이<br>마감됐어요</h2>'+
    '<p>신청 기간이 끝났어요.<br>궁금한 점은 보건소로 물어봐 주세요.</p>'+
   '</div></div><div class="foot"><button class="cta" type="button" data-act="home">홈으로</button><button class="textbtn" type="button" data-act="call">보건소에 전화로 물어보기</button></div>'+sheet(s)+'</div>';
 }
@@ -1120,12 +1120,12 @@ var ACTS=[
 var COPY=[
  ['B-01','S0 배너 서브','27년 2월 1일 시작 예정이에요 (11/10 확정 · v4: 내년 2월 1일 시작 예정이에요)'],
  ['B-01b','S0 배너 서브 (폐기)','연도를 적어 1월 1일 교체가 필요 없어져 폐기 (11/10)'],
- ['B-02','S0 배너 헤드라인','4기 미리 신청하기'],
+ ['B-02','S0 배너 헤드라인','4기 신청하기 (11/10 변경 · v4: 4기 미리 신청하기)'],
  ['B-03','S0 달력 아이콘','없음 — 통합본에서 날짜 글자를 빼고 아이콘만 (v4: 2027년 / 2월 / 1일)'],
  ['T-01','S0-E 토스트','신청 정보를 불러오지 못했어요. 잠시 후 다시 눌러 주세요.'],
  ['A-02','S1 제목 · 설명','이 정보로 4기에 신청할게요 / 3기에 등록한 정보예요 / 남동구에 사는 어르신이 대상이에요 (마지막 줄 11/10 추가)'],
  ['A-03','S1 버튼','맞아요, 신청할게요 / 정보가 다르면 전화로 알려 주세요'],
- ['A-08','S1 카드 제목','신청할 교실 · 미리 신청 중 / 신청자'],
+ ['A-08','S1 카드 제목','신청할 교실 · 사전 신청 중 / 신청자'],
  ['A-04','S1-1 제목 · 설명','필수 약관에 동의해 주세요 / 교실 운영과 개강 안내에 필요한 정보만 받아요'],
  ['A-12','S1-1 체크 항목','모두 동의해요 / [필수] 개인정보 수집·이용 동의 / [필수] 개인정보 제3자 제공 동의 (인천남동구 보건소)',1],
  ['A-05','S1-1 버튼 · 안내','동의하고 신청하기 / 필수 항목에 모두 동의해야 신청할 수 있어요'],
@@ -1133,18 +1133,18 @@ var COPY=[
  ['A-11','S1-2 안내 · 버튼','동의하지 않을 수 있어요. 다만 동의하지 않으면 4기에 참여할 수 없어요. / 동의하기',1],
  ['A-06','S1-3 버튼','신청하는 중이에요'],
  ['A-07','S1-4 오류 · 버튼','신청을 보내지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요. / 다시 신청하기 (버튼은 통합본 변경)'],
- ['D-01','S2 제목','4기 미리 신청을 받았어요'],
+ ['D-01','S2 제목','4기에 신청했어요 (11/10 변경 · v4: 4기 미리 신청을 받았어요)'],
  ['D-05','S2 설명','3기 정보 그대로 신청했어요',1],
  ['D-07','S2 · S3 정보 표','신청자 / 교실 / 개강 / 알림 · 개강 전날 문자로 알려 드려요',1],
  ['D-06','S2 · S3 안내','그 전까지는 지금처럼 오늘의 활동을 할 수 있어요',1],
- ['D-02','S3 제목','4기에 미리 신청했어요 (v4: 4기 신청이 끝났어요)'],
+ ['D-02','S3 제목','4기에 신청되어 있어요 (11/10 변경 · v4: 4기 신청이 끝났어요)'],
  ['D-03','S3 신청일','{신청일 YY년 M월 D일 (요일)}에 신청했어요 · 예: 26년 11월 10일 (화)'],
  ['D-04','S3 취소 줄','신청을 취소하고 싶어요 / 전화로 물어보기'],
  ['T-02','S3 토스트 (409)','이미 4기에 신청되어 있어요'],
  ['N-01','S4 제목','4기 신청서를 작성해 주세요'],
  ['N-02','S4 설명','3기에 등록한 정보가 없어서 신청서에서 이름과 연락처를 받아요. 3분쯤 걸려요.',1],
  ['N-03','S4 버튼','신청서 열기 / 다음에 할게요',1],
- ['C-01','S5 제목','4기 미리 신청이 마감됐어요'],
+ ['C-01','S5 제목','4기 사전 신청이 마감됐어요'],
  ['C-02','S5 설명','신청 기간이 끝났어요. 궁금한 점은 보건소로 물어봐 주세요. (정원 없음 확정으로 수정)',1],
  ['C-03','S5 버튼','홈으로 / 보건소에 전화로 물어보기',1],
  ['P-02','S6 제목 · 번호 · 버튼','인천남동구 보건소 / 032-453-6160 / 전화 걸기 / 닫기',1],
@@ -1172,7 +1172,7 @@ var SCR={
    el:['하단 탭바 위 토스트 #2B3036, 6초'],c:['T-01'],
    ex:['다시 누르면 재조회 (S0-L)'],sys:['home_banner_4th_tap에 status 없이 실패 기록']},
  'S1':{p:'3기에 등록한 정보 그대로 4기에 신청해도 되는지 한 장에서 확인받습니다. 입력은 받지 않습니다.',
-   el:['상단 ‹ 4기 미리 신청','큰 제목 Black 25 + 설명','카드1 신청할 교실: 뱃지 미리 신청 중, 교실명 Black 19, 개강 · 비용','카드2 신청자: 이름 · 연락처(가림) · 사는 곳 17px','하단 고정 [맞아요, 신청할게요] + 텍스트 버튼'],
+   el:['상단 ‹ 4기 신청','큰 제목 Black 25 + 설명','카드1 신청할 교실: 뱃지 사전 신청 중, 교실명 Black 19, 개강 · 비용','카드2 신청자: 이름 · 연락처(가림) · 사는 곳 17px','하단 고정 [맞아요, 신청할게요] + 텍스트 버튼'],
    c:['A-02','A-08','A-03'],
    ex:['정보가 다르면 앱에서 고치지 않고 S6 전화','뒤로 가면 홈, 다시 들어오면 체크는 초기화 (TC-03)'],
    sys:['apply_4th_view']},
@@ -1318,6 +1318,7 @@ var HIST=[
  ['2026-11-10<small>설문 결정</small>','문자 · 취소 · 마감','완료 문자 미정, 개강 전날 발송일 미정, 재신청 미정, 정원 미정','완료 문자 즉시, 개강 전날 1/31(일), 취소는 전화 + 운영자 도구, 취소 문자 없음, 마감 전 재신청 허용, 정원 없음. S5 문구에서 “정원이 다 찼어요” 삭제','신청 후 두 달 동안 연락이 없던 문제 해소. 취소 · 재신청을 DB 상태 하나로 연동'],
  ['2026-11-10<small>설문 결정</small>','데이터베이스','웹 신청서 데이터 미정, 이력 기록 없음','앱 · 리포트 · 웹 신청을 한 표에, 연락처로 계정 자동 연결, 재신청은 새 행, 신청 이력 표(application_event), 운영자 취소 · 수정 API, 상태 연동 표','상태 하나가 배너 · 리포트 버튼 · 문자를 모두 결정하도록'],
  ['2026-11-10<small>Figma</small>','Figma 구성','화면 13장 두 줄 + 화면 아래 짧은 설명','3기 리포트 기획 페이지 형식: 화면 왼쪽 + 1400 폭 디스크립션 표(상단바 · 세컨바 · 요소 표 · 예외 화면 표) + 넘버링, 변형 화면은 같은 줄 오른쪽. 03 플로우 섹션 추가','기존 기획 문서와 같은 방식으로 읽히게 (사용자 요청)'],
+ ['2026-11-10<small>용어</small>','“미리 신청” 용어','배너 “4기 미리 신청하기”, S1 “4기 미리 신청”, 뱃지 “미리 신청 중”, S5 “4기 미리 신청이 마감됐어요”, S2 “4기 미리 신청을 받았어요”, S3 “4기에 미리 신청했어요”','배너 “4기 신청하기”, S1 “4기 신청”, 뱃지 “사전 신청 중”, S5 “4기 사전 신청이 마감됐어요”, S2 “4기에 신청했어요”, S3 “4기에 신청되어 있어요”. 문서 이름 “4기 사전 신청”','“미리 신청”이 애매함. 기간은 사전 신청, 행동은 4기 신청으로 나눔. S2 · S3 제목은 방금 한 일 / 지금 상태로 구분 (사용자 결정)'],
  ['2026-11-10<small>통합본</small>','배너 달력 아이콘','흰 달력 카드 56에 “2027년” 11px · “2월” 9px · “1일” 18px (B-03)','날짜 글자 없는 달력 모양 아이콘 56. 날짜는 서브 문구 B-01에만','“2월” 9px가 너무 작고, 키우면 둔탁해 보임. 서브 문구에 이미 날짜가 있어 중복 제거 (리뷰 결정). v4 시안 · Figma에도 반영 필요']
 ];
 
