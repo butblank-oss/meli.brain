@@ -156,10 +156,10 @@ footer a{color:var(--brand)}
 .banner{margin:0 16px 12px;height:84px;border-radius:16px;background:#265F4D;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;padding:0 14px;cursor:pointer;border:0;width:calc(100% - 32px);text-align:left;font-family:inherit;transition:transform .12s ease}
 .banner:active{transform:scale(.98)}
 .banner::after{content:"";position:absolute;right:-26px;bottom:-40px;width:110px;height:110px;border-radius:50%;background:#2F6E59}
-.cal{position:relative;z-index:1;width:56px;height:56px;flex:none;background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.18)}
-.cal .t{width:100%;background:#FFD54A;color:#1E4B3D;font-size:11px;font-weight:900;text-align:center;line-height:17px}
-.cal .m{font-size:9px;color:#5F6B66;font-weight:700;line-height:1;margin-top:5px}
-.cal .d{font-size:18px;color:#1E4B3D;font-weight:900;line-height:1.15}
+.cal{position:relative;z-index:1;width:62px;height:62px;flex:none;background:#fff;border-radius:13px;overflow:hidden;display:flex;flex-direction:column;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.cal .t{width:100%;background:#FFD54A;color:#1E4B3D;font-size:13px;font-weight:900;text-align:center;line-height:20px}
+.cal .m{font-size:13px;color:#3D4743;font-weight:700;line-height:1;margin-top:4px}
+.cal .d{font-size:22px;color:#1E4B3D;font-weight:900;line-height:1.1}
 .btxt{position:relative;z-index:1;flex:1;min-width:0;display:flex;flex-direction:column}
 .btxt .sub .s{display:none}
 @container (max-width:359px){.btxt .sub .l{display:none}.btxt .sub .s{display:inline}}
@@ -1097,7 +1097,7 @@ var COPYMAP={}; COPY.forEach(function(c){COPYMAP[c[0]]=c});
 /* 화면 디스크립션: 목적 · 요소 · 문구 · 예외 · 시스템 */
 var SCR={
  'S0':{p:'홈에서 4기 신청으로 들어가는 단 하나의 입구. 상태와 관계없이 같은 모양이라 어르신이 헷갈리지 않습니다.',
-   el:['배너 343 × 84, 짙은 초록 #265F4D, 카드 전체가 버튼 (누르면 scale .98)','달력 아이콘 56: 노란 띠 “2027년”, “2월”, “1일”','서브 문구 Bold 14 노랑, 헤드라인 Black 23 흰색, 오른쪽 ›','아래 기존 홈 영역은 바꾸지 않음'],
+   el:['배너 343 × 84, 짙은 초록 #265F4D, 카드 전체가 버튼 (누르면 scale .98)','달력 아이콘 62: 노란 띠 “2027년” 13px, “2월” 13px, “1일” 22px','서브 문구 Bold 14 노랑, 헤드라인 Black 23 흰색, 오른쪽 ›','아래 기존 홈 영역은 바꾸지 않음'],
    c:['B-01','B-01b','B-02','B-03'],
    ex:['2027년 1월 1일부터 서브 문구를 B-01b로 서버에서 교체','마감 뒤에는 서버 설정으로 배너를 내림 (앱 업데이트 없이)','360px 미만 기기의 짧은 문구 B-01s는 정의 없음 (O-18)'],
    sys:['home_banner_4th_view (하루 1회)','탭 시 home_banner_4th_tap + GET apply-status']},
@@ -1240,7 +1240,8 @@ var HIST=[
  ['2026-11-10<small>통합본</small>','API 오류 이동','“그 외/타임아웃 10초 → S1-3”','S1-4','버튼 표 · TC-11과 맞춤 (I-04)'],
  ['2026-11-10<small>통합본</small>','문구 ID','20개','31개 (A-10 ~ A-12, D-05 ~ D-07, N-02 · N-03, C-02 · C-03, P-02 제안)','ID 없는 화면 문구 정리 (I-07)'],
  ['2026-11-10<small>통합본</small>','프로토타입 컨트롤','사용자 상태 · 신청 결과','+ 동작 줄이기 토글, 화면 13장 바로 가기, 화면별 디스크립션 패널','QA와 리뷰를 프로토타입 한 곳에서'],
- ['2026-11-10<small>통합본</small>','확인 필요','v4 7장 8개 + 이전 핸드오프 8장 · 10장','O-01 ~ O-19로 중복 없이 합치고 담당 · 상태 부여','흩어진 질문을 한 표로']
+ ['2026-11-10<small>통합본</small>','확인 필요','v4 7장 8개 + 이전 핸드오프 8장 · 10장','O-01 ~ O-19로 중복 없이 합치고 담당 · 상태 부여','흩어진 질문을 한 표로'],
+ ['2026-11-10<small>통합본</small>','배너 달력 아이콘','아이콘 56, “2027년” 11px · “2월” 9px · “1일” 18px','아이콘 62, “2027년” 13px · “2월” 13px · “1일” 22px, “2월” 색 #3D4743','“2월”이 너무 작아 어르신이 읽기 어려움 (리뷰 의견). v4 시안 · Figma에도 반영 필요']
 ];
 
 /* 확인 필요 */
