@@ -308,7 +308,8 @@ footer a{color:var(--brand)}
           <label class="f" for="c-user">사용자 상태 (배너를 누를 때 서버가 돌려주는 값)
             <select id="c-user">
               <option value="ELIGIBLE">ELIGIBLE · 3기 등록 · 4기 미신청</option>
-              <option value="APPLIED">APPLIED · 4기 이미 신청</option>
+              <option value="APPLIED">APPLIED · 4기 이미 신청 (홈은 리포트 배너)</option>
+              <option value="CANCELLED">취소됨 · 신청 후 운영자가 취소 (다시 4기 배너)</option>
               <option value="NO_PRIOR">NO_PRIOR · 3기 미등록</option>
               <option value="CLOSED">CLOSED · 신청 마감</option>
               <option value="STATUS_FAIL">조회 실패 (네트워크 · 5초 초과)</option>
@@ -391,7 +392,7 @@ footer a{color:var(--brand)}
           <text class="fl bg" x="700" y="442" text-anchor="middle">410 그 사이 마감</text>
           <text class="fl" x="175" y="306" text-anchor="middle">탭</text>
           <!-- nodes -->
-          <g class="fn main"><rect x="20" y="290" width="140" height="56" rx="12"/><text class="t1" x="34" y="312">S0</text><text class="t2" x="62" y="312">홈 배너</text><text class="t3" x="34" y="333">문구는 상태 무관</text></g>
+          <g class="fn main"><rect x="20" y="290" width="140" height="56" rx="12"/><text class="t1" x="34" y="312">S0</text><text class="t2" x="62" y="312">홈 배너</text><text class="t3" x="34" y="333">미신청자만 · 신청자는 리포트</text></g>
           <g class="fn main"><rect x="190" y="290" width="140" height="56" rx="12"/><text class="t1" x="204" y="312">S0-L</text><text class="t2" x="246" y="312">상태 조회</text><text class="t3" x="204" y="333">GET apply-status</text></g>
           <g class="fn main"><rect x="400" y="120" width="140" height="56" rx="12"/><text class="t1" x="414" y="142">S1</text><text class="t2" x="440" y="142">신청 화면</text><text class="t3" x="414" y="163">ELIGIBLE</text></g>
           <g class="fn end"><rect x="400" y="240" width="140" height="56" rx="12"/><text class="t1" x="414" y="262">S3</text><text class="t2" x="440" y="262">신청 내용</text><text class="t3" x="414" y="283">APPLIED · 확인 → S0</text></g>
@@ -421,8 +422,8 @@ footer a{color:var(--brand)}
           <tr><td><code>F-03</code></td><td>S1 · 정보 확인 후 [맞아요, 신청할게요]</td><td><code>apply_4th_agree_open</code></td><td>S1-1 약관 시트, 버튼 흐림</td></tr>
           <tr><td><code>F-04</code></td><td>S1-1 · 모두 동의해요 (또는 각 항목, 보기 → S1-2 → 동의하기)</td><td>필수 2개가 모두 켜지는 순간 <code>apply_4th_consent_all</code></td><td>[동의하고 신청하기] 켜짐, 안내 문구 자리만 남김</td></tr>
           <tr><td><code>F-05</code></td><td>S1-1 · [동의하고 신청하기]</td><td><code>POST /cohort/4/apply</code> (consents 2개 + 동의 시각, 10초 제한), <code>apply_4th_submit</code></td><td>S1-3 로딩, 시트 닫기 · 뒤로 막음</td></tr>
-          <tr><td><code>F-06</code></td><td>S1-3 · 대기</td><td>200: 신청 1건 + 동의 2건 + 개강 전날 문자 예약을 한 번에 저장 <span class="prop">제안</span>, <code>apply_4th_result=200</code></td><td>S2, 250ms 뒤 맬리 폭죽</td></tr>
-          <tr><td><code>F-07</code></td><td>S2 · [확인] 또는 기기 뒤로</td><td>—</td><td>S0. 이후 배너 탭은 APPLIED → S3</td></tr>
+          <tr><td><code>F-06</code></td><td>S1-3 · 대기</td><td>200: 신청 1건 + 동의 2건 + 완료 문자(즉시) + 개강 전날 문자 예약을 한 번에 저장, <code>apply_4th_result=200</code></td><td>S2, 250ms 뒤 맬리 폭죽</td></tr>
+          <tr><td><code>F-07</code></td><td>S2 · [확인] 또는 기기 뒤로</td><td>—</td><td>S0. 이제 신청자라 홈에는 3기 리포트 배너 (S0-R)</td></tr>
           <tr><td colspan="4"><b>B. 신청 결과 예외</b></td></tr>
           <tr><td><code>F-11</code></td><td>S1-3 · 409</td><td>저장 없음, <code>apply_4th_result=409</code></td><td>S3 + 토스트 T-02 6초</td></tr>
           <tr><td><code>F-12</code></td><td>S1-3 · 410</td><td>저장 없음, <code>apply_4th_result=410</code></td><td>S5</td></tr>
@@ -431,10 +432,15 @@ footer a{color:var(--brand)}
           <tr><td colspan="4"><b>C. 배너 탭 상태 분기</b></td></tr>
           <tr><td><code>F-21</code></td><td>S0-L · APPLIED</td><td><code>applied_at</code> 함께 받음</td><td>S3, 신청일 D-03 표시. 취소 줄 → S6</td></tr>
           <tr><td><code>F-22</code></td><td>S0-L · NO_PRIOR</td><td><code>form_url</code> 받음</td><td>홈 위 S4 시트</td></tr>
-          <tr><td><code>F-23</code></td><td>S4 · [신청서 열기]</td><td><code>apply_4th_form_open</code>, 외부 브라우저로 meli.health/invitations/dementia</td><td>시트 닫힘. 웹 작성 뒤 앱에 오면 계정 연결 전까지 다시 S4 <span class="tbd">확인 필요</span></td></tr>
+          <tr><td><code>F-23</code></td><td>S4 · [신청서 열기]</td><td><code>apply_4th_form_open</code>, 외부 브라우저로 meli.health/invitations/dementia</td><td>시트 닫힘. 웹 신청은 같은 신청 표에 저장되고, 연락처가 같으면 다음 홈 진입 때 자동 연결 → APPLIED <span class="st ok">11/10 확정</span></td></tr>
           <tr><td><code>F-24</code></td><td>S0-L · CLOSED</td><td>—</td><td>S5, [홈으로] → S0, 전화 문의 → S6</td></tr>
           <tr><td><code>F-25</code></td><td>S0-L · 조회 실패 / 5초 초과</td><td>상태값 없음</td><td>S0에 머묾, 토스트 T-01 6초. 다시 누르면 재조회</td></tr>
-          <tr><td colspan="4"><b>D. 문의</b></td></tr>
+          <tr><td colspan="4"><b>D. 홈 진입 · 취소 · 재신청 <span class="st ok">11/10 확정</span></b></td></tr>
+          <tr><td><code>F-41</code></td><td>앱 실행 · 홈 진입</td><td><code>GET /cohort/4/apply-status</code> (5초)</td><td>APPLIED → 3기 리포트 배너 (S0-R) · 그 외 · 조회 실패 → 4기 배너 (S0)</td></tr>
+          <tr><td><code>F-42</code></td><td>3기 리포트 · “4기도 참여하기” (S7-11)</td><td>같은 상태 조회</td><td>S1 → S1-1 → S2, 배너 경로와 같음. 뒤로 가면 리포트로</td></tr>
+          <tr><td><code>F-43</code></td><td>S3 · 취소 문의 → 센터 전화</td><td>운영자 도구에서 취소 → CANCELLED, 개강 전날 문자 예약 취소, 취소 문자 없음</td><td>다음 홈 진입부터 4기 배너 (S0)</td></tr>
+          <tr><td><code>F-44</code></td><td>취소한 사람이 배너 탭 (마감 전)</td><td>ELIGIBLE → 새 신청 행</td><td>S1부터 다시. 완료 문자 다시 발송</td></tr>
+          <tr><td colspan="4"><b>E. 문의</b></td></tr>
           <tr><td><code>F-31</code></td><td>S1 “정보가 다르면 전화로 알려 주세요” · S3 “신청을 취소하고 싶어요” · S5 전화 문의</td><td>—</td><td>S6 시트</td></tr>
           <tr><td><code>F-32</code></td><td>S6 · [전화 걸기]</td><td><code>apply_4th_call_tap</code>, <code>tel:0324536160</code></td><td>기기 전화 앱. 전화가 안 되는 기기는 화면 번호를 보고 직접 걸기</td></tr>
         </tbody>
@@ -454,50 +460,52 @@ footer a{color:var(--brand)}
       </ul>
     </section>
     <section>
-      <h2>2. 사용자 상태</h2>
-      <p>배너를 누를 때마다 서버에 신청 상태를 조회하고, 결과에 따라 이동할 화면을 정합니다. 배너 모양은 상태와 상관없이 같습니다. 상태는 저장값이 아니라 조회 때 계산하는 값입니다(데이터베이스 탭 참고).</p>
+      <h2>2. 사용자 상태와 판정 순서</h2>
+      <p>신청 상태는 저장값이 아니라 조회할 때 계산합니다. 조회는 두 번 합니다. <b>홈에 들어올 때</b> 어떤 배너를 보여줄지 정하고, <b>배너를 누를 때</b> 어느 화면으로 갈지 정합니다. 둘 다 같은 API(<code>GET /cohort/4/apply-status</code>)를 씁니다.</p>
       <div class="tbl"><table>
-        <colgroup><col style="width:120px"><col><col style="width:260px"></colgroup>
-        <thead><tr><th>상태 코드</th><th>조건</th><th>배너 탭 시</th></tr></thead>
+        <colgroup><col style="width:120px"><col><col style="width:200px"><col style="width:180px"></colgroup>
+        <thead><tr><th>상태 코드</th><th>조건</th><th>홈 배너</th><th>4기 배너 탭 시</th></tr></thead>
         <tbody>
-        <tr><td><code>ELIGIBLE</code></td><td>3기 등록 정보(이름, 연락처)가 있고 4기 신청 기록이 없음</td><td>S1 신청 화면</td></tr>
-        <tr><td><code>APPLIED</code></td><td>4기 신청 기록이 있음 (앱 또는 웹 신청서, 계정 연결된 경우)</td><td>S3 신청 내용</td></tr>
-        <tr><td><code>NO_PRIOR</code></td><td>3기 등록 정보가 없거나, 이름·연락처 중 하나라도 비어 있음</td><td>S4 신청서 안내 시트 → 웹 신청서</td></tr>
-        <tr><td><code>CLOSED</code></td><td>신청 기간이 끝났거나 정원이 찼음</td><td>S5 마감 안내</td></tr>
-        <tr><td>조회 실패</td><td>네트워크 끊김, 서버 오류, 응답 5초 초과</td><td>홈에 머물고 토스트 (S0-E)</td></tr>
+        <tr><td><code>APPLIED</code></td><td>4기 신청 기록이 APPLIED 상태. 앱 · 3기 리포트 · 웹 신청서 어디서 신청했든 같음 (웹은 연락처로 계정이 연결된 경우)</td><td>3기 리포트 배너로 교체 <span class="st ok">11/10 확정</span></td><td>S3 신청 내용</td></tr>
+        <tr><td><code>CLOSED</code></td><td>마감일이 지남. 정원은 두지 않음 <span class="st ok">11/10 확정</span></td><td>마감 뒤에는 서버 설정으로 배너를 내림</td><td>S5 마감 안내</td></tr>
+        <tr><td><code>ELIGIBLE</code></td><td>3기 등록 정보(이름, 연락처)가 있고, 4기 신청이 없거나 취소됨</td><td>4기 배너</td><td>S1 신청 화면</td></tr>
+        <tr><td><code>NO_PRIOR</code></td><td>3기 등록 정보가 없거나 이름 · 연락처가 비어 있음</td><td>4기 배너</td><td>S4 신청서 안내 → 웹 신청서</td></tr>
+        <tr><td>조회 실패</td><td>네트워크 끊김, 서버 오류, 응답 5초 초과</td><td>4기 배너 (홈 진입 때 실패하면)</td><td>홈에 머물고 토스트 (S0-E)</td></tr>
         </tbody>
       </table></div>
-      <div class="callout"><b>판정 순서는 v4에 없습니다.</b> 신청을 마친 사람이 마감 뒤에 배너를 누르면 S3와 S5 중 어디로 가야 하는지 정해야 합니다. 이 통합본은 APPLIED를 먼저 보는 순서를 <b>제안</b>만 해 두었습니다 (확인 필요 O-17).</div>
+      <div class="callout"><b>판정 순서: APPLIED → CLOSED → ELIGIBLE → NO_PRIOR</b> <span class="st ok">11/10 확정</span>. 신청한 사람은 마감 뒤에도 S3에서 자기 신청을 확인합니다.</div>
     </section>
     <section>
       <h2>3. 배너 노출</h2>
       <ul>
-        <li>노출 대상: 로그인한 모든 사용자. 신청 상태에 따라 숨기거나 문구를 바꾸지 않습니다.</li>
-        <li>노출 위치: 홈 상단, 기존 3기 리포트 배너 자리. 3기 리포트 배너는 같은 배포에서 내립니다.</li>
-        <li>노출 기간: 배포일부터 신청 마감일까지 <span class="tbd">마감일 확인 필요</span>. 마감 후에는 서버 설정으로 내리고, 앱 업데이트 없이 끌 수 있어야 합니다.</li>
-        <li>문구는 날짜만 쓰고 D-day는 넣지 않습니다. 서브 문구 “내년 2월 1일 시작 예정이에요”(B-01), 달력 아이콘은 날짜 글자 없이 모양만 (통합본 변경, v4는 “2027년 / 2월 / 1일”).</li>
-        <li>“내년”은 2026년 안에서만 맞는 말이라, 2027년 1월 1일 이후에도 배너가 남아 있으면 서브 문구를 “2월 1일 시작 예정이에요”(B-01b)로 바꿉니다. 서버에서 바꿀 수 있어야 합니다.</li>
-        <li>360px 미만 기기는 짧은 문구(B-01s)를 쓴다고 QA-03에 적혀 있지만, 정의서에 B-01s 문구가 없고 프로토타입은 같은 문장을 씁니다 <span class="tbd">확인 필요</span></li>
+        <li>노출 대상: 4기 미신청자(ELIGIBLE · NO_PRIOR · 신청을 취소한 사람). 신청자는 같은 자리에 기존 3기 리포트 배너 “242일 두뇌운동 기록이 나왔어요 / 3기 리포트 보러가기”가 다시 나옵니다 <span class="st ok">11/10 확정</span></li>
+        <li>신청을 취소하면 다음 홈 진입부터 다시 4기 배너가 나옵니다. 마감 전이면 다시 신청할 수 있습니다 <span class="st ok">11/10 확정</span></li>
+        <li>노출 위치: 홈 상단, 기존 3기 리포트 배너 자리 (카드 1개)</li>
+        <li>노출 기간: 배포일부터 마감일까지 <span class="tbd">마감일 확인 필요</span>. 마감 뒤에는 서버 설정으로 내리고, 앱 업데이트 없이 끌 수 있어야 합니다.</li>
+        <li>문구: 서브 B-01 “27년 2월 1일 시작 예정이에요”, 헤드라인 B-02 “4기 미리 신청하기”. 연도를 적어서 1월 1일에 문구를 바꿀 필요가 없습니다 <span class="st ok">11/10 확정</span></li>
+        <li>날짜 표기는 모든 화면에서 “27년 2월 1일 (월)”처럼 두 자리 연도로 씁니다. D-day는 넣지 않습니다 <span class="st ok">11/10 확정</span></li>
+        <li>웹 신청서로 신청한 사람(NO_PRIOR)은 3기 리포트가 없어, 신청 뒤 어떤 배너를 보여줄지 정해야 합니다 <span class="tbd">확인 필요 O-20</span></li>
       </ul>
     </section>
     <section>
       <h2>4. 신청</h2>
       <ul>
-        <li>3기 등록 정보(이름, 연락처, 사는 동)를 그대로 써서 신청합니다. 앱에서 따로 입력받지 않습니다.</li>
-        <li>정보가 바뀐 사용자는 앱에서 고칠 수 없고, 치매안심센터 전화로 안내합니다(S6).</li>
-        <li>순서: 신청 화면(교실과 신청자 정보 확인) → 약관 시트. 약관 시트의 [동의하고 신청하기]가 실제 신청 요청입니다.</li>
-        <li>필수 동의 2개(개인정보 수집·이용, 제3자 제공)에 모두 체크해야 버튼이 켜집니다. “모두 동의해요” 한 번으로 둘 다 체크됩니다. 기수마다 동의를 새로 받습니다.</li>
-        <li>동의하지 않으면 신청할 수 없습니다. 버튼 아래에 “필수 항목에 모두 동의해야 신청할 수 있어요”를 보여줍니다.</li>
-        <li>한 계정은 4기에 한 번만 신청할 수 있습니다. 중복 요청은 서버가 막고 S3로 보냅니다.</li>
-        <li>신청 취소는 앱에서 받지 않고 치매안심센터 전화로 처리합니다.</li>
-        <li>거주지(남동구)는 앱에서 막지 않고 보건소가 사후 확인합니다 <span class="tbd">확인 필요</span></li>
+        <li>진입은 두 곳입니다. 홈 배너와 3기 리포트의 “4기도 참여하기”(S7-11). 둘 다 S1 정보 확인 → S1-1 약관 시트 → S2 완료의 같은 흐름이고, 리포트의 확인 시트(07-h)와 결과 화면(SC-RP-08 · 08-a)은 쓰지 않습니다 <span class="st ok">11/10 확정</span></li>
+        <li>3기 등록 정보(이름, 연락처, 사는 동)를 그대로 써서 신청합니다. 앱에서 입력받지 않습니다.</li>
+        <li>S1에 “남동구에 사는 어르신이 대상이에요”를 한 줄 넣고, 거주지는 앱에서 막지 않고 보건소가 사후 확인합니다 <span class="st ok">11/10 확정</span></li>
+        <li>필수 동의 2개(개인정보 수집·이용, 제3자 제공)에 모두 체크해야 신청할 수 있습니다. 기수마다 새로 받습니다.</li>
+        <li>한 계정, 한 연락처는 4기에 살아 있는 신청을 1건만 가질 수 있습니다. 중복 요청은 서버가 막고 S3로 보냅니다.</li>
+        <li>정보 변경과 취소는 앱에서 받지 않습니다. 전화(S6)를 받은 센터 직원이 운영자 도구에서 처리합니다 <span class="st ok">11/10 확정</span> <span class="tbd">운영자 도구 기획 O-21</span></li>
+        <li>취소한 뒤 다시 신청하는 것은 마감 전까지 허용합니다 <span class="st ok">11/10 확정</span></li>
+        <li>명칭: 화면에는 “두뇌운동 치매예방교실 4기”, 약관 · 문자 · DB에는 K-13 정식 명칭 <span class="st ok">11/10 확정</span>. 운영 주체 표기는 “인천남동구 보건소”로 통일합니다 <span class="st ok">11/10 확정</span></li>
       </ul>
     </section>
     <section>
       <h2>5. 알림</h2>
       <ul>
-        <li>개강 전날 신청자 전원에게 문자를 보냅니다. 화면에는 “개강 전날 문자로 알려 드려요”로 안내합니다. 개강 전날인 2027년 1월 31일은 일요일입니다 <span class="tbd">발송일 확인 필요</span></li>
-        <li>신청 직후 완료 문자를 보낼지 정해야 합니다 <span class="tbd">확인 필요</span></li>
+        <li>신청 완료 문자: 신청이 저장되면 바로 1건 보냅니다. 앱 배너와 리포트 경로 모두 해당합니다 <span class="st ok">11/10 확정</span></li>
+        <li>개강 전날 문자: 2027년 1월 31일(일), 그때 신청 상태가 APPLIED인 사람 전원에게 보냅니다 <span class="st ok">11/10 확정</span>. 발송 시각은 정해야 합니다.</li>
+        <li>취소 문자는 보내지 않습니다. 취소하면 예약된 개강 전날 문자도 취소합니다 <span class="st ok">11/10 확정</span></li>
         <li>4기 신청은 실제 문자가 나갑니다. 테스트는 반드시 본인 번호 계정으로만 합니다.</li>
       </ul>
     </section>
@@ -531,11 +539,11 @@ footer a{color:var(--brand)}
         <colgroup><col style="width:160px"><col><col style="width:230px"><col style="width:130px"></colgroup>
         <thead><tr><th>기존 규칙 (docs)</th><th>내용</th><th>v4 · 이 통합본</th><th>관계</th></tr></thead>
         <tbody>
-        <tr><td><code>K-13</code> 4기 프로그램 명칭<small>01_정책·상수·산식</small></td><td>“2027년 인천 남동구 보건소 치매예방 프로그램 4기”. 07-h 바텀시트와 SC-RP-08에서 명칭을 다르게 쓰지 않음</td><td>앱 화면은 “두뇌운동 치매예방교실 4기”. DB에는 정식 명칭과 화면 표기를 따로 두는 안 <span class="prop">제안</span></td><td><span class="st q">다름 · O-03</span></td></tr>
-        <tr><td><code>Q-13</code> · <code>K-14</code> 문의 전화<small>01_정책·상수·산식</small></td><td>보건소 대표번호 032-453-6160 일괄 사용 (2026-10-12 종결)</td><td>S6 번호 032-453-6160은 같음. 다만 docs는 “보건소 대표번호”, S6 제목은 “남동구 치매안심센터”</td><td><span class="st h">번호 일치 · 명칭 다름 · O-04</span></td></tr>
-        <tr><td>변경이력 30 발급기관<small>01_정책·상수·산식</small></td><td>“인천남동구 보건소”로 확정 (2026-09-07). K-13의 “보건소”와 주체를 맞춤</td><td>S1 “남동구 치매안심센터”, 제3자 제공 받는 곳 “남동구 치매안심센터”</td><td><span class="st q">다름 · O-04</span></td></tr>
-        <tr><td><code>S7-11</code> → <code>07-h</code> → <code>SC-RP-08</code><small>03_화면설계서</small></td><td>리포트의 “4기도 참여하기” → 확인 바텀시트 “신청하시겠습니까?” [닫기]/[네, 신청합니다] → 결과 화면 완료/실패(08-a). 이미 신청함은 확인 시트를 건너뛰고 완료 화면. 폼 동의 기록 없음(07-m)은 버튼 미노출</td><td>배너 경로는 S1 정보 확인 → S1-1 약관 시트 → S2. 실패는 별도 화면이 아니라 시트 안 오류(S1-4). 3기 미등록은 버튼을 숨기지 않고 S4로 웹 신청서 안내</td><td><span class="st q">다름 · O-13</span></td></tr>
-        <tr><td><code>S8-05</code> 완료 본문<small>03_화면설계서</small></td><td>“4기가 시작될 때 보건소에서 연락드리겠습니다. 자세한 문의사항은 032-453-6160으로…”</td><td>S2 알림 줄 “개강 전날 문자로 알려 드려요”</td><td><span class="st q">다름 · O-13</span></td></tr>
+        <tr><td><code>K-13</code> 4기 프로그램 명칭<small>01_정책·상수·산식</small></td><td>“2027년 인천 남동구 보건소 치매예방 프로그램 4기”. 07-h 바텀시트와 SC-RP-08에서 명칭을 다르게 쓰지 않음</td><td>화면은 “두뇌운동 치매예방교실 4기”, 약관 · 문자 · DB는 K-13 정식 명칭 (11/10 확정)</td><td><span class="st h">결정 · K-13 개정 필요 (O-22)</span></td></tr>
+        <tr><td><code>Q-13</code> · <code>K-14</code> 문의 전화<small>01_정책·상수·산식</small></td><td>보건소 대표번호 032-453-6160 일괄 사용 (2026-10-12 종결)</td><td>S6 제목 “인천남동구 보건소” · 번호 032-453-6160 (11/10 확정)</td><td><span class="st ok">일치</span></td></tr>
+        <tr><td>변경이력 30 발급기관<small>01_정책·상수·산식</small></td><td>“인천남동구 보건소”로 확정 (2026-09-07). K-13의 “보건소”와 주체를 맞춤</td><td>S1 · 제3자 제공 받는 곳 · S6 모두 “인천남동구 보건소” (11/10 확정)</td><td><span class="st ok">일치</span></td></tr>
+        <tr><td><code>S7-11</code> → <code>07-h</code> → <code>SC-RP-08</code><small>03_화면설계서</small></td><td>리포트의 “4기도 참여하기” → 확인 바텀시트 “신청하시겠습니까?” [닫기]/[네, 신청합니다] → 결과 화면 완료/실패(08-a). 이미 신청함은 확인 시트를 건너뛰고 완료 화면. 폼 동의 기록 없음(07-m)은 버튼 미노출</td><td>리포트 S7-11도 배너와 같은 S1 → S1-1 → S2 흐름으로 통일 (11/10 확정). 07-h · SC-RP-08 · 08-a는 쓰지 않음</td><td><span class="st h">결정 · 03 화면설계서 개정 필요 (O-22)</span></td></tr>
+        <tr><td><code>S8-05</code> 완료 본문<small>03_화면설계서</small></td><td>“4기가 시작될 때 보건소에서 연락드리겠습니다. 자세한 문의사항은 032-453-6160으로…”</td><td>완료 화면은 S2 하나로 통일. “개강 전날 문자로 알려 드려요”</td><td><span class="st h">S8-05 폐기 대상 (O-22)</span></td></tr>
         <tr><td><code>A-09</code> 4기 신청 DB 저장<small>11_QA_개발검수-20261012</small></td><td>신청 후 저장 테이블 · 행(사용자 ID · 프로그램 · 신청 시각 · 플랫폼) 공유, 중복 1건, 08-a 실패 시 저장 없음</td><td>데이터베이스 탭의 <code>cohort_application</code>에 네 값 + 진입 경로를 담고, 중복은 고유 인덱스로 1건, 실패 시 트랜잭션 롤백 <span class="prop">제안</span></td><td><span class="st h">반영 · 제안</span></td></tr>
         </tbody>
       </table></div>
@@ -576,8 +584,10 @@ footer a{color:var(--brand)}
         <colgroup><col style="width:240px"><col></colgroup>
         <thead><tr><th>요청</th><th>응답과 화면 처리</th></tr></thead>
         <tbody>
-        <tr><td><code>GET /cohort/4/apply-status</code><small>배너 탭 시 · 제한 5초</small></td><td><code>status</code>: ELIGIBLE · APPLIED · NO_PRIOR · CLOSED<br><code>profile</code>: 이름, 연락처(가운데 가림), 사는 동 (ELIGIBLE, APPLIED)<br><code>applied_at</code>(APPLIED), <code>start_date</code>, <code>form_url</code>(NO_PRIOR)<br>실패 · 5초 초과 → S0-E</td></tr>
-        <tr><td><code>POST /cohort/4/apply</code><small>[동의하고 신청하기] · 제한 10초</small></td><td>body: <code>consents</code> [PRIVACY_COLLECT, THIRD_PARTY_NAMDONG] 각각 약관 버전과 동의 시각, <code>entry_point</code>, 헤더 <code>Idempotency-Key</code><br>200 → S2 · 409 이미 신청 → S3 + 토스트 · 410 마감 → S5 · 그 외 / 10초 초과 → <b>S1-4</b><br><small>v4 정의서 원문은 “그 외/타임아웃 10초 → S1-3”으로 적혀 있습니다. 버튼 표와 테스트(TC-11)는 S1-4라서 오기로 보고 S1-4로 정리했습니다 (QA 탭 I-04).</small></td></tr>
+        <tr><td><code>GET /cohort/4/apply-status</code><small>홈 진입 때 + 배너 탭 때 · 제한 5초</small></td><td><code>status</code>: ELIGIBLE · APPLIED · NO_PRIOR · CLOSED<br><code>profile</code>: 이름, 연락처(가운데 가림), 사는 동 (ELIGIBLE, APPLIED)<br><code>applied_at</code>(APPLIED), <code>start_date</code>, <code>form_url</code>(NO_PRIOR), <code>home_banner</code>(4th · report · none)<br>홈 진입 때 실패 → 4기 배너 · 배너 탭 때 실패 · 5초 초과 → S0-E</td></tr>
+        <tr><td><code>POST /admin/…/applications/{id}/cancel</code><small>운영자 도구 · 전화 취소</small></td><td>status CANCELLED, 개강 전날 문자 예약 취소, 이력 기록. 다음 홈 진입부터 4기 배너 (데이터베이스 탭)</td></tr>
+        <tr><td><code>PATCH /admin/…/applications/{id}</code><small>운영자 도구 · 정보 수정</small></td><td>이름 · 연락처 · 동 수정, 전후 값 이력 기록</td></tr>
+        <tr><td><code>POST /cohort/4/apply</code><small>[동의하고 신청하기] · 제한 10초</small></td><td>body: <code>consents</code> [PRIVACY_COLLECT, THIRD_PARTY_NAMDONG] 각각 약관 버전과 동의 시각, <code>entry_point</code>, 헤더 <code>Idempotency-Key</code><br>200 → S2 (완료 문자 즉시 · 개강 전날 예약) · 409 이미 신청 → S3 + 토스트 · 410 마감 → S5 · 그 외 / 10초 초과 → <b>S1-4</b><br><small>v4 정의서 원문은 “그 외/타임아웃 10초 → S1-3”으로 적혀 있습니다. 버튼 표와 테스트(TC-11)는 S1-4라서 오기로 보고 S1-4로 정리했습니다 (QA 탭 I-04).</small></td></tr>
         </tbody>
       </table></div>
 <pre>// GET /cohort/4/apply-status → 200
@@ -603,7 +613,7 @@ footer a{color:var(--brand)}
         <colgroup><col style="width:220px"><col><col style="width:240px"></colgroup>
         <thead><tr><th>이벤트</th><th>언제</th><th>함께 남길 값 <span class="prop">제안</span></th></tr></thead>
         <tbody>
-        <tr><td><code>home_banner_4th_view</code></td><td>홈 배너가 화면에 보일 때 (하루 1회)</td><td>—</td></tr>
+        <tr><td><code>home_banner_4th_view</code></td><td>홈 배너가 화면에 보일 때 (하루 1회)</td><td><code>kind</code>: 4th · report (신청자는 report)</td></tr>
         <tr><td><code>home_banner_4th_tap</code></td><td>배너 탭</td><td><code>status</code>, <code>latency_ms</code> (v4)</td></tr>
         <tr><td><code>apply_4th_view</code></td><td>S1 진입</td><td>—</td></tr>
         <tr><td><code>apply_4th_agree_open</code></td><td>약관 시트 열림</td><td><code>open_count</code></td></tr>
@@ -655,168 +665,200 @@ footer a{color:var(--brand)}
   <div id="tab-db" hidden><div class="doc">
     <section>
       <h2>데이터베이스 설계안</h2>
-      <p>v4 문서에는 API만 있고 저장 구조는 없습니다. 이 탭은 화면과 A-09 요청(사용자 ID · 프로그램 · 신청 시각 · 플랫폼, 중복 1건, 실패 시 저장 없음)을 만족하도록 만든 <b>제안</b>입니다. 테이블 이름과 타입은 개발팀 스키마 규칙에 맞게 바꿔도 됩니다. 확정이 필요한 값은 <span class="tbd">확인 필요</span>로 표시했습니다.</p>
+      <p>화면 · 정책 · A-09 요청(사용자 ID · 프로그램 · 신청 시각 · 플랫폼, 중복 1건, 실패 시 저장 없음)과 11/10 확정 사항을 만족하도록 만든 <b>제안</b>입니다. 테이블 이름과 타입은 개발팀 스키마 규칙에 맞게 바꿔도 됩니다. 핵심은 <b>신청 상태 하나(cohort_application.status)가 홈 배너, 리포트 버튼, 문자 예약을 모두 결정한다</b>는 점입니다. 화면이나 문자 쪽에 상태를 따로 저장하지 않습니다.</p>
       <div class="grid2">
-        <div class="mini"><b><code>cohort</code></b><p>기수 설정. 개강일, 신청 기간, 정원, 배너 문구, 웹 신청서 주소를 서버에서 바꾸기 위한 표</p></div>
-        <div class="mini"><b><code>cohort_application</code></b><p>4기 신청 레코드 (A-09). 앱 · 웹 신청서 · 리포트 경로 신청을 한 표에</p></div>
-        <div class="mini"><b><code>consent_record</code> · <code>terms_version</code></b><p>약관 동의 기록. 신청 1건당 필수 동의 2행, 동의한 약관 버전과 시각</p></div>
-        <div class="mini"><b><code>sms_dispatch</code></b><p>문자 발송 예약과 결과. 개강 전날 안내, (정해지면) 신청 완료 문자</p></div>
+        <div class="mini"><b><code>cohort</code></b><p>기수 설정. 개강일, 마감일, 배너 노출 여부, 문구, 웹 신청서 주소, 대표번호</p></div>
+        <div class="mini"><b><code>cohort_application</code></b><p>4기 신청 (A-09). 앱 배너 · 리포트 · 웹 신청서 신청을 한 표에. 취소 후 재신청은 새 행</p></div>
+        <div class="mini"><b><code>consent_record</code> · <code>terms_version</code></b><p>약관 동의. 신청 1건당 필수 동의 2행, 동의한 약관 버전과 시각</p></div>
+        <div class="mini"><b><code>sms_dispatch</code></b><p>문자. 신청 완료(즉시)와 개강 전날(1/31 예약)</p></div>
+        <div class="mini"><b><code>application_event</code></b><p>신청에 일어난 일의 기록. 신청 · 취소 · 정보 수정 · 계정 연결을 누가 언제 했는지</p></div>
       </div>
-      <p style="font-size:13.5px">이미 있다고 가정한 표: <code>users</code>(앱 계정), <code>cohort_member</code>(3기 등록 정보: user_id, cohort_id, 이름, 연락처, 사는 동). 상태 조회는 이 둘과 아래 표를 읽어 계산합니다.</p>
+      <p style="font-size:13.5px">이미 있다고 가정한 표: <code>users</code>(앱 계정), <code>cohort_member</code>(3기 등록 정보: user_id, cohort_id, 이름, 연락처, 사는 동), <code>report_3rd_target</code>(3기 리포트 대상자). 운영자 계정 표(<code>admin_user</code>)는 운영자 도구 기획(O-21)에서 정합니다.</p>
+    </section>
+
+    <section>
+      <h2>상태 연동 · 이벤트별로 무엇이 바뀌나</h2>
+      <p>신청 상태가 바뀌는 모든 일을 한 표에 모았습니다. 앱은 홈에 들어올 때마다 상태를 다시 조회하므로, 운영자가 취소한 결과도 다음 홈 진입에 그대로 반영됩니다.</p>
+      <div class="tbl"><table style="min-width:980px">
+        <colgroup><col style="width:180px"><col style="width:240px"><col style="width:180px"><col style="width:170px"><col></colgroup>
+        <thead><tr><th>일어난 일</th><th>DB</th><th>홈 배너</th><th>리포트 S7-11 버튼</th><th>문자</th></tr></thead>
+        <tbody>
+        <tr><td>앱 배너로 신청 (200)</td><td>application 1행 APPLIED (entry_point = home_banner) + 동의 2행 + event APPLIED</td><td>다음 홈부터 3기 리포트 배너</td><td>비활성 “4기 신청이 완료되었습니다”</td><td>완료 문자 즉시 SENT · 개강 전날 SCHEDULED</td></tr>
+        <tr><td>리포트 S7-11로 신청 (200)</td><td>위와 같음 (entry_point = report_s7_11)</td><td>3기 리포트 배너</td><td>비활성</td><td>위와 같음</td></tr>
+        <tr><td>웹 신청서로 신청</td><td>application 1행 APPLIED (platform = web, user_id 없음)</td><td>계정 연결 전: 그대로 / 연결 후: O-20 결정대로</td><td>해당 없음 (3기 리포트 없음)</td><td>웹 쪽 규칙 (확인 필요)</td></tr>
+        <tr><td>앱 상태 조회 때 웹 신청 발견</td><td>연락처 해시가 같으면 user_id를 채움 + event LINKED_ACCOUNT</td><td>APPLIED로 판정</td><td>—</td><td>변화 없음</td></tr>
+        <tr><td>같은 사람이 또 신청 (409)</td><td>저장 없음 (고유 인덱스)</td><td>변화 없음</td><td>변화 없음</td><td>변화 없음</td></tr>
+        <tr><td>신청 실패 · 시간 초과</td><td>저장 없음, 트랜잭션 전부 되돌림 (A-09)</td><td>4기 배너 그대로</td><td>활성 그대로</td><td>보내지 않음</td></tr>
+        <tr><td>운영자가 취소 (전화 접수)</td><td>status CANCELLED, cancelled_at · cancelled_by · 사유 + event CANCELLED</td><td>다음 홈부터 다시 4기 배너</td><td>다시 활성 (마감 전)</td><td>개강 전날 예약 CANCELLED, 취소 문자 없음</td></tr>
+        <tr><td>취소 후 다시 신청 (마감 전)</td><td>새 application 행 APPLIED. 이전 CANCELLED 행은 이력으로 남음</td><td>3기 리포트 배너</td><td>비활성</td><td>새 완료 문자 · 새 개강 전날 예약</td></tr>
+        <tr><td>운영자가 정보 수정</td><td>applicant_name · 연락처 · 동 수정 + event INFO_UPDATED (바꾸기 전 값 기록)</td><td>변화 없음</td><td>변화 없음</td><td>예약 문자는 새 연락처로 발송</td></tr>
+        <tr><td>마감 시각 지남</td><td>변화 없음 (cohort.apply_close_at으로 판정)</td><td>미신청자: 배너 내림 · 신청자: 리포트 배너</td><td>비활성 (마감)</td><td>변화 없음</td></tr>
+        <tr><td>2027-01-31 발송 배치</td><td>APPLIED 행의 SCHEDULED 예약만 SENDING → SENT / FAILED</td><td>—</td><td>—</td><td>발송 직전에 신청이 아직 APPLIED인지 다시 확인</td></tr>
+        </tbody>
+      </table></div>
     </section>
 
     <section>
       <h2><code>cohort</code> · 기수 설정</h2>
       <div class="tbl"><table>
-        <colgroup><col style="width:170px"><col style="width:130px"><col style="width:200px"><col></colgroup>
+        <colgroup><col style="width:170px"><col style="width:130px"><col style="width:210px"><col></colgroup>
         <thead><tr><th>컬럼</th><th>타입</th><th>키 · 제약</th><th>설명</th></tr></thead>
         <tbody>
         <tr><td><code>cohort_id</code></td><td>BIGINT</td><td>PK</td><td></td></tr>
-        <tr><td><code>program_code</code></td><td>VARCHAR(40)</td><td>NOT NULL</td><td>예: <code>NAMDONG_DEMENTIA</code></td></tr>
-        <tr><td><code>cohort_no</code></td><td>SMALLINT</td><td>NOT NULL · UNIQUE(program_code, cohort_no)</td><td>4</td></tr>
-        <tr><td><code>official_name</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>K-13 정식 명칭 “2027년 인천 남동구 보건소 치매예방 프로그램 4기”</td></tr>
-        <tr><td><code>display_name</code></td><td>VARCHAR(60)</td><td>NOT NULL</td><td>앱 화면 표기 “두뇌운동 치매예방교실 4기” <span class="tbd">O-03</span></td></tr>
-        <tr><td><code>start_date</code></td><td>DATE</td><td>NOT NULL</td><td>2027-02-01 <span class="tbd">O-01</span></td></tr>
-        <tr><td><code>apply_open_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td>배너 노출 시작</td></tr>
-        <tr><td><code>apply_close_at</code></td><td>TIMESTAMPTZ</td><td>NULL 허용</td><td>마감 시각. 비어 있으면 마감 없음 <span class="tbd">O-02</span></td></tr>
-        <tr><td><code>capacity</code></td><td>INT</td><td>NULL 허용 · &gt; 0</td><td>정원. 비어 있으면 제한 없음 <span class="tbd">O-02</span></td></tr>
+        <tr><td><code>program_code</code> · <code>cohort_no</code></td><td>VARCHAR(40) · SMALLINT</td><td>UNIQUE(program_code, cohort_no)</td><td>예: NAMDONG_DEMENTIA · 4</td></tr>
+        <tr><td><code>official_name</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>K-13 정식 명칭. 약관 · 문자에 씀</td></tr>
+        <tr><td><code>display_name</code></td><td>VARCHAR(60)</td><td>NOT NULL</td><td>화면용 “두뇌운동 치매예방교실 4기” <span class="st ok">11/10 확정</span></td></tr>
+        <tr><td><code>operator_name</code></td><td>VARCHAR(60)</td><td>NOT NULL</td><td>“인천남동구 보건소” <span class="st ok">11/10 확정</span></td></tr>
+        <tr><td><code>start_date</code></td><td>DATE</td><td>NOT NULL</td><td>2027-02-01 <span class="st ok">11/10 확정</span></td></tr>
+        <tr><td><code>apply_open_at</code> · <code>apply_close_at</code></td><td>TIMESTAMPTZ</td><td>close는 NULL 허용</td><td>마감 시각 <span class="tbd">O-02</span>. 정원 컬럼은 두지 않음 (11/10 확정)</td></tr>
         <tr><td><code>banner_enabled</code></td><td>BOOLEAN</td><td>NOT NULL DEFAULT true</td><td>앱 업데이트 없이 배너 끄기</td></tr>
-        <tr><td><code>banner_sub_copy</code></td><td>VARCHAR(40)</td><td>NOT NULL</td><td>B-01 → 2027-01-01부터 B-01b로 교체 <span class="tbd">O-11</span></td></tr>
-        <tr><td><code>form_url</code></td><td>VARCHAR(255)</td><td></td><td>NO_PRIOR 안내용. 현재 <a href="https://meli.health/invitations/dementia" target="_blank" rel="noopener">meli.health/invitations/dementia</a></td></tr>
-        <tr><td><code>contact_tel</code></td><td>VARCHAR(20)</td><td>NOT NULL</td><td>032-453-6160 (Q-13)</td></tr>
+        <tr><td><code>banner_sub_copy</code></td><td>VARCHAR(40)</td><td>NOT NULL</td><td>“27년 2월 1일 시작 예정이에요”</td></tr>
+        <tr><td><code>pre_start_sms_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td>2027-01-31 (일) <span class="st ok">11/10 확정</span>, 시각 미정</td></tr>
+        <tr><td><code>form_url</code> · <code>contact_tel</code></td><td>VARCHAR</td><td></td><td>meli.health/invitations/dementia · 032-453-6160</td></tr>
         </tbody>
       </table></div>
     </section>
 
     <section>
       <h2><code>cohort_application</code> · 4기 신청 (A-09)</h2>
-      <p>신청 1건 = 1행. 앱 배너, 3기 리포트(S7-11), 웹 신청서 신청을 모두 이 표에 쌓고 <code>platform</code>과 <code>entry_point</code>로 구분하는 안입니다. 웹 신청서 데이터를 같은 표에 넣을지는 <span class="tbd">O-06</span>에서 정합니다.</p>
+      <p>신청 1건 = 1행. 앱 배너, 리포트 S7-11, 웹 신청서 신청을 모두 이 표에 쌓습니다 <span class="st ok">11/10 확정</span>. 취소 후 다시 신청하면 이전 행은 CANCELLED로 남기고 새 행을 만듭니다.</p>
       <div class="tbl"><table>
         <colgroup><col style="width:170px"><col style="width:150px"><col style="width:210px"><col></colgroup>
         <thead><tr><th>컬럼</th><th>타입</th><th>키 · 제약</th><th>설명</th></tr></thead>
         <tbody>
         <tr><td><code>application_id</code></td><td>BIGINT</td><td>PK</td><td></td></tr>
         <tr><td><code>cohort_id</code></td><td>BIGINT</td><td>FK → cohort · NOT NULL</td><td>A-09 “프로그램”</td></tr>
-        <tr><td><code>user_id</code></td><td>BIGINT</td><td>FK → users · NULL 허용</td><td>A-09 “사용자 ID”. 웹 신청서 신청자는 계정 연결 전까지 NULL</td></tr>
-        <tr><td><code>applicant_name</code></td><td>VARCHAR(40)</td><td>NOT NULL</td><td>신청 시점 이름 스냅샷 (3기 정보에서 복사)</td></tr>
-        <tr><td><code>phone_enc</code></td><td>VARBINARY</td><td>NOT NULL</td><td>연락처 암호화 저장. 문자 발송용</td></tr>
-        <tr><td><code>phone_hash</code></td><td>CHAR(64)</td><td>NOT NULL · INDEX</td><td>숫자만 남긴 번호의 해시. 중복 확인과 웹 신청서 ↔ 계정 연결에 사용</td></tr>
-        <tr><td><code>dong</code></td><td>VARCHAR(30)</td><td></td><td>사는 동. 거주지 사후 확인용 <span class="tbd">O-16</span></td></tr>
-        <tr><td><code>platform</code></td><td>ENUM</td><td>NOT NULL</td><td>A-09 “플랫폼”: <code>ios</code> · <code>android</code> · <code>web</code></td></tr>
-        <tr><td><code>entry_point</code></td><td>ENUM</td><td>NOT NULL</td><td><code>home_banner</code> · <code>report_s7_11</code> · <code>web_form</code> · <code>admin</code></td></tr>
-        <tr><td><code>source_cohort_id</code></td><td>BIGINT</td><td>FK → cohort · NULL 허용</td><td>정보를 가져온 기수 (배너 신청은 3기)</td></tr>
-        <tr><td><code>status</code></td><td>ENUM</td><td>NOT NULL DEFAULT 'APPLIED'</td><td><code>APPLIED</code> · <code>CANCELLED</code></td></tr>
-        <tr><td><code>applied_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td>A-09 “신청 시각”. 서버 시각. S3의 D-03 문구에 씀</td></tr>
-        <tr><td><code>cancelled_at</code> · <code>cancelled_by</code> · <code>cancel_reason</code></td><td>TIMESTAMPTZ · BIGINT · VARCHAR(200)</td><td>NULL 허용</td><td>전화 취소를 운영자가 처리한 기록</td></tr>
+        <tr><td><code>user_id</code></td><td>BIGINT</td><td>FK → users · NULL 허용</td><td>A-09 “사용자 ID”. 웹 신청은 계정 연결 전까지 NULL</td></tr>
+        <tr><td><code>applicant_name</code> · <code>dong</code></td><td>VARCHAR</td><td>name NOT NULL</td><td>신청 시점 스냅샷. 운영자가 수정 가능</td></tr>
+        <tr><td><code>phone_enc</code> · <code>phone_hash</code></td><td>VARBINARY · CHAR(64)</td><td>NOT NULL · INDEX(hash)</td><td>연락처 암호화 저장 / 숫자만 남긴 번호의 해시. 중복 확인과 계정 연결에 사용</td></tr>
+        <tr><td><code>platform</code></td><td>ENUM</td><td>NOT NULL</td><td>A-09 “플랫폼”: ios · android · web</td></tr>
+        <tr><td><code>entry_point</code></td><td>ENUM</td><td>NOT NULL</td><td>home_banner · report_s7_11 · web_form · admin</td></tr>
+        <tr><td><code>status</code></td><td>ENUM</td><td>NOT NULL DEFAULT 'APPLIED'</td><td>APPLIED · CANCELLED</td></tr>
+        <tr><td><code>applied_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td>A-09 “신청 시각”. S3의 “26년 11월 10일 (화)에 신청했어요”</td></tr>
+        <tr><td><code>cancelled_at</code> · <code>cancelled_by</code> · <code>cancel_reason</code></td><td>TIMESTAMPTZ · BIGINT · VARCHAR(200)</td><td>NULL 허용</td><td>운영자 도구에서 취소한 기록</td></tr>
+        <tr><td><code>previous_application_id</code></td><td>BIGINT</td><td>FK → self · NULL 허용</td><td>재신청이면 직전 취소 행</td></tr>
         <tr><td><code>idempotency_key</code></td><td>UUID</td><td>UNIQUE · NULL 허용</td><td>앱 재요청이 두 번 저장되지 않게</td></tr>
         <tr><td><code>created_at</code> · <code>updated_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td></td></tr>
         </tbody>
       </table></div>
-<pre>-- 중복 1건 (A-09): 같은 기수에 살아 있는 신청은 계정당, 연락처당 1건
+<pre>-- 살아 있는 신청은 계정당 · 연락처당 1건 (A-09). CANCELLED 행은 제외라 재신청 가능
 CREATE UNIQUE INDEX ux_app_user  ON cohort_application (cohort_id, user_id)    WHERE status = 'APPLIED' AND user_id IS NOT NULL;
 CREATE UNIQUE INDEX ux_app_phone ON cohort_application (cohort_id, phone_hash) WHERE status = 'APPLIED';
 CREATE INDEX ix_app_cohort ON cohort_application (cohort_id, status, applied_at);</pre>
       <h3>예시 행</h3>
-<pre>application_id | cohort_id | user_id | applicant_name | phone_hash | dong     | platform | entry_point | source_cohort_id | status  | applied_at
-1001           | 4         | 58231   | 박영자         | 9f2c…e1    | 구월1동  | android  | home_banner | 3                | APPLIED | 2026-11-10 10:26:41+09
-1002           | 4         | NULL    | 김OO           | 41ab…7c    | 간석4동  | web      | web_form    | NULL             | APPLIED | 2026-11-08 14:12:03+09
-1003           | 4         | 60417   | 이OO           | c07d…22    | 만수6동  | ios      | report_s7_11| 3                | CANCELLED | 2026-11-04 09:40:55+09</pre>
+<pre>application_id | cohort_id | user_id | applicant_name | dong     | platform | entry_point  | status    | applied_at             | previous
+1001           | 4         | 58231   | 박영자         | 구월1동  | android  | home_banner  | APPLIED   | 2026-11-10 10:26:41+09 | NULL
+1002           | 4         | 60417   | 이OO           | 만수6동  | ios      | report_s7_11 | CANCELLED | 2026-11-04 09:40:55+09 | NULL
+1005           | 4         | 60417   | 이OO           | 만수6동  | ios      | home_banner  | APPLIED   | 2026-11-12 15:02:10+09 | 1002
+1003           | 4         | NULL    | 김OO           | 간석4동  | web      | web_form     | APPLIED   | 2026-11-08 14:12:03+09 | NULL</pre>
     </section>
 
     <section>
       <h2><code>consent_record</code> · <code>terms_version</code> · 약관 동의</h2>
-      <p>기수마다 동의를 새로 받으므로 동의는 신청에 묶습니다. 동의한 약관 문구가 나중에 바뀌어도 어떤 버전에 동의했는지 남도록 버전 표를 따로 둡니다.</p>
       <div class="tbl"><table>
         <colgroup><col style="width:170px"><col style="width:130px"><col style="width:230px"><col></colgroup>
         <thead><tr><th>컬럼</th><th>타입</th><th>키 · 제약</th><th>설명</th></tr></thead>
         <tbody>
         <tr><td colspan="4"><b><code>consent_record</code></b></td></tr>
         <tr><td><code>consent_id</code></td><td>BIGINT</td><td>PK</td><td></td></tr>
-        <tr><td><code>application_id</code></td><td>BIGINT</td><td>FK · NOT NULL · UNIQUE(application_id, consent_code)</td><td>신청 1건당 2행</td></tr>
-        <tr><td><code>consent_code</code></td><td>ENUM</td><td>NOT NULL</td><td><code>PRIVACY_COLLECT</code> 개인정보 수집·이용 · <code>THIRD_PARTY_NAMDONG</code> 제3자 제공(남동구 치매안심센터)</td></tr>
-        <tr><td><code>terms_version_id</code></td><td>BIGINT</td><td>FK → terms_version · NOT NULL</td><td></td></tr>
-        <tr><td><code>agreed_at</code> · <code>received_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td>기기에서 체크한 시각 / 서버가 받은 시각</td></tr>
-        <tr><td><code>platform</code></td><td>ENUM</td><td>NOT NULL</td><td>동의를 받은 채널</td></tr>
-        <tr><td><code>retain_until</code></td><td>DATE</td><td>NOT NULL</td><td>4기 종료 후 1년 <span class="tbd">O-07</span>. 이후 파기 배치 대상</td></tr>
+        <tr><td><code>application_id</code></td><td>BIGINT</td><td>FK · UNIQUE(application_id, consent_code)</td><td>신청 1건당 2행. 재신청이면 새로 2행</td></tr>
+        <tr><td><code>consent_code</code></td><td>ENUM</td><td>NOT NULL</td><td>PRIVACY_COLLECT · THIRD_PARTY (받는 곳 인천남동구 보건소)</td></tr>
+        <tr><td><code>terms_version_id</code></td><td>BIGINT</td><td>FK → terms_version</td><td></td></tr>
+        <tr><td><code>agreed_at</code> · <code>received_at</code> · <code>platform</code></td><td>TIMESTAMPTZ · ENUM</td><td>NOT NULL</td><td>기기에서 체크한 시각 / 서버가 받은 시각 / 채널</td></tr>
+        <tr><td><code>retain_until</code></td><td>DATE</td><td>NOT NULL</td><td>4기 종료 후 1년 <span class="tbd">O-07</span>. 지나면 파기 배치</td></tr>
         <tr><td colspan="4"><b><code>terms_version</code></b></td></tr>
-        <tr><td><code>terms_version_id</code></td><td>BIGINT</td><td>PK</td><td></td></tr>
-        <tr><td><code>consent_code</code> · <code>version</code></td><td>ENUM · VARCHAR(20)</td><td>UNIQUE(consent_code, version)</td><td>예: 2026-11-v1</td></tr>
-        <tr><td><code>items</code> · <code>purpose</code> · <code>retention_text</code> · <code>recipient</code></td><td>TEXT</td><td></td><td>S1-2 화면에 그대로 뿌리는 값. 웹 신청서 문구와 같게 쓸지 <span class="tbd">O-07</span></td></tr>
-        <tr><td><code>effective_from</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td></td></tr>
+        <tr><td><code>terms_version_id</code> · <code>consent_code</code> · <code>version</code></td><td>BIGINT · ENUM · VARCHAR</td><td>UNIQUE(code, version)</td><td>예: 2026-11-v1</td></tr>
+        <tr><td><code>items</code> · <code>purpose</code> · <code>retention_text</code> · <code>recipient</code></td><td>TEXT</td><td></td><td>S1-2 화면에 그대로 뿌리는 값</td></tr>
         </tbody>
       </table></div>
     </section>
 
     <section>
-      <h2><code>sms_dispatch</code> · 문자 발송</h2>
-      <p>신청이 저장될 때 개강 전날 안내 문자를 예약 행으로 같이 만듭니다. 발송일과 신청 완료 문자 여부가 정해지지 않아 해당 값은 비워 둡니다.</p>
+      <h2><code>sms_dispatch</code> · 문자</h2>
       <div class="tbl"><table>
-        <colgroup><col style="width:170px"><col style="width:130px"><col style="width:220px"><col></colgroup>
+        <colgroup><col style="width:170px"><col style="width:130px"><col style="width:230px"><col></colgroup>
         <thead><tr><th>컬럼</th><th>타입</th><th>키 · 제약</th><th>설명</th></tr></thead>
         <tbody>
         <tr><td><code>dispatch_id</code></td><td>BIGINT</td><td>PK</td><td></td></tr>
-        <tr><td><code>application_id</code></td><td>BIGINT</td><td>FK · NOT NULL · UNIQUE(application_id, template_code)</td><td>같은 문자가 두 번 나가지 않게</td></tr>
-        <tr><td><code>template_code</code></td><td>ENUM</td><td>NOT NULL</td><td><code>PRE_START_REMINDER</code> 개강 전날 · <code>APPLY_CONFIRM</code> 신청 완료 <span class="tbd">O-08</span></td></tr>
-        <tr><td><code>scheduled_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td>개강 전날 2027-01-31(일) 또는 금요일 1/29 <span class="tbd">O-09</span>. 발송 시각도 미정</td></tr>
-        <tr><td><code>status</code></td><td>ENUM</td><td>NOT NULL</td><td><code>SCHEDULED</code> · <code>SENDING</code> · <code>SENT</code> · <code>FAILED</code> · <code>CANCELLED</code></td></tr>
-        <tr><td><code>attempt_count</code> · <code>fail_code</code></td><td>SMALLINT · VARCHAR(40)</td><td></td><td>문자 업체 오류 코드</td></tr>
-        <tr><td><code>provider_message_id</code> · <code>sent_at</code></td><td>VARCHAR(80) · TIMESTAMPTZ</td><td>NULL 허용</td><td></td></tr>
+        <tr><td><code>application_id</code></td><td>BIGINT</td><td>FK · UNIQUE(application_id, template_code)</td><td>같은 문자가 두 번 나가지 않게</td></tr>
+        <tr><td><code>template_code</code></td><td>ENUM</td><td>NOT NULL</td><td><code>APPLY_CONFIRM</code> 신청 완료 (즉시) · <code>PRE_START_REMINDER</code> 개강 전날 <span class="st ok">11/10 확정</span>. 취소 문자 템플릿은 없음</td></tr>
+        <tr><td><code>scheduled_at</code></td><td>TIMESTAMPTZ</td><td>NOT NULL</td><td>완료 문자는 신청 시각, 개강 전날은 cohort.pre_start_sms_at</td></tr>
+        <tr><td><code>status</code></td><td>ENUM</td><td>NOT NULL</td><td>SCHEDULED · SENDING · SENT · FAILED · CANCELLED</td></tr>
+        <tr><td><code>attempt_count</code> · <code>fail_code</code> · <code>provider_message_id</code> · <code>sent_at</code></td><td></td><td></td><td>실패는 정해진 횟수까지 재시도</td></tr>
         </tbody>
       </table></div>
     </section>
 
     <section>
-      <h2>상태 조회 · 신청 처리 순서</h2>
-      <h3><code>GET apply-status</code> 계산 순서 <span class="prop">제안</span></h3>
+      <h2><code>application_event</code> · 신청 이력</h2>
+      <p>전화로 취소하거나 정보를 고치는 일은 운영자가 하므로, 누가 언제 무엇을 바꿨는지 남겨야 나중에 민원에 답할 수 있습니다.</p>
+      <div class="tbl"><table>
+        <colgroup><col style="width:170px"><col style="width:130px"><col style="width:210px"><col></colgroup>
+        <thead><tr><th>컬럼</th><th>타입</th><th>키 · 제약</th><th>설명</th></tr></thead>
+        <tbody>
+        <tr><td><code>event_id</code></td><td>BIGINT</td><td>PK</td><td></td></tr>
+        <tr><td><code>application_id</code></td><td>BIGINT</td><td>FK · INDEX</td><td></td></tr>
+        <tr><td><code>event_type</code></td><td>ENUM</td><td>NOT NULL</td><td>APPLIED · CANCELLED · INFO_UPDATED · LINKED_ACCOUNT</td></tr>
+        <tr><td><code>actor_type</code> · <code>actor_id</code></td><td>ENUM · BIGINT</td><td>NOT NULL</td><td>user · admin · system</td></tr>
+        <tr><td><code>before_json</code> · <code>after_json</code></td><td>JSON</td><td></td><td>정보 수정 전후 값 (연락처는 가린 값)</td></tr>
+        <tr><td><code>memo</code> · <code>created_at</code></td><td>VARCHAR(200) · TIMESTAMPTZ</td><td></td><td>예: “11/12 본인 전화, 이사로 취소”</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <h2>상태 조회 · 신청 · 운영자 처리</h2>
+      <h3><code>GET /cohort/4/apply-status</code> 계산 순서 <span class="st ok">11/10 확정</span></h3>
       <ol>
-        <li><code>cohort.banner_enabled = false</code>면 배너를 그리지 않음 (조회 대상 아님)</li>
-        <li>내 <code>user_id</code> 또는 3기에 등록한 연락처의 <code>phone_hash</code>로 <code>status='APPLIED'</code> 신청이 있으면 → <b>APPLIED</b> (마감보다 먼저 봄, <span class="tbd">O-17</span>). 연락처로 찾은 웹 신청서 신청은 이때 <code>user_id</code>를 채워 연결 <span class="tbd">O-10</span></li>
-        <li>지금이 <code>apply_close_at</code> 이후이거나, <code>capacity</code>가 있고 APPLIED 수가 정원 이상이면 → <b>CLOSED</b></li>
-        <li>직전 기수 <code>cohort_member</code>에 이름과 연락처가 모두 있으면 → <b>ELIGIBLE</b> (profile은 가려서 내려줌)</li>
-        <li>그 외 → <b>NO_PRIOR</b> (<code>form_url</code>)</li>
+        <li><code>banner_enabled = false</code>면 4기 배너를 그리지 않음</li>
+        <li>내 <code>user_id</code>, 또는 3기에 등록한 연락처의 <code>phone_hash</code>로 APPLIED 신청이 있으면 <b>APPLIED</b>. 연락처로 찾은 웹 신청은 이때 <code>user_id</code>를 채우고 LINKED_ACCOUNT 기록</li>
+        <li>지금이 <code>apply_close_at</code> 이후면 <b>CLOSED</b></li>
+        <li>직전 기수 <code>cohort_member</code>에 이름과 연락처가 모두 있으면 <b>ELIGIBLE</b> (CANCELLED만 있는 사람도 여기)</li>
+        <li>그 외 <b>NO_PRIOR</b></li>
       </ol>
-      <h3><code>POST apply</code> 트랜잭션 <span class="prop">제안</span></h3>
+      <p>응답에 <code>home_banner</code>(<code>4th</code> · <code>report</code> · <code>none</code>)를 함께 내려주면 앱은 판정 로직 없이 그대로 그립니다 <span class="prop">제안</span>. report는 APPLIED이면서 3기 리포트 대상자일 때만입니다.</p>
+      <h3><code>POST /cohort/4/apply</code> 트랜잭션</h3>
       <ol>
         <li>같은 <code>Idempotency-Key</code>로 이미 처리했으면 그때 결과를 그대로 돌려줌</li>
-        <li>마감 조건이면 410, 저장 없음</li>
-        <li>살아 있는 신청이 있으면 409, 저장 없음</li>
-        <li><code>cohort_application</code> 1행 + <code>consent_record</code> 2행 + <code>sms_dispatch</code>(PRE_START_REMINDER) 1행을 한 트랜잭션으로 저장. 하나라도 실패하면 전부 되돌리고 5xx → S1-4 (A-09 “실패 시 저장 없음”)</li>
-        <li>동시에 두 요청이 들어와 고유 인덱스에 걸리면 409로 바꿔 응답</li>
-        <li>정원이 있으면 마지막 자리 경쟁을 막기 위해 <code>cohort</code> 행을 잠그고 수를 셈</li>
+        <li>마감이면 410, 살아 있는 신청이 있으면 409. 둘 다 저장 없음</li>
+        <li>신청 1행 + 동의 2행 + 문자 2행(APPLY_CONFIRM 즉시, PRE_START_REMINDER 예약) + 이벤트 1행을 한 트랜잭션으로 저장. 하나라도 실패하면 전부 되돌리고 5xx → S1-4 (A-09)</li>
+        <li>고유 인덱스 충돌(동시 요청)은 409로 바꿔 응답</li>
+        <li>완료 문자는 커밋 뒤 발송 큐로. 발송이 실패해도 신청은 유지하고 재시도</li>
+      </ol>
+      <h3>운영자 도구 API <span class="prop">제안</span> <span class="tbd">O-21</span></h3>
+      <ol>
+        <li><code>POST /admin/cohort/4/applications/{id}/cancel</code> (사유 필수): status CANCELLED, 개강 전날 예약 CANCELLED, 이벤트 기록. 마감 뒤 취소도 허용</li>
+        <li><code>PATCH /admin/cohort/4/applications/{id}</code>: 이름 · 연락처 · 동 수정, 전후 값을 이벤트에 기록. 연락처가 바뀌면 해시도 다시 계산</li>
+        <li>운영자 화면에는 연락처 · 이름으로 검색, 상태 · 경로 · 신청 시각 · 이력이 보여야 함</li>
       </ol>
     </section>
 
     <section>
       <h2>상태 전이</h2>
       <div class="tbl"><table>
-        <colgroup><col style="width:120px"><col style="width:120px"><col><col style="width:220px"></colgroup>
+        <colgroup><col style="width:120px"><col style="width:120px"><col><col style="width:240px"></colgroup>
         <thead><tr><th>이전</th><th>이후</th><th>계기</th><th>같이 바뀌는 것</th></tr></thead>
         <tbody>
         <tr><td colspan="4"><b>신청 <code>cohort_application.status</code></b></td></tr>
-        <tr><td>(없음)</td><td><code>APPLIED</code></td><td>앱 POST 200, 웹 신청서 제출, 리포트 S7-11 신청</td><td>동의 2행, 문자 예약 1행 생성</td></tr>
-        <tr><td><code>APPLIED</code></td><td><code>CANCELLED</code></td><td>치매안심센터 전화 → 운영자가 관리 화면에서 처리 (앱 취소 없음)</td><td>예약 문자 <code>SCHEDULED → CANCELLED</code>. 그 뒤 배너 탭 결과는 O-19 결정에 따름 (제안: ELIGIBLE, 마감 뒤라면 CLOSED)</td></tr>
-        <tr><td><code>CANCELLED</code></td><td><code>APPLIED</code></td><td>취소 후 다시 신청 — 허용 여부 미정 <span class="tbd">O-19</span></td><td>새 행으로 쌓을지(이력 보존) 같은 행을 되살릴지</td></tr>
+        <tr><td>(없음)</td><td><code>APPLIED</code></td><td>앱 POST 200 · 리포트 S7-11 · 웹 신청서 제출</td><td>동의 2행, 문자 2행, 이벤트</td></tr>
+        <tr><td><code>APPLIED</code></td><td><code>CANCELLED</code></td><td>운영자 도구 취소 (전화 접수)</td><td>개강 전날 예약 CANCELLED, 홈 배너 4기로</td></tr>
+        <tr><td><code>CANCELLED</code></td><td>새 행 <code>APPLIED</code></td><td>마감 전 재신청 <span class="st ok">11/10 확정</span></td><td>새 동의 · 새 문자, previous_application_id 연결</td></tr>
         <tr><td colspan="4"><b>문자 <code>sms_dispatch.status</code></b></td></tr>
-        <tr><td><code>SCHEDULED</code></td><td><code>SENDING</code></td><td>발송 배치가 <code>scheduled_at</code>에 집어 감</td><td>보내기 직전 신청이 아직 APPLIED인지 다시 확인</td></tr>
-        <tr><td><code>SENDING</code></td><td><code>SENT</code> / <code>FAILED</code></td><td>문자 업체 응답</td><td>FAILED는 정해진 횟수까지 재시도</td></tr>
-        <tr><td><code>SCHEDULED</code></td><td><code>CANCELLED</code></td><td>신청 취소</td><td>—</td></tr>
+        <tr><td><code>SCHEDULED</code></td><td><code>SENDING</code></td><td>발송 배치가 scheduled_at에 집어 감</td><td>보내기 직전 신청이 APPLIED인지 다시 확인</td></tr>
+        <tr><td><code>SENDING</code></td><td><code>SENT</code> / <code>FAILED</code></td><td>문자 업체 응답</td><td>FAILED는 재시도</td></tr>
+        <tr><td><code>SCHEDULED</code></td><td><code>CANCELLED</code></td><td>신청 취소</td><td>취소 문자는 없음</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13.5px">화면 상태 ELIGIBLE · NO_PRIOR · CLOSED는 저장하지 않고 조회 때 계산합니다. APPLIED만 신청 레코드에서 옵니다.</p>
     </section>
 
     <section>
       <h2>웹 신청서와의 통합</h2>
-      <p>3기 미등록자는 S4를 거쳐 <a href="https://meli.health/invitations/dementia" target="_blank" rel="noopener">meli.health/invitations/dementia</a>에서 신청합니다. 11/9 기준 사전등록 137명 중 23명은 보건소 신청폼(보건소 직접 접수)으로 들어왔습니다(report-3rd-hc 보고 페이지 기준). 이 경로가 웹 신청서와 같은 것인지는 O-06에서 확인합니다. 앱과 웹 신청이 한곳에 모여야 중복 1건 규칙과 APPLIED 판정이 맞습니다.</p>
-      <div class="tbl"><table>
-        <colgroup><col style="width:120px"><col><col style="width:190px"><col style="width:190px"></colgroup>
-        <thead><tr><th>방식</th><th>내용</th><th>좋은 점</th><th>걸리는 점</th></tr></thead>
-        <tbody>
-        <tr><td><b>A. 한 표</b> <span class="prop">추천 제안</span></td><td>웹 신청서도 <code>cohort_application</code>에 <code>platform=web</code>, <code>entry_point=web_form</code>, <code>user_id=NULL</code>로 저장. 앱 상태 조회 때 연락처 해시로 찾아 <code>user_id</code>를 채움</td><td>중복 판정과 집계가 한 번에. 보건소 명단 추출이 쉬움</td><td>웹 신청서 쪽 저장 코드를 바꿔야 함. 같은 번호를 가족이 같이 쓰는 경우 잘못 연결될 수 있음</td></tr>
-        <tr><td><b>B. 따로 두고 합쳐 읽기</b></td><td>웹 신청서 기존 표는 그대로 두고, 두 표를 합친 뷰로 상태를 판정</td><td>웹 신청서을 건드리지 않음</td><td>중복을 고유 인덱스로 막을 수 없어 409 판정이 느슨함. 동의 기록 구조가 둘로 갈림</td></tr>
-        </tbody>
-      </table></div>
-      <div class="callout">어느 방식으로 할지, 연락처로 계정을 연결해도 되는지는 개발팀과 보건소가 정할 일이라 확인 필요 <b>O-06 · O-10</b>에 올려 두었습니다. 3기 리포트 S7-11은 “참여 의사만 저장”으로 적혀 있어, 이것을 4기 신청 1건으로 볼지도 같이 정해야 합니다.</div>
+      <p>3기 미등록자는 S4를 거쳐 <a href="https://meli.health/invitations/dementia" target="_blank" rel="noopener">meli.health/invitations/dementia</a>에서 신청합니다. 11/9 기준 사전등록 137명 중 23명은 보건소 신청폼(보건소 직접 접수)으로 들어왔습니다(report-3rd-hc 보고 페이지 기준).</p>
+      <ul>
+        <li>웹 신청도 <code>cohort_application</code>에 <code>platform = web</code>, <code>entry_point = web_form</code>, <code>user_id = NULL</code>로 저장합니다 <span class="st ok">11/10 확정</span></li>
+        <li>앱 상태 조회 때 연락처 해시가 같으면 계정을 자동으로 연결합니다 <span class="st ok">11/10 확정</span>. 가족이 같은 번호를 쓰는 경우 잘못 연결될 수 있어, 연결 기록(LINKED_ACCOUNT)을 남기고 운영자가 풀 수 있게 합니다 <span class="prop">제안</span></li>
+        <li>보건소 직접 접수(종이 · 전화) 23명을 운영자 도구로 이 표에 넣을지(entry_point = admin)는 운영자 도구 기획에서 정합니다 <span class="tbd">O-21</span></li>
+      </ul>
     </section>
   </div></div>
 
@@ -847,7 +889,7 @@ CREATE INDEX ix_app_cohort ON cohort_application (cohort_id, status, applied_at)
         <tr><td><code>I-03</code></td><td>정책서 7장 번호가 1-6, 8, 7 순서로 섞임</td><td>낮음</td><td>확인 필요 탭에서 새 번호(O-xx)로 다시 매김</td></tr>
         <tr><td><code>I-04</code></td><td>정의서 API 표 “그 외/타임아웃 10초 → S1-3”. 버튼 표 · TC-11은 S1-4</td><td>중간</td><td>S1-4로 정리 (이 통합본 반영)</td></tr>
         <tr><td><code>I-05</code></td><td>요청문은 S2를 “확성기 든 노란 마스코트”로 적었지만 에셋과 모션은 고깔(폭죽) 든 맬리</td><td>낮음</td><td>에셋 기준 “폭죽 든 맬리”로 정리</td></tr>
-        <tr><td><code>I-06</code></td><td>상태 판정 순서가 없음. 신청한 사람이 마감 뒤 배너를 누르면 S3와 S5 중 어디인지 정해지지 않음</td><td>중간</td><td>APPLIED 먼저 <span class="prop">제안</span> <span class="tbd">O-17</span></td></tr>
+        <tr><td><code>I-06</code></td><td>상태 판정 순서가 없음. 신청한 사람이 마감 뒤 배너를 누르면 S3와 S5 중 어디인지 정해지지 않음</td><td>중간</td><td>APPLIED 먼저 <span class="st ok">11/10 확정</span></td></tr>
         <tr><td><code>I-07</code></td><td>S2 설명 · S4 설명 · S5 버튼 · S6 제목 등 문구 11개에 ID가 없음</td><td>낮음</td><td>A-10 ~ A-12, D-05 ~ D-07, N-02 · N-03, C-02 · C-03, P-02 제안 번호 부여 (정의서 3장)</td></tr>
         <tr><td><code>I-08</code></td><td>S3 신청일 예시 “11월 10일 (화)”와 S1 개강 “2027년 2월 1일 (월)”은 요일이 맞음. 이전 버전 “2월 3일 (화)”는 2027년 기준 수요일(이전 핸드오프 D-08)</td><td>정보</td><td>요일 계산 확인 완료. 개강일 자체는 <span class="tbd">O-01</span></td></tr>
         </tbody>
@@ -880,7 +922,7 @@ CREATE INDEX ix_app_cohort ON cohort_application (cohort_id, status, applied_at)
   <div id="tab-open" hidden><div class="doc">
     <section>
       <h2>확인 필요</h2>
-      <p>v4 정책서 7장(8개), 이전 핸드오프 8장(D-01 ~ D-08)과 10장(1 ~ 8번), 이 통합본에서 새로 생긴 질문을 겹치지 않게 합쳤습니다. 어느 것도 임의로 정하지 않았습니다. 담당은 문서에 적힌 역할을 기준으로 한 추정이라 바꿔도 됩니다.</p>
+      <p>v4 정책서 7장(8개), 이전 핸드오프 8장(D-01 ~ D-08)과 10장(1 ~ 8번), 이 통합본에서 새로 생긴 질문을 겹치지 않게 합쳤습니다. 11/10 설문으로 정해진 것은 “확정 11/10”으로 바꾸고, 설문에서 새로 생긴 질문은 O-20 ~ O-23으로 더했습니다. 어느 것도 임의로 정하지 않았습니다. 담당은 문서에 적힌 역할을 기준으로 한 추정이라 바꿔도 됩니다.</p>
       <div class="meta" id="open-sum"></div>
       <div class="tbl"><table>
         <colgroup><col style="width:70px"><col><col style="width:130px"><col style="width:130px"></colgroup>
@@ -905,12 +947,13 @@ var ICON={
   bell:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 16V11a6 6 0 1112 0v5l1.5 2h-15L6 16z" stroke="#191F28" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20.5a2 2 0 004 0" stroke="#191F28" stroke-width="1.9" stroke-linecap="round"/></svg>',
   check:'<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l2.9 2.8 6-6.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   okc:'<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#0E7A52"/><path d="M4.6 8.2l2.2 2.1 4.6-4.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  report:'<svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="3" fill="#fff"/><path d="M4 8h16" stroke="#FFD54A" stroke-width="2.2"/><path d="M8.5 16.5v-3M12 16.5v-5.5M15.5 16.5v-4" stroke="#265F4D" stroke-width="2" stroke-linecap="round"/></svg>',
   cal:'<svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3" stroke="#8B95A1" stroke-width="1.8"/><path d="M3.5 10h17M8 3v4M16 3v4M9.5 14.5l5 0" stroke="#8B95A1" stroke-width="1.8" stroke-linecap="round"/></svg>'
 };
 var NAMES={
   'S0':'홈 · 배너','S0-L':'홈 · 상태 조회 중','S0-E':'홈 · 상태 조회 실패',
   'S1':'신청 화면 · 교실과 정보 확인','S1-1':'약관 동의 시트','S1-2':'약관 상세',
-  'S1-3':'신청하는 중','S1-4':'신청 실패','S2':'신청 완료','S3':'신청 내용','S4':'신청서 안내 시트','S5':'신청 마감','S6':'전화 문의 시트'
+  'S1-3':'신청하는 중','S1-4':'신청 실패','S0-R':'홈 · 신청자 (리포트 배너)','S2':'신청 완료','S3':'신청 내용','S4':'신청서 안내 시트','S5':'신청 마감','S6':'전화 문의 시트'
 };
 function status(){return '<div class="status"><span>10:26</span><span aria-hidden="true">▮▮ ◔</span></div>'}
 function appbar(t,act,step){return '<div class="appbar"><button class="back" type="button" data-act="'+(act||'home')+'" aria-label="뒤로">'+ICON.back+'</button><span style="flex:1">'+t+'</span>'+(step?'<span class="step" aria-label="'+step+' 단계">'+step+'</span>':'')+'</div>'}
@@ -919,9 +962,12 @@ function toast(msg,bottom){return msg?'<div class="toast" role="status" style="b
 function home(s){
   return '<div class="scr"><div class="body">'+
    '<div class="home-head"><span>맬리브레인</span>'+ICON.bell+'</div>'+
-   '<button class="banner'+(s.checking?' busy':'')+'" type="button" data-act="banner"'+(s.checking?' aria-busy="true"':'')+' aria-label="4기 미리 신청하기. 2027년 2월 1일 시작 예정이에요">'+
+   (s.rb?'<button class="banner" type="button" data-act="report" aria-label="3기 리포트 보러가기. 242일 두뇌운동 기록이 나왔어요">'+
+     '<span class="cal ic" aria-hidden="true">'+ICON.report+'</span>'+
+     '<span class="btxt"><span class="sub"><span class="l">242일 두뇌운동 기록이 나왔어요</span><span class="s">242일 두뇌운동 기록이 나왔어요</span></span><span class="hd">3기 리포트 보러가기</span></span><span class="chev" aria-hidden="true">›</span></button>'
+   :'<button class="banner'+(s.checking?' busy':'')+'" type="button" data-act="banner"'+(s.checking?' aria-busy="true"':'')+' aria-label="4기 미리 신청하기. 27년 2월 1일 시작 예정이에요">'+
      '<span class="cal ic" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="3.5" fill="#fff"/><path d="M3 9.5h18" stroke="#FFD54A" stroke-width="2.2"/><path d="M8 3v3.5M16 3v3.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="8.5" cy="14" r="1.3" fill="#265F4D"/><circle cx="12" cy="14" r="1.3" fill="#265F4D"/><circle cx="15.5" cy="14" r="1.3" fill="#FFB547"/></svg></span>'+
-     '<span class="btxt"><span class="sub"><span class="l">내년 2월 1일 시작 예정이에요</span><span class="s">내년 2월 1일 시작 예정이에요</span></span><span class="hd">4기 미리 신청하기</span></span><span class="chev" aria-hidden="true">›</span><span class="bspin" aria-hidden="true"></span></button>'+
+     '<span class="btxt"><span class="sub"><span class="l">27년 2월 1일 시작 예정이에요</span><span class="s">27년 2월 1일 시작 예정이에요</span></span><span class="hd">4기 미리 신청하기</span></span><span class="chev" aria-hidden="true">›</span><span class="bspin" aria-hidden="true"></span></button>')+
    '<div class="ghost"><span class="ghost-tag">기존 홈 영역 · 변경 없음</span><i class="m"></i><i class="s"></i><i class="l"></i></div>'+
    '<div class="ghost"><span class="ghost-tag">기존 홈 영역 · 변경 없음</span><i class="m"></i><i></i><i class="s"></i></div>'+
    '<div class="ghost"><span class="ghost-tag">기존 홈 영역 · 변경 없음</span><i class="m"></i><i class="s"></i></div>'+
@@ -936,10 +982,10 @@ function crow(on,act,cls,inner,see){return '<div class="row'+cls+'"><span class=
 function applyScr(s){
   var body='<div class="body"><div class="ask">'+
     '<h2>이 정보로<br>4기에 신청할게요</h2>'+
-    '<p>3기에 등록한 정보예요</p>'+
+    '<p>3기에 등록한 정보예요<br>남동구에 사는 어르신이 대상이에요</p>'+
     '<div class="box"><div class="box-h"><span>신청할 교실</span><span class="badge">미리 신청 중</span></div>'+
       '<div class="box-t">두뇌운동 치매예방교실 4기</div>'+
-      '<dl class="who big"><div><dt>개강</dt><dd>2027년 2월 1일 (월)</dd></div><div><dt>비용</dt><dd>무료 · 남동구 치매안심센터</dd></div></dl></div>'+
+      '<dl class="who big"><div><dt>개강</dt><dd>27년 2월 1일 (월)</dd></div><div><dt>비용</dt><dd>무료 · 인천남동구 보건소</dd></div></dl></div>'+
     '<div class="box"><div class="box-h"><span>신청자</span></div>'+
       '<dl class="who big"><div><dt>이름</dt><dd>박영자</dd></div><div><dt>연락처</dt><dd>010-****-5678</dd></div><div><dt>사는 곳</dt><dd>남동구 구월1동</dd></div></dl></div>'+
   '</div></div>';
@@ -953,7 +999,7 @@ function agreeSheet(s){
    '<div class="agree'+(s.nudge?' nudge':'')+'">'+
      crow(all?true:(a||b)?'mixed':false,'cAll',' all','모두 동의해요')+
      crow(a,'c1','','<span class="req">[필수]</span>개인정보 수집·이용 동의','terms1')+
-     crow(b,'c2','','<span class="req">[필수]</span>개인정보 제3자 제공 동의 (남동구 치매안심센터)','terms2')+
+     crow(b,'c2','','<span class="req">[필수]</span>개인정보 제3자 제공 동의 (인천남동구 보건소)','terms2')+
    '</div>'+
    (s.error?'<div class="err" role="alert">신청을 보내지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.</div>':'')+
    (s.loading?'<button class="cta loading" type="button" disabled aria-busy="true"><span class="spin" aria-hidden="true"></span>신청하는 중이에요</button>'
@@ -967,7 +1013,7 @@ function termsPage(s){
   return '<div class="page">'+appbar(one?'개인정보 수집·이용 동의':'개인정보 제3자 제공 동의','termsBack')+
    '<div class="body"><div class="terms" style="padding:4px 16px 16px;display:flex;flex-direction:column;gap:12px"><dl>'+
    (one?'<div><dt>수집 항목</dt><dd>이름, 연락처, 사는 동, 3기 활동 기록</dd></div><div><dt>목적</dt><dd>치매예방교실 4기 운영과 개강 안내 문자</dd></div><div><dt>보유 기간</dt><dd>4기 종료 후 1년</dd></div>'
-       :'<div><dt>받는 곳</dt><dd>남동구 치매안심센터</dd></div><div><dt>제공 항목</dt><dd>이름, 연락처, 사는 동, 4기 활동 기록</dd></div><div><dt>목적</dt><dd>교실 참여 확인과 상담 연계</dd></div><div><dt>보유 기간</dt><dd>4기 종료 후 1년</dd></div>')+
+       :'<div><dt>받는 곳</dt><dd>인천남동구 보건소</dd></div><div><dt>제공 항목</dt><dd>이름, 연락처, 사는 동, 4기 활동 기록</dd></div><div><dt>목적</dt><dd>교실 참여 확인과 상담 연계</dd></div><div><dt>보유 기간</dt><dd>4기 종료 후 1년</dd></div>')+
    '</dl><p style="margin:0;font-size:15px;color:#4E5968">동의하지 않을 수 있어요. 다만 동의하지 않으면 4기에 참여할 수 없어요.</p></div></div>'+
    '<div class="foot"><button class="cta" type="button" data-act="agree-'+(one?'1':'2')+'">동의하기</button></div></div>';
 }
@@ -978,8 +1024,8 @@ function doneScr(s,view){
     (view?'<img src="'+MASCOT+'" alt="">':'<button type="button" class="mallie" data-act="pop" aria-label="맬리 폭죽 다시 터뜨리기"><span class="shd" aria-hidden="true"></span><img src="'+MASCOT+'" alt=""></button>')+
     '<span class="ok">'+ICON.okc+'신청 완료</span>'+
     '<h2>'+(view?'4기에 미리<br>신청했어요':'4기 미리 신청을<br>받았어요')+'</h2>'+
-    '<p>'+(view?'2026년 11월 10일 (화)에 신청했어요':'3기 정보 그대로 신청했어요')+'</p>'+
-    '<dl class="rows"><div><dt>신청자</dt><dd>박영자</dd></div><div><dt>교실</dt><dd>두뇌운동 치매예방교실 4기</dd></div><div><dt>개강</dt><dd>2027년 2월 1일 (월)</dd></div><div><dt>알림</dt><dd>개강 전날 문자로 알려 드려요</dd></div></dl>'+
+    '<p>'+(view?'26년 11월 10일 (화)에 신청했어요':'3기 정보 그대로 신청했어요')+'</p>'+
+    '<dl class="rows"><div><dt>신청자</dt><dd>박영자</dd></div><div><dt>교실</dt><dd>두뇌운동 치매예방교실 4기</dd></div><div><dt>개강</dt><dd>27년 2월 1일 (월)</dd></div><div><dt>알림</dt><dd>개강 전날 문자로 알려 드려요</dd></div></dl>'+
     '<p class="note">그 전까지는 지금처럼 오늘의 활동을 할 수 있어요</p>'+
     (view?'<button type="button" class="linkrow" data-act="call" style="background:#fff;border-radius:14px;padding:0 16px"><span>신청을 취소하고 싶어요</span><b>전화로 물어보기 ›</b></button>':'')+
   '</div></div><div class="foot"><button class="cta" type="button" data-act="home">확인</button></div>'+sheet(s)+(s.toast?'<div class="toast" role="status" style="top:60px">'+s.toast+'</div>':'')+'</div>';
@@ -990,8 +1036,8 @@ function closed(s){
    '<div class="closed-ic">'+ICON.cal+'</div>'+
    '<span class="ok" style="color:#4E5968;background:#E9ECEF">신청 마감</span>'+
    '<h2>4기 미리 신청이<br>마감됐어요</h2>'+
-   '<p>신청 기간이 끝났거나 정원이 다 찼어요.<br>궁금한 점은 치매안심센터로 물어봐 주세요.</p>'+
-  '</div></div><div class="foot"><button class="cta" type="button" data-act="home">홈으로</button><button class="textbtn" type="button" data-act="call">치매안심센터에 전화로 물어보기</button></div>'+sheet(s)+'</div>';
+   '<p>신청 기간이 끝났어요.<br>궁금한 점은 보건소로 물어봐 주세요.</p>'+
+  '</div></div><div class="foot"><button class="cta" type="button" data-act="home">홈으로</button><button class="textbtn" type="button" data-act="call">보건소에 전화로 물어보기</button></div>'+sheet(s)+'</div>';
 }
 
 function sheet(s){
@@ -1004,7 +1050,7 @@ function sheet(s){
       '<button class="cta" type="button" data-act="form">신청서 열기</button>'+
       '<button class="textbtn" type="button" data-act="close">다음에 할게요</button>';
   } else if(s.sheet==='call'){
-    h='<h3>남동구 치매안심센터</h3>'+
+    h='<h3>인천남동구 보건소</h3>'+
       '<div class="tel">'+TEL+'</div>'+
       '<p>평일 오전 9시부터 오후 6시까지 받아요.</p>'+
       '<button class="cta" type="button" data-act="dial">전화 걸기</button>'+
@@ -1027,6 +1073,7 @@ function render(s){
 /* ===== 정의서 데이터 (v4 03_정의서 + 통합본 제안) ===== */
 var DEF=[
  ['S0','홈 · 배너','앱 실행, 홈 탭','기존 홈 위에 고정 배너 1개. 배너 문구는 상태와 상관없이 같음'],
+ ['S0-R','홈 · 신청자 (리포트 배너)','홈 진입 조회 결과 APPLIED','4기 배너 자리에 기존 3기 리포트 배너. 취소되면 다음 홈 진입부터 다시 4기 배너'],
  ['S0-L','홈 · 상태 조회 중','배너 탭 직후, 조회 응답 전','배너 위 어두운 덮개와 스피너. 조회 중 다시 눌러도 무시'],
  ['S0-E','홈 · 상태 조회 실패','배너 탭 후 조회 실패나 5초 초과','홈에 머물고 토스트 6초. 다시 누르면 재조회'],
  ['S1','신청 화면 · 교실과 정보 확인','배너 탭, ELIGIBLE','큰 제목 “이 정보로 4기에 신청할게요”, 신청할 교실(교실명, 개강, 비용·운영), 신청자(이름, 연락처, 사는 곳). 스크롤 없음. 하단 [맞아요, 신청할게요], 정보가 다르면 전화로 알려 주세요'],
@@ -1041,7 +1088,8 @@ var DEF=[
  ['S6','전화 문의 시트','S1 · S3 · S5의 문의 버튼','센터 이름, 대표번호 032-453-6160(선택 가능한 텍스트), 운영 시간, [전화 걸기]']
 ];
 var ACTS=[
- ['S0','배너 (카드 전체)','S0-L 조회 중 → ELIGIBLE: S1 · APPLIED: S3 · NO_PRIOR: S4 · CLOSED: S5 · 실패: S0-E'],
+ ['S0-R','3기 리포트 배너','기존 3기 리포트 (이 문서 범위 밖)'],
+ ['S0','배너 (카드 전체)','S0-L 조회 중 → ELIGIBLE · 취소됨: S1 · APPLIED: S3 · NO_PRIOR: S4 · CLOSED: S5 · 실패: S0-E'],
  ['S0-E','배너 다시 탭','재조회 (S0-L)'],
  ['S1','맞아요, 신청할게요','S1-1 약관 시트 열기'],
  ['S1','정보가 다르면 전화로 알려 주세요','S6 시트'],
@@ -1069,16 +1117,16 @@ var ACTS=[
  ['모든 시트','기기 뒤로 가기','화면을 벗어나지 않고 시트만 닫기 (신청 중에는 무시)']
 ];
 var COPY=[
- ['B-01','S0 배너 서브','내년 2월 1일 시작 예정이에요 (2026년 12월 31일까지)'],
- ['B-01b','S0 배너 서브 (2027년 1월 1일부터)','2월 1일 시작 예정이에요'],
+ ['B-01','S0 배너 서브','27년 2월 1일 시작 예정이에요 (11/10 확정 · v4: 내년 2월 1일 시작 예정이에요)'],
+ ['B-01b','S0 배너 서브 (폐기)','연도를 적어 1월 1일 교체가 필요 없어져 폐기 (11/10)'],
  ['B-02','S0 배너 헤드라인','4기 미리 신청하기'],
  ['B-03','S0 달력 아이콘','없음 — 통합본에서 날짜 글자를 빼고 아이콘만 (v4: 2027년 / 2월 / 1일)'],
  ['T-01','S0-E 토스트','신청 정보를 불러오지 못했어요. 잠시 후 다시 눌러 주세요.'],
- ['A-02','S1 제목 · 설명','이 정보로 4기에 신청할게요 / 3기에 등록한 정보예요'],
+ ['A-02','S1 제목 · 설명','이 정보로 4기에 신청할게요 / 3기에 등록한 정보예요 / 남동구에 사는 어르신이 대상이에요 (마지막 줄 11/10 추가)'],
  ['A-03','S1 버튼','맞아요, 신청할게요 / 정보가 다르면 전화로 알려 주세요'],
  ['A-08','S1 카드 제목','신청할 교실 · 미리 신청 중 / 신청자'],
  ['A-04','S1-1 제목 · 설명','필수 약관에 동의해 주세요 / 교실 운영과 개강 안내에 필요한 정보만 받아요'],
- ['A-12','S1-1 체크 항목','모두 동의해요 / [필수] 개인정보 수집·이용 동의 / [필수] 개인정보 제3자 제공 동의 (남동구 치매안심센터)',1],
+ ['A-12','S1-1 체크 항목','모두 동의해요 / [필수] 개인정보 수집·이용 동의 / [필수] 개인정보 제3자 제공 동의 (인천남동구 보건소)',1],
  ['A-05','S1-1 버튼 · 안내','동의하고 신청하기 / 필수 항목에 모두 동의해야 신청할 수 있어요'],
  ['A-10','S1-2 제목','개인정보 수집·이용 동의 / 개인정보 제3자 제공 동의',1],
  ['A-11','S1-2 안내 · 버튼','동의하지 않을 수 있어요. 다만 동의하지 않으면 4기에 참여할 수 없어요. / 동의하기',1],
@@ -1089,27 +1137,32 @@ var COPY=[
  ['D-07','S2 · S3 정보 표','신청자 / 교실 / 개강 / 알림 · 개강 전날 문자로 알려 드려요',1],
  ['D-06','S2 · S3 안내','그 전까지는 지금처럼 오늘의 활동을 할 수 있어요',1],
  ['D-02','S3 제목','4기에 미리 신청했어요 (v4: 4기 신청이 끝났어요)'],
- ['D-03','S3 신청일','{신청일 YYYY년 M월 D일 (요일)}에 신청했어요 (v4는 연도 없음)'],
+ ['D-03','S3 신청일','{신청일 YY년 M월 D일 (요일)}에 신청했어요 · 예: 26년 11월 10일 (화)'],
  ['D-04','S3 취소 줄','신청을 취소하고 싶어요 / 전화로 물어보기'],
  ['T-02','S3 토스트 (409)','이미 4기에 신청되어 있어요'],
  ['N-01','S4 제목','4기 신청서를 작성해 주세요'],
  ['N-02','S4 설명','3기에 등록한 정보가 없어서 신청서에서 이름과 연락처를 받아요. 3분쯤 걸려요.',1],
  ['N-03','S4 버튼','신청서 열기 / 다음에 할게요',1],
  ['C-01','S5 제목','4기 미리 신청이 마감됐어요'],
- ['C-02','S5 설명','신청 기간이 끝났거나 정원이 다 찼어요. 궁금한 점은 치매안심센터로 물어봐 주세요.',1],
- ['C-03','S5 버튼','홈으로 / 치매안심센터에 전화로 물어보기',1],
- ['P-02','S6 제목 · 번호 · 버튼','남동구 치매안심센터 / 032-453-6160 / 전화 걸기 / 닫기',1],
+ ['C-02','S5 설명','신청 기간이 끝났어요. 궁금한 점은 보건소로 물어봐 주세요. (정원 없음 확정으로 수정)',1],
+ ['C-03','S5 버튼','홈으로 / 보건소에 전화로 물어보기',1],
+ ['P-02','S6 제목 · 번호 · 버튼','인천남동구 보건소 / 032-453-6160 / 전화 걸기 / 닫기',1],
+ ['R-01','S0-R 리포트 배너 (기존)','242일 두뇌운동 기록이 나왔어요 / 3기 리포트 보러가기 · 변경 없음'],
  ['P-01','S6 운영 시간','평일 오전 9시부터 오후 6시까지 받아요.']
 ];
 var COPYMAP={}; COPY.forEach(function(c){COPYMAP[c[0]]=c});
 
 /* 화면 디스크립션: 목적 · 요소 · 문구 · 예외 · 시스템 */
 var SCR={
- 'S0':{p:'홈에서 4기 신청으로 들어가는 단 하나의 입구. 상태와 관계없이 같은 모양이라 어르신이 헷갈리지 않습니다.',
+ 'S0':{p:'4기 미신청자에게 보이는 신청 입구. 신청자는 같은 자리에 3기 리포트 배너가 나옵니다 (S0-R, 11/10 확정).',
    el:['배너 343 × 84, 짙은 초록 #265F4D, 카드 전체가 버튼 (누르면 scale .98)','달력 모양 아이콘 56 (날짜 글자 없음, 날짜는 서브 문구에만)','서브 문구 Bold 14 노랑, 헤드라인 Black 23 흰색, 오른쪽 ›','아래 기존 홈 영역은 바꾸지 않음'],
    c:['B-01','B-01b','B-02','B-03'],
-   ex:['2027년 1월 1일부터 서브 문구를 B-01b로 서버에서 교체','마감 뒤에는 서버 설정으로 배너를 내림 (앱 업데이트 없이)','360px 미만 기기의 짧은 문구 B-01s는 정의 없음 (O-18)'],
+   ex:['서브 문구에 연도(27년)가 있어 1월 1일 교체 불필요','마감 뒤에는 서버 설정으로 배너를 내림 (앱 업데이트 없이)','360px 미만 기기의 짧은 문구 B-01s는 정의 없음 (O-18)'],
    sys:['home_banner_4th_view (하루 1회)','탭 시 home_banner_4th_tap + GET apply-status']},
+ 'S0-R':{p:'신청을 마친 사람에게는 4기 배너 대신 원래 있던 3기 리포트 배너를 다시 보여줍니다. 신청했는지 헷갈려 다시 누르는 일을 막습니다.',
+   el:['기존 3기 리포트 배너 그대로 (변경 없음)','서브 “242일 두뇌운동 기록이 나왔어요” · 헤드라인 “3기 리포트 보러가기”'],c:[],
+   ex:['취소(CANCELLED)되면 다음 홈 진입부터 4기 배너','홈 진입 조회 실패 시에는 4기 배너','웹 신청자(3기 리포트 없음)는 결정 필요 (O-20)'],
+   sys:['홈 진입 때 GET /cohort/4/apply-status → home_banner = report','11/10 확정']},
  'S0-L':{p:'조회를 기다리는 동안 눌렸다는 것을 보여주고, 연타로 두 번 이동하는 것을 막습니다.',
    el:['배너 위 어두운 덮개 (검정 55%)','흰 스피너 28, 오른쪽 화살표 자리 (통합본 변경, v4는 가운데)'],c:[],
    ex:['조회 중 다시 누르면 무시','5초 안에 응답이 없으면 S0-E'],
@@ -1155,17 +1208,17 @@ var SCR={
  'S4':{p:'3기 등록 정보가 없는 사람에게 앱 대신 웹 신청서로 안내합니다.',
    el:['홈 위 바텀 시트','제목 · 설명','[신청서 열기] · 다음에 할게요'],
    c:['N-01','N-02','N-03'],
-   ex:['신청서는 외부 브라우저로 열림','웹 작성 후 앱 복귀 시 계정 연결 전까지 다시 S4 (O-10)'],
+   ex:['신청서는 외부 브라우저로 열림','웹 신청은 같은 신청 표에 저장, 연락처가 같으면 자동 연결 (11/10 확정) · 신청 후 배너는 O-20'],
    sys:['apply_4th_form_open','form_url = https://meli.health/invitations/dementia']},
  'S5':{p:'신청을 받을 수 없다는 것을 알리고 문의 경로만 남깁니다.',
    el:['회색 달력 아이콘','회색 뱃지 신청 마감','제목 · 설명','하단 [홈으로] + 전화 문의'],
    c:['C-01','C-02','C-03'],
-   ex:['신청 도중 마감되면 410으로 이 화면','신청한 사람이 마감 후 들어올 때 S3/S5 순서 미정 (O-17)'],
+   ex:['신청 도중 마감되면 410으로 이 화면','신청한 사람은 마감 뒤에도 S3 (11/10 확정)'],
    sys:['apply_4th_result = 410 (신청 중 마감 시)']},
  'S6':{p:'정보 변경, 취소, 마감 문의를 모두 치매안심센터 전화 한 곳으로 모읍니다.',
    el:['센터 이름','큰 번호 Black 26, 선택 가능한 텍스트','운영 시간','[전화 걸기] · 닫기'],
    c:['P-02','P-01'],
-   ex:['전화가 안 되는 기기는 번호를 보고 직접 걸기','운영 시간은 확인 필요 (O-05)'],
+   ex:['전화가 안 되는 기기는 번호를 보고 직접 걸기','운영 시간은 확인 필요 (O-05) · 제목은 인천남동구 보건소 (11/10 확정)'],
    sys:['apply_4th_call_tap','tel:0324536160']}
 };
 
@@ -1218,8 +1271,13 @@ var TCS=[
  ['TC-24','저장 중 동의 기록 저장을 일부러 실패시킴','신청 · 동의 · 문자 예약 모두 없음, S1-4','미실행',1],
  ['TC-25','첫 요청은 저장됐지만 응답을 못 받은 상태에서 S1-4 재요청 (같은 요청 키)','새 행 없이 200, S2','미실행',1],
  ['TC-26','웹 신청서에 신청한 번호와 같은 연락처의 3기 계정으로 배너 탭','APPLIED → S3, 신청 행에 user_id 연결','미실행 · O-10',1],
- ['TC-27','운영자가 신청을 취소 처리','예약 문자 CANCELLED. 배너 탭 결과는 O-19 결정대로 (제안: S1, 마감 뒤라면 S5)','미실행 · O-19',1],
- ['TC-28','신청을 마친 계정으로 마감 시각 뒤 배너 탭','O-17 결정대로 (제안: S3)','미실행 · O-17',1]
+ ['TC-27','운영자가 신청을 취소 처리','개강 전날 예약 CANCELLED, 취소 문자 없음. 다음 홈 진입부터 4기 배너 (마감 뒤라면 배너 없음)','미실행',1],
+ ['TC-28','신청을 마친 계정으로 마감 시각 뒤 배너 탭','S3 (APPLIED를 먼저 판정, 11/10 확정)','미실행',1],
+ ['TC-29','신청을 마친 계정으로 홈 진입','4기 배너 대신 3기 리포트 배너 (S0-R)','미실행',1],
+ ['TC-30','운영자 취소 뒤 홈 진입','다시 4기 배너. 탭하면 S1, 다시 신청하면 새 행 + 완료 문자','미실행',1],
+ ['TC-31','리포트 S7-11 “4기도 참여하기”','S1 → S1-1 → S2. 확인 시트(07-h) 없음. 신청 후 버튼 비활성','미실행',1],
+ ['TC-32','앱 신청 성공','완료 문자 1건 즉시, 개강 전날(1/31) 예약 1건. 같은 신청에 두 번 나가지 않음','미실행',1],
+ ['TC-33','홈 진입 상태 조회 실패','4기 배너. 탭하면 다시 조회해 신청자면 S3','미실행',1]
 ];
 
 /* 변경이력 */
@@ -1228,7 +1286,7 @@ var HIST=[
  ['2026-11-10<small>v4</small>','개강일 표기','배너 “4기는 2월 3일에 시작해요” · 정보 행 “2월 3일 (화)”, 연도 없음','2027년 2월 1일 (월), 화면에 연도 표기','해가 바뀌는 일정. 2027-02-03은 수요일이라 날짜와 요일이 어긋났음(D-08). 2/1 확정은 아직 O-01'],
  ['2026-11-10<small>v4</small>','D-day','라벨 “다음 교실 · D-120” (고정값)','D-day 넣지 않음, 날짜만','(통합본 추정) 먼 날짜의 D-day는 의미가 적고 계산값 관리가 필요. 관련 질문 10-7 → O-15'],
  ['2026-11-10<small>v4</small>','배너 노출 대상','쉬는 기간 · 일반 회원만 (진행 중 회원은 없음)','로그인한 모든 사용자, 상태 무관 같은 배너','상태는 탭할 때 서버에서 판정. 3기 리포트 배너 자리를 대신함'],
- ['2026-11-10<small>v4</small>','배너 문구 · 모양','라벨 · 제목 · 보조문구 · CTA 버튼 + 새싹 캐릭터. 신청 후 “4기 신청 완료 · D-120 / 신청 내용 보기”로 바뀜','343 × 84 짙은 초록 배너, 달력 아이콘, “내년 2월 1일 시작 예정이에요 / 4기 미리 신청하기”, 상태와 관계없이 같음','한 가지 모양으로 단순화. 신청 여부는 눌렀을 때 S3로 보여줌'],
+ ['2026-11-10<small>v4</small>','배너 문구 · 모양','라벨 · 제목 · 보조문구 · CTA 버튼 + 새싹 캐릭터. 신청 후 “4기 신청 완료 · D-120 / 신청 내용 보기”로 바뀜','343 × 84 짙은 초록 배너, 달력 아이콘, “27년 2월 1일 시작 예정이에요 / 4기 미리 신청하기”, 상태와 관계없이 같음','한 가지 모양으로 단순화. 신청 여부는 눌렀을 때 S3로 보여줌'],
  ['2026-11-10<small>v4</small>','배너 탭 영역','손가락 커서는 배너 전체, 실제로는 CTA 버튼만 눌림 (G-02)','카드 전체가 버튼','어르신 터치 정확도. 빈틈 G-02 해소'],
  ['2026-11-10<small>v4</small>','신청 경로','배너 → 교실 알아보기(혜택 목록 포함) → “남동구 교실 신청하기” 한 번 탭으로 완료 (확인 없음, P-03)','배너 → 상태 조회 → S1 정보 확인 → S1-1 약관 시트 → S2','개인정보 제3자 제공 동의가 필요하고, 확인 없이 바로 신청되는 문제(D-02)'],
  ['2026-11-10<small>v4</small>','혜택 목록','교실 알아보기 화면에 “교실 회원이 되면” 4줄 (CI-05)','삭제','S1이 스크롤 없이 한 화면에 들어가도록 (QA-01)'],
@@ -1253,35 +1311,45 @@ var HIST=[
  ['2026-11-10<small>통합본</small>','QA · QC 반영','로딩 버튼 #3E8F6C(3.9:1), 흐린 버튼 글자 #8B95A1(2.5:1), 체크 줄 안에 보기 버튼, 키보드 조작 뒤 포커스 사라짐','로딩 #2F7D5B(5.0:1), 흐린 글자 #5C6675(4.7:1), 보기 버튼을 체크 줄 밖으로, 포커스 유지 · 시트 안으로 이동, Esc = 기기 뒤로','QA 전문가 · QC 2명 검토 결과 (TC-19 실패 해소, 대비 기준 4.5:1)'],
  ['2026-11-10<small>통합본</small>','화면 문구 (시니어 UI/UX 점검)','S3 “4기 신청이 끝났어요”, S1 “정보가 바뀌었어요”, S3 “전화로 문의 ›”, 알림 “개강 전날 문자로 보내요”, 신청일 “11월 10일 (화)”','“4기에 미리 신청했어요”, “정보가 다르면 전화로 알려 주세요”, “전화로 물어보기 ›”, “개강 전날 문자로 알려 드려요”, “2026년 11월 10일 (화)”','마감(S5)과 헷갈림 방지, 누르면 전화로 이어진다는 것을 드러냄, 보내는 대상 명시, 개강일 연도와 표기 맞춤. 사용자 결정'],
  ['2026-11-10<small>통합본</small>','동작 (시니어 UI/UX 점검)','S1-4 버튼 “동의하고 신청하기”, 토스트 4초, 맬리 숨쉬기 끝없이 반복, 조회 스피너 배너 가운데','S1-4 버튼 “다시 신청하기”, 토스트 6초, 숨쉬기 2번 뒤 멈춤, 스피너 화살표 자리','다시 눌러도 된다는 것을 알림, 어르신 읽기 시간, 읽는 동안 주의 분산 감소, 헤드라인 가림 방지. 사용자 결정'],
+ ['2026-11-10<small>설문 결정</small>','배너 노출 · 판정','로그인한 모두에게 같은 4기 배너 (v4). 판정 순서 없음','4기 미신청자만 4기 배너, 신청자는 3기 리포트 배너로 교체. 취소하면 다시 4기 배너. 판정 APPLIED → CLOSED → ELIGIBLE → NO_PRIOR. 홈 진입 때도 상태 조회','신청했는지 헷갈려 다시 누르는 일 방지. 신청자는 마감 뒤에도 자기 신청 확인'],
+ ['2026-11-10<small>설문 결정</small>','날짜 · 명칭 · 운영 주체','“내년 2월 1일”, “2027년 2월 1일 (월)”, 운영 “남동구 치매안심센터”, 명칭 미정','“27년 2월 1일”, “27년 2월 1일 (월)”, “26년 11월 10일 (화)”. 운영 주체 “인천남동구 보건소”. 화면은 짧은 이름, 약관 · 문자 · DB는 K-13','해가 바뀌어도 맞는 표기. 기존 문서(변경이력 30, Q-13)와 주체를 맞춤'],
+ ['2026-11-10<small>설문 결정</small>','신청 경로 · 거주지','리포트 S7-11은 확인 시트(07-h) 한 번, 약관 없음. 거주 안내 없음','리포트도 S1 → S1-1 → S2 같은 흐름. S1에 “남동구에 사는 어르신이 대상이에요” 한 줄, 사후 확인','약관 동의 없는 신청을 없애고 완료 문구를 하나로'],
+ ['2026-11-10<small>설문 결정</small>','문자 · 취소 · 마감','완료 문자 미정, 개강 전날 발송일 미정, 재신청 미정, 정원 미정','완료 문자 즉시, 개강 전날 1/31(일), 취소는 전화 + 운영자 도구, 취소 문자 없음, 마감 전 재신청 허용, 정원 없음. S5 문구에서 “정원이 다 찼어요” 삭제','신청 후 두 달 동안 연락이 없던 문제 해소. 취소 · 재신청을 DB 상태 하나로 연동'],
+ ['2026-11-10<small>설문 결정</small>','데이터베이스','웹 신청서 데이터 미정, 이력 기록 없음','앱 · 리포트 · 웹 신청을 한 표에, 연락처로 계정 자동 연결, 재신청은 새 행, 신청 이력 표(application_event), 운영자 취소 · 수정 API, 상태 연동 표','상태 하나가 배너 · 리포트 버튼 · 문자를 모두 결정하도록'],
+ ['2026-11-10<small>Figma</small>','Figma 구성','화면 13장 두 줄 + 화면 아래 짧은 설명','3기 리포트 기획 페이지 형식: 화면 왼쪽 + 1400 폭 디스크립션 표(상단바 · 세컨바 · 요소 표 · 예외 화면 표) + 넘버링, 변형 화면은 같은 줄 오른쪽. 03 플로우 섹션 추가','기존 기획 문서와 같은 방식으로 읽히게 (사용자 요청)'],
  ['2026-11-10<small>통합본</small>','배너 달력 아이콘','흰 달력 카드 56에 “2027년” 11px · “2월” 9px · “1일” 18px (B-03)','날짜 글자 없는 달력 모양 아이콘 56. 날짜는 서브 문구 B-01에만','“2월” 9px가 너무 작고, 키우면 둔탁해 보임. 서브 문구에 이미 날짜가 있어 중복 제거 (리뷰 결정). v4 시안 · Figma에도 반영 필요']
 ];
 
 /* 확인 필요 */
 var OPEN=[
- ['O-01','개강일과 요일','v4는 2027년 2월 1일 (월). 기존 앱 문구는 2월 3일이고, 2027년 2월 3일은 수요일이라 요일도 맞지 않음. 어느 날이 맞는지.','v4 7-5 · 핸드오프 D-08 · C-01','보건소','q'],
- ['O-02','신청 마감일 · 정원 · 우선 신청','마감일, 정원 제한 여부. 이전 프로토타입의 “3기 회원 12월 15일까지 우선 신청 · 남은 자리 412석”을 살릴지, 재등록 목표 280명(1차 100 · 2차 100 · 3차 80)과의 관계.','v4 7-5 · D-07 · 10-4 · C-05 · C-06','보건소 · 기획','q'],
- ['O-03','4기 프로그램 명칭','K-13 “2027년 인천 남동구 보건소 치매예방 프로그램 4기”를 앱에도 쓸지, “두뇌운동 치매예방교실 4기”를 화면용 짧은 표기로 따로 둘지.','핸드오프 D-01 · 10-5 · K-13','기획','d'],
- ['O-04','운영 주체 표기','“남동구 치매안심센터”(S1 비용 줄 · 제3자 제공 받는 곳 · S6 제목)와 확정된 발급기관 “인천남동구 보건소”(변경이력 30, 이전 값이 바로 “치매안심센터”였음) 중 무엇으로 맞출지. S6 번호 032-453-6160은 docs에서 “보건소 대표번호”. 제3자 제공 받는 곳이 법적 주체와 같아야 하는지도 확인.','핸드오프 D-05 · 10-5','기획 · 보건소','d'],
- ['O-05','치매안심센터 운영 시간','S6 “평일 오전 9시부터 오후 6시까지”가 맞는지. 번호 032-453-6160은 Q-13과 같음(D-04 해소). 번호를 누구 번호로 표기할지는 O-04.','v4 7-6 · D-04','보건소','q'],
- ['O-06','신청 데이터 저장 위치','3기 회원 정보로 4기 신청 레코드를 만들 수 있는지, 웹 신청서와 같은 표에 쌓을지(방식 A/B), 리포트 S7-11 “참여 의사”를 신청 1건으로 볼지.','v4 7-1 · D-06 · A-09','개발','d'],
+ ['O-01','개강일','2027년 2월 1일 (월)로 확정. 화면은 “27년 2월 1일 (월)”.','v4 7-5 · 핸드오프 D-08 · 설문 11/10','보건소','k'],
+ ['O-02','신청 마감일','정원은 두지 않기로 확정. 마감일만 정하면 됨. 마감 뒤 배너는 서버 설정으로 내림.','v4 7-5 · D-07 · 10-4 · 설문 11/10','보건소','q'],
+ ['O-03','4기 프로그램 명칭','화면은 “두뇌운동 치매예방교실 4기”, 약관 · 문자 · DB는 K-13 정식 명칭으로 확정. K-13 문서 개정은 O-22.','D-01 · 10-5 · K-13 · 설문 11/10','기획','k'],
+ ['O-04','운영 주체 표기','“인천남동구 보건소”로 통일 확정. S1 비용 줄 · 제3자 제공 받는 곳 · S6 제목 반영.','D-05 · 10-5 · 변경이력 30 · 설문 11/10','기획','k'],
+ ['O-05','운영 시간','S6 “평일 오전 9시부터 오후 6시까지”가 맞는지. 번호는 Q-13과 같음.','v4 7-6 · D-04','보건소','q'],
+ ['O-06','신청 데이터 저장 위치','앱 배너 · 리포트 S7-11 · 웹 신청서를 한 표(cohort_application)에 쌓기로 확정.','v4 7-1 · D-06 · A-09 · 설문 11/10','개발','k'],
  ['O-07','동의 문구와 보유 기간','웹 신청서 필수 동의 문구를 그대로 쓸 수 있는지, 보유 기간 “4기 종료 후 1년”이 맞는지.','v4 7-2','보건소 · 개발','q'],
- ['O-08','신청 직후 완료 문자 · 푸시','앱 신청에도 완료 문자를 보낼지, 앱 푸시를 같이 쓸지, 발송 시각.','v4 7-3 · 10-8','기획 · 보건소','q'],
- ['O-09','개강 전날 문자 발송일','2027년 1월 31일은 일요일. 주말 발송이 되는지, 금요일 1월 29일로 당길지. 당기면 화면 문구 “개강 전날 문자로 알려 드려요”도 바뀜.','v4 7-7 · QA-15','보건소','d'],
- ['O-10','웹 신청과 앱 계정 연결','웹 신청서으로 신청한 사람을 연락처로 앱 계정에 연결해도 되는지. 연결 전에는 앱에서 다시 S4가 뜸.','v4 7-4 · 정책서 6장','개발 · 보건소','q'],
- ['O-11','배너 노출 종료와 문구 교체','마감일까지 노출. 1월에도 노출하면 1월 1일에 B-01b로 교체. 개강일 이후 배너 처리, 신청하지 않은 쉬는 기간 회원이 개강 후 일반 회원으로 넘어가는지.','v4 7-8 · 10-1','기획','q'],
- ['O-12','쉬는 기간 화면과 빈틈','쉬는 기간의 시작 · 끝(3기 종료 11/30 다음 날 ~ 개강 전날), 멈춘 순위 신청 버튼(G-01), 잠금 카드 문구(G-07), 3기 기록 카드(G-08), 먼저 신청한 진행 중 회원의 상태 이어받기(G-09).','10-2 · 9장 G-01 · G-07 ~ G-09','기획','x'],
- ['O-13','신청 경로 간 확인 단계 · 결과 화면 통일','리포트(07-h 확인 시트 → SC-RP-08 / 08-a)와 배너(S1 → 약관 시트 → S2 / S1-4)를 맞출지. 실패 표시 방식, 완료 문구(“보건소에서 연락드리겠습니다” vs “개강 전날 문자로 알려 드려요”), 리포트 경로에도 약관 동의를 받을지.','D-02 · D-03 · 10-3 · S8-05','기획','d'],
- ['O-14','정보 변경 · 신청 취소','v4는 앱에서 받지 않고 전화로(S6). 센터가 취소를 처리할 운영 도구가 있는지.','10-6 · G-04 · G-06','기획 · 보건소','h'],
- ['O-15','D-day 표기','v4는 넣지 않음. 이대로 확정인지.','10-7 · C-02','기획','h'],
- ['O-16','거주지 확인','앱에서 막지 않고 보건소가 사후 확인. 3기 이후 남동구 밖으로 이사한 회원 처리.','v4 4장 · G-10','보건소','q'],
- ['O-17','상태 판정 순서','신청한 사람이 마감 뒤에 들어오면 S3(신청 내용)인지 S5(마감)인지. 통합본 제안은 APPLIED를 먼저 봄.','통합본 I-06','기획 · 개발','d'],
- ['O-18','360px 미만 배너 짧은 문구 B-01s','QA-03 조치에 적힌 B-01s 문구가 정의돼 있지 않음.','QA-03 · 통합본 I-01','디자인','q'],
- ['O-19','취소 후 재신청','전화로 취소한 뒤 배너로 다시 신청할 수 있는지, 이력을 새 행으로 남길지.','통합본 DB 상태 전이','기획 · 보건소','q']
+ ['O-08','신청 완료 문자','신청이 저장되면 바로 보내기로 확정. 앱 푸시는 쓰지 않음(정하지 않음).','v4 7-3 · 10-8 · 설문 11/10','기획 · 보건소','k'],
+ ['O-09','개강 전날 문자','2027년 1월 31일(일)에 보내기로 확정. 발송 시각만 정하면 됨.','v4 7-7 · QA-15 · 설문 11/10','보건소','k'],
+ ['O-10','웹 신청과 앱 계정 연결','연락처가 같으면 자동 연결로 확정. 잘못 연결되면 운영자가 풀 수 있게(O-21).','v4 7-4 · 설문 11/10','개발 · 보건소','k'],
+ ['O-11','배너 문구 교체 · 노출 종료','“27년” 표기로 1월 1일 문구 교체가 필요 없어짐. 마감 뒤 서버 설정으로 내림.','v4 7-8 · 10-1 · 설문 11/10','기획','k'],
+ ['O-12','쉬는 기간 화면과 빈틈','쉬는 기간의 시작 · 끝, 멈춘 순위, 잠금 카드, 3기 기록 카드, 상태 이어받기, 신청 안 한 쉬는 기간 회원이 개강 뒤 일반 회원으로 넘어가는지.','10-1 · 10-2 · 9장 G-01 · G-07 ~ G-09','기획','x'],
+ ['O-13','신청 경로 통일','리포트 S7-11도 배너와 같은 S1 → S1-1 → S2로 확정. 07-h · SC-RP-08 · 08-a는 쓰지 않음. 문서 개정은 O-22.','D-02 · D-03 · 10-3 · S8-05 · 설문 11/10','기획','k'],
+ ['O-14','정보 변경 · 신청 취소','앱에서 받지 않고 전화 → 센터 직원이 운영자 도구로 처리하기로 확정. 도구 기획은 O-21.','10-6 · G-04 · G-06 · 설문 11/10','기획 · 보건소','k'],
+ ['O-15','D-day 표기','넣지 않기로 확정.','10-7 · C-02 · 설문 11/10','기획','k'],
+ ['O-16','거주지 확인','앱에서 막지 않고 보건소 사후 확인 + S1에 “남동구에 사는 어르신이 대상이에요” 한 줄로 확정.','v4 4장 · G-10 · 설문 11/10','보건소','k'],
+ ['O-17','상태 판정 순서','APPLIED → CLOSED → ELIGIBLE → NO_PRIOR로 확정. 신청자는 마감 뒤에도 S3.','통합본 I-06 · 설문 11/10','기획 · 개발','k'],
+ ['O-18','작은 기기 배너 문구','320 · 360px에서 “27년 2월 1일 시작 예정이에요”가 말줄임 없이 들어가는지 다시 확인. 짧은 문구 B-01s가 필요한지.','QA-03 · 통합본 I-01','디자인','q'],
+ ['O-19','취소 후 재신청','마감 전까지 허용으로 확정. 이전 신청은 CANCELLED로 남기고 새 행. 취소 문자는 보내지 않음.','통합본 DB · 설문 11/10','기획 · 보건소','k'],
+ ['O-20','웹 신청자의 신청 후 배너','웹 신청서로 신청한 사람(NO_PRIOR)은 3기 리포트가 없어 “리포트 배너로 교체”가 안 됨. 4기 배너를 두고 탭하면 S3로 갈지, 배너를 숨길지, “4기 신청 완료” 배너를 따로 만들지.','설문 11/10 후속','기획','d'],
+ ['O-21','운영자 도구 기획','전화 취소 · 정보 수정 · 연락처 검색 · 이력 보기 · 잘못된 계정 연결 풀기. 보건소 직접 접수(종이 · 전화) 23명을 이 도구로 신청 표에 넣을지.','설문 11/10 후속 · DB 탭','기획 · 개발','q'],
+ ['O-22','기존 문서 개정','K-13에 화면용 짧은 이름 예외 추가, 03 화면설계서의 07-h · SC-RP-08 · 08-a · S8-05를 이번 흐름으로 개정, 01 정책의 배너 노출 규칙 갱신.','설문 11/10 후속','기획','q'],
+ ['O-23','신청자에게 보이는 리포트 배너 기간','신청자에게 다시 보여주는 3기 리포트 배너를 언제까지 둘지. 리포트 노출 종료일과 4기 개강일 중 무엇을 따를지.','설문 11/10 후속','기획','d']
 ];
-var STL={q:['확인 필요','q'],d:['결정 필요','q'],h:['v4 방향 · 확정 확인','h'],x:['범위 밖 · 보류','x']};
+var STL={k:['확정 11/10','ok'],q:['확인 필요','q'],d:['결정 필요','q'],h:['v4 방향 · 확정 확인','h'],x:['범위 밖 · 보류','x']};
 
 /* ===== 프로토타입 상태 ===== */
-var S0={screen:'S0',terms:0,c1:false,c2:false,sheet:null,loading:false,error:false,toast:null,err0:false,checking:false,nudge:false};
+var S0={screen:'S0',rb:false,terms:0,c1:false,c2:false,sheet:null,loading:false,error:false,toast:null,err0:false,checking:false,nudge:false};
 var st=Object.assign({},S0), timer=null, toastTimer=null, nudgeTimer=null;
 var $=function(id){return document.getElementById(id)};
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
@@ -1292,6 +1360,7 @@ function idOf(s){
     if(s.sheet==='agree') return s.loading?'S1-3':s.error?'S1-4':'S1-1';
     return 'S1';
   }
+  if(s.screen==='S0'&&s.rb) return 'S0-R';
   if(s.screen==='S0'&&s.sheet==='noprior') return 'S4';
   if(s.screen==='S0'&&s.checking) return 'S0-L';
   if(s.screen==='S0'&&s.err0) return 'S0-E';
@@ -1365,7 +1434,8 @@ function popMallie(){
   popRAF=requestAnimationFrame(frame);
 }
 function showToast(msg){ st.toast=msg; clearTimeout(toastTimer); toastTimer=setTimeout(function(){st.toast=null;st.err0=false;draw()},6000); }
-function go(screen,extra){ clearTimeout(timer); cancelAnimationFrame(popRAF); st=Object.assign({},S0,{screen:screen},extra||{}); draw(); if(screen==='S2') setTimeout(popMallie,250); }
+function homeBanner(){ var u=$('c-user').value; return u==='APPLIED'; }
+function go(screen,extra){ clearTimeout(timer); cancelAnimationFrame(popRAF); st=Object.assign({},S0,{screen:screen},extra||{}); if(screen==='S0'&&!(extra&&'rb' in extra)) st.rb=homeBanner(); draw(); if(screen==='S2') setTimeout(popMallie,250); }
 
 function act(a){
   if(a==='noop'||st.loading||st.checking) return;
@@ -1375,7 +1445,7 @@ function act(a){
       st.checking=false;
       var u=$('c-user').value;
       if(u==='STATUS_FAIL'){ st.err0=true; showToast('신청 정보를 불러오지 못했어요. 잠시 후 다시 눌러 주세요.'); return draw(); }
-      if(u==='ELIGIBLE') return go('S1');
+      if(u==='ELIGIBLE'||u==='CANCELLED') return go('S1');
       if(u==='APPLIED') return go('S3');
       if(u==='NO_PRIOR'){ st.sheet='noprior'; return draw(); }
       if(u==='CLOSED') return go('S5');
@@ -1383,6 +1453,7 @@ function act(a){
     return;
   }
   if(a==='home') return go('S0');
+  if(a==='report'){ showToast('3기 리포트가 열려요 (기존 화면 · 이 프로토타입 범위 밖)'); return draw(); }
   if(a==='pop') return popMallie();
   if(a==='openAgree'){ st.sheet='agree'; st.error=false; }
   else if(a==='c1'){ st.c1=!st.c1; }
@@ -1427,7 +1498,8 @@ $('c-rm').addEventListener('change',function(){ if(st.screen==='S2') go('S2'); }
 
 /* 화면 상태 13장 (갤러리 · 바로 가기 공용) */
 var GAL=[
- ['S0',{screen:'S0'}],
+ ['S0',{screen:'S0',rb:false}],
+ ['S0-R',{screen:'S0',rb:true}],
  ['S0-L',{screen:'S0',checking:true}],
  ['S0-E',{screen:'S0',err0:true,toast:'신청 정보를 불러오지 못했어요. 잠시 후 다시 눌러 주세요.'}],
  ['S1',{screen:'S1'}],
@@ -1464,7 +1536,7 @@ $('qa-tc').innerHTML=rows(TCS,function(r){return '<tr><td><code>'+r[0]+'</code>'
 $('hist').innerHTML=rows(HIST,function(r){return '<tr><td>'+r[0]+'</td><td><b>'+esc(r[1])+'</b></td><td>'+esc(r[2])+'</td><td>'+esc(r[3])+'</td><td>'+esc(r[4])+'</td></tr>'});
 $('open-list').innerHTML=rows(OPEN,function(r){var s=STL[r[5]];return '<tr><td><code>'+r[0]+'</code></td><td><b>'+esc(r[1])+'</b><br>'+esc(r[2])+'<small>출처: '+esc(r[3])+'</small></td><td>'+esc(r[4])+'</td><td><span class="st '+s[1]+'">'+s[0]+'</span></td></tr>'});
 (function(){var c={}; OPEN.forEach(function(r){var k=STL[r[5]][0]; c[k]=(c[k]||0)+1});
-  $('open-sum').innerHTML='<span class="pill">전체 '+OPEN.length+'건</span>'+Object.keys(c).map(function(k){return '<span class="pill'+(k==='결정 필요'||k==='확인 필요'?' no':'')+'">'+k+' '+c[k]+'</span>'}).join('');})();
+  $('open-sum').innerHTML='<span class="pill">전체 '+OPEN.length+'건</span>'+Object.keys(c).map(function(k){return '<span class="pill'+(k==='결정 필요'||k==='확인 필요'?' no':(k==='확정 11/10'?' go':''))+'">'+k+' '+c[k]+'</span>'}).join('');})();
 
 function buildGallery(){
   if($('gal').childElementCount) return;
