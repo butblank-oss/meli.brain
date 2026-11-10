@@ -1,0 +1,917 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>쉬는 기간 배너 → 4기 신청 루트 핸드오프</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+  background:#F5F7F8;color:#191F28;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:44px 28px 120px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.3;margin:0 0 6px}
+h2{font-size:20px;font-weight:800;letter-spacing:-.02em;margin:46px 0 14px;padding-top:20px;
+  border-top:2px solid #191F28}
+h3{font-size:15px;font-weight:800;margin:28px 0 10px;color:#0A6B47}
+h4{font-size:13px;font-weight:800;margin:20px 0 8px;color:#334155}
+p{font-size:13px;color:#38414D;margin:0 0 10px}
+ul,ol{margin:0 0 12px 18px}
+li{font-size:13px;color:#38414D;margin-bottom:4px}
+hr{border:0;border-top:1px solid #D7DDE2;margin:26px 0}
+strong{font-weight:700;color:#111}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+  background:#EAEEF1;border-radius:4px;padding:1px 5px;color:#0F3D2C}
+a{color:#0A6B47}
+pre{background:#141A20;color:#D7E3DC;border-radius:8px;padding:14px 16px;margin:0 0 16px;
+  overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.7}
+.tw{overflow-x:auto;border:1px solid #D7DDE2;border-radius:10px;margin:0 0 16px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{padding:9px 11px;font-size:11px;font-weight:700;color:#fff;background:#334155;text-align:left;
+  letter-spacing:.03em;white-space:nowrap;vertical-align:top}
+td{padding:9px 11px;font-size:12px;color:#38414D;line-height:1.7;border-top:1px solid #EDF0F2;vertical-align:top}
+tr:nth-child(even) td{background:#FAFBFC}
+td:first-child{font-weight:700;color:#0A6B47;font-size:11px;white-space:nowrap}
+table.plain td:first-child{font-weight:400;color:#38414D;font-size:12px;white-space:normal}
+blockquote{background:#F0F7F3;border-left:3px solid #0E7A52;border-radius:0 8px 8px 0;
+  padding:12px 16px;margin:0 0 16px}
+blockquote p{margin:0;font-size:12.5px;color:#22402F}
+blockquote.warn{background:#FDF3EE;border-left-color:#C2410C}
+blockquote.warn p{color:#5A2A12}
+.meta{font-size:12px;color:#6A7480;margin-bottom:26px;padding-bottom:20px;border-bottom:1px solid #D7DDE2}
+.toc{background:#fff;border:1px solid #D7DDE2;border-radius:10px;padding:16px 20px;margin-bottom:30px}
+.toc a{display:inline-block;font-size:12px;margin:0 14px 5px 0;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+@media print{body{background:#fff}.wrap{max-width:none;padding:0}h2{page-break-after:avoid}
+  .tw{page-break-inside:avoid}}
+
+body,p,li,td,th,h1,h2,h3{word-break:keep-all;overflow-wrap:break-word}
+@media (max-width:640px){.wrap{padding:28px 16px 80px}}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+</style></head><body><div class="wrap">
+<h1>쉬는 기간 배너 → 4기
+신청 루트 핸드오프</h1>
+<blockquote>
+<p>맬리브레인 4기 개편 프로토타입(<code>proto-4th/index.html</code>)에서
+<strong>쉬는 기간 회원의 홈 배너와, 배너에서 4기 신청 완료까지 이어지는
+루트</strong>를 정리한 문서예요. 다른 세션에서 이 문서와 프로토타입
+HTML을 함께 읽고, 정책·화면설계·개발 요청 문서로 이어서 정리하는 데
+쓰려고 만들었어요. 기준 시점: 2026-11-10 · 기준 파일:
+<code>proto-4th/index.html</code> (PR #18로 main 반영)</p>
+</blockquote>
+<h2>0. 다른 세션에 붙여넣을
+지시문</h2>
+<pre><code>butblank-oss/meli.brain 저장소의 proto-4th/handoff/쉬는기간_배너_핸드오프.md 를 먼저 읽고,
+같은 폴더 기준 ../index.html (4기 개편 프로토타입)을 참고해서
+&quot;쉬는 기간 배너 → 4기 신청&quot; 루트를 기획 문서로 정리해 줘.
+
+- 핸드오프 문서 4장(루트)과 6장(정책)은 프로토타입 코드에서 읽어낸 사실이야. 그대로 기준으로 써.
+- 8장(기존 문서와 어긋나는 점)과 10장(남은 결정사항)은 확정이 아니야. 임의로 정하지 말고 나한테 물어봐.
+- 결과물은 docs/ 의 기존 문서 형식(정책·상수 표, 화면 요소 ID 표, 예외 상태 표)을 따라 .md와 .html로 만들어 줘.</code></pre>
+<h2>1. 참고 자료</h2>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>위치</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>프로토타입 HTML</td>
+<td><code>proto-4th/index.html</code></td>
+<td>이미지·글꼴·코드가 한 파일에 번들됨 (약 3.8MB)</td>
+</tr>
+<tr class="even">
+<td>공개 주소</td>
+<td><a
+href="https://butblank-oss.github.io/meli.brain/proto-4th/">https://butblank-oss.github.io/meli.brain/proto-4th/</a></td>
+<td>GitHub Pages · main 브랜치</td>
+</tr>
+<tr class="odd">
+<td>3기 리포트의 4기 신청 경로</td>
+<td><code>docs/03_화면설계서.md</code> S7-11 · 07-h · SC-RP-08</td>
+<td>리포트 안 "4기도 참여하기" → 확인 시트 → 결과 화면</td>
+</tr>
+<tr class="even">
+<td>4기 프로그램 명칭 · 문의 전화</td>
+<td><code>docs/01_정책·상수·산식.md</code> K-13, Q-13</td>
+<td>명칭 통일 규칙</td>
+</tr>
+<tr class="odd">
+<td>4기 신청 DB 저장</td>
+<td><code>docs/11_QA_개발검수-20261012.md</code> A-09</td>
+<td>저장 테이블·행 정의 개발 요청 중</td>
+</tr>
+<tr class="even">
+<td>재등록 목표</td>
+<td><code>report-3rd/index.html</code></td>
+<td>재등록 280명 (1차 100 · 2차 100 · 3차 80)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>프로토타입에서 이 루트를
+보는 방법</h3>
+<ol type="1">
+<li>공개 주소를 PC 브라우저로 열면 왼쪽에 컨트롤 패널, 가운데에 폰
+화면이 보여요.</li>
+<li>컨트롤 패널 <strong>회원 상태 → "쉬는 기간"</strong> 을 누르면 홈
+상단에 배너가 나와요.</li>
+<li>배너의 <strong>"미리 신청하기"</strong> 버튼부터 아래 4장 순서대로
+눌러 보면 돼요.</li>
+<li>컨트롤 패널 <strong>여정 개선 → "홈 · 기수 종료 2주 전"</strong>,
+<strong>"4기 이어서 신청"</strong> 은 진행 중 회원 쪽 진입
+경로예요(4-4).</li>
+</ol>
+<blockquote>
+<p>프로토타입 코드를 직접 읽어야 하면: <code>index.html</code> 안의
+<code>&lt;script type="__bundler/template"&gt;</code> 블록이 화면
+마크업과 상태 로직이에요. JSON 문자열로 들어 있어서 파싱해서 꺼내야
+읽혀요. 배너 관련 로직은 <code>renderVals()</code>의
+<code>goClassInfo</code>, <code>applyClass</code>,
+<code>applyDoneHome</code>, <code>bannerLabel/Title/Sub/Cta</code>,
+<code>journeyVals()</code>의 <code>goReapply</code>,
+<code>reapplySubmit</code>이에요.</p>
+</blockquote>
+<h2>2. 회원 상태 3종</h2>
+<p>프로토타입은 회원 상태(<code>tier</code>)를 3가지로 나눠요. 배너는
+<strong>진행 중이 아닐 때만</strong> 보여요.</p>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>상태</th>
+<th>코드값</th>
+<th>정의</th>
+<th>홈 상단 제목</th>
+<th>배너</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>진행 중</td>
+<td><code>class</code></td>
+<td>현재 기수(3기) 교실 회원</td>
+<td>치매예방교실 26년</td>
+<td>없음</td>
+</tr>
+<tr class="even">
+<td>쉬는 기간</td>
+<td><code>break</code></td>
+<td>지난 기수 회원 · 기수 사이 공백기</td>
+<td>치매예방교실 · 쉬는 기간</td>
+<td><strong>4기 안내 배너</strong></td>
+</tr>
+<tr class="odd">
+<td>일반</td>
+<td><code>free</code></td>
+<td>교실 회원이 아닌 앱 단독 사용자</td>
+<td>맬리브레인</td>
+<td>교실 안내 배너</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>쉬는 기간과 일반은 <strong>같은 무료 범위</strong>를 써요 (활동
+4가지만 열림, 16가지 중).</li>
+<li>쉬는 기간에만 더 보이는 것: <strong>지난 기수 기록 · 멈춘 순위 ·
+개강 D-day</strong>.</li>
+</ul>
+<h2>3. 쉬는 기간 배너 정의</h2>
+<h3>3-1. 위치와 노출 조건</h3>
+<ul>
+<li><strong>위치:</strong> 홈(오늘 탭) 최상단, "지금 할 활동" 카드 위.
+카드 없이 배경 위에 놓이고, 아래에 1px 구분선이 있어요.</li>
+<li><strong>노출 조건:</strong> <code>tier !== 'class'</code> (쉬는 기간
+· 일반). 쉬는 기간이면 아래 문구, 일반이면 교실 안내 문구.</li>
+<li><strong>노출 종료:</strong> 프로토타입에는 종료 조건이 없어요. 4기
+개강일 이후 처리는 10장 결정사항이에요.</li>
+<li><strong>구성:</strong> 라벨(초록 15px) · 제목(18px) · 보조문구(15px)
+· CTA 버튼(42px, 초록) · 오른쪽 새싹 캐릭터 이미지(112px).</li>
+</ul>
+<h3>3-2. 상태별 문구</h3>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>요소</th>
+<th>쉬는 기간 · 미신청</th>
+<th>쉬는 기간 · 신청 완료</th>
+<th>일반 (참고)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>라벨</td>
+<td>다음 교실 · D-120</td>
+<td>4기 신청 완료 · D-120</td>
+<td>남동구 주민이세요?</td>
+</tr>
+<tr class="even">
+<td>제목</td>
+<td>4기는 2월 3일에 시작해요</td>
+<td>4기는 2월 3일에 시작해요</td>
+<td>치매예방교실에 함께해요</td>
+</tr>
+<tr class="odd">
+<td>보조문구</td>
+<td>미리 신청하면 첫날부터 모든 활동이 열려요</td>
+<td>개강 전날 알림을 보내드릴게요</td>
+<td>교실 회원은 16가지 활동과 동네 순위가 열려요</td>
+</tr>
+<tr class="even">
+<td>CTA</td>
+<td><strong>미리 신청하기</strong></td>
+<td><strong>신청 내용 보기</strong></td>
+<td>교실 알아보기</td>
+</tr>
+<tr class="odd">
+<td>CTA 이동</td>
+<td>교실 알아보기 (쉬는 기간형)</td>
+<td>4기 신청 완료 화면</td>
+<td>교실 알아보기 (지역 선택형)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>신청 여부는 <code>applied4</code> 값 하나로 갈라요. 4기 신청 완료
+화면에서 "확인"을 누르면 <code>true</code>가 돼요.</li>
+<li>D-120은 프로토타입에서 고정값이에요. 실서비스에서는 개강일 기준
+계산값이어야 해요(7장).</li>
+</ul>
+<h3>3-3. 같은 화면의 쉬는 기간
+연동 요소</h3>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>위치</th>
+<th>쉬는 기간 표시</th>
+<th>누르면</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>홈 · 반쪽 카드</td>
+<td>"3기 내 기록" · 최종 160등 · 12일</td>
+<td>(프로토타입 미정의)</td>
+</tr>
+<tr class="even">
+<td>홈 · 지금 할 활동</td>
+<td>"오늘의 추천 · n/3 완료" (진행 중은 "3주차 커리큘럼")</td>
+<td>활동 시작</td>
+</tr>
+<tr class="odd">
+<td>성과 탭 · 순위</td>
+<td><strong>3기 최종 순위 · 쉬는 동안 멈춤</strong> · 160등 · 823명 중
+상위 20% · "4기 순위는 2월 3일에 시작해요 / 미리 신청하면 첫날부터
+함께해요" + "신청" 버튼</td>
+<td><strong>연결 안 됨</strong> (9장)</td>
+</tr>
+<tr class="even">
+<td>더 해보기 탭 · 잠금 카드</td>
+<td>"4가지는 누구나 할 수 있어요 / 교실 회원은 16가지 모두 열려요" +
+<strong>"4기 신청"</strong> 버튼</td>
+<td>배너 CTA와 같은 이동</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. 루트 (화면 흐름)</h2>
+<h3>4-1. 전체 그림</h3>
+<pre><code>[쉬는 기간 · 미신청]
+ 홈 배너 &quot;미리 신청하기&quot; ──┐
+ 더 해보기 잠금 카드 &quot;4기 신청&quot; ─┤
+                         ▼
+               교실 알아보기 (쉬는 기간형)
+               └ 남동구 4기 카드 &quot;남동구 교실 신청하기&quot;
+                         ▼
+               4기 신청 완료  ── &quot;확인&quot; ──▶ 홈 (applied4 = true)
+                         ▲                     │
+[쉬는 기간 · 신청 완료]      │                     ▼
+ 홈 배너 &quot;신청 내용 보기&quot; ───┘         배너 문구가 &quot;4기 신청 완료&quot;로 바뀜
+ 더 해보기 잠금 카드 &quot;4기 신청&quot; ─┘  (신청 후에는 교실 알아보기를 건너뜀)
+
+[진행 중 · 기수 종료 2주 전]  ← 쉬는 기간 진입 전 경로
+ 홈 공지 &quot;3기가 11월 30일에 끝나요&quot; → 4기 이어서 신청 → &quot;이대로 신청하기&quot; → 4기 신청 완료 → 홈</code></pre>
+<h3>4-2. 단계표 — 쉬는 기간 ·
+미신청</h3>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>화면</th>
+<th>사용자 행동</th>
+<th>결과</th>
+<th>코드 근거</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R-01</td>
+<td>홈</td>
+<td>배너 "미리 신청하기" 탭</td>
+<td>교실 알아보기로 이동. 돌아갈 화면(<code>back</code>)에 홈 저장</td>
+<td><code>goClassInfo</code></td>
+</tr>
+<tr class="even">
+<td>R-01b</td>
+<td>더 해보기</td>
+<td>잠금 카드 "4기 신청" 탭</td>
+<td>R-01과 같음. <code>back</code> = 더 해보기</td>
+<td><code>goClassInfo</code></td>
+</tr>
+<tr class="odd">
+<td>R-02</td>
+<td>교실 알아보기</td>
+<td>화면 확인</td>
+<td>남동구 4기 카드만 보임 (지역 선택 영역 숨김)</td>
+<td><code>showNamdong</code>, <code>infoFree=false</code></td>
+</tr>
+<tr class="even">
+<td>R-03</td>
+<td>교실 알아보기</td>
+<td>"남동구 교실 신청하기" 탭</td>
+<td><strong>확인 단계 없이</strong> 바로 4기 신청 완료 화면</td>
+<td><code>applyClass</code> (tier=break 분기)</td>
+</tr>
+<tr class="odd">
+<td>R-03b</td>
+<td>교실 알아보기</td>
+<td>왼쪽 위 뒤로</td>
+<td><code>back</code>에 저장된 화면으로 복귀</td>
+<td><code>backFromInfo</code></td>
+</tr>
+<tr class="even">
+<td>R-04</td>
+<td>4기 신청 완료</td>
+<td>"확인" 탭</td>
+<td>홈으로 이동, <code>applied4 = true</code></td>
+<td><code>applyDoneHome</code></td>
+</tr>
+<tr class="odd">
+<td>R-05</td>
+<td>홈</td>
+<td>배너 확인</td>
+<td>라벨·보조문구·CTA가 신청 완료형으로 바뀜</td>
+<td><code>bannerLabel</code> 등</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4-3. 단계표 — 쉬는 기간 · 신청
+완료</h3>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>화면</th>
+<th>사용자 행동</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R-11</td>
+<td>홈</td>
+<td>배너 "신청 내용 보기" 탭</td>
+<td>교실 알아보기를 건너뛰고 4기 신청 완료 화면으로 바로 이동</td>
+</tr>
+<tr class="even">
+<td>R-11b</td>
+<td>더 해보기</td>
+<td>잠금 카드 "4기 신청" 탭</td>
+<td>R-11과 같음 (버튼 문구는 그대로 "4기 신청")</td>
+</tr>
+<tr class="odd">
+<td>R-12</td>
+<td>4기 신청 완료</td>
+<td>"확인" 탭</td>
+<td><strong>항상 홈으로</strong> 이동 (더 해보기에서 왔어도 홈)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4-4. 진입 경로 —
+진행 중 회원 (기수 종료 2주 전)</h3>
+<p>쉬는 기간이 되기 전에 4기를 먼저 신청하는 경로예요. 배너 루트와 같은
+<strong>4기 신청 완료 화면</strong>으로 합류해요.</p>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>화면</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E-01</td>
+<td>홈 · 공지 (1/2)</td>
+<td>"공지 · 3기가 11월 30일에 끝나요 / 끝나도 오늘의 활동은 무료예요 ·
+3기 회원은 4기를 먼저 신청할 수 있어요 / 4기 이어서 신청하기". 공지는
+2개를 넘겨 보는 형식이고 2번째는 기존 챌린지 공지</td>
+</tr>
+<tr class="even">
+<td>E-02</td>
+<td>4기 이어서 신청</td>
+<td>"4기도 이어서 하실래요? / 3기 때 정보로 채워 뒀어요. 바뀐 것만 고쳐
+주세요" · 이름·생년월일·휴대폰(가림)·사는 곳 · "바뀐 정보 고치기" · "3기
+회원은 12월 15일까지 먼저 신청할 수 있어요 · 남은 자리 412석"</td>
+</tr>
+<tr class="odd">
+<td>E-03</td>
+<td>4기 신청 완료</td>
+<td>"이대로 신청하기" → 완료 화면. 기수 종료 공지는
+내려감(<code>endSoon=false</code>)</td>
+</tr>
+<tr class="even">
+<td>E-04</td>
+<td>홈</td>
+<td>"확인" → 홈. 진행 중 상태라 배너는 없음</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4-5. 참고 — 일반 회원
+루트 (같은 배너 자리)</h3>
+<p>배너 자리와 "교실 알아보기" 화면을 공유하지만 흐름이 달라요. 쉬는
+기간 문서에서는 <strong>차이를 구분하는 용도로만</strong> 보세요.</p>
+<ul>
+<li>배너 "교실 알아보기" → 교실 알아보기 (지역 선택형): "어디에 사세요?"
+→ 서울 / 인천 / 그 외 지역 → 구 선택</li>
+<li>인천 남동구 → "교실 있음" 카드 → "4기 미리 신청하기" → <strong>가입
+2안 (남동구 거주 질문 → 동 선택 → 신청 정보 입력 → 승인 신청
+완료)</strong></li>
+<li>다른 구 → 보건소 전화 안내 · "교실이 생기면 알림 받기"</li>
+<li>그 외 지역 → 치매상담콜센터 1899-9988 안내</li>
+</ul>
+<h2>5. 화면별 요소</h2>
+<h3>5-1. 교실 알아보기 (쉬는
+기간형)</h3>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>요소</th>
+<th>내용</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CI-01</td>
+<td>헤더</td>
+<td>뒤로 버튼 + "치매예방교실 알아보기"</td>
+<td>뒤로 → <code>back</code> 화면</td>
+</tr>
+<tr class="even">
+<td>CI-02</td>
+<td>카드 라벨</td>
+<td>"인천 남동구" + 배지 "4기 신청 중"</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>CI-03</td>
+<td>카드 제목</td>
+<td>"두뇌운동 치매예방교실 4기"</td>
+<td>K-13 명칭과 다름 (8장)</td>
+</tr>
+<tr class="even">
+<td>CI-04</td>
+<td>정보 4행</td>
+<td>개강 2월 3일 (화) · 대상 남동구에 사는 어르신 · 비용 무료 · 보건소
+지원 · 운영 남동구 치매안심센터</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>CI-05</td>
+<td>혜택 목록</td>
+<td>"교실 회원이 되면" · 16가지 활동이 모두 열려요 · 같은 동네
+어르신들과 순위를 겨뤄요 · 매달 리포트와 수료증을 받아요 · 보건소
+상담실에 바로 물어봐요</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>CI-06</td>
+<td>주 버튼</td>
+<td><strong>남동구 교실 신청하기</strong></td>
+<td>쉬는 기간 → 바로 완료</td>
+</tr>
+<tr class="odd">
+<td>CI-07</td>
+<td>보조 링크</td>
+<td>"치매안심센터에 전화로 물어보기"</td>
+<td><strong>동작 없음</strong> (9장)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>5-2. 4기 신청 완료</h3>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>요소</th>
+<th>내용</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AD-01</td>
+<td>일러스트</td>
+<td>축하하는 헬씨 캐릭터</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>AD-02</td>
+<td>배지</td>
+<td>"신청 완료"</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>AD-03</td>
+<td>헤딩</td>
+<td>"4기 미리 신청을 / 받았어요"</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>AD-04</td>
+<td>보조문구</td>
+<td>"3기 정보 그대로 신청했어요"</td>
+<td>신청 시 정보 재확인 단계 없음</td>
+</tr>
+<tr class="odd">
+<td>AD-05</td>
+<td>정보 4행</td>
+<td>신청자 박영자 · 교실 두뇌운동 치매예방교실 4기 · 개강 2월 3일 (화) ·
+D-120 · 알림 개강 전날 문자로 보내요</td>
+<td>신청자 이름은 샘플</td>
+</tr>
+<tr class="even">
+<td>AD-06</td>
+<td>안내</td>
+<td>"그 전까지는 지금처럼 오늘의 추천 활동을 할 수 있어요"</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>AD-07</td>
+<td>주 버튼</td>
+<td><strong>확인</strong> → 홈</td>
+<td>붙박이 하단 버튼</td>
+</tr>
+</tbody>
+</table></div>
+<h3>5-3. 4기 이어서 신청 (진행 중
+회원)</h3>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>요소</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RA-01</td>
+<td>헤더</td>
+<td>뒤로(홈)</td>
+</tr>
+<tr class="even">
+<td>RA-02</td>
+<td>헤딩</td>
+<td>"4기도 이어서 / 하실래요?"</td>
+</tr>
+<tr class="odd">
+<td>RA-03</td>
+<td>보조문구</td>
+<td>"3기 때 정보로 채워 뒀어요. 바뀐 것만 고쳐 주세요"</td>
+</tr>
+<tr class="even">
+<td>RA-04</td>
+<td>정보 4행</td>
+<td>이름 · 생년월일 · 휴대폰(가운데 가림) · 사는 곳(동까지)</td>
+</tr>
+<tr class="odd">
+<td>RA-05</td>
+<td>링크</td>
+<td>"바뀐 정보 고치기" — <strong>동작 없음</strong></td>
+</tr>
+<tr class="even">
+<td>RA-06</td>
+<td>안내</td>
+<td>"3기 회원은 12월 15일까지 먼저 신청할 수 있어요 · 남은 자리
+412석"</td>
+</tr>
+<tr class="odd">
+<td>RA-07</td>
+<td>주 버튼</td>
+<td><strong>이대로 신청하기</strong> → 4기 신청 완료</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. 정책 · 규칙
+(프로토타입에서 읽어낸 것)</h2>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>규칙</th>
+<th>근거 화면</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P-01</td>
+<td>4기 안내 배너는 진행 중이 아닌 회원(쉬는 기간 · 일반)의 홈 최상단에
+보인다</td>
+<td>홈</td>
+</tr>
+<tr class="even">
+<td>P-02</td>
+<td>쉬는 기간 회원은 지역 선택 없이 <strong>남동구 4기 교실만</strong>
+안내받는다 (지난 기수가 남동구였으므로)</td>
+<td>교실 알아보기</td>
+</tr>
+<tr class="odd">
+<td>P-03</td>
+<td>쉬는 기간 회원의 4기 신청은 <strong>확인 시트 없이 한 번 탭으로
+완료</strong>된다. 3기 때 정보를 그대로 쓴다</td>
+<td>교실 알아보기 → 완료</td>
+</tr>
+<tr class="even">
+<td>P-04</td>
+<td>진행 중 회원은 기수 종료 2주 전부터 홈 공지로 4기 우선 신청을
+안내받고, 3기 정보를 미리 채운 화면에서 확인 후 신청한다</td>
+<td>4기 이어서 신청</td>
+</tr>
+<tr class="odd">
+<td>P-05</td>
+<td>3기 회원 우선 신청 기간은 12월 15일까지이고, 남은 자리를 함께
+보여준다</td>
+<td>4기 이어서 신청</td>
+</tr>
+<tr class="even">
+<td>P-06</td>
+<td>신청을 마친 회원이 같은 진입점을 다시 누르면 신청 화면이 아니라
+<strong>신청 완료 화면</strong>을 보여준다 (중복 신청 방지)</td>
+<td>배너 · 잠금 카드</td>
+</tr>
+<tr class="odd">
+<td>P-07</td>
+<td>신청 후 배너는 사라지지 않고 "4기 신청 완료 · D-n"으로 바뀌어
+개강일까지 유지된다</td>
+<td>홈</td>
+</tr>
+<tr class="even">
+<td>P-08</td>
+<td>개강 전날 문자로 알림을 보낸다</td>
+<td>4기 신청 완료</td>
+</tr>
+<tr class="odd">
+<td>P-09</td>
+<td>쉬는 기간에도 오늘의 추천 활동(무료 4가지)은 계속 할 수 있다</td>
+<td>완료 화면 안내 · 홈</td>
+</tr>
+<tr class="even">
+<td>P-10</td>
+<td>쉬는 기간에는 지난 기수 순위를 <strong>최종값으로 멈춰</strong>
+보여주고, 4기 순위는 개강일에 새로 시작한다</td>
+<td>성과 탭</td>
+</tr>
+<tr class="odd">
+<td>P-11</td>
+<td>3기 종료 후에도 오늘의 활동은 무료로 유지된다</td>
+<td>기수 종료 공지</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. 상수 (프로토타입 값)</h2>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>항목</th>
+<th>프로토타입 값</th>
+<th>실서비스 처리 제안</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-01</td>
+<td>4기 개강일</td>
+<td>"2월 3일 (화)" (연도 표기 없음) · D-08 참고</td>
+<td>서버 설정값</td>
+</tr>
+<tr class="even">
+<td>C-02</td>
+<td>개강 D-day</td>
+<td>D-120 고정</td>
+<td>개강일 − 오늘로 계산</td>
+</tr>
+<tr class="odd">
+<td>C-03</td>
+<td>3기 종료일</td>
+<td>11월 30일</td>
+<td>서버 설정값</td>
+</tr>
+<tr class="even">
+<td>C-04</td>
+<td>기수 종료 공지 시작</td>
+<td>종료 2주 전</td>
+<td>서버 설정값</td>
+</tr>
+<tr class="odd">
+<td>C-05</td>
+<td>3기 회원 우선 신청 마감</td>
+<td>12월 15일</td>
+<td>서버 설정값</td>
+</tr>
+<tr class="even">
+<td>C-06</td>
+<td>남은 자리</td>
+<td>412석</td>
+<td>정원 − 신청 수 실시간 계산 여부 결정 필요</td>
+</tr>
+<tr class="odd">
+<td>C-07</td>
+<td>무료 활동 수 / 전체</td>
+<td>4가지 / 16가지</td>
+<td>서버 설정값</td>
+</tr>
+<tr class="even">
+<td>C-08</td>
+<td>개강 알림</td>
+<td>개강 전날 · 문자</td>
+<td>발송 시각·채널 결정 필요</td>
+</tr>
+<tr class="odd">
+<td>C-09</td>
+<td>3기 최종 순위 예시</td>
+<td>160등 / 823명 · 상위 20%</td>
+<td>3기 종료 시점 값 고정</td>
+</tr>
+<tr class="even">
+<td>C-10</td>
+<td>교실 명칭</td>
+<td>두뇌운동 치매예방교실 4기</td>
+<td>K-13과 통일 필요</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. 기존 문서와 어긋나는 점
+(확인 필요)</h2>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>항목</th>
+<th>프로토타입</th>
+<th>기존 문서</th>
+<th>확인할 것</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>D-01</td>
+<td>4기 프로그램 명칭</td>
+<td>두뇌운동 치매예방교실 4기</td>
+<td>K-13 "2027년 인천 남동구 보건소 치매예방 프로그램 4기" · "두 곳에서
+다르게 쓰지 않는다"</td>
+<td>앱 화면도 K-13을 쓸지, 짧은 표기를 따로 둘지</td>
+</tr>
+<tr class="even">
+<td>D-02</td>
+<td>신청 확인 단계</td>
+<td>쉬는 기간: 확인 없이 바로 완료 · 진행 중: 정보 확인 화면</td>
+<td>3기 리포트: 07-h 확인 바텀시트 → SC-RP-08 완료 / 08-a 실패</td>
+<td>세 경로(리포트 · 배너 · 기수 종료 공지)의 확인 단계를 맞출지</td>
+</tr>
+<tr class="odd">
+<td>D-03</td>
+<td>신청 실패 화면</td>
+<td>없음</td>
+<td>08-a 실패 화면 있음</td>
+<td>앱 배너 루트에도 실패 상태를 둘지</td>
+</tr>
+<tr class="even">
+<td>D-04</td>
+<td>문의 전화</td>
+<td>"치매안심센터에 전화로 물어보기" (번호 없음)</td>
+<td>Q-13 보건소 대표번호 032-453-6160으로 일괄</td>
+<td>같은 번호를 쓸지</td>
+</tr>
+<tr class="odd">
+<td>D-05</td>
+<td>운영 주체 표기</td>
+<td>운영: 남동구 치매안심센터</td>
+<td>발급기관 "인천남동구 보건소"로 확정 (변경이력 30)</td>
+<td>운영 주체 표기 통일</td>
+</tr>
+<tr class="even">
+<td>D-06</td>
+<td>신청 저장</td>
+<td>화면 상태값만 바뀜</td>
+<td>A-09: 저장 테이블 · 행(사용자 ID · 프로그램 · 신청 시각 · 플랫폼) ·
+중복 1건</td>
+<td>배너 신청도 같은 테이블에 플랫폼/진입점 값을 다르게 저장할지</td>
+</tr>
+<tr class="odd">
+<td>D-07</td>
+<td>정원 · 남은 자리</td>
+<td>412석</td>
+<td>3기 리포트: 재등록 목표 280명 (1차 100 · 2차 100 · 3차 80)</td>
+<td>412석의 근거, 차수별 모집과의 관계</td>
+</tr>
+<tr class="even">
+<td>D-08</td>
+<td>개강 연도 · 요일</td>
+<td>2월 3일 (화)</td>
+<td>K-13 "2027년"</td>
+<td>2027년 2월 3일은 수요일 (화요일은 2026년). 날짜와 요일 중 무엇이
+맞는지</td>
+</tr>
+</tbody>
+</table></div>
+<h2>9. 프로토타입 빈틈 (구현 전
+정의 필요)</h2>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>위치</th>
+<th>빈틈</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>G-01</td>
+<td>성과 탭 · 멈춘 순위 카드</td>
+<td>"신청" 버튼에 동작이 연결돼 있지 않음. 배너와 같은 이동이
+맞는지</td>
+</tr>
+<tr class="even">
+<td>G-02</td>
+<td>홈 · 배너</td>
+<td>배너 전체에 손가락 커서가 있지만 실제로는 CTA 버튼만 눌림. 배너 전체
+탭 영역 여부</td>
+</tr>
+<tr class="odd">
+<td>G-03</td>
+<td>교실 알아보기</td>
+<td>"치매안심센터에 전화로 물어보기" 동작 없음</td>
+</tr>
+<tr class="even">
+<td>G-04</td>
+<td>4기 이어서 신청</td>
+<td>"바뀐 정보 고치기" 동작 없음. 정보가 바뀐 사람(특히 관외 이사)의
+처리</td>
+</tr>
+<tr class="odd">
+<td>G-05</td>
+<td>4기 신청 완료</td>
+<td>"확인"이 항상 홈으로 감. 더 해보기에서 들어온 경우 원래 화면 복귀
+여부</td>
+</tr>
+<tr class="even">
+<td>G-06</td>
+<td>4기 신청 완료</td>
+<td>신청 취소 방법이 없음</td>
+</tr>
+<tr class="odd">
+<td>G-07</td>
+<td>더 해보기 · 잠금 카드</td>
+<td>신청 완료 후에도 버튼 문구가 "4기 신청"으로 남음</td>
+</tr>
+<tr class="even">
+<td>G-08</td>
+<td>홈 · 반쪽 카드</td>
+<td>"3기 내 기록" 카드의 이동 화면 미정의</td>
+</tr>
+<tr class="odd">
+<td>G-09</td>
+<td>진행 중 회원 · 신청 후</td>
+<td>4기를 먼저 신청한 진행 중 회원이 3기 종료 후 쉬는 기간이 되면 배너는
+처음부터 "신청 완료"형이어야 함. 상태 이어받기 규칙 필요</td>
+</tr>
+<tr class="even">
+<td>G-10</td>
+<td>쉬는 기간 · 남동구 외 거주</td>
+<td>지난 기수 이후 이사한 회원에게도 남동구 교실만 보여줌</td>
+</tr>
+</tbody>
+</table></div>
+<h2>10. 남은 결정사항</h2>
+<ol type="1">
+<li><strong>배너 종료 시점</strong> — 4기 개강일에 배너를 내리고 진행 중
+상태로 바꾸는지, 신청 안 한 쉬는 기간 회원은 개강 후 일반 회원으로
+넘어가는지.</li>
+<li><strong>쉬는 기간의 시작과 끝</strong> — 3기 종료일(11/30) 다음
+날부터 4기 개강 전날까지로 볼지.</li>
+<li><strong>확인 단계 통일</strong> — 배너 루트도 리포트처럼 확인
+바텀시트를 거칠지(D-02).</li>
+<li><strong>신청 마감 이후</strong> — 우선 신청 마감(12/15) 이후와
+정원이 다 찬 경우 배너 문구와 CTA.</li>
+<li><strong>명칭 · 전화번호 · 운영 주체</strong> — D-01, D-04, D-05 통일
+방식.</li>
+<li><strong>신청 정보 변경 · 취소</strong> — G-04, G-06의 허용 여부와
+경로.</li>
+<li><strong>D-day 표기 범위</strong> — D-120처럼 먼 날짜도 D-day로
+보여줄지, 일정 기간 전부터만 보여줄지.</li>
+<li><strong>개강 알림</strong> — 문자 외 앱 푸시 병행 여부, 발송
+시각.</li>
+</ol>
+
+</div></body></html>
