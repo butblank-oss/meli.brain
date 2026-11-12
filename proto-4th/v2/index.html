@@ -56,6 +56,19 @@ th { text-align: left; font-size: 13px; font-weight: 600; color: var(--text-2); 
 td { font-size: 15px; line-height: 22px; padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; text-wrap: pretty; }
 td:first-child { font-weight: 600; white-space: nowrap; }
 td b { font-weight: 600; color: var(--text-accent); }
+.vst { font-size: 14px !important; color: var(--text-3) !important; }
+.vt { table-layout: fixed; min-width: 0; } .vt td:first-child { white-space: normal; }
+.vt .opt { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 0; font: 500 15px/22px var(--font-sans); color: var(--text); cursor: pointer; } .vt .opt.on { color: var(--text-accent); font-weight: 600; } .vt .opt.on::before { content: "보는 중 · "; font-size: 13px; }
+.vrow { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.vbtn { height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border-control); background: var(--surface); font: 600 14px var(--font-sans); color: var(--text); cursor: pointer; }
+.vbtn[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+.vbtn:disabled { opacity: .45; cursor: default; }
+.vcnt { font-size: 14px; font-weight: 700; color: var(--text-2); } .vcnt.lead { color: var(--text-accent); }
+.vwho { display: block; width: 100%; font-size: 13px; line-height: 19px; color: var(--text-3); margin-top: 4px; }
+.vnote { display: flex; flex-direction: column; gap: 8px; } .vnote textarea { width: 100%; border: 1px solid var(--border-control); border-radius: 12px; padding: 10px 12px; font: 400 15px/22px var(--font-sans); resize: vertical; color: var(--text); background: var(--surface); }
+.vsave { align-self: flex-start; height: 44px; padding: 0 18px; border-radius: 12px; border: 0; background: var(--primary); color: var(--on-primary); font: 600 15px var(--font-sans); cursor: pointer; } .vsave:disabled { opacity: .45; }
+.vnotes { display: flex; flex-direction: column; gap: 8px; } .vnotes .n { background: var(--surface-sub); border-radius: 12px; padding: 10px 12px; } .vnotes .w { font-size: 13px; font-weight: 600; color: var(--text-2); } .vnotes .x { font-size: 15px; line-height: 22px; color: var(--text); white-space: pre-wrap; margin-top: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
 <style>
 /* ── 폰 화면: DS 2.1 견본 대표 화면 수치 ── */
@@ -330,9 +343,14 @@ td b { font-weight: 600; color: var(--text-accent); }
     </aside>
     <div class="phone" id="phone"><div class="dev" id="live"></div></div>
     <aside class="notes" aria-label="A/B 설명">
-      <h2>A/B로 볼 수 있는 것</h2>
-      <p>굵은 글자가 지금 선택된 안이에요. 시안을 고르면 이 표가 정책서의 결정 목록이 돼요.</p>
-      <div class="tw"><table><thead><tr><th style="width:120px">항목</th><th>A</th><th>B</th></tr></thead><tbody id="abTable"></tbody></table></div>
+      <h2>함께 고르기</h2>
+      <p>안 이름을 누르면 왼쪽 화면이 그 안으로 바뀌어요. 마음에 드는 쪽의 <b>고르기</b>를 누르면 투표돼요. 다시 누르면 취소돼요. 누가 무엇을 골랐는지는 모두에게 보여요.</p>
+      <p class="vst" id="vStatus">투표판을 불러오는 중이에요…</p>
+      <div class="tw"><table class="vt"><colgroup><col style="width:96px"><col style="width:50%"><col style="width:50%"></colgroup><thead><tr><th>항목</th><th>A</th><th>B</th></tr></thead><tbody id="abTable"></tbody></table></div>
+      <button type="button" class="rs" id="vMajor">많이 고른 안으로 화면 보기</button>
+      <h2 style="margin-top:8px">의견</h2>
+      <div class="vnote"><label for="vNote" class="sr">내 의견</label><textarea id="vNote" rows="3" maxlength="400" placeholder="고른 이유나 다른 의견을 남겨 주세요"></textarea><button type="button" class="vsave" id="vSave">의견 저장</button></div>
+      <div id="vNotes" class="vnotes"></div>
       <p id="nowNote"></p>
     </aside>
   </section>
@@ -539,7 +557,7 @@ var CHAT0 = [
   ['d', '9월 23일 (수)'],
   ['me', '마음다루기 3분 7분이 지났는데 탭해도 호흡을 계속해요 어떻게 해야 되나요 답장 꼭 주세요', '오후 3:26'],
   ['d', '9월 29일 (화)'],
-  ['hc', '안녕하세요! 답장이 늦어서 죄송합니다. 탭했을 때 완료 버튼이 나와야 합니다! 혹시 나중에 또 이런 문제가 생기면 <span style="white-space:nowrap">032-453-6163</span>으로 전화 부탁드리면 바로 안내해드리겠습니다!', '오전 10:00']
+  ['hc', '안녕하세요! 답장이 늦어서 죄송합니다. 탭했을 때 완료 버튼이 나와야 합니다! 혹시 나중에 또 이런 문제가 생기면 <span style="white-space:nowrap">032-453-6160</span>으로 전화 부탁드리면 바로 안내해드리겠습니다!', '오전 10:00']
 ];
 function chatHTML(s, c) {
   var msgs = CHAT0.concat(s.sent), last = '';
@@ -606,7 +624,7 @@ function draw(changed) {
   $('tierSeg').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.tier === ctl.tier); });
   $('c-applied').disabled = ctl.tier !== 'break'; $('c-applied').checked = ctl.applied;
   $('abList').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', ctl.ab[b.dataset.k] === b.dataset.v); });
-  $('abTable').innerHTML = AB.map(function (a) { var on = ctl.ab[a[0]]; return '<tr><td>' + a[1] + '</td><td>' + (on === 'A' ? '<b>' + a[2] + '</b>' : a[2]) + '</td><td>' + (on === 'B' ? '<b>' + a[3] + '</b>' : a[3]) + '</td></tr>'; }).join('');
+  renderVotes();
   $('nowNote').textContent = { class: '진행 중: 탭 4개 모두 열림. 맨 위는 공지(닫기 가능).', break: ctl.applied ? '쉬는 기간 · 4기 신청함: 맨 위가 3기 리포트 배너로 바뀌어요(통합본 규칙). 안내 문구도 바뀌어요.' : '쉬는 기간: 맨 위 4기 신청 배너. 화면 안에는 신청 버튼 없이 “배너에서 할 수 있어요” 안내만. 기록은 3기 최종 순위가 멈춘 채로 보여요.', free: '일반: 맨 위는 교실 안내(닫기 가능). 기록 · 두뇌활동은 잠금, 교실 알아보기로 이어져요.' }[ctl.tier];
 }
 function toast(m) { st.toast = m; clearTimeout(toastT); toastT = setTimeout(function () { st.toast = null; draw(); }, 4000); draw(); }
@@ -645,6 +663,63 @@ function act(el) {
     case 'notify': var r = st.region ? st.sido + ' ' + st.region : '사시는 지역'; goBack(); return toast(r + '에 교실이 생기면 알려드릴게요');
   }
 }
+/* ===== 함께 고르기 (투표판) ===== */
+var V = { db: null, user: null, me: null, docs: {}, names: {}, can: true, busy: false, ready: false, err: '' };
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function nm(id) { return id === V.me ? '나' : (V.names[id] || '참여자'); }
+function tally(k) { var r = { A: [], B: [] }; Object.keys(V.docs).forEach(function (id) { var v = (V.docs[id].picks || {})[k]; if (v === 'A' || v === 'B') r[v].push(id); }); return r; }
+function renderVotes() {
+  var mine = (V.me && V.docs[V.me] && V.docs[V.me].picks) || {}, off = !V.db || !V.me || !V.can || V.busy;
+  $('abTable').innerHTML = AB.map(function (a) {
+    var on = ctl.ab[a[0]], t = tally(a[0]), cell = function (v, label) {
+      var n = t[v].length, o = t[v === 'A' ? 'B' : 'A'].length;
+      return '<td><button type="button" class="opt' + (on === v ? ' on' : '') + '" data-pv="' + a[0] + '" data-v="' + v + '">' + label + '</button><div class="vrow"><button type="button" class="vbtn" data-vote="' + a[0] + '" data-v="' + v + '" aria-pressed="' + (mine[a[0]] === v) + '"' + (off ? ' disabled' : '') + '>' + (mine[a[0]] === v ? '골랐어요' : v + ' 고르기') + '</button><span class="vcnt' + (n && n > o ? ' lead' : '') + '">' + n + '표</span>' + (n ? '<span class="vwho">' + t[v].map(function (id) { return esc(nm(id)); }).join(', ') + '</span>' : '') + '</div></td>';
+    };
+    return '<tr><td>' + a[1] + '</td>' + cell('A', a[2]) + cell('B', a[3]) + '</tr>';
+  }).join('');
+  var people = Object.keys(V.docs).length;
+  $('vStatus').textContent = V.err || (!V.ready ? '투표판을 불러오는 중이에요…' : !V.db ? '투표판에 연결하지 못했어요. 로그인한 상태로 열면 투표할 수 있어요.' : !V.can ? '보기 권한이라 투표는 못 하고 결과만 볼 수 있어요. 공유 권한을 참여자 이상으로 받아 주세요.' : '지금까지 ' + people + '명이 참여했어요.');
+  var notes = Object.keys(V.docs).filter(function (id) { return V.docs[id].note; }).sort(function (x, y) { return (V.docs[y].at || 0) - (V.docs[x].at || 0); });
+  $('vNotes').innerHTML = notes.length ? notes.map(function (id) { return '<div class="n"><div class="w">' + esc(nm(id)) + '</div><div class="x">' + esc(V.docs[id].note) + '</div></div>'; }).join('') : '<p class="vst">아직 남긴 의견이 없어요.</p>';
+  $('vSave').disabled = off;
+}
+function saveMine(patch) {
+  if (!V.db || !V.me || V.busy) return;
+  var cur = V.docs[V.me] || { picks: {}, note: '' }, next = { picks: Object.assign({}, cur.picks), note: cur.note || '', at: Date.now() };
+  if (patch.k) { if (next.picks[patch.k] === patch.v) delete next.picks[patch.k]; else next.picks[patch.k] = patch.v; }
+  if (patch.note !== undefined) next.note = patch.note;
+  V.busy = true; V.docs[V.me] = next; renderVotes();
+  V.db.doc('votes/' + V.me).set(next).then(function () { V.busy = false; V.err = ''; if (patch.note !== undefined) toast('의견을 저장했어요'); renderVotes(); }, function (e) { V.busy = false; if (e && (e.code === 'permission_denied' || e.code === 'not_granted')) V.can = false; else V.err = '저장하지 못했어요. 잠시 뒤 다시 눌러 주세요.'; renderVotes(); });
+}
+$('abTable').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.pv) { ctl.ab[b.dataset.pv] = b.dataset.v; draw(); return; }
+  if (b.dataset.vote) saveMine({ k: b.dataset.vote, v: b.dataset.v });
+});
+$('vSave').addEventListener('click', function () { saveMine({ note: $('vNote').value.trim() }); });
+$('vMajor').addEventListener('click', function () { AB.forEach(function (a) { var t = tally(a[0]); if (t.A.length !== t.B.length) ctl.ab[a[0]] = t.A.length > t.B.length ? 'A' : 'B'; }); draw(); toast('표가 같은 항목은 그대로 두었어요'); });
+(function boot(n) {
+  if (!window.claude || !window.claude.use) { if (n < 25) return setTimeout(function () { boot(n + 1); }, 200); V.ready = true; renderVotes(); return; }
+  var timer = setTimeout(function () { V.ready = true; renderVotes(); }, 10000);
+  Promise.all([window.claude.use('db'), window.claude.use('user')]).then(function (r) {
+    V.db = r[0]; V.user = r[1];
+    if (!V.db) { clearTimeout(timer); V.ready = true; renderVotes(); return; }
+    (V.user ? V.user.id() : Promise.resolve(null)).then(function (id) {
+      V.me = id;
+      if (V.user && V.user.can) V.user.can('data.write').then(function (ok) { if (ok === false) { V.can = false; renderVotes(); } });
+      V.db.collection('votes').onSnapshot(function (snap) {
+        clearTimeout(timer); V.ready = true; var d = {};
+        snap.docs.forEach(function (x) { if (x.exists) d[x.id] = x.data() || {}; });
+        if (V.me && V.docs[V.me] && V.busy) d[V.me] = V.docs[V.me];
+        var first = !Object.keys(V.docs).length; V.docs = d;
+        if (first && V.me && d[V.me] && d[V.me].note && !$('vNote').value) $('vNote').value = d[V.me].note;
+        var ids = Object.keys(d);
+        if (V.user && ids.length) V.user.profiles(ids).then(function (ps) { ids.forEach(function (i) { V.names[i] = (ps[i] && ps[i].name) || ''; }); renderVotes(); }); else renderVotes();
+      }, function () { clearTimeout(timer); V.ready = true; V.err = '투표판을 불러오지 못했어요. 새로 고침해 주세요.'; renderVotes(); });
+    });
+  }, function () { clearTimeout(timer); V.ready = true; renderVotes(); });
+})(0);
+
 $('abList').innerHTML = AB.map(function (a) { return '<div class="r"><span>' + a[1] + '</span><div class="seg3" role="group" aria-label="' + a[1] + '"><button type="button" data-k="' + a[0] + '" data-v="A">A</button><button type="button" data-k="' + a[0] + '" data-v="B">B</button></div></div>'; }).join('');
 $('abList').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; ctl.ab[b.dataset.k] = b.dataset.v; draw(); });
 $('tierSeg').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; ctl.tier = b.dataset.tier; if (ctl.tier !== 'break') ctl.applied = false; st = clone(BASE); anim = 'enter-fade'; draw(true); });
