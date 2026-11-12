@@ -61,7 +61,7 @@ td b { font-weight: 600; color: var(--text-accent); }
 /* ── 폰 화면: DS 2.1 견본 대표 화면 수치 ── */
 .phone { width: 391px; max-width: 100%; height: 828px; border-radius: 44px; background: var(--frame); padding: 8px; box-shadow: var(--shadow-float); }
 .dev { --fs: 1; position: relative; width: 375px; height: 812px; border-radius: 36px; overflow: hidden; background: var(--bg); isolation: isolate; color: var(--text); text-align: left; letter-spacing: -0.01em; }
-.dev .status { position: absolute; top: 0; left: 0; right: 0; height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; font-size:calc(15px * var(--fs)); font-weight: 600; z-index: 40; pointer-events: none; font-variant-numeric: tabular-nums; background: linear-gradient(var(--bg) 70%, transparent); }
+.dev .status { position: absolute; top: 0; left: 0; right: 0; height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; z-index: 40; pointer-events: none; font-variant-numeric: tabular-nums; background: linear-gradient(var(--bg) 70%, transparent); }
 .dev .view { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; padding-top: 44px; padding-bottom: 128px; scrollbar-width: none; }
 .dev .view::-webkit-scrollbar { display: none; }
 .dev .view.cta-pad { padding-bottom: 120px; }
@@ -82,23 +82,23 @@ td b { font-weight: 600; color: var(--text-accent); }
 
 /* 머리 */
 .dev .ttl { padding: 12px 24px 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-.dev .ttl h1 { margin: 0; font-size:calc(24px * var(--fs)); line-height:calc(32px * var(--fs)); font-weight: 700; letter-spacing: -0.02em; }
+.dev .ttl h1 { margin: 0; font-size:calc(24px * (1 + (var(--fs) - 1) * 0.417)); line-height:calc(32px * (1 + (var(--fs) - 1) * 0.25)); font-weight: 700; letter-spacing: -0.02em; }
 .dev .ttl .ib { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; position: relative; color: var(--text-2); margin: -8px -12px 0 0; border-radius: 12px; }
 .dev .ttl .ib .dotr { position: absolute; top: 12px; right: 13px; width: 8px; height: 8px; border-radius: 50%; background: var(--badge-dot); }
-.dev .substat { padding: 2px 24px 0; font-size:calc(14px * var(--fs)); font-weight: 600; color: var(--text-3); }
+.dev .substat { padding: 2px 24px 0; font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); font-weight: 600; color: var(--text-3); }
 .dev .back { height: 52px; display: flex; align-items: center; padding: 0 4px; position: relative; }
-.dev .back .t { position: absolute; left: 64px; right: 64px; text-align: center; font-size:calc(17px * var(--fs)); font-weight: 600; pointer-events: none; }
+.dev .back .t { position: absolute; left: 64px; right: 64px; text-align: center; font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); font-weight: 600; pointer-events: none; }
 .dev .back button { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
 .dev .col { padding: 20px 12px 0; display: flex; flex-direction: column; gap: 12px; }
 .dev .card { background: var(--surface); border-radius: 20px; }
 .dev .c20 { padding: 20px; display: flex; flex-direction: column; gap: 4px; }
-.dev .st { padding: 24px 12px 8px; font-size:calc(14px * var(--fs)); font-weight: 600; color: var(--text-2); }
-.dev .sec { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 12px 0; } .dev .sec b { font-size:calc(18px * var(--fs)); font-weight: 600; } .dev .sec button { font-size:calc(15px * var(--fs)); font-weight: 600; color: var(--text-3); min-height: 44px; }
-.dev .lab { font-size:calc(14px * var(--fs)); font-weight: 600; color: var(--text-2); }
-.dev .cap { font-size:calc(14px * var(--fs)); line-height:calc(20px * var(--fs)); color: var(--text-3); text-wrap: pretty; }
-.dev .hd18 { font-size:calc(18px * var(--fs)); line-height:calc(26px * var(--fs)); font-weight: 600; text-wrap: balance; }
-.dev .h20 { font-size:calc(20px * var(--fs)); line-height:calc(28px * var(--fs)); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
-.dev .chip { height: 28px; padding: 0 10px; border-radius: 8px; font-size:calc(13px * var(--fs)); font-weight: 600; background: var(--surface-sub); color: var(--text-2); display: inline-flex; align-items: center; white-space: nowrap; flex: none; }
+.dev .st { padding: 24px 12px 8px; font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); font-weight: 600; color: var(--text-2); }
+.dev .sec { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 12px 0; } .dev .sec b { font-size:calc(18px * (1 + (var(--fs) - 1) * 0.667)); font-weight: 600; } .dev .sec button { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; color: var(--text-3); min-height: 44px; }
+.dev .lab { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); font-weight: 600; color: var(--text-2); }
+.dev .cap { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); line-height:calc(20px * (1 + (var(--fs) - 1) * 0.6)); color: var(--text-3); text-wrap: pretty; }
+.dev .hd18 { font-size:calc(18px * (1 + (var(--fs) - 1) * 0.667)); line-height:calc(26px * (1 + (var(--fs) - 1) * 0.385)); font-weight: 600; text-wrap: balance; }
+.dev .h20 { font-size:calc(20px * (1 + (var(--fs) - 1) * 0.6)); line-height:calc(28px * (1 + (var(--fs) - 1) * 0.321)); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
+.dev .chip { height: 28px; padding: 0 10px; border-radius: 8px; font-size:calc(13px * (1 + (var(--fs) - 1) * 0.846)); font-weight: 600; background: var(--surface-sub); color: var(--text-2); display: inline-flex; align-items: center; white-space: nowrap; flex: none; }
 .dev .chip.a { background: var(--surface-mint); color: var(--text-accent); } .dev .chip.w { background: var(--warning-bg); color: var(--warning); }
 .dev .nw { white-space: nowrap; }
 
@@ -110,39 +110,39 @@ td b { font-weight: 600; color: var(--text-accent); }
 .dev .th.s64 { width: 64px; height: 64px; }
 
 /* 버튼 */
-.dev .btn { height: 56px; border-radius: 16px; font-size:calc(18px * var(--fs)); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; transition: transform var(--duration-press) ease, background var(--duration-press) ease; }
+.dev .btn { height: 56px; border-radius: 16px; font-size:calc(18px * (1 + (var(--fs) - 1) * 0.667)); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; transition: transform var(--duration-press) ease, background var(--duration-press) ease; }
 .dev .btn:active { transform: scale(var(--press-scale)); }
 .dev .btn.p { background: var(--primary); color: var(--on-primary); } .dev .btn.p:active { background: var(--primary-pressed); }
 .dev .btn.s { background: var(--surface-sub); color: var(--text); } .dev .btn.g { background: transparent; color: var(--text-3); }
-.dev .btn.md { height: 48px; border-radius: 12px; font-size:calc(17px * var(--fs)); }
-.dev .sb { height: 44px; padding: 0 16px; border-radius: 12px; font-size:calc(16px * var(--fs)); font-weight: 600; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; flex-shrink: 0; transition: transform var(--duration-press) ease; }
+.dev .btn.md { height: 48px; border-radius: 12px; font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); }
+.dev .sb { height: 44px; padding: 0 16px; border-radius: 12px; font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; flex-shrink: 0; transition: transform var(--duration-press) ease; }
 .dev .sb:active { transform: scale(var(--press-scale)); }
 .dev .sb.p { background: var(--primary); color: var(--on-primary); } .dev .sb.s { background: var(--surface-sub); } .dev .sb.t { background: var(--surface-mint); color: var(--text-accent); } .dev .sb.w { background: var(--surface); color: var(--text-accent); } .dev .sb.g { color: var(--text-3); padding: 0 10px; }
 
 /* 오늘: 공지 · 지금 할 활동 · 오늘의 활동 */
 .dev .notice { position: relative; padding: 0 84px 0 16px; min-height: 76px; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; transition: opacity 200ms var(--ease-exit), transform 200ms var(--ease-exit); }
-.dev .notice .t { font-size:calc(16px * var(--fs)); font-weight: 600; } .dev .notice .s { font-size:calc(14px * var(--fs)); color: var(--text-3); }
-.dev .notice .x { position: absolute; top: 50%; right: 12px; margin-top: -22px; height: 44px; padding: 0 12px; border-radius: 12px; background: var(--surface-sub); font-size:calc(15px * var(--fs)); font-weight: 600; display: flex; align-items: center; }
+.dev .notice .t { font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; } .dev .notice .s { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); }
+.dev .notice .x { position: absolute; top: 50%; right: 12px; margin-top: -22px; height: 44px; padding: 0 12px; border-radius: 12px; background: var(--surface-sub); font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; display: flex; align-items: center; }
 .dev .hero { padding: 20px; display: flex; flex-direction: column; gap: 4px; position: relative; }
 .dev .hero .dots { display: flex; gap: 4px; } .dev .hero .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); } .dev .hero .dots i.on { background: var(--primary); }
-.dev .hero .nm { font-size:calc(24px * var(--fs)); line-height:calc(32px * var(--fs)); font-weight: 700; letter-spacing: -0.02em; margin-top: 8px; padding-right: 76px; }
-.dev .hero .mt { font-size:calc(15px * var(--fs)); color: var(--text-3); }
+.dev .hero .nm { font-size:calc(24px * (1 + (var(--fs) - 1) * 0.417)); line-height:calc(32px * (1 + (var(--fs) - 1) * 0.25)); font-weight: 700; letter-spacing: -0.02em; margin-top: 8px; padding-right: 76px; }
+.dev .hero .mt { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); color: var(--text-3); }
 .dev .hero .chr { position: absolute; right: 16px; top: 24px; }
 .dev .hero .btn { margin-top: 16px; }
 .dev .list { padding: 8px 0; display: flex; flex-direction: column; }
-.dev .list .hd { padding: 12px 20px 4px; font-size:calc(18px * var(--fs)); font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; } .dev .list .hd span { font-size:calc(15px * var(--fs)); color: var(--text-accent); font-weight: 600; }
+.dev .list .hd { padding: 12px 20px 4px; font-size:calc(18px * (1 + (var(--fs) - 1) * 0.667)); font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; } .dev .list .hd span { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); color: var(--text-accent); font-weight: 600; }
 .dev .row { display: flex; align-items: center; gap: 14px; padding: 6px 20px; min-height: 56px; }
-.dev .row .m { flex: 1; min-width: 0; display: flex; flex-direction: column; } .dev .row .a { font-size:calc(17px * var(--fs)); font-weight: 600; } .dev .row .a.done { color: var(--text-3); } .dev .row .b { font-size:calc(14px * var(--fs)); color: var(--text-3); } .dev .row .b.okt { color: var(--text-accent); font-weight: 600; }
+.dev .row .m { flex: 1; min-width: 0; display: flex; flex-direction: column; } .dev .row .a { font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); font-weight: 600; } .dev .row .a.done { color: var(--text-3); } .dev .row .b { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); } .dev .row .b.okt { color: var(--text-accent); font-weight: 600; }
 .dev .ok { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; } .dev .ok .i { width: 16px; height: 16px; stroke-width: 3; }
-.dev .foot { margin: 4px 20px 0; border-top: 1px solid var(--border); height: 52px; display: flex; align-items: center; gap: 14px; font-size:calc(15px * var(--fs)); font-weight: 500; color: var(--text-2); }
+.dev .foot { margin: 4px 20px 0; border-top: 1px solid var(--border); height: 52px; display: flex; align-items: center; gap: 14px; font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 500; color: var(--text-2); }
 .dev .foot .sep { width: 1px; height: 12px; background: var(--border); } .dev .foot button { min-height: 44px; }
 .dev .bar { height: 10px; border-radius: 5px; background: var(--surface-mint); overflow: hidden; } .dev .bar i { display: block; height: 100%; border-radius: 5px; background: var(--primary); }
-.dev .big { display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; } .dev .big b { font-size:calc(32px * var(--fs)); line-height:calc(42px * var(--fs)); font-weight: 700; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; } .dev .big u { text-decoration: none; font-size:calc(20px * var(--fs)); font-weight: 600; color: var(--text-2); } .dev .big em { font-style: normal; font-size:calc(15px * var(--fs)); color: var(--text-3); padding-left: 6px; }
+.dev .big { display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; } .dev .big b { font-size:calc(32px * (1 + (var(--fs) - 1) * 0.25)); line-height:calc(42px * (1 + (var(--fs) - 1) * 0.15)); font-weight: 700; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; } .dev .big u { text-decoration: none; font-size:calc(20px * (1 + (var(--fs) - 1) * 0.6)); font-weight: 600; color: var(--text-2); } .dev .big em { font-style: normal; font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); color: var(--text-3); padding-left: 6px; }
 .dev .half { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .dev .half .card { padding: 20px; min-height: 120px; display: flex; flex-direction: column; gap: 2px; text-align: left; }
 .dev .half .chev { margin-top: auto; align-self: flex-end; }
 .dev .lrow { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 8px 20px; width: 100%; text-align: left; } .dev .lrow + .lrow { border-top: 1px solid var(--border); }
-.dev .lrow .m { flex: 1; min-width: 0; } .dev .lrow .a { font-size:calc(17px * var(--fs)); font-weight: 600; } .dev .lrow .a.off { color: var(--text-3); font-weight: 500; } .dev .lrow .a.r { font-weight: 500; } .dev .lrow .b { font-size:calc(14px * var(--fs)); color: var(--text-3); } .dev .lrow .v { font-size:calc(15px * var(--fs)); color: var(--text-3); }
+.dev .lrow .m { flex: 1; min-width: 0; } .dev .lrow .a { font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); font-weight: 600; } .dev .lrow .a.off { color: var(--text-3); font-weight: 500; } .dev .lrow .a.r { font-weight: 500; } .dev .lrow .b { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); } .dev .lrow .v { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); color: var(--text-3); }
 .dev .lrow:active { background: var(--surface-sub); }
 .dev .dotb { width: 8px; height: 8px; border-radius: 50%; background: var(--badge-dot); }
 
@@ -152,70 +152,70 @@ td b { font-weight: 600; color: var(--text-accent); }
 .dev .banner::after { content: ""; position: absolute; right: -26px; bottom: -40px; width: 110px; height: 110px; border-radius: 50%; background: #2F6E59; }
 .dev .banner .cal { position: relative; z-index: 1; width: 56px; height: 56px; flex: none; background: #2F6E59; border-radius: 16px; display: flex; align-items: center; justify-content: center; }
 .dev .banner .btxt { position: relative; z-index: 1; flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.dev .banner .sub { font-size:calc(14px * var(--fs)); font-weight: 700; color: #FFD54A; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.dev .banner .hd { font-size:calc(23px * var(--fs)); font-weight: 900; color: #fff; line-height: 1.25; letter-spacing: -.02em; }
-.dev .banner .chv { position: relative; z-index: 1; color: #9FD3BF; font-size:calc(22px * var(--fs)); font-weight: 700; }
+.dev .banner .sub { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); font-weight: 700; color: #FFD54A; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dev .banner .hd { font-size:calc(23px * (1 + (var(--fs) - 1) * 0.457)); font-weight: 900; color: #fff; line-height: 1.25; letter-spacing: -.02em; }
+.dev .banner .chv { position: relative; z-index: 1; color: #9FD3BF; font-size:calc(22px * (1 + (var(--fs) - 1) * 0.5)); font-weight: 700; }
 /* 4기 배너 B: DS 토큰으로 다시 그림 */
 .dev .banner.ds { background: var(--primary); border-radius: 20px; padding: 0 16px; gap: 14px; }
 .dev .banner.ds::after { display: none; }
 .dev .banner.ds .cal { background: var(--green-950); color: var(--mint-100); }
-.dev .banner.ds .sub { font-size:calc(15px * var(--fs)); font-weight: 600; color: var(--mint-100); } .dev .banner.ds .hd { font-size:calc(24px * var(--fs)); line-height:calc(32px * var(--fs)); font-weight: 700; } .dev .banner.ds .chv { color: var(--mint-100); }
+.dev .banner.ds .sub { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; color: var(--mint-100); } .dev .banner.ds .hd { font-size:calc(24px * (1 + (var(--fs) - 1) * 0.417)); line-height:calc(32px * (1 + (var(--fs) - 1) * 0.25)); font-weight: 700; } .dev .banner.ds .chv { color: var(--mint-100); }
 .dev .banner.rep { background: var(--surface); } .dev .banner.rep::after { display: none; }
-.dev .banner.rep .cal { background: var(--surface-mint); color: var(--text-accent); } .dev .banner.rep .sub { color: var(--text-3); font-weight: 600; } .dev .banner.rep .hd { color: var(--text); font-size:calc(20px * var(--fs)); font-weight: 700; } .dev .banner.rep .chv { color: var(--gray-400); }
+.dev .banner.rep .cal { background: var(--surface-mint); color: var(--text-accent); } .dev .banner.rep .sub { color: var(--text-3); font-weight: 600; } .dev .banner.rep .hd { color: var(--text); font-size:calc(20px * (1 + (var(--fs) - 1) * 0.6)); font-weight: 700; } .dev .banner.rep .chv { color: var(--gray-400); }
 
 /* 기록 */
 .dev .seg { margin: 16px 12px 0; position: relative; height: 44px; border-radius: 12px; background: var(--border); padding: 4px; display: grid; grid-template-columns: 1fr 1fr; }
-.dev .seg button { position: relative; display: flex; align-items: center; justify-content: center; font-size:calc(16px * var(--fs)); font-weight: 600; color: var(--text-3); border-radius: 8px; text-align: center; }
+.dev .seg button { position: relative; display: flex; align-items: center; justify-content: center; font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; color: var(--text-3); border-radius: 8px; text-align: center; }
 .dev .seg button[aria-selected="true"] { background: var(--text); color: var(--surface); }
-.dev .pnav { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px 0; font-size:calc(17px * var(--fs)); font-weight: 600; }
+.dev .pnav { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px 0; font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); font-weight: 600; }
 .dev .pnav button { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--text-3); border-radius: 12px; }
-.dev .mon { margin: -2px 0 0 auto; height: 40px; padding: 0 12px; border-radius: 12px; background: var(--surface); font-size:calc(15px * var(--fs)); font-weight: 600; color: var(--text-2); display: flex; align-items: center; gap: 4px; }
+.dev .mon { margin: -2px 0 0 auto; height: 40px; padding: 0 12px; border-radius: 12px; background: var(--surface); font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; color: var(--text-2); display: flex; align-items: center; gap: 4px; }
 .dev .dist { display: flex; align-items: flex-end; gap: 3px; height: 64px; margin-top: 12px; } .dev .dist i { flex: 1; border-radius: 3px 3px 0 0; background: var(--chart-empty); } .dev .dist i.on { background: var(--primary); } .dev .dist.off i { background: var(--gray-100); }
-.dev .axis { display: flex; justify-content: space-between; font-size:calc(13px * var(--fs)); color: var(--text-3); padding-top: 6px; }
-.dev .up { font-size:calc(15px * var(--fs)); font-weight: 600; color: var(--text-accent); display: flex; align-items: center; gap: 4px; padding-top: 10px; } .dev .up .i { width: 18px; height: 18px; }
+.dev .axis { display: flex; justify-content: space-between; font-size:calc(13px * (1 + (var(--fs) - 1) * 0.846)); color: var(--text-3); padding-top: 6px; }
+.dev .up { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; color: var(--text-accent); display: flex; align-items: center; gap: 4px; padding-top: 10px; } .dev .up .i { width: 18px; height: 18px; }
 .dev .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
 .dev .hr { height: 1px; background: var(--border); margin: 14px 0 10px; }
 .dev .mini { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .dev .mini .card { padding: 18px; display: flex; flex-direction: column; gap: 2px; text-align: left; }
-.dev .mini .v { font-size:calc(24px * var(--fs)); font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; } .dev .mini .v small { font-size:calc(16px * var(--fs)); font-weight: 600; color: var(--text-2); padding-left: 2px; }
+.dev .mini .v { font-size:calc(24px * (1 + (var(--fs) - 1) * 0.417)); font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; } .dev .mini .v small { font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; color: var(--text-2); padding-left: 2px; }
 .dev .chart { display: grid; gap: 8px; align-items: end; height: 104px; padding-top: 16px; } .dev .chart > div { display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; height: 100%; }
-.dev .chart .n { text-align: center; font-size:calc(15px * var(--fs)); font-weight: 500; color: var(--text-3); font-variant-numeric: tabular-nums; } .dev .chart .n.on { font-weight: 700; color: var(--text-accent); }
+.dev .chart .n { text-align: center; font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 500; color: var(--text-3); font-variant-numeric: tabular-nums; } .dev .chart .n.on { font-weight: 700; color: var(--text-accent); }
 .dev .chart .b { border-radius: 6px; background: var(--chart-empty); } .dev .chart .b.on { background: var(--primary); }
-.dev .xl { display: grid; gap: 8px; text-align: center; font-size:calc(14px * var(--fs)); color: var(--text-3); padding-top: 6px; } .dev .xl .on { color: var(--text); font-weight: 700; }
+.dev .xl { display: grid; gap: 8px; text-align: center; font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); padding-top: 6px; } .dev .xl .on { color: var(--text); font-weight: 700; }
 .dev .sum { display: flex; gap: 16px; align-items: center; } .dev .sum .m { flex: 1; display: flex; flex-direction: column; gap: 2px; } .dev .sum .h20 b { color: var(--text-accent); }
-.dev .lvl { display: flex; justify-content: space-between; font-size:calc(15px * var(--fs)); font-weight: 600; padding: 12px 0 8px; } .dev .lvl span { font-weight: 400; color: var(--text-3); }
-.dev .top1 { display: flex; align-items: center; gap: 14px; padding-top: 4px; } .dev .top1 .m { flex: 1; } .dev .top1 .a { font-size:calc(17px * var(--fs)); font-weight: 600; } .dev .top1 .r { text-align: right; } .dev .top1 .r b { font-size:calc(20px * var(--fs)); font-weight: 700; } .dev .top1 .r b small { font-size:calc(14px * var(--fs)); font-weight: 600; color: var(--text-2); padding-left: 2px; }
+.dev .lvl { display: flex; justify-content: space-between; font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; padding: 12px 0 8px; } .dev .lvl span { font-weight: 400; color: var(--text-3); }
+.dev .top1 { display: flex; align-items: center; gap: 14px; padding-top: 4px; } .dev .top1 .m { flex: 1; } .dev .top1 .a { font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); font-weight: 600; } .dev .top1 .r { text-align: right; } .dev .top1 .r b { font-size:calc(20px * (1 + (var(--fs) - 1) * 0.6)); font-weight: 700; } .dev .top1 .r b small { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); font-weight: 600; color: var(--text-2); padding-left: 2px; }
 .dev .cal7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px 0; text-align: center; padding-top: 10px; }
-.dev .cal7 .h { font-size:calc(14px * var(--fs)); font-weight: 600; color: var(--text-3); padding-bottom: 4px; }
-.dev .cal7 button { justify-self: center; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size:calc(15px * var(--fs)); font-variant-numeric: tabular-nums; }
+.dev .cal7 .h { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); font-weight: 600; color: var(--text-3); padding-bottom: 4px; }
+.dev .cal7 button { justify-self: center; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-variant-numeric: tabular-nums; }
 .dev .cal7.A button { font-weight: 600; color: var(--text-3); }
 .dev .cal7.A .n3 { background: var(--primary); color: var(--on-primary); } .dev .cal7.A .n2 { box-shadow: inset 0 0 0 3px var(--mint-500); color: var(--text); } .dev .cal7.A .n1 { background: var(--surface-mint); color: var(--text); } .dev .cal7.A .t { box-shadow: 0 0 0 2px var(--focus-ring); color: var(--text-accent); }
 .dev .cal7.B button { background: var(--chart-empty); } .dev .cal7.B button span { width: 31px; height: 31px; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-weight: 500; color: var(--text-3); }
 .dev .cal7.B .n1 { background: conic-gradient(var(--primary) 0 120deg, var(--chart-empty) 120deg 360deg); } .dev .cal7.B .n2 { background: conic-gradient(var(--primary) 0 240deg, var(--chart-empty) 240deg 360deg); } .dev .cal7.B .n3 { background: var(--primary); }
 .dev .cal7.B .n1 span, .dev .cal7.B .n2 span, .dev .cal7.B .n3 span { font-weight: 700; color: var(--text); } .dev .cal7.B .t { box-shadow: 0 0 0 2px var(--focus-ring); } .dev .cal7.B .t span { color: var(--text-accent); font-weight: 700; }
 .dev .cal7 .f { background: transparent !important; color: var(--gray-400) !important; box-shadow: none !important; cursor: default; } .dev .cal7 .f span { background: transparent !important; color: var(--gray-400) !important; }
-.dev .lg { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size:calc(14px * var(--fs)); color: var(--text-3); padding-top: 10px; } .dev .lg span { display: inline-flex; align-items: center; gap: 6px; } .dev .lg b { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
+.dev .lg { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); padding-top: 10px; } .dev .lg span { display: inline-flex; align-items: center; gap: 6px; } .dev .lg b { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
 
 /* 두뇌활동 */
 .dev .recent { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 12px; }
 .dev .tile { background: var(--surface); border-radius: 20px; padding: 10px 10px 14px; display: flex; flex-direction: column; gap: 8px; text-align: left; }
-.dev .tile img { width: 100%; aspect-ratio: 1; border-radius: 8px; object-fit: cover; display: block; } .dev .tile .a { font-size:calc(15px * var(--fs)); font-weight: 600; line-height:calc(20px * var(--fs)); text-wrap: balance; } .dev .tile .b { font-size:calc(14px * var(--fs)); color: var(--text-3); }
-.dev .kv { display: flex; flex-direction: column; margin: 0; } .dev .kv div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; font-size:calc(17px * var(--fs)); } .dev .kv div + div { border-top: 1px solid var(--border); } .dev .kv dt { color: var(--text-3); } .dev .kv dd { margin: 0; font-weight: 600; text-align: right; }
+.dev .tile img { width: 100%; aspect-ratio: 1; border-radius: 8px; object-fit: cover; display: block; } .dev .tile .a { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; line-height:calc(20px * (1 + (var(--fs) - 1) * 0.6)); text-wrap: balance; } .dev .tile .b { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); }
+.dev .kv { display: flex; flex-direction: column; margin: 0; } .dev .kv div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); } .dev .kv div + div { border-top: 1px solid var(--border); } .dev .kv dt { color: var(--text-3); } .dev .kv dd { margin: 0; font-weight: 600; text-align: right; }
 .dev .utabs { margin-top: 20px; padding: 0 12px; display: flex; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
-.dev .utabs button { position: relative; height: 48px; padding: 0 12px; display: flex; align-items: center; font-size:calc(16px * var(--fs)); font-weight: 600; color: var(--text-3); white-space: nowrap; }
+.dev .utabs button { position: relative; height: 48px; padding: 0 12px; display: flex; align-items: center; font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; color: var(--text-3); white-space: nowrap; }
 .dev .utabs button[aria-selected="true"] { color: var(--text); } .dev .utabs button[aria-selected="true"]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 3px; border-radius: 2px; background: var(--primary); }
 .dev .lockc { padding: 16px 20px; background: var(--surface-mint); border-radius: 20px; display: flex; flex-direction: column; gap: 2px; }
 .dev .grow { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 10px 16px 10px 20px; width: 100%; text-align: left; } .dev .grow + .grow { border-top: 1px solid var(--border); }
-.dev .grow .m { flex: 1; min-width: 0; } .dev .grow .a { font-size:calc(17px * var(--fs)); font-weight: 600; } .dev .grow .a.off { color: var(--text-3); font-weight: 500; } .dev .grow .b { font-size:calc(14px * var(--fs)); color: var(--text-3); } .dev .grow.lk .th { opacity: .55; }
+.dev .grow .m { flex: 1; min-width: 0; } .dev .grow .a { font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); font-weight: 600; } .dev .grow .a.off { color: var(--text-3); font-weight: 500; } .dev .grow .b { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); } .dev .grow.lk .th { opacity: .55; }
 .dev .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .dev .gt { background: var(--surface); border-radius: 20px; padding: 12px 12px 16px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
 .dev .gt .im { position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--surface-sub); } .dev .gt .im > img { width: 100%; height: 100%; object-fit: cover; display: block; } .dev .gt.lk .im > img { opacity: .55; }
 .dev .gt .hrt { position: absolute; top: 6px; right: 6px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--text-3); display: flex; align-items: center; justify-content: center; } .dev .gt .hrt.on { background: var(--primary); color: #fff; } .dev .gt .hrt .i { width: 18px; height: 18px; }
-.dev .gt .a { font-size:calc(16px * var(--fs)); font-weight: 600; padding: 0 4px; line-height:calc(22px * var(--fs)); } .dev .gt .b { font-size:calc(14px * var(--fs)); color: var(--text-3); padding: 0 4px; margin-top: -8px; }
+.dev .gt .a { font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; padding: 0 4px; line-height:calc(22px * (1 + (var(--fs) - 1) * 0.5)); } .dev .gt .b { font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); padding: 0 4px; margin-top: -8px; }
 
 /* 내정보 */
-.dev .prof { padding: 20px; display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; } .dev .prof .m { flex: 1; display: flex; flex-direction: column; gap: 2px; } .dev .prof .n { font-size:calc(20px * var(--fs)); font-weight: 700; letter-spacing: -0.02em; }
+.dev .prof { padding: 20px; display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; } .dev .prof .m { flex: 1; display: flex; flex-direction: column; gap: 2px; } .dev .prof .n { font-size:calc(20px * (1 + (var(--fs) - 1) * 0.6)); font-weight: 700; letter-spacing: -0.02em; }
 .dev .quick { padding: 18px 8px; display: grid; grid-template-columns: repeat(4, 1fr); }
-.dev .quick button { display: flex; flex-direction: column; align-items: center; gap: 6px; } .dev .quick i { width: 48px; height: 48px; border-radius: 14px; background: var(--surface-sub); color: var(--text-2); display: flex; align-items: center; justify-content: center; font-style: normal; } .dev .quick span { font-size:calc(13px * var(--fs)); font-weight: 500; color: var(--text-2); }
+.dev .quick button { display: flex; flex-direction: column; align-items: center; gap: 6px; } .dev .quick i { width: 48px; height: 48px; border-radius: 14px; background: var(--surface-sub); color: var(--text-2); display: flex; align-items: center; justify-content: center; font-style: normal; } .dev .quick span { font-size:calc(13px * (1 + (var(--fs) - 1) * 0.846)); font-weight: 500; color: var(--text-2); }
 .dev .sw { width: 52px; height: 32px; border-radius: 999px; background: var(--border); position: relative; flex-shrink: 0; transition: background 200ms ease; }
 .dev .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform 280ms var(--ease-spring-soft); }
 .dev .sw[aria-checked="true"] { background: var(--primary); } .dev .sw[aria-checked="true"]::after { transform: translateX(20px); }
@@ -223,31 +223,31 @@ td b { font-weight: 600; color: var(--text-accent); }
 
 /* 교실 알아보기 */
 .dev .sido { margin-top: 10px; height: 48px; border-radius: 12px; background: var(--border); padding: 4px; display: grid; grid-template-columns: repeat(3, 1fr); }
-.dev .sido button { border-radius: 8px; font-size:calc(16px * var(--fs)); font-weight: 600; color: var(--text-2); text-align: center; } .dev .sido button[aria-selected="true"] { background: var(--text); color: var(--surface); }
+.dev .sido button { border-radius: 8px; font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; color: var(--text-2); text-align: center; } .dev .sido button[aria-selected="true"] { background: var(--text); color: var(--surface); }
 .dev .region { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-.dev .region button { min-height: 48px; border-radius: 12px; font-size:calc(16px * var(--fs)); font-weight: 600; background: var(--surface-sub); color: var(--text-2); text-align: center; }
+.dev .region button { min-height: 48px; border-radius: 12px; font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); font-weight: 600; background: var(--surface-sub); color: var(--text-2); text-align: center; }
 .dev .region button[aria-pressed="true"] { background: var(--text); color: var(--surface); }
-.dev .quote { background: var(--surface-sub); border-radius: 12px; padding: 14px 16px; font-size:calc(16px * var(--fs)); line-height:calc(24px * var(--fs)); color: var(--text-2); }
+.dev .quote { background: var(--surface-sub); border-radius: 12px; padding: 14px 16px; font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); line-height:calc(24px * (1 + (var(--fs) - 1) * 0.417)); color: var(--text-2); }
 .dev .cta { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 20px 28px; background: linear-gradient(to bottom, rgba(242,244,246,0), var(--bg) 24px); z-index: 20; }
 
 /* 탭바: DS 견본 */
 .dev .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 128px; background: linear-gradient(to bottom, rgba(242,244,246,0), var(--bg) 45%); pointer-events: none; z-index: 25; }
 .dev .tabbar { position: absolute; left: 16px; right: 16px; bottom: 24px; height: 72px; border-radius: 999px; background: var(--surface); box-shadow: var(--shadow-tabbar); display: grid; grid-template-columns: repeat(4, 1fr); padding: 6px; z-index: 30; }
 .dev .tabbar button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--text-3); border-radius: 999px; transition: background 300ms var(--ease-enter), color 200ms ease; }
-.dev .tabbar button .i { width: 26px; height: 26px; } .dev .tabbar button span { font-size:calc(15px * var(--fs)); font-weight: 600; }
+.dev .tabbar button .i { width: 26px; height: 26px; } .dev .tabbar button span { font-size:calc(15px * (1 + (var(--fs) - 1) * 0.8)); font-weight: 600; }
 .dev .tabbar button[aria-current="page"] { background: var(--surface-mint); color: var(--primary); } .dev .tabbar button[aria-current="page"] span { font-weight: 700; color: var(--text); }
 
 /* 시트 · 토스트 */
 .dev .scrim { position: absolute; inset: 0; background: var(--scrim); z-index: 50; animation: fadein var(--duration-sheet) var(--ease-enter); }
 .dev .sheet { position: absolute; left: 12px; right: 12px; bottom: 12px; background: var(--surface); border-radius: 28px; padding: 12px 20px 20px; z-index: 51; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sheet); animation: sheetin var(--duration-sheet) var(--ease-enter); max-height: calc(100% - 64px); overflow-y: auto; }
 .dev .sheet .grab { width: 40px; height: 5px; border-radius: 3px; background: var(--gray-300); align-self: center; margin-bottom: 4px; flex: none; }
-.dev .sheet h3 { margin: 0; font-size:calc(20px * var(--fs)); line-height:calc(28px * var(--fs)); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
-.dev .sheet > p { margin: -6px 0 0; font-size:calc(16px * var(--fs)); line-height:calc(24px * var(--fs)); color: var(--text-2); text-wrap: pretty; }
+.dev .sheet h3 { margin: 0; font-size:calc(20px * (1 + (var(--fs) - 1) * 0.6)); line-height:calc(28px * (1 + (var(--fs) - 1) * 0.321)); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
+.dev .sheet > p { margin: -6px 0 0; font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); line-height:calc(24px * (1 + (var(--fs) - 1) * 0.417)); color: var(--text-2); text-wrap: pretty; }
 .dev.closing .scrim { animation: fadeout 200ms var(--ease-exit) forwards; } .dev.closing .sheet { animation: sheetout 200ms var(--ease-exit) forwards; }
 @keyframes fadein { from { opacity: 0; } to { opacity: 1; } } @keyframes fadeout { to { opacity: 0; } }
 @keyframes sheetin { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } } @keyframes sheetout { to { transform: translateY(40px); opacity: 0; } }
-.dev .bignum { font-size:calc(28px * var(--fs)); line-height:calc(36px * var(--fs)); font-weight: 700; user-select: all; font-variant-numeric: tabular-nums; }
-.dev .toast { position: absolute; left: 50%; transform: translateX(-50%); bottom: 112px; min-height: 48px; max-width: calc(100% - 40px); padding: 12px 20px; border-radius: 999px; background: var(--toast-bg); color: var(--on-toast); font-size:calc(16px * var(--fs)); line-height:calc(24px * var(--fs)); font-weight: 500; z-index: 60; text-align: center; width: max-content; text-wrap: balance; animation: toastin 240ms var(--ease-enter); }
+.dev .bignum { font-size:calc(28px * (1 + (var(--fs) - 1) * 0.321)); line-height:calc(36px * (1 + (var(--fs) - 1) * 0.194)); font-weight: 700; user-select: all; font-variant-numeric: tabular-nums; }
+.dev .toast { position: absolute; left: 50%; transform: translateX(-50%); bottom: 112px; min-height: 48px; max-width: calc(100% - 40px); padding: 12px 20px; border-radius: 999px; background: var(--toast-bg); color: var(--on-toast); font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75)); line-height:calc(24px * (1 + (var(--fs) - 1) * 0.417)); font-weight: 500; z-index: 60; text-align: center; width: max-content; text-wrap: balance; animation: toastin 240ms var(--ease-enter); }
 @keyframes toastin { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translateX(-50%); } }
 
 /* 반쪽 카드 A: 화살표 대신 오른쪽 아래 아이콘 */
@@ -260,16 +260,16 @@ td b { font-weight: 600; color: var(--text-accent); }
 .dev .cinfo { margin: 0 12px; padding: 12px 12px 12px 16px; background: var(--surface); border-radius: 16px; display: flex; align-items: center; gap: 10px; flex: none; }
 .dev .cinfo .m { flex: 1; min-width: 0; } .dev .cinfo .sb { gap: 4px; padding: 0 12px; }
 .dev .cbody { flex: 1; overflow-y: auto; padding: 8px 12px 16px; display: flex; flex-direction: column; gap: 8px; scrollbar-width: none; }
-.dev .cdate { display: flex; justify-content: center; padding: 12px 0 4px; } .dev .cdate span { font-size:calc(13px * var(--fs)); font-weight: 600; color: var(--text-3); background: var(--surface-sub); box-shadow: inset 0 0 0 1px var(--border); padding: 4px 12px; border-radius: 999px; }
-.dev .csys { text-align: center; font-size:calc(14px * var(--fs)); color: var(--text-3); padding: 2px 16px; }
-.dev .cwho { display: flex; align-items: center; gap: 8px; font-size:calc(14px * var(--fs)); font-weight: 600; color: var(--text-2); padding-top: 4px; }
+.dev .cdate { display: flex; justify-content: center; padding: 12px 0 4px; } .dev .cdate span { font-size:calc(13px * (1 + (var(--fs) - 1) * 0.846)); font-weight: 600; color: var(--text-3); background: var(--surface-sub); box-shadow: inset 0 0 0 1px var(--border); padding: 4px 12px; border-radius: 999px; }
+.dev .csys { text-align: center; font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); color: var(--text-3); padding: 2px 16px; }
+.dev .cwho { display: flex; align-items: center; gap: 8px; font-size:calc(14px * (1 + (var(--fs) - 1) * 0.857)); font-weight: 600; color: var(--text-2); padding-top: 4px; }
 .dev .cmsg { display: flex; flex-direction: column; max-width: 88%; gap: 4px; } .dev .cmsg.hc { align-self: flex-start; } .dev .cmsg.me { align-self: flex-end; align-items: flex-end; }
-.dev .bub { font-size:calc(17px * var(--fs)); line-height:calc(26px * var(--fs)); padding: 12px 16px; border-radius: 20px; word-break: keep-all; overflow-wrap: anywhere; }
+.dev .bub { font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); line-height:calc(26px * (1 + (var(--fs) - 1) * 0.385)); padding: 12px 16px; border-radius: 20px; word-break: keep-all; overflow-wrap: anywhere; }
 .dev .cmsg.hc .bub { background: var(--surface); border-top-left-radius: 6px; } .dev .cmsg.me .bub { background: var(--primary); color: var(--on-primary); border-top-right-radius: 6px; }
-.dev .ctm { font-size:calc(13px * var(--fs)); color: var(--text-3); padding: 0 4px; }
+.dev .ctm { font-size:calc(13px * (1 + (var(--fs) - 1) * 0.846)); color: var(--text-3); padding: 0 4px; }
 .dev .cbar { flex: none; display: flex; align-items: flex-end; gap: 8px; padding: 10px 12px 28px; background: var(--surface); box-shadow: 0 -1px 0 var(--border); }
 .dev .cib { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-2); flex: none; }
-.dev .cin { flex: 1; min-width: 0; } .dev .cin textarea { width: 100%; min-height: 48px; max-height: 140px; resize: none; border: 0; border-radius: 24px; background: var(--surface-sub); padding: 12px 16px; font-family: var(--font-sans); font-weight: 400; font-size:calc(17px * var(--fs)); line-height:calc(24px * var(--fs)); color: var(--text); outline: none; display: block; }
+.dev .cin { flex: 1; min-width: 0; } .dev .cin textarea { width: 100%; min-height: 48px; max-height: 140px; resize: none; border: 0; border-radius: 24px; background: var(--surface-sub); padding: 12px 16px; font-family: var(--font-sans); font-weight: 400; font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706)); line-height:calc(24px * (1 + (var(--fs) - 1) * 0.417)); color: var(--text); outline: none; display: block; }
 .dev .cin textarea:focus { box-shadow: inset 0 0 0 2px var(--focus-ring); }
 .dev .csend { width: 48px; height: 48px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: flex; align-items: center; justify-content: center; flex: none; }
 .dev .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -297,7 +297,7 @@ td b { font-weight: 600; color: var(--text-accent); }
 .dev.big .top1 { flex-wrap: wrap; } .dev.big .top1 .r { text-align: left; flex-basis: 100%; padding-left: 78px; }
 .dev.big .sum { flex-direction: column-reverse; align-items: flex-start; }
 .dev.big .lvl { flex-direction: column; gap: 2px; }
-.dev.big .ttl { flex-wrap: wrap; } .dev.big .mon { margin-left: 0; }
+.dev .ttl h1 { flex: 1; min-width: 0; text-wrap: balance; } .dev.big .mon { margin-left: 0; } .dev.big .ttl:has(.mon) { flex-wrap: wrap; }
 .dev.big .cinfo { flex-wrap: wrap; } .dev.big .cinfo .sb { flex: 1; }
 .dev.big .cmsg { max-width: 94%; }
 .dev.big .gt .b { margin-top: 0; }
@@ -449,7 +449,7 @@ function perfHTML(s, c) {
     : '<div class="ttl"><h1>기록</h1></div><div class="seg" role="tablist"><button type="button" role="tab" aria-selected="' + weekly + '" data-act="week" data-v="1">주간</button><button type="button" role="tab" aria-selected="' + !weekly + '" data-act="week" data-v="0">월간</button></div><div class="pnav"><button type="button" aria-label="이전" data-act="toast" data-msg="이전 기간">' + ic('left') + '</button>' + (weekly ? wlabel : mlabel + (T === 'break' ? ' · 3기 마지막 달' : '')) + '<button type="button" aria-label="다음" data-act="toast" data-msg="다음 기간">' + ic('chevron', 'color:var(--text-3)') + '</button></div>';
   var out = '';
   if (weekly) {
-    out = '<div class="card c20"><span class="lab">이번 주 참여</span><div class="big"><b>5</b><u>일</u><em>7일 중</em></div>' + chart([['월', 12], ['화', 15], ['수', 9], ['목', 0], ['금', 13], ['토', 0], ['오늘', 10]], '오늘') + '<div class="cap" style="font-size:calc(13px * var(--fs));padding-top:10px">막대 위 숫자는 그날 활동한 시간(분)이에요</div></div>' +
+    out = '<div class="card c20"><span class="lab">이번 주 참여</span><div class="big"><b>5</b><u>일</u><em>7일 중</em></div>' + chart([['월', 12], ['화', 15], ['수', 9], ['목', 0], ['금', 13], ['토', 0], ['오늘', 10]], '오늘') + '<div class="cap" style="font-size:calc(13px * (1 + (var(--fs) - 1) * 0.846));padding-top:10px">막대 위 숫자는 그날 활동한 시간(분)이에요</div></div>' +
       '<div class="mini"><div class="card"><span class="lab">연속 참여</span><div class="v">19<small>일째</small></div></div><div class="card"><span class="lab">이번 주 활동</span><div class="v">9<small>번</small></div></div></div>' +
       '<div class="card c20"><span class="lab">이번 주 가장 많이 한 활동</span><div class="top1">' + gimg('11', 's64') + '<div class="m"><div class="a">진짜 색깔 찾기</div><div class="cap">' + dot('주의력 · 이번 주 4번') + '</div></div><div class="r"><b>450<small>점</small></b><div class="cap">최고 기록</div></div></div></div>';
   } else if (T === 'class') {
@@ -481,8 +481,8 @@ function perfHTML(s, c) {
 function moreHTML(s, c) {
   var trial = c.tier !== 'class', list = GAMES.filter(function (g) { return s.cat === '전체' || g[1] === s.cat; });
   var lock = '';
-  if (c.tier === 'break') lock = '<div class="lockc"><div class="hd18" style="font-size:calc(17px * var(--fs))">' + FREE.length + '가지는 누구나 할 수 있어요</div><div class="cap">교실 회원은 16가지 모두 열려요</div><div class="cap" style="color:var(--text-2)">' + (c.applied ? '4기에 신청했어요. <span class="nw">27년 2월 1일부터</span> 모두 열려요' : '4기 신청은 오늘 탭 맨 위 배너에서 할 수 있어요') + '</div></div>';
-  if (c.tier === 'free') lock = '<div class="lockc"><div class="hd18" style="font-size:calc(17px * var(--fs))">' + FREE.length + '가지는 누구나 할 수 있어요</div><div class="cap">교실 회원은 16가지 모두 열려요</div><button class="sb w" type="button" data-act="ci" style="align-self:flex-start;margin-top:10px">교실 알아보기</button></div>';
+  if (c.tier === 'break') lock = '<div class="lockc"><div class="hd18" style="font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706))">' + FREE.length + '가지는 누구나 할 수 있어요</div><div class="cap">교실 회원은 16가지 모두 열려요</div><div class="cap" style="color:var(--text-2)">' + (c.applied ? '4기에 신청했어요. <span class="nw">27년 2월 1일부터</span> 모두 열려요' : '4기 신청은 오늘 탭 맨 위 배너에서 할 수 있어요') + '</div></div>';
+  if (c.tier === 'free') lock = '<div class="lockc"><div class="hd18" style="font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706))">' + FREE.length + '가지는 누구나 할 수 있어요</div><div class="cap">교실 회원은 16가지 모두 열려요</div><button class="sb w" type="button" data-act="ci" style="align-self:flex-start;margin-top:10px">교실 알아보기</button></div>';
   var items;
   if (c.ab.glist === 'A') items = '<div class="card" style="padding:8px 0">' + list.map(function (g) { var lk = trial && FREE.indexOf(g[0]) < 0; return '<button class="grow ' + (lk ? 'lk' : '') + '" type="button" data-act="game" data-n="' + g[0] + '" data-lk="' + lk + '">' + gimg(g[4], 's64') + '<div class="m"><div class="a ' + (lk ? 'off' : '') + '">' + g[0] + '</div><div class="b">' + dot(lk ? '교실 회원 전용 · 미리보기 1번' : g[2] + ' · ' + (g[3] ? '최고 ' + g[3] + '점' : '아직 안 해봤어요')) + '</div></div>' + (lk ? '<span style="color:var(--text-3)">' + ic('lock', 'width:20px;height:20px') + '</span>' : ic('chevron')) + '</button>'; }).join('') + '</div>';
   else items = '<div class="grid2">' + list.map(function (g) { var lk = trial && FREE.indexOf(g[0]) < 0, fav = s.fav.indexOf(g[0]) >= 0; return '<div class="gt ' + (lk ? 'lk' : '') + '" role="button" tabindex="0" data-act="game" data-n="' + g[0] + '" data-lk="' + lk + '"><div class="im">' + (g[4] ? '<img src="' + IMG['g-' + g[4]] + '" alt="">' : '<span class="mal" style="width:100%;height:100%;border-radius:0"><img src="' + IMG['m-quiz'] + '" width="96" height="96" alt=""></span>') + (lk ? '<span class="hrt" aria-label="잠김">' + ic('lock', 'width:18px;height:18px') + '</span>' : '<button class="hrt ' + (fav ? 'on' : '') + '" type="button" data-act="fav" data-n="' + g[0] + '" aria-pressed="' + fav + '" aria-label="즐겨찾기">' + ic(fav ? 'heart-fill' : 'heart') + '</button>') + '</div><div class="a">' + g[0] + '</div><div class="b">' + dot(lk ? '교실 회원 전용' : g[1] + ' · ' + g[2]) + '</div></div>'; }).join('') + '</div>';
@@ -505,12 +505,12 @@ function meHTML(s, c) {
   var cls = T === 'free' ? row('교실 알아보기', '우리 동네 치매예방교실', 'ci', undefined, '')
     : T === 'break' ? row('프로그램 진행 내역', '26년 교실 3기 · 10월 31일 종료', 'history', undefined, '') + row('3기 리포트', '242일 두뇌운동 기록', 'report', undefined, '') + row('3기 수료증', '11월 1일 발급', 'toast', undefined, 'data-msg="3기 수료증은 3기 리포트에서 볼 수 있어요"')
     : row('프로그램 진행 내역', '26년 교실 3기 · 진행 중', 'history', undefined, '') + '<button class="lrow" type="button" data-act="cert"><div class="m"><div class="a off">수료증</div><div class="b">기수가 끝나면 확인할 수 있어요</div></div><span class="chip">기수 종료 후</span></button>';
-  var quick = c.ab.me === 'B' ? '<div class="card quick">' + [['건강 강좌', ic('calendar'), 'toast', 'data-msg="건강 강좌는 이번 범위 밖이에요"'], T === 'free' ? ['교실 알아보기', ic('search'), 'ci', ''] : ['보건소 상담', ic('chat'), 'chat', ''], ['알림', ic('bell'), 'toast', 'data-msg="알림 설정은 아래 설정에 있어요"'], ['글자 크기', '<span style="font-size:calc(19px * var(--fs));font-weight:700">가</span>', 'toast', 'data-msg="글자 크기 화면은 이번 범위 밖이에요"']].map(function (q) { return '<button type="button" data-act="' + q[2] + '" ' + q[3] + '><i>' + q[1] + '</i><span>' + q[0] + '</span></button>'; }).join('') + '</div>' : '';
+  var quick = c.ab.me === 'B' ? '<div class="card quick">' + [['건강 강좌', ic('calendar'), 'toast', 'data-msg="건강 강좌는 이번 범위 밖이에요"'], T === 'free' ? ['교실 알아보기', ic('search'), 'ci', ''] : ['보건소 상담', ic('chat'), 'chat', ''], ['알림', ic('bell'), 'toast', 'data-msg="알림 설정은 아래 설정에 있어요"'], ['글자 크기', '<span style="font-size:calc(19px * (1 + (var(--fs) - 1) * 0.632));font-weight:700">가</span>', 'toast', 'data-msg="글자 크기 화면은 이번 범위 밖이에요"']].map(function (q) { return '<button type="button" data-act="' + q[2] + '" ' + q[3] + '><i>' + q[1] + '</i><span>' + q[0] + '</span></button>'; }).join('') + '</div>' : '';
   return '<div class="ttl"><h1>내정보</h1></div><div class="col stag"><button class="card prof" type="button" data-act="toast" data-msg="계정 관리는 이번 범위 밖이에요">' + mal('hello', 64) + '<div class="m"><div class="n">박영자님</div><div class="cap">' + dot(cap) + '</div></div>' + ic('chevron') + '</button>' + quick + '</div>' +
     '<div style="padding:0 12px">' + sec('교실', cls) + sec('설정', swr('알림 받기', '하루 한 번 · 정오 12시', 'noti') + row('알림 시간', '', 'toast', '<span class="v">정오 12시</span>' + ic('chevron'), 'data-msg="알림 시간 고르기 시트가 열려요"') + swr('분당 걸음 수 표시', '', 'spm')) +
     sec('도움말', (T === 'free' ? '' : row('보건소 상담실', '보건소 직원과 1:1 채팅', 'chat', '<span class="dotb"></span>' + ic('chevron'), '')) + row('앱 사용법') + row('새소식', '11월 10일 업데이트', 'toast', '<span class="dotb"></span>' + ic('chevron')) + '<div class="lrow"><div class="m"><div class="a r">앱 버전</div></div><span class="v">4.2.0</span></div>' + row('캐시 지우기')) +
     sec('앱 고지사항', row('이용약관') + row('개인정보 처리방침') + row('저작권 표기')) +
-    '<div class="card" style="margin-top:12px"><button class="callc" type="button" data-act="toast" data-msg="실제 앱에서는 고객센터 1533-0130으로 전화가 걸려요"><span class="mal" style="width:48px;height:48px;color:var(--text-accent)">' + ic('phone') + '</span><div style="flex:1"><div class="hd18" style="font-size:calc(17px * var(--fs))">고객센터 전화하기</div><div class="cap">' + dot('1533-0130 · 평일 9시~6시') + '</div></div>' + ic('chevron') + '</button></div><div class="cap" style="padding:10px 12px 0">누르면 바로 전화가 걸려요. 고객확인번호는 자동으로 전달돼요.</div></div>';
+    '<div class="card" style="margin-top:12px"><button class="callc" type="button" data-act="toast" data-msg="실제 앱에서는 고객센터 1533-0130으로 전화가 걸려요"><span class="mal" style="width:48px;height:48px;color:var(--text-accent)">' + ic('phone') + '</span><div style="flex:1"><div class="hd18" style="font-size:calc(17px * (1 + (var(--fs) - 1) * 0.706))">고객센터 전화하기</div><div class="cap">' + dot('1533-0130 · 평일 9시~6시') + '</div></div>' + ic('chevron') + '</button></div><div class="cap" style="padding:10px 12px 0">누르면 바로 전화가 걸려요. 고객확인번호는 자동으로 전달돼요.</div></div>';
 }
 function historyHTML(s, c) {
   var Pp = [['두뇌운동 치매예방교실 3기', c.tier === 'class' ? '2026.03.03 ~ 진행 중' : '2026.03.03 ~ 2026.10.31', c.tier === 'class'], ['두뇌운동 치매예방교실 2기', '2025.03.04 ~ 2025.11.01', false]];
@@ -521,7 +521,7 @@ function ciHTML(s, c) {
   if (s.sido === '그 외 지역') { res = '<div class="card c20" style="gap:8px">' + mal('search', 64) + '<div class="hd18">가까운 보건소를 안내받으세요</div><div class="cap">치매상담콜센터에 전화하면 사시는 곳의 치매안심센터를 알려드려요. 그곳에 교실을 열어 달라고 요청해 주세요.</div><dl class="kv"><div><dt>치매상담콜센터</dt><dd>1899-9988</dd></div></dl></div>'; cta = '<button class="btn p" type="button" data-act="notify">교실이 생기면 알림 받기</button>'; }
   else if (s.sido === '인천' && s.region === '남동구') { res = '<div class="card c20" style="gap:8px"><div style="display:flex;justify-content:space-between;align-items:center"><span class="lab">인천남동구 보건소</span><span class="chip a">교실 있음</span></div><div class="h20">두뇌운동 치매예방교실</div><div class="cap">남동구에 사는 어르신이 대상이에요. 교실 참여는 보건소에 전화로 물어봐 주세요.</div><dl class="kv"><div><dt>문의</dt><dd>032-453-6160</dd></div><div><dt>받는 시간</dt><dd>평일 9시 ~ 6시</dd></div></dl></div>'; cta = '<button class="btn p" type="button" data-act="call">보건소에 전화로 물어보기</button>'; }
   else if (s.region) { var tel = HC[s.sido][s.region]; res = '<div class="card c20" style="gap:8px"><span class="chip w" style="align-self:flex-start">교실 없음</span><div class="hd18"><span class="nw">' + s.sido + ' ' + s.region + '</span>에는 아직 맬리브레인 교실이 없어요</div><div class="cap">보건소에 요청하면 생길 수 있어요.</div><dl class="kv"><div><dt>' + s.region + '보건소</dt><dd>' + (tel || '번호 확인 중') + '</dd></div></dl><div class="lab" style="padding-top:4px">이렇게 말씀해 보세요</div><div class="quote">“맬리브레인 두뇌운동 교실을 ' + s.region + '에서도 열어주세요. 인천 남동구 보건소에서 하고 있어요.”</div></div>'; cta = '<button class="btn p" type="button" data-act="notify">교실이 생기면 알림 받기</button>'; }
-  return backBar('치매예방교실 알아보기') + '<div class="col stag" style="padding-top:8px"><div style="padding:0 12px;display:flex;flex-direction:column;gap:4px"><div style="font-size:calc(24px * var(--fs));line-height:calc(32px * var(--fs));font-weight:700;letter-spacing:-0.02em">어디에 사세요?</div><div class="cap" style="font-size:calc(16px * var(--fs))">사는 곳을 고르면 가까운 교실을 알려드려요</div></div>' +
+  return backBar('치매예방교실 알아보기') + '<div class="col stag" style="padding-top:8px"><div style="padding:0 12px;display:flex;flex-direction:column;gap:4px"><div style="font-size:calc(24px * (1 + (var(--fs) - 1) * 0.417));line-height:calc(32px * (1 + (var(--fs) - 1) * 0.25));font-weight:700;letter-spacing:-0.02em">어디에 사세요?</div><div class="cap" style="font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75))">사는 곳을 고르면 가까운 교실을 알려드려요</div></div>' +
     '<div class="card c20"><span class="lab">사는 곳</span><div class="sido" role="tablist">' + sidos.map(function (r) { return '<button type="button" role="tab" aria-selected="' + (s.sido === r) + '" data-act="sido" data-v="' + r + '">' + r + '</button>'; }).join('') + '</div>' + (regions.length ? '<div class="lab" style="padding-top:12px">구 · 군</div><div class="region">' + regions.map(function (r) { return '<button type="button" aria-pressed="' + (s.region === r) + '" data-act="region" data-v="' + r + '">' + r + '</button>'; }).join('') + '</div>' : '') + '</div>' + res + '</div>' + (cta ? '<div class="cta">' + cta + '</div>' : '');
 }
 
@@ -534,7 +534,7 @@ var CHAT0 = [
   ['d', '9월 23일 (수)'],
   ['me', '마음다루기 3분 7분이 지났는데 탭해도 호흡을 계속해요 어떻게 해야 되나요 답장 꼭 주세요', '오후 3:26'],
   ['d', '9월 29일 (화)'],
-  ['hc', '안녕하세요! 답장이 늦어서 죄송합니다. 탭했을 때 완료 버튼이 나와야 합니다! 혹시 나중에 또 이런 문제가 생기면 032-453-6163으로 전화 부탁드리면 바로 안내해드리겠습니다!', '오전 10:00']
+  ['hc', '안녕하세요! 답장이 늦어서 죄송합니다. 탭했을 때 완료 버튼이 나와야 합니다! 혹시 나중에 또 이런 문제가 생기면 <span style="white-space:nowrap">032-453-6163</span>으로 전화 부탁드리면 바로 안내해드리겠습니다!', '오전 10:00']
 ];
 function chatHTML(s, c) {
   var msgs = CHAT0.concat(s.sent), last = '';
@@ -557,7 +557,7 @@ function sheetHTML(s, c) {
   else if (s.sheet === 'call') h = '<h3 id="sh-t">인천남동구 보건소</h3><div class="bignum">032-453-6160</div><p>평일 오전 9시부터 오후 6시까지 받아요.</p><button class="btn p" type="button" data-act="dial">' + ic('phone') + '전화 걸기</button><button class="btn g" type="button" data-act="close">닫기</button>';
   else if (s.sheet === 'rank') { var my = 160 - s.done.length * 4, R = [['오혜숙', 824], ['이경자', 817], ['강남이', 789], ['나 (박영자)', 788], ['김말순', 783], ['김순자', 779], ['박용미', 771]]; h = '<h3 id="sh-t">내 앞뒤 순위</h3><p>동점이면 참여 일수, 연속 일수 순으로 정해요</p><div class="card" style="background:var(--surface-sub);padding:4px 0">' + R.map(function (r, i) { return '<div class="lrow" style="min-height:52px;' + (i === 3 ? 'background:var(--surface-mint)' : '') + '"><span class="lab" style="width:52px">' + (my - 3 + i) + '등</span><div class="m"><div class="a r" style="' + (i === 3 ? 'color:var(--text-accent);font-weight:600' : '') + '">' + r[0] + '</div></div><span class="lab">' + r[1] + '점</span></div>'; }).join('') + '</div><button class="btn s md" type="button" data-act="close">닫기</button>'; }
   else if (s.sheet === 'day') { var n = dayN(+s.sheetArg.d); h = '<h3 id="sh-t">' + s.sheetArg.m + ' ' + s.sheetArg.d + '일 활동</h3><p>3가지 중 ' + n + '가지 했어요</p><div class="card" style="background:var(--surface-sub);padding:4px 0">' + ACT.map(function (a, i) { return '<div class="lrow" style="min-height:52px">' + (i < n ? '<span class="ok">' + ic('check') + '</span>' : '<span class="ok" style="background:transparent;box-shadow:inset 0 0 0 2px var(--border)"></span>') + '<div class="m"><div class="a r">' + a.short + '</div></div><span class="v">' + (i < n ? '완료' : '안 함') + '</span></div>'; }).join('') + '</div><button class="btn s md" type="button" data-act="close">닫기</button>'; }
-  else if (s.sheet === 'cert') h = '<span class="chip w" style="align-self:flex-start">기수 종료 후 발급</span><h3 id="sh-t">수료증은 언제 받나요?</h3><p>26년 교실 3기가 끝난 다음 날인 11월 1일에 수료증이 만들어져요.</p><div class="card c20" style="background:var(--surface-sub)"><div style="display:flex;justify-content:space-between" class="lab"><span>내 참여일</span><span style="color:var(--text-accent)">18일 더 필요해요</span></div><div class="big"><b style="font-size:calc(24px * var(--fs));line-height:calc(32px * var(--fs))">12</b><u style="font-size:calc(16px * var(--fs))">/ 30일</u></div><div class="bar"><i style="width:40%"></i></div></div><dl class="kv"><div><dt>수료 기준</dt><dd>참여일 30일 이상<br>또는 활동 30건 이상</dd></div><div><dt>발급기관</dt><dd>인천남동구 보건소</dd></div></dl><button class="btn s md" type="button" data-act="close">닫기</button>';
+  else if (s.sheet === 'cert') h = '<span class="chip w" style="align-self:flex-start">기수 종료 후 발급</span><h3 id="sh-t">수료증은 언제 받나요?</h3><p>26년 교실 3기가 끝난 다음 날인 11월 1일에 수료증이 만들어져요.</p><div class="card c20" style="background:var(--surface-sub)"><div style="display:flex;justify-content:space-between" class="lab"><span>내 참여일</span><span style="color:var(--text-accent)">18일 더 필요해요</span></div><div class="big"><b style="font-size:calc(24px * (1 + (var(--fs) - 1) * 0.417));line-height:calc(32px * (1 + (var(--fs) - 1) * 0.25))">12</b><u style="font-size:calc(16px * (1 + (var(--fs) - 1) * 0.75))">/ 30일</u></div><div class="bar"><i style="width:40%"></i></div></div><dl class="kv"><div><dt>수료 기준</dt><dd>참여일 30일 이상<br>또는 활동 30건 이상</dd></div><div><dt>발급기관</dt><dd>인천남동구 보건소</dd></div></dl><button class="btn s md" type="button" data-act="close">닫기</button>';
   else if (s.sheet === 'b4') h = '<span class="chip" style="align-self:flex-start">별도 기능 · 4기 사전 신청</span><h3 id="sh-t">배너를 누른 뒤의 화면은 통합본에서 정해요</h3><p>상태 조회, 신청 화면, 약관, 완료는 4기 사전 신청 통합본(11/11)이 기준이에요. 4기 개편에서는 배너가 놓일 자리와 모양만 정해요.</p><a class="btn p" href="https://claude.ai/artifact/C2sTVNptzGDGczaV7vbna1" target="_blank" rel="noopener" style="text-decoration:none">통합본 열기</a><button class="btn g" type="button" data-act="close">닫기</button>';
   return '<div class="scrim" data-act="close"></div><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t"><span class="grab" aria-hidden="true"></span>' + h + '</div>';
 }
