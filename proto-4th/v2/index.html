@@ -302,6 +302,11 @@ td b { font-weight: 600; color: var(--text-accent); }
 .dev.big .cmsg { max-width: 94%; }
 .dev.big .gt .b { margin-top: 0; }
 .dev.big .cinfo { flex-wrap: nowrap; padding: 8px 8px 8px 16px; } .dev.big .cinfo .cap { display: none; } .dev.big .cinfo .sb { flex: none; }
+/* 큰 글자: 닫기 버튼 전체 폭·가운데, 배지는 설명 아래로 */
+.dev.big .notice .x { margin: 8px 0 0; flex: 1 1 100%; justify-content: center; }
+.dev .lrow .chip.inl { display: none; }
+.dev.big .lrow .chip.inl { display: inline-flex; align-self: flex-start; margin: 6px 0 0; }
+.dev.big .lrow .chip.tr { display: none; }
 
 </style>
 <div class="wrap">
@@ -401,7 +406,7 @@ function calHTML(c, label, blanks, days, today) {
 
 /* ===== 반쪽 카드: A 아이콘 반쪽 카드 · B 목록 두 줄 ===== */
 function halfPair(c, items) {
-  if (c.ab.half === 'B') return '<div class="card" style="padding:8px 0">' + items.map(function (x) { return '<button class="lrow" type="button" data-act="' + x.act + '" ' + x.ex + '><span class="mal" style="width:40px;height:40px;color:var(--text-accent)">' + ic(x.ic) + '</span><div class="m"><div class="a">' + x.t + '</div><div class="b">' + dot(x.s) + '</div></div>' + (x.dot ? '<span class="dotb"></span>' : '') + (x.chip ? '<span class="chip">' + x.chip + '</span>' : ic('chevron')) + '</button>'; }).join('') + '</div>';
+  if (c.ab.half === 'B') return '<div class="card" style="padding:8px 0">' + items.map(function (x) { return '<button class="lrow" type="button" data-act="' + x.act + '" ' + x.ex + '><span class="mal" style="width:40px;height:40px;color:var(--text-accent)">' + ic(x.ic) + '</span><div class="m"><div class="a">' + x.t + '</div><div class="b">' + dot(x.s) + '</div>' + (x.chip ? '<span class="chip inl">' + x.chip + '</span>' : '') + '</div>' + (x.dot ? '<span class="dotb"></span>' : '') + (x.chip ? '<span class="chip tr">' + x.chip + '</span>' : ic('chevron')) + '</button>'; }).join('') + '</div>';
   return '<div class="half">' + items.map(function (x) { return '<button class="card hcard" type="button" data-act="' + x.act + '" ' + x.ex + '><div class="hd18">' + x.t + '</div><div class="cap">' + dot(x.s) + '</div>' + (x.chip ? '<span class="chip" style="align-self:flex-start;margin-top:8px">' + x.chip + '</span>' : '') + '<span class="hic">' + ic(x.ic) + (x.dot ? '<span class="dotr"></span>' : '') + '</span></button>'; }).join('') + '</div>';
 }
 
@@ -432,7 +437,7 @@ function homeHTML(s, c) {
   }).join('');
   var rc = { class: ['내 순위 확인하기', '823명 중 ' + (160 - dc * 4) + '등'], break: ['3기 내 기록', '최종 160등 · 142일 참여'], free: ['내 기록', '이번 주 ' + (3 + dc) + '번 참여'] }[c.tier];
   var cert = c.tier === 'break' ? '<button class="lrow" type="button" data-act="toast" data-msg="3기 수료증은 3기 리포트에서 볼 수 있어요"><div class="m"><div class="a">3기 수료증</div><div class="b">11월 1일에 발급됐어요</div></div>' + ic('chevron') + '</button>'
-    : '<button class="lrow" type="button" data-act="cert"><div class="m"><div class="a off">수료증</div><div class="b">기수가 끝나면 확인할 수 있어요</div></div><span class="chip">기수 종료 후</span></button>';
+    : '<button class="lrow" type="button" data-act="cert"><div class="m"><div class="a off">수료증</div><div class="b">기수가 끝나면 확인할 수 있어요</div><span class="chip inl">기수 종료 후</span></div><span class="chip tr">기수 종료 후</span></button>';
   return head(title, c, 'bell') + (c.ab.stat === 'A' ? '<div class="substat">' + statusLine(c) + '</div>' : '') + '<div class="col stag">' + topSlot(s, c) + hero +
     '<div class="card list"><div class="hd">오늘의 활동<span>' + dc + '/3 완료</span></div>' + rows + '<div class="foot"><button type="button" data-act="toast" data-msg="지난 활동은 이번 범위 밖이에요">지난 활동</button><span class="sep"></span><button type="button" data-act="tab" data-to="more">더 해보기</button><span class="sep"></span><button type="button" data-act="tab" data-to="perf">내 성과</button></div></div>' +
     '<div class="card c20"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="lab">오늘 걸음</div><div class="big"><b>3,061</b><u>보</u></div></div><button class="sb g" type="button" data-act="toast" data-msg="걸음 내역은 이번 범위 밖이에요">내역 보기</button></div><div class="bar" style="margin-top:8px"><i style="width:77%"></i></div><div class="cap" style="padding-top:6px">목표 4,000보 (보건소 권고)의 77%</div></div>' +
@@ -504,7 +509,7 @@ function meHTML(s, c) {
   var sec = function (t, rows) { return '<div class="st">' + t + '</div><div class="card" style="padding:8px 0">' + rows + '</div>'; };
   var cls = T === 'free' ? row('교실 알아보기', '우리 동네 치매예방교실', 'ci', undefined, '')
     : T === 'break' ? row('프로그램 진행 내역', '26년 교실 3기 · 10월 31일 종료', 'history', undefined, '') + row('3기 리포트', '242일 두뇌운동 기록', 'report', undefined, '') + row('3기 수료증', '11월 1일 발급', 'toast', undefined, 'data-msg="3기 수료증은 3기 리포트에서 볼 수 있어요"')
-    : row('프로그램 진행 내역', '26년 교실 3기 · 진행 중', 'history', undefined, '') + '<button class="lrow" type="button" data-act="cert"><div class="m"><div class="a off">수료증</div><div class="b">기수가 끝나면 확인할 수 있어요</div></div><span class="chip">기수 종료 후</span></button>';
+    : row('프로그램 진행 내역', '26년 교실 3기 · 진행 중', 'history', undefined, '') + '<button class="lrow" type="button" data-act="cert"><div class="m"><div class="a off">수료증</div><div class="b">기수가 끝나면 확인할 수 있어요</div><span class="chip inl">기수 종료 후</span></div><span class="chip tr">기수 종료 후</span></button>';
   var quick = c.ab.me === 'B' ? '<div class="card quick">' + [['건강 강좌', ic('calendar'), 'toast', 'data-msg="건강 강좌는 이번 범위 밖이에요"'], T === 'free' ? ['교실 알아보기', ic('search'), 'ci', ''] : ['보건소 상담', ic('chat'), 'chat', ''], ['알림', ic('bell'), 'toast', 'data-msg="알림 설정은 아래 설정에 있어요"'], ['글자 크기', '<span style="font-size:calc(19px * (1 + (var(--fs) - 1) * 0.632));font-weight:700">가</span>', 'toast', 'data-msg="글자 크기 화면은 이번 범위 밖이에요"']].map(function (q) { return '<button type="button" data-act="' + q[2] + '" ' + q[3] + '><i>' + q[1] + '</i><span>' + q[0] + '</span></button>'; }).join('') + '</div>' : '';
   return '<div class="ttl"><h1>내정보</h1></div><div class="col stag"><button class="card prof" type="button" data-act="toast" data-msg="계정 관리는 이번 범위 밖이에요">' + mal('hello', 64) + '<div class="m"><div class="n">박영자님</div><div class="cap">' + dot(cap) + '</div></div>' + ic('chevron') + '</button>' + quick + '</div>' +
     '<div style="padding:0 12px">' + sec('교실', cls) + sec('설정', swr('알림 받기', '하루 한 번 · 정오 12시', 'noti') + row('알림 시간', '', 'toast', '<span class="v">정오 12시</span>' + ic('chevron'), 'data-msg="알림 시간 고르기 시트가 열려요"') + swr('분당 걸음 수 표시', '', 'spm')) +
